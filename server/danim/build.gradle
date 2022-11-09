@@ -20,9 +20,30 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
+	runtimeOnly 'com.h2database:h2'
+	implementation 'com.google.code.gson:gson'
+
+	implementation "org.mapstruct:mapstruct:1.5.3.Final"
+	compileOnly "org.projectlombok:lombok:1.18.24"
+	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+	annotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
+	annotationProcessor "org.projectlombok:lombok:1.18.24"
+
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	testCompileOnly "org.projectlombok:lombok:1.18.24"
+	testImplementation 'org.projectlombok:lombok:1.18.24'
 }
 
 tasks.named('test') {
