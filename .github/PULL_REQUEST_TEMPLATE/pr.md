@@ -1,16 +1,16 @@
 ---
-name: feature
-about: add feature
+name: pr
+about: add pr
 title: "[FE BE] "
 labels: feature
 assignees: ''
 
 ---
 
-### 이슈 내용
+### PR 내용
 
 ### 작업 내용
-- [ ] 할 일
+- 
 
 ### 관련 이슈
 - #1
