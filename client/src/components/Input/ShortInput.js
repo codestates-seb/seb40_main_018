@@ -10,20 +10,24 @@ const InputContainer = styled.div`
   display: flex;
   align-content: center;
   align-items: center;
-  justify-content: space-between;
+  text-align: center;
+  /* justify-content: space-between; */
 `;
 const InputTitle = styled.div`
-  width: auto;
+  width: 120px;
   font-size: 20px;
   color: #535353;
+  text-align: start;
 `;
 
 const Input = styled.input`
   outline-style: none;
   border: none;
   font-size: 20px;
-  width: 70%;
+  margin-left: 20px;
+  max-width: 400px;
   color: #535353;
+  background: none;
 `;
 const ShortInput = ({ width, height, text }) => {
   return (
