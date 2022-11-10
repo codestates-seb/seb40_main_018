@@ -20,6 +20,12 @@ public enum ExceptionCode {
     // 태그
     TAG_NOT_FOUND(404, "태그를 찾을 수 없습니다"),
 
+    // 체크리스트
+    CHECK_LIST_NOT_FOUND(404, "체크 리스트를 찾을 수 없습니다."),
+
+    // 버킷리스트
+    BUCKET_LIST_NOT_FOUND(404, "버킷 리스트를 찾을 수 없습니다."),
+
     ACCESS_FORBIDDEN(403, "접근 권한이 없습니다.");
 
     @Getter
