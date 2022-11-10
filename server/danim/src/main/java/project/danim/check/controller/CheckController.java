@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project.danim.check.dto.CheckDeleteDto;
 import project.danim.check.dto.CheckPatchDto;
 import project.danim.check.dto.CheckPostDto;
 import project.danim.check.dto.CheckResponseDto;
@@ -60,9 +61,12 @@ public class CheckController {
 
     // 체크리스트 삭제
     @DeleteMapping("/{check-id}")
-    public String deleteCheck(@Positive @PathVariable("check-id") long checkId) {
-        return "Delete complete";
-    }
+    public ResponseEntity deleteCheck(@Positive @PathVariable("check-id") Long checkId) {
 
+        checkService.deleteCheck(checkId);
+
+        return new ResponseEntity<>(new CheckDeleteDto(checkId), HttpStatus.OK);
+
+    }
 
 }

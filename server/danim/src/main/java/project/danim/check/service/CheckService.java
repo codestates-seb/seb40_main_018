@@ -68,6 +68,13 @@ public class CheckService {
     }
 
     // 체크리스트 삭제
+    public void deleteCheck(Long checkId) {
+
+        Optional<Check> findCheck = checkRepository.findByCheckId(checkId);
+
+        checkRepository.deleteById(checkId);
+
+    }
 
 
 }
