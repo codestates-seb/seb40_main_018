@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import project.danim.check.domain.Check;
+import project.danim.check.dto.CheckPatchDto;
 import project.danim.check.dto.CheckPostDto;
 import project.danim.check.dto.CheckResponseDto;
 import project.danim.check.repository.CheckRepository;
@@ -26,16 +27,16 @@ public class CheckService {
     // 1개 조회
     public CheckResponseDto findCheck(Long checkId) {
 
-        Optional<Check> optionalCheck =  checkRepository.findByCheckId(checkId);
+        Optional<Check> optionalCheck = checkRepository.findByCheckId(checkId);
         Check findCheck = optionalCheck.orElseThrow(() -> new BusinessLogicException(ExceptionCode.CHECK_LIST_NOT_FOUND));
 
         return CheckResponseDto.of(findCheck);
 
     }
-    
+
     // 체크리스트 생성
     public CheckResponseDto createCheck(@Valid @RequestBody CheckPostDto request) {
-        
+
         // TODO 회원 확인 필요
 
         Check check = Check.builder()
@@ -48,11 +49,25 @@ public class CheckService {
         return CheckResponseDto.of(createdCheck);
 
     }
-    
+
     // 체크리스트 수정
-    
+    public CheckResponseDto updateCheck(@Valid @RequestBody CheckPatchDto request, Long checkId) {
+
+        Optional<Check> optionalCheck = checkRepository.findByCheckId(checkId);
+        Check findCheck = optionalCheck.orElseThrow(() -> new BusinessLogicException(ExceptionCode.CHECK_LIST_NOT_FOUND));
+
+        Optional.ofNullable(request.getCheckContent())
+                .ifPresent(checkContent -> findCheck.setCheckContent(checkContent));
+        Optional.ofNullable(request.getIsCheck())
+                .ifPresent(isCheck -> findCheck.setIsCheck(isCheck));
+
+        Check updatedCheck = checkRepository.save(findCheck);
+
+        return CheckResponseDto.of(updatedCheck);
+
+    }
+
     // 체크리스트 삭제
 
-    
 
 }
