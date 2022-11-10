@@ -22,7 +22,7 @@ public class CheckController {
 
     // 1개 조회
     @GetMapping
-    public ResponseEntity<> getCheck(Long checkId) {
+    public ResponseEntity<SingleResponseDto> getCheck(Long checkId) {
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(checkService.findCheck(checkId)), HttpStatus.OK);
