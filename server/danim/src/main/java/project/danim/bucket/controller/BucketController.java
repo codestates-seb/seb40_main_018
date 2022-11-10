@@ -6,7 +6,7 @@ import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/bucket-list")
-public class BucketListController {
+public class BucketController {
     @GetMapping
     public String getBucketList() {
         return "bucket your list!";
