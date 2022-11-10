@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.danim.check.domain.Check;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -18,8 +20,10 @@ public class CheckResponseDto {
 
     private Boolean isCheck;
 
+    private LocalDateTime createdAt;
+
     public static CheckResponseDto of(Check check) {
-        return new CheckResponseDto(check.getCheckId(), check.getCheckContent(), check.getIsCheck());
+        return new CheckResponseDto(check.getCheckId(), check.getCheckContent(), check.getIsCheck(), check.getCreatedAt());
     }
 
 }
