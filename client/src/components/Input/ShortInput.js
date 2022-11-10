@@ -22,7 +22,7 @@ const Input = styled.input`
   outline-style: none;
   border: none;
   font-size: 20px;
-  width: 80%;
+  width: 70%;
   color: #535353;
 `;
 const ShortInput = ({ width, height, text }) => {
