@@ -6,7 +6,7 @@ import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/check-list")
-public class ChecklistController {
+public class CheckController {
     @GetMapping
     public String getChecklist() {
         return "Check your list!";
