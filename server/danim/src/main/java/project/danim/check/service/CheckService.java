@@ -10,8 +10,10 @@ import project.danim.check.dto.CheckResponseDto;
 import project.danim.check.repository.CheckRepository;
 import project.danim.exeption.BusinessLogicException;
 import project.danim.exeption.ExceptionCode;
+import project.danim.response.MultiResponseDto;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,6 +34,11 @@ public class CheckService {
 
         return CheckResponseDto.of(findCheck);
 
+    }
+
+    // 전체 조회
+    public List<Check> findChecks() {
+        return checkRepository.findAll();
     }
 
     // 체크리스트 생성
@@ -75,6 +82,5 @@ public class CheckService {
         checkRepository.deleteById(checkId);
 
     }
-
 
 }

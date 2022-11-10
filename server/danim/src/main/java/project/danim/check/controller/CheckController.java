@@ -4,15 +4,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project.danim.check.domain.Check;
 import project.danim.check.dto.CheckDeleteDto;
 import project.danim.check.dto.CheckPatchDto;
 import project.danim.check.dto.CheckPostDto;
 import project.danim.check.dto.CheckResponseDto;
 import project.danim.check.service.CheckService;
+import project.danim.response.MultiResponseDto;
 import project.danim.response.SingleResponseDto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @RestController
 @Validated
@@ -33,6 +36,15 @@ public class CheckController {
         return new ResponseEntity<>(
                 new SingleResponseDto<>(checkService.findCheck(checkId)), HttpStatus.OK);
 
+    }
+
+    // 전체 조회
+    @GetMapping
+    public List<Check> getChecks() {
+
+        List<Check> checkList = checkService.findChecks();
+
+        return checkList;
     }
 
     // 체크리스트 생성
