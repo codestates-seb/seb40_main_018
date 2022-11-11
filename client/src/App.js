@@ -4,7 +4,7 @@ import Detail from "./pages/Detail";
 import Diary from "./pages/Diary";
 import DiaryEdit from "./pages/DiaryEdit";
 import Login from "./pages/Login";
-import Main from "./pages/Main";
+import MainPage from "./pages/MainPage";
 import MyList from "./pages/MyList";
 import MyPage from "./pages/MyPage";
 import SignUp from "./pages/SignUp";
@@ -17,7 +17,7 @@ function App() {
       <GlobalStyles />
       <Router>
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/diary" element={<Diary />} />
           <Route path="/diaryedit/:id" element={<DiaryEdit />} />
