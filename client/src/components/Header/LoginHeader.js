@@ -22,7 +22,7 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 63px;
-  padding: 0px 32px 0px 0px;
+  padding: 16px 32px 0px 0px;
   text-align: center;
   background-color: #ffffff;
 `;
@@ -31,7 +31,7 @@ export const Logo2 = styled(Logo)`
   width: 120px;
   height: 120px;
   margin-left: 35px;
-  margin-top: -34px;
+  margin-top: -48px;
   /* background 색상 제거해도 남아있는 background-color */
   background-color: transparent !important;
 `;

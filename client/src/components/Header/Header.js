@@ -1,24 +1,26 @@
 import { Link } from "react-router-dom";
-import { Box, HeaderContainer } from "./LoginHeader";
+import { Box, HeaderContainer, Logo2 } from "./LoginHeader";
 import styled from "styled-components";
-import { ReactComponent as Logo } from "../../images/DanimLogo.svg";
 
 export const BtnArea = styled.div`
   display: flex;
   text-align: center;
   padding-right: 12px;
   border: 1px solid blue;
+  > a {
+    > button {
+      border: none;
+    }
+  }
 `;
 
 export const AddStyle = styled.div`
   margin-left: 5px;
-`;
-
-export const Logo2 = styled(Logo)`
-  width: 120px;
-  height: 120px;
-  margin-left: -15px;
-  margin-top: -45px;
+  > a {
+    > button {
+      border: none;
+    }
+  }
 `;
 
 export const Header = () => {
