@@ -1,1 +1,5 @@
 /* index.css2 */
+@font-face {
+  font-family: "shinbttf";
+  src: url(../src/style/font/SSShinb7Regular.ttf);
+}
