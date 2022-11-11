@@ -15,7 +15,6 @@ export const Box = styled.div`
   z-index: 99;
   display: flex;
   flex-direction: column;
-  background: white;
 `;
 
 export const HeaderContainer = styled.div`
@@ -23,15 +22,18 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 63px;
-  padding: 16px 32px 0px 35px;
+  padding: 0px 32px 0px 0px;
   text-align: center;
+  background-color: #ffffff;
 `;
 
 export const Logo2 = styled(Logo)`
   width: 120px;
   height: 120px;
-  margin-left: -15px;
-  margin-top: -45px;
+  margin-left: 35px;
+  margin-top: -34px;
+  /* background 색상 제거해도 남아있는 background-color */
+  background-color: transparent !important;
 `;
 
 export const Modal = styled.div`
@@ -39,6 +41,7 @@ export const Modal = styled.div`
   max-width: 204px;
   position: relative;
   text-align: right;
+  background-color: transparent;
   > .modal-inside {
     width: 100%;
     background-color: white;

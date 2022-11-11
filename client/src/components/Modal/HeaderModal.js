@@ -7,6 +7,7 @@ export const Container = styled.div`
   width: 100%;
   padding: 16px 62px;
   border-bottom: 1px solid #dcdcdc;
+  background-color: rgba(255, 255, 255, 0.05);
   :last-child {
     border: none;
   }
@@ -30,12 +31,14 @@ export const Inside = styled.div`
       margin-left: -5px;
       text-decoration: none;
       color: #535353;
+      background-color: #ffffff;
     }
   }
 `;
 
 export const ModalContainer = styled.div`
   text-align: center;
+  background-color: #ffffff;
 `;
 
 export const ModalBackdrop = styled.div`
