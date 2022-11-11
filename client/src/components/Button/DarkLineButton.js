@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 const DarkLineButtonStyle = styled.button`
-  height: ${(props) => (props.height ? props.height : "auto")};
-  width: ${(props) => (props.width ? props.width : "auto")};
+  height: 30px;
+  width: 74px;
   color: hsl(180, 32%, 54%);
   background-color: hsl(0, 0%, 100%);
   border: 1px solid hsl(180, 32%, 54%);
   border-radius: 35px;
-  font-size: 16px;
+  font-size: 12px;
   &:hover {
     background-color: hsl(180, 12%, 96%);
   }
@@ -16,12 +16,8 @@ const DarkLineButtonStyle = styled.button`
   }
 `;
 
-const DarkLineButton = ({ text, height, width, handleSubmit }) => {
-  return (
-    <DarkLineButtonStyle width={width} height={height} onClick={handleSubmit}>
-      {text}
-    </DarkLineButtonStyle>
-  );
+const DarkLineButton = ({ text, handleSubmit }) => {
+  return <DarkLineButtonStyle onClick={handleSubmit}>{text}</DarkLineButtonStyle>;
 };
 
 export default DarkLineButton;

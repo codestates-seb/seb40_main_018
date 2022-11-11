@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 const DarkMintButtonStyle = styled.button`
-  height: ${(props) => (props.height ? props.height : "auto")};
-  width: ${(props) => (props.width ? props.width : "auto")};
+  height: 30px;
+  width: 74px;
   color: hsl(0, 0%, 100%);
   background-color: hsl(180, 32%, 54%);
   border: none;
   border-radius: 35px;
-  font-size: 16px;
+  font-size: 12px;
   &:hover {
     background-color: hsl(180, 25%, 35%);
   }
@@ -16,12 +16,8 @@ const DarkMintButtonStyle = styled.button`
   }
 `;
 
-const DarkMintButton = ({ text, width, height, handleSubmit }) => {
-  return (
-    <DarkMintButtonStyle width={width} height={height} onClick={handleSubmit}>
-      {text}
-    </DarkMintButtonStyle>
-  );
+const DarkMintButton = ({ text, handleSubmit }) => {
+  return <DarkMintButtonStyle onClick={handleSubmit}>{text}</DarkMintButtonStyle>;
 };
 
 export default DarkMintButton;
