@@ -9,12 +9,6 @@ const MintCardStyle = styled.button`
   border-radius: 35px;
   box-shadow: 0px 0px 4px 2px #63aeae;
   font-size: 14px;
-  /* &:hover {
-    background-color: hsl(180, 66%, 37%);
-  }
-  &:active {
-    background-color: hsl(180, 66%, 33%);
-  } */
 `;
 
 const MintCard = ({ text, height, width, handleSubmit }) => {
