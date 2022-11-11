@@ -11,9 +11,9 @@ const MintCardStyle = styled.button`
   font-size: 14px;
 `;
 
-const MintCard = ({ text, height, width, handleSubmit }) => {
+const MintCard = ({ text, height, width }) => {
   return (
-    <MintCardStyle width={width} height={height} onClick={handleSubmit}>
+    <MintCardStyle width={width} height={height}>
       {text}
     </MintCardStyle>
   );
