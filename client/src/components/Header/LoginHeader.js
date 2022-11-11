@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-// import user from "../../images/user.png";
 import { FaUserCircle } from "react-icons/fa";
-import logo from "../../images/DanimLogo.PNG";
 import { useEffect, useRef } from "react";
 import { HeaderModal } from "../Modal/HeaderModal";
+import { ReactComponent as Logo } from "../../images/DanimLogo.svg";
 
 export const Box = styled.div`
   width: 100%;
@@ -26,13 +25,13 @@ export const HeaderContainer = styled.div`
   height: 63px;
   padding: 16px 32px 0px 35px;
   text-align: center;
-  > a {
-    > .logo {
-      width: 102px;
-    }
-    > .user-icon {
-    }
-  }
+`;
+
+export const Logo2 = styled(Logo)`
+  width: 120px;
+  height: 120px;
+  margin-left: -15px;
+  margin-top: -45px;
 `;
 
 export const Modal = styled.div`
@@ -73,7 +72,7 @@ export const LoginHeader = () => {
     <Box>
       <HeaderContainer>
         <Link to="/">
-          <img className="logo" alt="logo" src={logo} />
+          <Logo2 />
         </Link>
         <Modal ref={insideClickRef}>
           <FaUserCircle size="32" color="#40D8D8" />
