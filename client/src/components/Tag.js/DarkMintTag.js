@@ -7,7 +7,6 @@ const DarkMintTagStyle = styled.button`
   float: left;
   color: hsl(0, 0%, 100%);
   background-color: hsl(180, 32%, 64%);
-  border: none;
   border-radius: 35px;
   font-size: 12px;
   &:hover {
