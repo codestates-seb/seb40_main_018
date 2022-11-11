@@ -1,16 +1,24 @@
 import { Link } from "react-router-dom";
-import logo from "../../images/DanimLogo.PNG";
 import { Box, HeaderContainer } from "./LoginHeader";
 import styled from "styled-components";
+import { ReactComponent as Logo } from "../../images/DanimLogo.svg";
 
 export const BtnArea = styled.div`
   display: flex;
   text-align: center;
   padding-right: 12px;
+  border: 1px solid blue;
 `;
 
-const AddStyle = styled.div`
+export const AddStyle = styled.div`
   margin-left: 5px;
+`;
+
+export const Logo2 = styled(Logo)`
+  width: 120px;
+  height: 120px;
+  margin-left: -15px;
+  margin-top: -45px;
 `;
 
 export const Header = () => {
@@ -18,7 +26,7 @@ export const Header = () => {
     <Box>
       <HeaderContainer>
         <Link to="/">
-          <img className="logo" alt="logo" src={logo} />
+          <Logo2 />
         </Link>
         <BtnArea>
           <Link to="/login">

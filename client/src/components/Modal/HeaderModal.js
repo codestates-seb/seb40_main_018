@@ -7,6 +7,7 @@ export const Container = styled.div`
   width: 100%;
   padding: 16px 62px;
   border-bottom: 1px solid #dcdcdc;
+  background-color: rgba(255, 255, 255, 0.05);
   :last-child {
     border: none;
   }
@@ -30,12 +31,14 @@ export const Inside = styled.div`
       margin-left: -5px;
       text-decoration: none;
       color: #535353;
+      background-color: #ffffff;
     }
   }
 `;
 
 export const ModalContainer = styled.div`
   text-align: center;
+  background-color: #ffffff;
 `;
 
 export const ModalBackdrop = styled.div`
@@ -65,17 +68,22 @@ export const ModalView = styled.div`
   background-color: #ffffff;
   width: 390px;
   height: 154px;
+  @media screen and (max-width: 640px) {
+    width: 330px;
+    height: 144px;
+  }
   > .close-btn {
-    border: 1px solid red;
-    /* border: none; */
     cursor: pointer;
-    background-color: #ffffff;
-    margin: 60px 0px 0px 320px;
+    float: right;
+    margin: 20px 20px 0 0;
   }
   > div.desc {
-    margin: 12px 0px 10px 0px;
+    margin: 40px 0px 10px 45px;
     color: #535353;
     font-size: 20px;
+    @media screen and (max-width: 640px) {
+      font-size: 18px;
+    }
   }
 `;
 
