@@ -4,6 +4,7 @@ import { ReactComponent as Logo } from "../images/DanimLogo.svg";
 
 export const Container = styled.div`
   width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,9 +16,10 @@ export const SignupContainer = styled.div`
 `;
 
 export const Intro = styled.div`
-  /* border: 1px solid yellow; */
-  margin-top: 174px;
+  /* margin-top: 174px; */
+  margin-bottom: 40.17px;
   text-align: center;
+
   div {
     font-size: 16px;
     color: #40d8d8;
