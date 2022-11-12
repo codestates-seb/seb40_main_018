@@ -4,12 +4,13 @@
 // import MintCard from "../components/Card/MintCard";
 import { SignUp } from "./SignUp";
 
+// import { Login } from "./Login";
+
 export default function MainPage() {
   return (
     <>
       <SignUp />
-      {/* <MintButton /> */}
-      {/* <MintCard /> */}
+      {/* <Login /> */}
     </>
   );
 }

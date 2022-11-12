@@ -12,18 +12,17 @@ export const Container = styled.div`
 `;
 
 export const SignupContainer = styled.div`
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 `;
 
 export const Intro = styled.div`
-  /* margin-top: 174px; */
   margin-bottom: 40.17px;
   text-align: center;
 
   div {
     font-size: 16px;
     color: #40d8d8;
-    margin-top: -66px;
+    margin-top: -60px;
   }
 `;
 
