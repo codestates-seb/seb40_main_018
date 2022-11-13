@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { AiOutlineClose } from "react-icons/ai";
+import { IoIosClose } from "react-icons/io";
+import MintLineButton from "../Button/MintLineButton";
+import MintButton from "../Button/MintButton";
 
 export const Container = styled.div`
   width: 100%;
   padding: 16px 62px;
   border-bottom: 1px solid #dcdcdc;
   background-color: rgba(255, 255, 255, 0.05);
+
   :last-child {
     border: none;
   }
@@ -28,7 +31,7 @@ export const Inside = styled.div`
     > a {
       display: inline-block;
       width: 90px;
-      margin-left: -5px;
+      margin-left: -15px;
       text-decoration: none;
       color: #535353;
       background-color: #ffffff;
@@ -37,8 +40,8 @@ export const Inside = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  text-align: center;
-  background-color: #ffffff;
+  /* text-align: center;
+  background-color: #ffffff; */
 `;
 
 export const ModalBackdrop = styled.div`
@@ -54,9 +57,11 @@ export const ModalBackdrop = styled.div`
 `;
 
 export const ModalBtn = styled.button`
+  width: 100%;
+  line-height: 1;
+  white-space: nowrap;
   text-decoration: none;
   border: none;
-  padding-top: 5px;
   cursor: pointer;
   font-size: 14px;
   background-color: #ffffff;
@@ -76,11 +81,16 @@ export const ModalView = styled.div`
     cursor: pointer;
     float: right;
     margin: 20px 20px 0 0;
+    background-color: transparent;
+    > .close {
+      background-color: transparent;
+    }
   }
   > div.desc {
     margin: 40px 0px 10px 45px;
     color: #535353;
     font-size: 20px;
+    background-color: transparent;
     @media screen and (max-width: 640px) {
       font-size: 18px;
     }
@@ -88,17 +98,11 @@ export const ModalView = styled.div`
 `;
 
 export const BottomButton = styled.button`
-  border: 1px solid blue;
-  width: 130px;
+  border: none;
   justify-content: space-between;
-  > .yes {
-    width: 54.3px;
-    height: 29.13px;
-    border: 1px solid blue;
-  }
   > .no {
-    width: 54.3px;
-    height: 29.13px;
+    margin-left: 14px;
+    border: none;
   }
 `;
 
@@ -113,40 +117,35 @@ export const HeaderModal = () => {
       <Container>
         <Inside>
           <div className="word-break">
+            <Link to="/">메인페이지</Link>
+          </div>
+        </Inside>
+      </Container>
+      <Container>
+        <Inside>
+          <div className="word-break">
             <Link to="/mypage">마이페이지</Link>
           </div>
         </Inside>
       </Container>
       <Container>
         <Inside>
-          <div className="word-break">
-            <Link to="/diaryedit/:id">일기 작성</Link>
-          </div>
-          <div className="word-break">
-            <Link to="/mylist">마이 리스트</Link>
-          </div>
-        </Inside>
-      </Container>
-      <Container>
-        <Inside>
-          <div className="word-break">
-            <Link to="/useredit">회원정보 수정</Link>
-          </div>
           <ModalContainer>
             <ModalBtn onClick={openModal}>로그아웃</ModalBtn>
             {isOpen === true ? (
               <ModalBackdrop onClick={openModal}>
                 <ModalView onClick={(e) => e.stopPropagation()}>
                   <span className="close-btn">
-                    <AiOutlineClose onClick={openModal}></AiOutlineClose>
+                    <IoIosClose className="close" size={30} onClick={openModal}></IoIosClose>
                   </span>
                   <div className="desc">로그아웃 하시겠습니까?</div>
                   <BottomButton>
+                    {/* UserInfo.js / onClick={logoutHandler} */}
                     <Link to="/" className="yes">
-                      네
+                      <MintLineButton text="네" />
                     </Link>
                     <button onClick={openModal} className="no">
-                      아니오
+                      <MintButton text="아니오" width="66px" />
                     </button>
                   </BottomButton>
                 </ModalView>
