@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-// import user from "../../images/user.png";
 import { FaUserCircle } from "react-icons/fa";
-import logo from "../../images/DanimLogo.PNG";
 import { useEffect, useRef } from "react";
 import { HeaderModal } from "../Modal/HeaderModal";
+import { ReactComponent as Logo } from "../../images/DanimLogo.svg";
 
 export const Box = styled.div`
   width: 100%;
@@ -16,7 +15,6 @@ export const Box = styled.div`
   z-index: 99;
   display: flex;
   flex-direction: column;
-  background: white;
 `;
 
 export const HeaderContainer = styled.div`
@@ -24,15 +22,18 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 63px;
-  padding: 16px 32px 0px 35px;
+  padding: 16px 32px 0px 0px;
   text-align: center;
-  > a {
-    > .logo {
-      width: 102px;
-    }
-    > .user-icon {
-    }
-  }
+  background-color: #ffffff;
+`;
+
+export const Logo2 = styled(Logo)`
+  width: 120px;
+  height: 120px;
+  margin-left: 35px;
+  margin-top: -48px;
+  /* background 색상 제거해도 남아있는 background-color */
+  background-color: transparent !important;
 `;
 
 export const Modal = styled.div`
@@ -40,6 +41,7 @@ export const Modal = styled.div`
   max-width: 204px;
   position: relative;
   text-align: right;
+  background-color: transparent;
   > .modal-inside {
     width: 100%;
     background-color: white;
@@ -73,7 +75,7 @@ export const LoginHeader = () => {
     <Box>
       <HeaderContainer>
         <Link to="/">
-          <img className="logo" alt="logo" src={logo} />
+          <Logo2 />
         </Link>
         <Modal ref={insideClickRef}>
           <FaUserCircle size="32" color="#40D8D8" />

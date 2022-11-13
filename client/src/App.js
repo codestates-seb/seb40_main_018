@@ -3,11 +3,11 @@ import "./App.css";
 import Detail from "./pages/Detail";
 import Diary from "./pages/Diary";
 import DiaryEdit from "./pages/DiaryEdit";
-import Login from "./pages/Login";
+import { Login } from "./pages/Login";
 import MainPage from "./pages/MainPage";
 import MyList from "./pages/MyList";
 import MyPage from "./pages/MyPage";
-import SignUp from "./pages/SignUp";
+import { SignUp } from "./pages/SignUp";
 import UserEdit from "./pages/UserEdit";
 import { GlobalStyles } from "./style/GlobalStyle";
 
