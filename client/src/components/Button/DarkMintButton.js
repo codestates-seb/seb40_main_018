@@ -8,6 +8,7 @@ const DarkMintButtonStyle = styled.button`
   border: none;
   border-radius: 35px;
   font-size: 12px;
+  margin-right: 10.12px;
   &:hover {
     background-color: hsl(180, 25%, 35%);
   }

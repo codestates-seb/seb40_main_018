@@ -17,5 +17,6 @@ const MintCard = ({ height, width }) => {
 export default MintCard;
 
 {
-  /* <BlueButton text="Ask Question" width="300px "height="200px" /> */
+  // <MintButton width="74px" text="가입하기">
+  // </MintButton>;
 }
