@@ -40,8 +40,7 @@ export const Inside = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  /* text-align: center;
-  background-color: #ffffff; */
+  background-color: #ffffff;
 `;
 
 export const ModalBackdrop = styled.div`

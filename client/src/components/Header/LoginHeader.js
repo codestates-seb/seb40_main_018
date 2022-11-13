@@ -32,6 +32,7 @@ export const HeaderContainer = styled.div`
   .user-image {
     margin-left: 18px;
     background-color: transparent;
+    cursor: pointer;
     /* border: 1px solid blue; */
     > .user {
       background-color: transparent;
