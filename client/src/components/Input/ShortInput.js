@@ -6,7 +6,7 @@ const InputContainer = styled.div`
   padding: 15px 20px;
   border-radius: 35px;
   box-shadow: 0 0 5px 2px #63aeae;
-  margin: 15px 0;
+  margin: 18px 0;
   display: flex;
   align-content: center;
   align-items: center;
@@ -28,11 +28,17 @@ const Input = styled.input`
   color: #535353;
   text-align: right;
 `;
-const ShortInput = ({ width, height, text }) => {
+
+const ErrorMessage = styled.p`
+  color: #de4f54 !important;
+`;
+
+const ShortInput = ({ width, height, text, type, value, handleValue, errorMsg }) => {
   return (
     <InputContainer width={width} height={height}>
       <InputTitle>{text}</InputTitle>
-      <Input type="text" />
+      <Input type={type} value={value} handleValue={handleValue} onChange={({ target }) => console.log(target.value)} />
+      <ErrorMessage>{errorMsg}</ErrorMessage>
     </InputContainer>
   );
 };
