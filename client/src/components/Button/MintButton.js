@@ -8,6 +8,7 @@ const MintButtonStyle = styled.button`
   border: none;
   border-radius: 35px;
   font-size: 12px;
+  padding: 0px 26px;
   &:hover {
     background-color: hsl(180, 66%, 37%);
   }
