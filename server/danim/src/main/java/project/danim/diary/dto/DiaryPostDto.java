@@ -1,13 +1,18 @@
 package project.danim.diary.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+@Getter
+//@Setter
 public class DiaryPostDto {
 
     @Positive
-    @NotNull
+   // @NotNull
     private Long memberId;
 
     @NotBlank(message = "Post Title")
@@ -20,7 +25,7 @@ public class DiaryPostDto {
       weather 데이터를 어떻게 가져올 것인가?
      */
     @NotBlank
-    private  int weather;
+    private int weather;
 
 
     @NotBlank

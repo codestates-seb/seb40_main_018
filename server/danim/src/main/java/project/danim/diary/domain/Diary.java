@@ -40,14 +40,40 @@ public class Diary extends BaseTime {
         this.weather = weather;
         this.cost = cost;
     }
+
+
     /*
+
+    Diary : Nenber = > 다 대 1  관계
+     */
+/*
+    @ManyToOne   // (1)
+    @JoinColumn(name = "MEMBER_ID")  // (2)
+    private Member member;
+*/
+
+    /*
+    Diary : random  = > 다 대 1 관계
+     */
+/*
+    @ManyToOne   // (1)
+    @JoinColumn(name = "RANDOM_ID")  // (2)
+    private Random random;
+
+  */
+
+    /*
+    Diary : TAG  = > 1 대 다 관계
+     */
+
+   /*
     @OneToMany(mappedBy = "diary")
     private List<Tag> tags = new ArrayList<>();
 */
 
     /*
-    @OneToMany(mappedBy = "diary")
-    private List<Member> members = new ArrayList<>();
+
+     1대 다 관계
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replys = new ArrayList<>();
