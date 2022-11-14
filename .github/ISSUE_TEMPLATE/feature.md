@@ -3,7 +3,7 @@ name: feature
 about: add feature
 title: "[FE BE]"
 labels: feature
-assignees: 2d3k
+assignees: ''
 
 ---
 
