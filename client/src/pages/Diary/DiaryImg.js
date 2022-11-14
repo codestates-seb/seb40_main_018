@@ -8,7 +8,6 @@ const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "700px")};
   height: ${(props) => (props.height ? props.height : "480px")};
   padding: 0 18px;
-  /* border-radius: 35px; */
   box-shadow: 0 0 5px 2px #63aeae;
   display: flex;
   flex-direction: column;
@@ -17,15 +16,29 @@ const InputContainer = styled.div`
   justify-content: center;
   margin-bottom: 40px;
 `;
-
+const ImgSliderBox = styled.div``;
 const UlStyle = styled.ul`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   width: 700px;
   height: auto;
-  overflow: unset;
   margin-bottom: 40px;
-  flex-wrap: wrap;
+`;
+
+const ListStyled = styled.li`
+  overflow: hidden;
+  position: relative;
+`;
+
+const ImgItem = styled.div`
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  padding: 10px;
+  text-align: right;
+  box-sizing: border-box;
 `;
 
 const PreViewImg = styled.img`
@@ -35,6 +48,15 @@ const PreViewImg = styled.img`
 `;
 
 const UploadBtn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px dashed #cacaca;
+  border-radius: 8px;
+  background-color: #fcfcff;
+  color: #cacaca;
+  font-size: 64px;
+  cursor: pointer;
   width: 120px;
   height: 120px;
   margin: 10px;
@@ -43,13 +65,17 @@ const fileTypes = ["JPG", "PNG", "GIF"];
 
 const DiaryImg = () => {
   const [imageList, setImageList] = useState([]);
+  // if (imageList.length > 10) {
+  //   alert("max10");
+  // }
+  console.log(imageList);
   const [isDrag, setIsDrag] = useState(false);
-
   const imageRegistHandler = (files) => {
     let tempImagelist = [...imageList];
     for (let i = 0; i < files.length; i++) {
       tempImagelist.push(files[i]);
     }
+
     setImageList(tempImagelist);
   };
 
@@ -62,7 +88,7 @@ const DiaryImg = () => {
         {imageList.length === 0 ? (
           <div>이미지를 추가해 주세요.</div>
         ) : (
-          <div>
+          <ImgSliderBox>
             <SimpleImageSlider
               style={{
                 backgroundSize: "contain",
@@ -77,21 +103,21 @@ const DiaryImg = () => {
               showNavs={true}
               autoPlay={true}
               loop={true}
-              bgColor="#E1DFE9"
+              // bgColor="#E1DFE9"
             />
-          </div>
+          </ImgSliderBox>
         )}
       </InputContainer>
       {/* <InputContainer2> */}
       <UlStyle>
         {imageList.map((image, index) => {
           return (
-            <li key={index}>
-              <div>
-                <MdClose onClick={() => imageDeleteHandler(index)} />
-              </div>
+            <ListStyled key={index}>
+              <ImgItem>
+                <MdClose className="delete-img" size="28" onClick={() => imageDeleteHandler(index)} />
+              </ImgItem>
               <PreViewImg alt="갤러리 이미지" src={URL.createObjectURL(image)} />
-            </li>
+            </ListStyled>
           );
         })}
 
