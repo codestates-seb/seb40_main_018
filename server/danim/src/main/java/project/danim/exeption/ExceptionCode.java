@@ -11,7 +11,7 @@ public enum ExceptionCode {
     NOT_LOGIN(403, "로그인이 되어있지 않습니다."),
 
     // 일기
-    ARTICLE_NOT_FOUND(404, "일기가 존재하지 않습니다."),
+    DIARY_NOT_FOUND(404, "일기가 존재하지 않습니다."),
 
     // 댓글
     COMMENT_EXIST(409, "존재하는 댓글입니다."),
