@@ -4,6 +4,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useRef } from "react";
 import { HeaderModal } from "../Modal/HeaderModal";
 import { ReactComponent as Logo } from "../../images/DanimLogo.svg";
+import MintLineButton from "../Button/MintLineButton";
 
 export const Box = styled.div`
   width: 100%;
@@ -22,9 +23,21 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 63px;
-  padding: 16px 32px 0px 0px;
+  padding: 16px 40px 0px 0px;
   text-align: center;
   background-color: #ffffff;
+  a {
+    background-color: transparent;
+  }
+  .user-image {
+    margin-left: 18px;
+    background-color: transparent;
+    cursor: pointer;
+    /* border: 1px solid blue; */
+    > .user {
+      background-color: transparent;
+    }
+  }
 `;
 
 export const Logo2 = styled(Logo)`
@@ -32,20 +45,28 @@ export const Logo2 = styled(Logo)`
   height: 120px;
   margin-left: 35px;
   margin-top: -48px;
-  /* background 색상 제거해도 남아있는 background-color */
   background-color: transparent !important;
+`;
+
+export const Block = styled.div`
+  display: flex;
+  background-color: transparent;
 `;
 
 export const Modal = styled.div`
   width: 100%;
-  max-width: 204px;
-  position: relative;
+  max-width: 180px;
   text-align: right;
   background-color: transparent;
+  position: fixed;
+  margin-top: 36px; // 수정
+  margin-left: 7px;
+
   > .modal-inside {
+    display: none;
     width: 100%;
     background-color: white;
-    box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.01), 0 3px 2px hsla(0, 0%, 0%, 0.13), 2px 2px 0px hsla(0, 0%, 0%, 0.13);
+    box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.01), 0 3px 2px hsla(0, 0%, 0%, 0.13), 2px 2px 8px hsla(0, 0%, 0%, 0.13);
     z-index: 2000;
     border-radius: 35px;
     white-space: normal;
@@ -59,8 +80,10 @@ export const LoginHeader = () => {
   const modalHandler = ({ target }) => {
     if (insideClickRef.current.contains(target)) {
       modalRef.current.style.display = "block";
-    } else {
+    } else if (!modalRef.current.contains(target)) {
       modalRef.current.style.display = "none";
+    } else {
+      modalRef.current.style.display = "block";
     }
   };
 
@@ -77,12 +100,22 @@ export const LoginHeader = () => {
         <Link to="/">
           <Logo2 />
         </Link>
-        <Modal ref={insideClickRef}>
-          <FaUserCircle size="32" color="#40D8D8" />
-          <div ref={modalRef} className="modal-inside">
-            <HeaderModal />
+        {/* Header.js / 로그인 ? 로그인 후 헤더 : 로그인 전 헤더 */}
+        <Block>
+          <Link to="/diaryedit/:id">
+            <MintLineButton text="일기 작성하기" width="138px" height="32px">
+              일기 작성하기
+            </MintLineButton>
+          </Link>
+          <div ref={insideClickRef} className="user-image">
+            <FaUserCircle className="user" size="32" color="#40D8D8" />
           </div>
-        </Modal>
+          <Modal>
+            <div ref={modalRef} className="modal-inside">
+              <HeaderModal />
+            </div>
+          </Modal>
+        </Block>
       </HeaderContainer>
     </Box>
   );
