@@ -11,9 +11,9 @@ import javax.validation.constraints.Positive;
 //@Setter
 public class DiaryPostDto {
 
-    @Positive
+  //  @Positive
    // @NotNull
-    private Long memberId;
+  //  private Long memberId;
 
     @NotBlank(message = "Post Title")
     private String title;
@@ -24,11 +24,11 @@ public class DiaryPostDto {
     /*
       weather 데이터를 어떻게 가져올 것인가?
      */
-    @NotBlank
-    private int weather;
+  //  @NotBlank
+  //  private int weather;
 
 
-    @NotBlank
+   // @NotBlank
     private int cost;
 
 }

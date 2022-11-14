@@ -23,11 +23,14 @@ public interface DiaryMapper {
     }
 
 
+    /*
+  MemberId 추가 필요!!
+ */
     default DiaryResponseDto diaryToDiaryResponseDto(Diary diary){
         DiaryResponseDto diaryResponseDto = new DiaryResponseDto();
 
-        diaryResponseDto.setDiaryId(diary.getDiaryId());
-        diaryResponseDto.setTitle(diary.getContent());
+      //  diaryResponseDto.setDiaryId(diary.getDiaryId());
+        diaryResponseDto.setTitle(diary.getTitle());
         diaryResponseDto.setContent(diary.getContent());
         diaryResponseDto.setCost(diary.getCost());
 
