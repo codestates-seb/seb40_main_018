@@ -22,6 +22,15 @@ const Section = styled.section`
 `;
 const Container = styled.div`
   width: 700px;
+  margin-bottom: 40px;
+`;
+const BtnArea = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  > button {
+    margin-left: 20px;
+  }
 `;
 
 const Diary = () => {
@@ -36,10 +45,10 @@ const Diary = () => {
           <DiaryPrice />
           <DiaryPlace />
           <DiaryHashtag />
-          <div className="buttonArea">
+          <BtnArea>
             <MintLineButton className="submit" text="등록"></MintLineButton>
             <MintButton className="cancel" text="취소"></MintButton>
-          </div>
+          </BtnArea>
         </Container>
       </Section>
     </>

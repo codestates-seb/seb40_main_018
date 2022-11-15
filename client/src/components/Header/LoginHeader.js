@@ -102,7 +102,7 @@ export const LoginHeader = () => {
         </Link>
         {/* Header.js / 로그인 ? 로그인 후 헤더 : 로그인 전 헤더 */}
         <Block>
-          <Link to="/diaryedit/:id">
+          <Link to="/diary">
             <MintLineButton text="일기 작성하기" width="138px" height="32px">
               일기 작성하기
             </MintLineButton>
