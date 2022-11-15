@@ -4,10 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import project.danim.audit.BaseTime;
 
 import javax.persistence.*;
-
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -27,18 +29,29 @@ public class Diary extends BaseTime {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(nullable = false)
-    private int weather;
+    /*
+    지역, 날씨 nullable = false로 바꿔야 합니다.
+     */
+    @Column(nullable = true)
+    private String weather;
 
     @Column(nullable = true)
+    private String area;
+    @Column(nullable = false)
     private int cost;
 
+    @CreatedDate
+    private LocalDateTime createdDate;
 
-    public Diary(long diaryId, String title, String content, int weather, int cost){
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
+
+    public Diary(long diaryId, String title, String content, String weather, String area, int cost){
         this.diaryId = diaryId;
         this.title = title;
         this.content = content;
         this.weather = weather;
+        this.area = area;
         this.cost = cost;
     }
 

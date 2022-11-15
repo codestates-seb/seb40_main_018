@@ -28,7 +28,8 @@ public class DiaryPostDto {
   //  private int weather;
 
 
-   // @NotBlank
+   // @NotBlank  ===> String만 받을 수 있음
+    @NotNull
     private int cost;
 
 }

@@ -14,6 +14,7 @@ import project.danim.diary.mapper.DiaryMapper;
 import project.danim.diary.service.DiaryService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Api(tags = {"Diary API"})
@@ -35,7 +36,7 @@ public class DiaryController {
 
     @ApiOperation(value = "Diary 등록", response = Diary.class)
     @PostMapping
-    public ResponseEntity createDiary(@Valid @RequestBody DiaryPostDto diaryPostDto) {
+    public ResponseEntity postDiary(@Valid @RequestBody DiaryPostDto diaryPostDto) {
         Diary postdiary = diaryService.createDiary(diaryMapper.diaryPostDtoToDiary(diaryPostDto));
 
         return new ResponseEntity<>(
@@ -44,9 +45,10 @@ public class DiaryController {
 
    @ApiOperation(value = "특정 Diary 조회", response = Diary.class)
     @GetMapping("/{diary-id}")
-    public ResponseEntity getDiary(@Positive @PathVariable("diary-id") long diaryId) {
+    public ResponseEntity getDiary(@Positive @PathVariable("diary-id") @NotNull long diaryId) {
+            Diary finddiary = diaryService.findDiary(diaryId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>((diaryMapper.diaryToDiaryResponseDtos(finddiary)),HttpStatus.OK);
     }
 
   @ApiOperation(value = "모든 Diary 조회", response = Diary.class)
@@ -62,9 +64,14 @@ public class DiaryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+    /*
+     다이어리 삭제 구현
+     */
    @ApiOperation(value = "Diary 삭제", response = Diary.class)
     @DeleteMapping("/{diary-id}")
     public ResponseEntity deleteDiary(@Positive @PathVariable("diary-id") long diaryId) {
+        diaryService.deleteDiary(diaryId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

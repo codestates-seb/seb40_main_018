@@ -32,8 +32,28 @@ public interface DiaryMapper {
       //  diaryResponseDto.setDiaryId(diary.getDiaryId());
         diaryResponseDto.setTitle(diary.getTitle());
         diaryResponseDto.setContent(diary.getContent());
+        diaryResponseDto.setWeather(diary.getWeather());
+        diaryResponseDto.setArea(diary.getArea());
         diaryResponseDto.setCost(diary.getCost());
+        diaryResponseDto.setCreatedDate(diary.getCreatedDate());
+        diaryResponseDto.setModifiedDate(diary.getModifiedDate());
+        //diaryResponseDto.setMemberId(diary.getMember().getMemberId());
 
+        return diaryResponseDto;
+    }
+
+      /*
+  MemberId 추가 필요!!
+ */
+   default DiaryResponseDto diaryToDiaryResponseDtos(Diary diary){
+
+        DiaryResponseDto diaryResponseDto = new DiaryResponseDto();
+        diaryResponseDto.setDiaryId(diary.getDiaryId());
+        diaryResponseDto.setTitle(diary.getTitle());
+        diaryResponseDto.setContent(diary.getContent());
+        diaryResponseDto.setCost(diary.getCost());
+        diaryResponseDto.setCreatedDate(diary.getCreatedDate());
+        diaryResponseDto.setModifiedDate(diary.getModifiedDate());
         //diaryResponseDto.setMemberId(diary.getMember().getMemberId());
 
         return diaryResponseDto;
