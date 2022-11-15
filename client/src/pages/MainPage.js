@@ -1,11 +1,8 @@
-// import { Header } from "../components/Header/Header";
-
-import { LoginHeader } from "../components/Header/LoginHeader";
+import MyList from "./MyList";
 export default function MainPage() {
   return (
     <>
-      <LoginHeader />
-      {/* <Header /> */}
+      <MyList />
     </>
   );
 }
