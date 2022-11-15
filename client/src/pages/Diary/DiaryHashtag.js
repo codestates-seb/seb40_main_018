@@ -1,4 +1,7 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { TagsInput } from "react-tag-input-component";
+import "./tag.css";
 
 const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "700px")};
@@ -13,7 +16,9 @@ const InputContainer = styled.div`
   margin-bottom: 40px;
 `;
 
-const HashTagArea = styled(InputContainer)``;
+const HashTagArea = styled(InputContainer)`
+  height: auto;
+`;
 
 const Tags = styled.div`
   margin-left: 10px;
@@ -23,19 +28,19 @@ const TitleText = styled.span`
   white-space: nowrap;
 `;
 
-const TagsInput = styled.input`
-  outline-style: none;
-  border: none;
-  width: 100%;
-  color: #535353;
-  background: none;
-`;
 const DiaryHashtag = () => {
+  const [selected, setSelected] = useState([]);
   return (
     <HashTagArea>
       <TitleText>해시태그 :</TitleText>
       <Tags>
-        <TagsInput />
+        <TagsInput
+          // style={{ border: "none", backgroundColor: "red" }}
+          value={selected}
+          onChange={setSelected}
+          name="HashTag"
+          placeHolder="태그를 입력해주세요."
+        />
       </Tags>
     </HashTagArea>
   );

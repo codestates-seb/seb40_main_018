@@ -1,0 +1,45 @@
+.rti--container {
+  border: none !important;
+  background-color: #fbfbfb !important;
+  box-shadow: none !important;
+  border-radius: 35px !important;
+}
+
+.rti--container :focus-visible,
+.rti--container :active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.rti--input {
+  background-color: #fbfbfb;
+}
+.rti--input :focus,
+.rti--input :focus-within,
+.rti--input :focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.rti--tag {
+  align-items: center;
+  background: #86c1c1;
+  border-radius: 35px;
+  display: inline-flex;
+  justify-content: center;
+  padding: 5px 10px;
+  font-size: 12px;
+  color: #ffffff;
+}
+.rti--tag button {
+  background: none;
+  border: 0;
+  font-size: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: inherit;
+  color: #ffffff;
+  padding: 0 !important;
+  margin-left: 5px;
+}
