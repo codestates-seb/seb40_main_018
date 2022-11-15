@@ -45,6 +45,7 @@ const PreViewImg = styled.img`
   width: 120px;
   height: 120px;
   margin: 10px;
+  border-radius: 8px;
 `;
 
 const UploadBtn = styled.button`
