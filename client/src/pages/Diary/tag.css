@@ -3,6 +3,7 @@
   background-color: #fbfbfb !important;
   box-shadow: none !important;
   border-radius: 35px !important;
+  padding: 0;
 }
 
 .rti--container :focus-visible,

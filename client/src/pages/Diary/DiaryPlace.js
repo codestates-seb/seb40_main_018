@@ -37,6 +37,7 @@ const Select = styled.select`
   border: none;
   margin-right: 8px;
   font-size: 14px;
+  background-color: #fbfbfb;
 `;
 
 const DiaryPlace = () => {

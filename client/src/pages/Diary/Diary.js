@@ -1,5 +1,4 @@
 import styled from "styled-components";
-// import React from "react";
 import { LoginHeader } from "../../components/Header/LoginHeader";
 
 import MintLineButton from "../../components/Button/MintLineButton";

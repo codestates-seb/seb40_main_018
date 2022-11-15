@@ -18,6 +18,7 @@ const InputContainer = styled.div`
 
 const HashTagArea = styled(InputContainer)`
   height: auto;
+  padding: 10px 18px;
 `;
 
 const Tags = styled.div`
