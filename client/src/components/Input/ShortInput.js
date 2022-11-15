@@ -27,6 +27,7 @@ const Input = styled.input`
   width: 70%;
   color: #535353;
   text-align: right;
+  background-color: transparent;
 `;
 
 const ErrorMessage = styled.p`

@@ -115,6 +115,7 @@ export const SignupForm = () => {
           <Link to="/login">
             <DarkMintButton width="74px" text="로그인" />
           </Link>
+          {/* 가입 후 로그인 페이지로 이동 */}
           <DarkLineButton width="74px" text="가입하기" handleSubmit={handleSubmit} />
         </ButtonContainer>
       </Move>

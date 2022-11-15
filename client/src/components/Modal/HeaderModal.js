@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { IoIosClose } from "react-icons/io";
 import MintLineButton from "../Button/MintLineButton";
-import MintButton from "../Button/MintButton";
 
 export const Container = styled.div`
   width: 100%;
@@ -99,9 +98,27 @@ export const ModalView = styled.div`
 export const BottomButton = styled.button`
   border: none;
   justify-content: space-between;
+  background-color: transparent;
   > .no {
     margin-left: 14px;
     border: none;
+  }
+`;
+
+export const MintButton3 = styled.button`
+  height: ${(props) => (props.height ? props.height : "auto")};
+  width: ${(props) => (props.width ? props.width : "auto")};
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(180, 66%, 55%);
+  border: none;
+  border-radius: 35px;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    background-color: hsl(180, 66%, 37%);
+  }
+  &:active {
+    background-color: hsl(180, 66%, 33%);
   }
 `;
 
@@ -144,7 +161,9 @@ export const HeaderModal = () => {
                       <MintLineButton text="네" />
                     </Link>
                     <button onClick={openModal} className="no">
-                      <MintButton text="아니오" width="66px" />
+                      <MintButton3 width="66px" height="30px">
+                        아니오
+                      </MintButton3>
                     </button>
                   </BottomButton>
                 </ModalView>
