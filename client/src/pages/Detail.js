@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import DarkMintButton from "../components/Button/DarkMintButton";
 import { IoIosArrowDropdown } from "react-icons/io";
+import SimpleImageSlider from "react-simple-image-slider";
 
 const Section = styled.section`
   display: flex;
@@ -17,6 +18,7 @@ const DiaryContainer = styled.div`
   justify-content: center;
   align-content: center;
   width: 700px;
+  margin-top: 113px;
   border-bottom: 1px solid #86c1c1;
 `;
 const TitleArea = styled.div`
@@ -182,6 +184,15 @@ const CommentDeleteBtn = styled(DeleteBtn)`
 `;
 const Detail = () => {
   const tags = ["밤바다", "장범준", "회쏘"];
+  const images = [
+    { url: "images/1.jpg" },
+    { url: "images/2.jpg" },
+    { url: "images/3.jpg" },
+    { url: "images/4.jpg" },
+    { url: "images/5.jpg" },
+    { url: "images/6.jpg" },
+    { url: "images/7.jpg" },
+  ];
   return (
     <Section>
       <DiaryContainer>
@@ -201,7 +212,25 @@ const Detail = () => {
             <Weather>맑음</Weather>
           </DateArea>
         </TitleArea>
-        <IMGArea></IMGArea>
+        <IMGArea>
+          <SimpleImageSlider
+            style={{
+              backgroundSize: "contain",
+              backgroundRepeat: "none",
+            }}
+            width={"700px"}
+            height={"480px"}
+            // images={imageList.map((item) => {
+            //   return { url: URL.createObjectURL(item) };
+            // })}
+            images={images}
+            showBullets={true}
+            showNavs={true}
+            autoPlay={true}
+            loop={true}
+            // bgColor="#E1DFE9"
+          />
+        </IMGArea>
         <DiaryArea>
           <HeartAndNickname>
             <button>heart</button>
