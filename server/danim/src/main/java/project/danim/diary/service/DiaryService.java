@@ -2,12 +2,15 @@ package project.danim.diary.service;
 
 import org.springframework.stereotype.Service;
 import project.danim.diary.domain.Diary;
+import project.danim.diary.dto.DiaryResponseDto;
 import project.danim.diary.repository.DiaryRepository;
 import project.danim.exeption.BusinessLogicException;
 import project.danim.exeption.ExceptionCode;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DiaryService {
@@ -28,6 +31,9 @@ public class DiaryService {
         return findDiary;
     }
 
+    /*
+     예외 처리
+     */
     public Diary findDiary(long diaryId) {
         return findVerifiedDiary(diaryId);
     }
@@ -46,7 +52,9 @@ public class DiaryService {
 
      */
     public Diary updateDiary(Diary diary){
+
         Diary findDiary = findVerifiedDiary(diary.getDiaryId()); // 요청된 일기가 DB에 없으면 에러
+        //diaryRepository.findById(diaryId);
 
         Optional.ofNullable(diary.getTitle())
                 .ifPresent(diaryTitle -> findDiary.setTitle(diaryTitle));
@@ -57,10 +65,20 @@ public class DiaryService {
         Optional.ofNullable(diary.getCost())
                 .ifPresent(diaryCost -> findDiary.setCost(diaryCost));
 
-        Diary updatedDiarys = diaryRepository.save(findDiary);
+        findDiary.setModifiedDate(LocalDateTime.now());
 
-        return updatedDiarys;
+        Diary updatedDiaries = diaryRepository.save(findDiary);
+
+        return updatedDiaries;
     }
+
+//    default List<DiaryResponseDto> diaryToDiaryResponseDtos(List<Diary> diary){
+//
+//        List<DiaryResponseDto> diaryResponseDtos =diary.stream().map(diary -> answerToAnswerResponseDto(answer)).collect(Collectors.toList());
+//
+//
+//        return answerResponseDtos;
+//    };
 
     /*
     특정 다이어리 삭제

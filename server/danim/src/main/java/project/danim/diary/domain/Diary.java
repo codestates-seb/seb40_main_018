@@ -41,10 +41,10 @@ public class Diary extends BaseTime {
     private int cost;
 
     @CreatedDate
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 
     @LastModifiedDate
-    private LocalDateTime modifiedDate;
+    private LocalDateTime modifiedDate = LocalDateTime.now();
 
     public Diary(long diaryId, String title, String content, String weather, String area, int cost){
         this.diaryId = diaryId;
