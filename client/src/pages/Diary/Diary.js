@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { LoginHeader } from "../../components/Header/LoginHeader";
+import LoginHeader from "../../components/Header/LoginHeader";
 
 import MintLineButton from "../../components/Button/MintLineButton";
 import MintButton from "../../components/Button/MintButton";

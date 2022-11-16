@@ -26,17 +26,9 @@ export const HeaderContainer = styled.div`
   padding: 16px 40px 0px 0px;
   text-align: center;
   background-color: #ffffff;
-  a {
-    background-color: transparent;
-  }
   .user-image {
     margin-left: 18px;
-    background-color: transparent;
     cursor: pointer;
-    /* border: 1px solid blue; */
-    > .user {
-      background-color: transparent;
-    }
   }
 `;
 
@@ -45,19 +37,16 @@ export const Logo2 = styled(Logo)`
   height: 120px;
   margin-left: 35px;
   margin-top: -48px;
-  background-color: transparent !important;
 `;
 
 export const Block = styled.div`
   display: flex;
-  background-color: transparent;
 `;
 
 export const Modal = styled.div`
   width: 100%;
   max-width: 180px;
   text-align: right;
-  background-color: transparent;
   position: fixed;
   margin-top: 36px; // 수정
   margin-left: 7px;
@@ -73,7 +62,7 @@ export const Modal = styled.div`
   }
 `;
 
-export const LoginHeader = () => {
+function LoginHeader() {
   const modalRef = useRef();
   const insideClickRef = useRef();
 
@@ -119,4 +108,6 @@ export const LoginHeader = () => {
       </HeaderContainer>
     </Box>
   );
-};
+}
+
+export default LoginHeader;

@@ -79,16 +79,11 @@ export const ModalView = styled.div`
     cursor: pointer;
     float: right;
     margin: 20px 20px 0 0;
-    background-color: transparent;
-    > .close {
-      background-color: transparent;
-    }
   }
   > div.desc {
     margin: 40px 0px 10px 45px;
     color: #535353;
     font-size: 20px;
-    background-color: transparent;
     @media screen and (max-width: 640px) {
       font-size: 18px;
     }
@@ -102,6 +97,7 @@ export const BottomButton = styled.button`
   > .no {
     margin-left: 14px;
     border: none;
+    background-color: transparent;
   }
 `;
 

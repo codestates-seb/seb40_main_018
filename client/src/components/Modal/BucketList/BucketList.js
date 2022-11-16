@@ -14,12 +14,12 @@ export const Test = styled.div`
 `;
 
 export const Block2 = styled.div`
-  background-color: transparent;
   display: flex;
   > .complete-icon {
     border: none;
     background-color: transparent;
     margin-left: 3px;
+    cursor: pointer;
   }
   > .complete {
     text-decoration-style: solid;
@@ -36,7 +36,6 @@ export const Block2 = styled.div`
     font-size: 14px;
     padding-left: 10px;
     margin-right: 20px;
-    font-family: "Gowun Dodum", sans-serif;
     line-height: 3;
   }
 `;
@@ -47,7 +46,6 @@ export const ButtonContainer = styled.div`
   align-items: center;
   line-height: 1;
   white-space: nowrap;
-  background-color: transparent;
 `;
 
 export const MintLineButton2 = styled.button`
