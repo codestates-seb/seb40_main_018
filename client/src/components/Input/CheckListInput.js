@@ -35,10 +35,10 @@ export const Button = styled.button`
   }
 `;
 
-const CheckListInput = ({ width, height }) => {
+const CheckListInput = ({ width, height, placeholder }) => {
   return (
     <InputContainer width={width} height={height}>
-      <Input />
+      <Input placeholder={placeholder} />
       <Button>
         <AiOutlinePlusCircle className="add" color="5E5E5E" size="18" />
       </Button>
