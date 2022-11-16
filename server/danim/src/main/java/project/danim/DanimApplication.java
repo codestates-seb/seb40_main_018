@@ -8,7 +8,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 @EnableJpaAuditing
-@SpringBootApplication(exclude = UserDetailsServiceAutoConfiguration.class)
+@SpringBootApplication
 public class DanimApplication {
 
 	public static void main(String[] args) {
