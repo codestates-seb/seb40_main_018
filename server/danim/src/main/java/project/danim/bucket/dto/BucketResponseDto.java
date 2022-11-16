@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.danim.bucket.domain.Bucket;
-import project.danim.check.domain.Check;
-import project.danim.check.dto.CheckResponseDto;
 
 import java.time.LocalDateTime;
 
