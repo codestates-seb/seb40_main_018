@@ -1,6 +1,10 @@
 import styled from "styled-components";
+import { useState } from "react";
 import DarkMintButton from "../components/Button/DarkMintButton";
+import CheckListInput from "../components/Input/CheckListInput";
 import { IoIosArrowDropdown } from "react-icons/io";
+import { FiHeart } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 import SimpleImageSlider from "react-simple-image-slider";
 
 const Section = styled.section`
@@ -193,6 +197,12 @@ const Detail = () => {
     { url: "images/6.jpg" },
     { url: "images/7.jpg" },
   ];
+
+  const [like, setLike] = useState(false);
+
+  const onClickHandler = () => {
+    setLike(!like);
+  };
   return (
     <Section>
       <DiaryContainer>
@@ -233,7 +243,11 @@ const Detail = () => {
         </IMGArea>
         <DiaryArea>
           <HeartAndNickname>
-            <button>heart</button>
+            {like ? (
+              <FaHeart color="#DF4949" onClick={onClickHandler} />
+            ) : (
+              <FiHeart color="#DF4949" fill="#646464" onClick={onClickHandler} />
+            )}
             <Nickname>dlwlrma</Nickname>
           </HeartAndNickname>
           <RandomQuestion>최고의 여행 명소는 어디였나요?</RandomQuestion>
@@ -271,7 +285,7 @@ const Detail = () => {
           <IoIosArrowDropdown color="#535353" size="22" />
         </CommentTitleArea>
         <CommentInputArea>
-          <input />
+          <CheckListInput width="100%" height="36px" placeholder="댓글을 입력해주세요." />
         </CommentInputArea>
         <CommentsArea>
           <CommentTextArea>
