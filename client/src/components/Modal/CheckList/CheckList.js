@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { ButtonContainer } from "../../CheckList-BucketList/CheckList";
-import { MintButton2, MintLineButton2 } from "../../CheckList-BucketList/BucketList";
+
 export const Test = styled.div`
   margin: 19px 0 19px 0px;
   background-color: white;
@@ -39,6 +38,49 @@ export const Block2 = styled.div`
     margin-right: 20px;
     font-family: "Gowun Dodum", sans-serif;
     line-height: 3;
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  column-gap: 6px;
+  align-items: center;
+  line-height: 1;
+  white-space: nowrap;
+  background-color: transparent;
+`;
+
+export const MintLineButton2 = styled.button`
+  height: 30px;
+  width: ${(props) => (props.width ? props.width : "auto")};
+  color: hsl(0, 0%, 32%);
+  background-color: hsl(0, 0%, 100%);
+  border: 1px solid hsl(180, 66%, 74%);
+  border-radius: 35px;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    background-color: hsl(180, 12%, 96%);
+  }
+  &:active {
+    background-color: hsl(180, 12%, 92%);
+  }
+`;
+
+export const MintButton2 = styled.button`
+  height: 30px;
+  width: ${(props) => (props.width ? props.width : "auto")};
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(180, 66%, 55%);
+  border: none;
+  border-radius: 35px;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    background-color: hsl(180, 66%, 37%);
+  }
+  &:active {
+    background-color: hsl(180, 66%, 33%);
   }
 `;
 

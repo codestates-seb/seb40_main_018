@@ -68,7 +68,7 @@ export const CheckInput = ({ input, setInput, todos, setTodos, editTodo, setEdit
     }
   }, [setInput, editTodo]);
 
-  const setInputChange = (event) => {
+  const onInputChange = (event) => {
     setInput(event.target.value);
   };
 
@@ -84,7 +84,7 @@ export const CheckInput = ({ input, setInput, todos, setTodos, editTodo, setEdit
   return (
     <InputContainer width="399px" height="36px">
       <form onSubmit={onFormSubmit} className="form">
-        <Input type="text" value={input} required onChange={setInputChange} />
+        <Input type="text" value={input} required onChange={onInputChange} />
         <Button type="submit">
           {editTodo ? (
             <MdOutlineUpdate className="update" color="5E5E5E" size="18" />
