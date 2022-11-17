@@ -6,7 +6,7 @@ import DiaryEdit from "./pages/DiaryEdit/DiaryEdit";
 import { Login } from "./pages/Login";
 import MainPage from "./pages/MainPage";
 import MyList from "./pages/MyList";
-import MyPage from "./pages/MyPage";
+import MyPage from "./pages/MyPage/MyPage";
 import { SignUp } from "./pages/SignUp";
 import UserEdit from "./pages/UserEdit";
 import { GlobalStyles } from "./style/GlobalStyle";
