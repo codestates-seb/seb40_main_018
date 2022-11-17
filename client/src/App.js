@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Detail from "./pages/Detail";
 import Diary from "../src/pages/Diary/Diary";
-import DiaryEdit from "./pages/DiaryEdit";
+import DiaryEdit from "./pages/DiaryEdit/DiaryEdit";
 import { Login } from "./pages/Login";
 import MainPage from "./pages/MainPage";
 import MyList from "./pages/MyList";
