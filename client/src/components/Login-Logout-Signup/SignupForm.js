@@ -7,24 +7,19 @@ import MintCard from "../Card/MintCard";
 import ShortInput from "../Input/ShortInput";
 
 export const Move = styled.div`
-  background-color: transparent;
   position: relative;
   z-index: 2;
   margin-top: -402px;
 `;
 
 export const InputContainer = styled.div`
-  background-color: transparent;
-  /* border: 1px solid yellow; */
   margin: 57.56px 0px 22.14px 0px;
   padding-left: 57.26px;
   padding-right: 57.26px;
 `;
 
 export const ButtonContainer = styled.div`
-  background-color: transparent;
   text-align: center;
-  /* border: 1px solid pink; */
 `;
 
 export const SignupForm = () => {
@@ -36,6 +31,7 @@ export const SignupForm = () => {
   const [password2, setPassword2] = useState("");
   const [pwdErrMsg, setPwdErrMsg] = useState("");
   const [pwdErrMsg2, setPwdErrMsg2] = useState("");
+  // const navigate = useNavigate();
 
   const isValid = (type, value) => {
     const pattern = {
@@ -93,6 +89,22 @@ export const SignupForm = () => {
     if (!checkInputVal) {
       return false;
     }
+
+    // axios
+    //   // eslint-disable-next-line no-undef
+    //   .post("http://localhost:4000/signup", {
+    //     NAME: name,
+    //     EMAIL: email,
+    //     PASSWORD: password,
+    //   })
+    //   .then(() => {
+    //     alert("회원가입 성공!");
+    //     navigate("/login");
+    //   })
+    //   .catch((error) => {
+    //     alert("회원가입 실패!");
+    //     console.log(error);
+    //   });
   };
 
   return (

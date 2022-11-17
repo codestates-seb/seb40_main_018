@@ -3,12 +3,12 @@ import LoginHeader from "../../components/Header/LoginHeader";
 
 import MintLineButton from "../../components/Button/MintLineButton";
 import MintButton from "../../components/Button/MintButton";
-import DiaryTitle from "./DiaryTitle";
-import DiaryImg from "./DiaryImg";
-import DiaryText from "./DiaryText";
-import DiaryPrice from "./DiaryPrice";
-import DiaryPlace from "./DiaryPlace";
-import DiaryHashtag from "./DiaryHashtag";
+import DiaryEditTitle from "./DiaryEditTitle";
+import DiaryEditImg from "./DiaryEditImg";
+import DiaryEditText from "./DiaryEditText";
+import DiaryEditPrice from "./DiaryEditPrice";
+import DiaryEditPlace from "./DiaryEditPlace";
+import DiaryEditHashtag from "./DiaryEditHashtag";
 
 const Section = styled.section`
   display: flex;
@@ -17,7 +17,8 @@ const Section = styled.section`
   justify-content: center;
   align-items: center;
   background-color: #fbfbfb;
-  margin-top: 90px;
+  margin-top: 63px;
+  padding-top: 50px;
   font-size: 14px;
 `;
 const Container = styled.div`
@@ -33,20 +34,20 @@ const BtnArea = styled.div`
   }
 `;
 
-const Diary = () => {
+const DiaryEdit = () => {
   return (
     <>
       <LoginHeader />
       <Section>
         <Container>
-          <DiaryTitle />
-          <DiaryImg />
-          <DiaryText />
-          <DiaryPrice />
-          <DiaryPlace />
-          <DiaryHashtag />
+          <DiaryEditTitle />
+          <DiaryEditImg />
+          <DiaryEditText />
+          <DiaryEditPrice />
+          <DiaryEditPlace />
+          <DiaryEditHashtag />
           <BtnArea>
-            <MintLineButton className="submit" text="등록"></MintLineButton>
+            <MintLineButton className="submit" text="수정"></MintLineButton>
             <MintButton className="cancel" text="취소"></MintButton>
           </BtnArea>
         </Container>
@@ -55,4 +56,4 @@ const Diary = () => {
   );
 };
 
-export default Diary;
+export default DiaryEdit;

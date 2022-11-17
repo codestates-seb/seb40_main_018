@@ -55,6 +55,24 @@ export const LoginForm = () => {
     if (!checkInputVal) {
       return false;
     }
+
+    // axios
+    // // eslint-disable-next-line no-undef
+    // .post("http://localhost:4000/login", {
+    //     EMAIL: email,
+    //     PASSWORD: password,
+    // })
+    // .then((res) => {
+    //   if (res.headers.authorization) {
+    //     localStorage.setItem("accessToken", res.headers.authorization); -> cookie
+    //     localStorage.setItem("refreshToken", res.headers.refresh); -> cookie
+    //   }
+
+    //   setIsLogin(true); - mainpage
+    //   setUserInfo(res.data.data);
+    //   navigate("/");
+    // })
+    // .catch((error) => console.log(error));
   };
 
   return (

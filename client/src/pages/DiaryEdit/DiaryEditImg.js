@@ -64,11 +64,18 @@ const UploadBtn = styled.button`
 `;
 const fileTypes = ["JPG", "PNG", "GIF"];
 
-const DiaryImg = () => {
-  const [imageList, setImageList] = useState([]);
-  // if (imageList.length > 10) {
-  //   alert("max10");
-  // }
+const DiaryEditImg = () => {
+  // const images = [
+  //   { url: "../../images/user.png" },
+  //   { url: "images/2.jpg" },
+  //   { url: "images/3.jpg" },
+  //   { url: "images/4.jpg" },
+  //   { url: "images/5.jpg" },
+  //   { url: "images/6.jpg" },
+  //   { url: "images/7.jpg" },
+  // ];
+  const [imageList, setImageList] = useState([]); // 여기 잘 바꿔야 할듯?
+
   console.log(imageList);
   const [isDrag, setIsDrag] = useState(false);
   const imageRegistHandler = (files) => {
@@ -113,7 +120,6 @@ const DiaryImg = () => {
           </ImgSliderBox>
         )}
       </InputContainer>
-      {/* <InputContainer2> */}
       <UlStyle>
         {imageList.map((image, index) => {
           return (
@@ -137,8 +143,7 @@ const DiaryImg = () => {
           <UploadBtn type="button">{!isDrag && <MdUploadFile />}</UploadBtn>
         </FileUploader>
       </UlStyle>
-      {/* </InputContainer2> */}
     </>
   );
 };
-export default DiaryImg;
+export default DiaryEditImg;

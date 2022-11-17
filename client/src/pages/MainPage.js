@@ -1,12 +1,10 @@
-// import { Header } from "../components/Header/Header";
-import { Card } from "../components/Main/Card";
-import { MainTab } from "../components/Main/MainTab";
+import LoginHeader from "../components/Header/LoginHeader";
+import MyList from "./MyList";
 export default function MainPage() {
   return (
     <>
-      {/* <Header /> */}
-      <MainTab />
-      <Card />
+      <LoginHeader />
+      <MyList />
     </>
   );
 }
