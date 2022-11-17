@@ -1,8 +1,28 @@
 import { useEffect, useState } from "react";
-// import { IoIosClose } from "react-icons/io";
 import styled from "styled-components";
+import { IoIosClose } from "react-icons/io";
 import { BucketInput } from "./BucketInput";
 import { BucketList } from "./BucketList";
+import { ModalBackdrop2 } from "../CheckList/CheckListModal";
+
+const DarkMintShadowButton = styled.button`
+  height: 30px;
+  width: 166px;
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(180, 32%, 54%);
+  border: none;
+  border-radius: 35px;
+  font-size: 15px;
+  margin-right: 11px;
+  box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.01), 0 3px 2px hsla(0, 0%, 0%, 0.13), 2px 2px 6px hsla(0, 0%, 0%, 0.2);
+  font-weight: bold;
+  &:hover {
+    background-color: hsl(180, 25%, 35%);
+  }
+  &:active {
+    background-color: hsl(180, 25%, 31%);
+  }
+`;
 
 export const Container = styled.div`
   width: 100%;
@@ -15,34 +35,34 @@ export const Container = styled.div`
 `;
 
 export const ListHeader = styled.div`
-  /* border: 1px solid pink; */
   display: flex;
   justify-content: space-between;
-  background-color: transparent;
-  margin-bottom: 4px;
-  margin-top: 18px;
-  > div {
-    font-size: 16px;
-    color: #63aeae;
-    background-color: transparent;
-  }
-
+  margin-bottom: 5px;
+  margin-top: 17px;
   > .close-btn {
-    background-color: transparent;
-    margin-top: -4px;
+    margin-top: -3px;
     > .close {
       cursor: pointer;
-      background-color: transparent;
     }
   }
 `;
 
 export const Text = styled.div`
   margin-left: 19px;
+  font-size: 16px;
+  color: #63aeae;
 `;
 
-export const ListInput = styled.div`
-  /* border: 1px solid yellow; */
+export const ListInput = styled.div``;
+export const Box = styled.div``;
+export const ModalContainer2 = styled.div`
+  width: 100%;
+  max-width: 430px;
+  text-align: right;
+  position: fixed;
+  margin-top: 24px;
+  margin-left: -20px;
+  z-index: 999;
 `;
 
 export const BucketListModal = () => {
@@ -50,32 +70,46 @@ export const BucketListModal = () => {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState(initialState);
   const [editTodo, setEditTodo] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(!isOpen);
+  };
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
-
   return (
-    <Container>
-      <ListHeader>
-        <Text>Bucket List</Text>
-        {/* <span className="close-btn">
-          <IoIosClose className="close" size={30}></IoIosClose>
-        </span> */}
-      </ListHeader>
-      <ListInput>
-        <BucketInput
-          input={input}
-          setInput={setInput}
-          todos={todos}
-          setTodos={setTodos}
-          editTodo={editTodo}
-          setEditTodo={setEditTodo}
-        />
-      </ListInput>
-      <div>
-        <BucketList todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} />
-      </div>
-    </Container>
+    <>
+      <DarkMintShadowButton onClick={openModal}>버킷리스트</DarkMintShadowButton>
+      {isOpen === true ? (
+        <ModalBackdrop2 onClick={openModal}>
+          <ModalContainer2>
+            <Container onClick={openModal}>
+              <Box onClick={(e) => e.stopPropagation()}>
+                <ListHeader>
+                  <Text>Bucket List</Text>
+                  <span className="close-btn">
+                    <IoIosClose onClick={openModal} className="close" size={30}></IoIosClose>
+                  </span>
+                </ListHeader>
+                <ListInput>
+                  <BucketInput
+                    input={input}
+                    setInput={setInput}
+                    todos={todos}
+                    setTodos={setTodos}
+                    editTodo={editTodo}
+                    setEditTodo={setEditTodo}
+                  />
+                </ListInput>
+                <div>
+                  <BucketList todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} />
+                </div>
+              </Box>
+            </Container>
+          </ModalContainer2>
+        </ModalBackdrop2>
+      ) : null}
+    </>
   );
 };
