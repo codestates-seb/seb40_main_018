@@ -98,8 +98,12 @@ const DiaryText = () => {
 
   let pop = Math.floor(Math.random() * randomQuestions.length);
   const onClickHandler = () => {
-    setQuestion(randomQuestions[pop]);
-    setCounter(counter + 1);
+    if (counter >= 3) {
+      counter = 3;
+    } else {
+      setQuestion(randomQuestions[pop]);
+      setCounter(counter + 1);
+    }
   };
   return (
     <TextArea>
