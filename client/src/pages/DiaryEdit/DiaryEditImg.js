@@ -83,6 +83,10 @@ const DiaryEditImg = () => {
     for (let i = 0; i < files.length; i++) {
       tempImagelist.push(files[i]);
     }
+    if (tempImagelist.length > 10) {
+      alert("최대 10장까지 업로드할 수 있습니다.");
+      tempImagelist = tempImagelist.slice(0, 10);
+    }
 
     setImageList(tempImagelist);
   };
