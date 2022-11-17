@@ -3,11 +3,9 @@ import { BucketListModal } from "../BucketList/BucketListModal";
 import { CheckListModal } from "../CheckList/CheckListModal";
 
 const Block = styled.div`
-  /* border: 1px solid grey; */
   margin-top: 322px;
-  padding-left: 320px;
+  margin-left: 320px;
   width: 100%;
-
   > p {
     color: #535353;
     margin-bottom: 5px;

@@ -7,24 +7,19 @@ import MintCard from "../Card/MintCard";
 import ShortInput from "../Input/ShortInput";
 
 export const Move = styled.div`
-  background-color: transparent;
   position: relative;
   z-index: 2;
   margin-top: -402px;
 `;
 
 export const InputContainer = styled.div`
-  background-color: transparent;
-  /* border: 1px solid yellow; */
   margin: 57.56px 0px 22.14px 0px;
   padding-left: 57.26px;
   padding-right: 57.26px;
 `;
 
 export const ButtonContainer = styled.div`
-  background-color: transparent;
   text-align: center;
-  /* border: 1px solid pink; */
 `;
 
 export const SignupForm = () => {

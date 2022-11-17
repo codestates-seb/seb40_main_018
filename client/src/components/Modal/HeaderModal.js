@@ -8,12 +8,9 @@ export const Container = styled.div`
   width: 100%;
   padding: 16px 62px;
   border-bottom: 1px solid #dcdcdc;
-  background-color: rgba(255, 255, 255, 0.05);
-
   :last-child {
     border: none;
   }
-
   @media screen and (max-width: 875px) {
     display: flex;
     flex-flow: row wrap;
@@ -25,7 +22,6 @@ export const Inside = styled.div`
   color: #535353;
   line-height: 1.8;
   text-align: center;
-
   > .word-break {
     > a {
       display: inline-block;
@@ -33,14 +29,11 @@ export const Inside = styled.div`
       margin-left: -15px;
       text-decoration: none;
       color: #535353;
-      background-color: #ffffff;
     }
   }
 `;
 
-export const ModalContainer = styled.div`
-  background-color: #ffffff;
-`;
+export const ModalContainer = styled.div``;
 
 export const ModalBackdrop = styled.div`
   position: fixed;
@@ -62,7 +55,6 @@ export const ModalBtn = styled.button`
   border: none;
   cursor: pointer;
   font-size: 14px;
-  background-color: #ffffff;
   color: #535353;
 `;
 

@@ -24,7 +24,6 @@ export const HeaderContainer = styled.div`
   width: 100%;
   height: 63px;
   padding: 16px 40px 0px 0px;
-  text-align: center;
   background-color: #ffffff;
   .user-image {
     margin-left: 18px;
@@ -46,11 +45,9 @@ export const Block = styled.div`
 export const Modal = styled.div`
   width: 100%;
   max-width: 180px;
-  text-align: right;
   position: fixed;
-  margin-top: 36px; // 수정
+  margin-top: 36px;
   margin-left: 7px;
-
   > .modal-inside {
     display: none;
     width: 100%;

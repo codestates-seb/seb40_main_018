@@ -28,7 +28,6 @@ export const Container = styled.div`
   width: 100%;
   padding-left: 14px;
   padding-right: 16px;
-  background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid #63aeae;
   border-radius: 35px;
   box-shadow: 0 0 1px #63aeae, 0 0 1px #63aeae, 0 0 5px #63aeae;
@@ -39,10 +38,6 @@ export const ListHeader = styled.div`
   justify-content: space-between;
   margin-bottom: 5px;
   margin-top: 17px;
-  > div {
-    font-size: 16px;
-    color: #63aeae;
-  }
   > .close-btn {
     margin-top: -3px;
     > .close {
@@ -53,6 +48,8 @@ export const ListHeader = styled.div`
 
 export const Text = styled.div`
   margin-left: 19px;
+  font-size: 16px;
+  color: #63aeae;
 `;
 
 export const ListInput = styled.div``;

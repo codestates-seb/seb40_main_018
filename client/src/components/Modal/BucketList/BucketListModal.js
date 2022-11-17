@@ -39,11 +39,6 @@ export const ListHeader = styled.div`
   justify-content: space-between;
   margin-bottom: 5px;
   margin-top: 17px;
-  > div {
-    font-size: 16px;
-    color: #63aeae;
-  }
-
   > .close-btn {
     margin-top: -3px;
     > .close {
@@ -54,6 +49,8 @@ export const ListHeader = styled.div`
 
 export const Text = styled.div`
   margin-left: 19px;
+  font-size: 16px;
+  color: #63aeae;
 `;
 
 export const ListInput = styled.div``;

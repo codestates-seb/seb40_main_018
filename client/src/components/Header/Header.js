@@ -1,23 +1,15 @@
 import { Link } from "react-router-dom";
 import { Box, HeaderContainer, Logo2 } from "./LoginHeader";
 import styled from "styled-components";
-import MintLineButton from "../Button/MintLineButton";
-import MintButton from "../Button/MintButton";
+import { MintButton2, MintLineButton2 } from "../Modal/CheckList/CheckList";
 
 export const BtnArea = styled.div`
   display: flex;
   text-align: center;
   column-gap: 12px;
-  background-color: transparent;
-  a {
-    background-color: transparent;
-  }
 `;
 
-export const AddStyle = styled.div`
-  margin-left: 5px;
-  background-color: transparent;
-`;
+export const AddStyle = styled.div``;
 
 export const Header = () => {
   return (
@@ -28,11 +20,15 @@ export const Header = () => {
         </Link>
         <BtnArea>
           <Link to="/login">
-            <MintLineButton text="로그인" width="93px" height="30px" />
+            <MintLineButton2 width="83px" height="30px">
+              로그인
+            </MintLineButton2>
           </Link>
           <AddStyle>
             <Link to="/signup">
-              <MintButton text="회원가입" width="93px" height="30px" />
+              <MintButton2 width="83px" height="30px">
+                회원가입
+              </MintButton2>
             </Link>
           </AddStyle>
         </BtnArea>

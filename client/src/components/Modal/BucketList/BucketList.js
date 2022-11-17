@@ -2,12 +2,9 @@ import styled from "styled-components";
 
 export const Test = styled.div`
   margin: 19px 0 19px 0px;
-  background-color: white;
   > .list-item {
-    /* border: 1px solid red; */
     width: 100%;
     display: flex;
-    background-color: white;
     border-top: 1px solid #dcdcdc;
     justify-content: space-between;
   }
@@ -29,8 +26,7 @@ export const Block2 = styled.div`
   }
 
   > .list {
-    width: 220px;
-    background-color: white;
+    width: 250px;
     border: none;
     color: #535353;
     font-size: 14px;
@@ -44,8 +40,6 @@ export const ButtonContainer = styled.div`
   display: flex;
   column-gap: 6px;
   align-items: center;
-  line-height: 1;
-  white-space: nowrap;
 `;
 
 export const MintLineButton2 = styled.button`
