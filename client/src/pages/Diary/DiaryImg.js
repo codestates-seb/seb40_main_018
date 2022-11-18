@@ -108,7 +108,7 @@ const DiaryImg = ({ imageList, setImageList }) => {
           </ImgSliderBox>
         )}
       </InputContainer>
-      {/* <InputContainer2> */}
+
       <UlStyle>
         {imageList.map((image, index) => {
           return (
@@ -132,7 +132,6 @@ const DiaryImg = ({ imageList, setImageList }) => {
           <UploadBtn type="button">{!isDrag && <MdUploadFile />}</UploadBtn>
         </FileUploader>
       </UlStyle>
-      {/* </InputContainer2> */}
     </>
   );
 };

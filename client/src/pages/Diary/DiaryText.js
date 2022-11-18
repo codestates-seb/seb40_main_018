@@ -95,11 +95,9 @@ const DiaryText = ({ question, setQuestion, counter, setCounter, diary, setDiary
         </RandomArea>
       </QuestionArea>
       <WriteArea>
-        <DiaryWrite
-          placeholder="이곳에 여행일지를 기록 해주세요."
-          onChange={onChangeHandler}
-          value={diary}
-        ></DiaryWrite>
+        <DiaryWrite placeholder="이곳에 여행일지를 기록 해주세요." onChange={onChangeHandler} value={diary}>
+          {diary}
+        </DiaryWrite>
       </WriteArea>
     </TextArea>
   );

@@ -114,15 +114,8 @@ const ModalTxt = styled.div`
   font-family: "shinbttf";
 `;
 
-const DiaryEditTitle = () => {
-  const [title, setTitle] = useState("hello");
+const DiaryEditTitle = ({ title, setTitle, weather, setWeather, year, setYear, month, setMonth, day, setDay }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [year, setYear] = useState("2022");
-  const [month, setMonth] = useState("11");
-  const [day, setDay] = useState("16");
-  // console.log(setYear, setMonth, setDay);
-  // console.log(setYear);
-  const [weather, setWeather] = useState("맑음");
 
   const weatherTxt = [
     "태풍",
@@ -146,10 +139,16 @@ const DiaryEditTitle = () => {
   };
 
   const onClickHandler = (e) => {
-    setYear(e.target.value);
-    setMonth(e.target.value);
-    setDay(e.target.value);
     setWeather(e.target.textContent);
+  };
+  const selectYearHandler = (e) => {
+    setYear(e.target.value);
+  };
+  const selectMonthHandler = (e) => {
+    setMonth(e.target.value);
+  };
+  const selectDayHandler = (e) => {
+    setDay(e.target.value);
   };
   return (
     <TitleArea>
@@ -158,7 +157,7 @@ const DiaryEditTitle = () => {
       </InputContainer>
       <InputContainer width="280px">
         <DateArea>
-          <Select defaultValue={year}>
+          <Select defaultValue={year} onClick={selectYearHandler}>
             <Option> ----</Option>
             <Option>2022</Option>
             <Option>2021</Option>
@@ -187,7 +186,7 @@ const DiaryEditTitle = () => {
           <DateText>년</DateText>
         </DateArea>
         <DateArea>
-          <Select defaultValue={month}>
+          <Select defaultValue={month} onClick={selectMonthHandler}>
             <Option>--</Option>
             <Option>12</Option>
             <Option>11</Option>
@@ -205,7 +204,7 @@ const DiaryEditTitle = () => {
           <DateText>월</DateText>
         </DateArea>
         <DateArea>
-          <Select defaultValue={day}>
+          <Select defaultValue={day} onClick={selectDayHandler}>
             <Option>--</Option>
             <Option>31</Option>
             <Option>30</Option>

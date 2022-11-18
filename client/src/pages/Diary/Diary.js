@@ -70,6 +70,7 @@ const Diary = () => {
   const [city, setCity] = useState(Location[selected][0]);
   const [tags, setTags] = useState([]);
 
+  //post
   const submitHandler = () => {
     const diaryInfo = {
       // memberId: memberId,

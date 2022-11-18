@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { TagsInput } from "react-tag-input-component";
 import "../Diary/tag.css";
@@ -29,14 +28,12 @@ const TitleText = styled.span`
   white-space: nowrap;
 `;
 
-const DiaryEditHashtag = () => {
-  const [selected, setSelected] = useState(["밤바다", "장범준", "회쏘"]);
-  console.log(selected);
+const DiaryEditHashtag = ({ tags, setTags }) => {
   return (
     <HashTagArea>
       <TitleText>해시태그 :</TitleText>
       <Tags>
-        <TagsInput value={selected} onChange={setSelected} name="HashTag" placeHolder="태그를 입력해주세요." />
+        <TagsInput value={tags} onChange={setTags} name="HashTag" placeHolder="태그를 입력해주세요." />
       </Tags>
     </HashTagArea>
   );
