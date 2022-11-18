@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { BiWon } from "react-icons/bi";
-import { useState } from "react";
 
 const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "700px")};
@@ -34,18 +33,13 @@ const Price = styled.input`
   }
 `;
 
-const DiaryEditPrice = () => {
-  const [price, setPrice] = useState(150000);
-  console.log(price);
-
+const DiaryEditPrice = ({ price, setPrice }) => {
   const onChangeHandler = (e) => {
-    console.log(e.target.value);
     setPrice(e.target.value);
   };
   return (
     <PriceArea>
       <TitleText>경비 :</TitleText>
-      {/* 데이터 받아오기 */}
       <Price type="number" onChange={onChangeHandler} value={price} />
       <BiWon />
     </PriceArea>
