@@ -114,7 +114,7 @@ const ModalTxt = styled.div`
   font-family: "shinbttf";
 `;
 
-const DiaryTitle = () => {
+const DiaryTitle = ({ title, setTitle, weather, setWeather, year, setYear, month, setMonth, day, setDay }) => {
   const weatherTxt = [
     "태풍",
     "미세먼지",
@@ -133,18 +133,32 @@ const DiaryTitle = () => {
   const openModal = () => {
     setIsOpen(!isOpen);
   };
-  const [weather, setWeather] = useState("날씨");
+
   const onClickHandler = (e) => {
     setWeather(e.target.textContent);
+  };
+
+  const onChangeHandler = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const selectYearHandler = (e) => {
+    setYear(e.target.value);
+  };
+  const selectMonthHandler = (e) => {
+    setMonth(e.target.value);
+  };
+  const selectDayHandler = (e) => {
+    setDay(e.target.value);
   };
   return (
     <TitleArea>
       <InputContainer width="380px">
-        <Title placeholder="제목" />
+        <Title placeholder="제목" onChange={onChangeHandler} value={title} />
       </InputContainer>
       <InputContainer width="280px">
         <DateArea>
-          <Select>
+          <Select defaultValue={year} onClick={selectYearHandler}>
             <Option> ----</Option>
             <Option>2022</Option>
             <Option>2021</Option>
@@ -173,7 +187,7 @@ const DiaryTitle = () => {
           <DateText>년</DateText>
         </DateArea>
         <DateArea>
-          <Select>
+          <Select defaultValue={month} onClick={selectMonthHandler}>
             <Option>--</Option>
             <Option>12</Option>
             <Option>11</Option>
@@ -191,7 +205,7 @@ const DiaryTitle = () => {
           <DateText>월</DateText>
         </DateArea>
         <DateArea>
-          <Select>
+          <Select defaultValue={day} onClick={selectDayHandler}>
             <Option>--</Option>
             <Option>31</Option>
             <Option>30</Option>
