@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import LoginHeader from "../../components/Header/LoginHeader";
-import MyList from "../MyList";
 import MapIcon from "./MapIcon";
 import MyPageSearch from "./MyPageSearch";
 import MyPageCard from "./MapageCard";
@@ -11,6 +10,7 @@ const MyPageContanier = styled.div`
   align-items: center;
   justify-content: center;
   align-content: center;
+  background-color: #fbfbfb;
 `;
 
 const MyPage = () => {
@@ -19,7 +19,6 @@ const MyPage = () => {
     <>
       <LoginHeader />
       <MyPageContanier>
-        <MyList />
         <MapIcon />
         <MyPageSearch />
         <MyPageCard />
