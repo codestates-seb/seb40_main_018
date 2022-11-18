@@ -19,7 +19,7 @@ export const Input = styled.input`
   outline-style: none;
   border: none;
   font-size: 14px;
-  width: 341.12px;
+  width: 365px;
   color: #535353;
   margin-top: -2px;
   margin-left: 20px;
@@ -65,7 +65,7 @@ export const CheckInput = ({ input, setInput, todos, setTodos, editTodo, setEdit
     }
   };
   return (
-    <InputContainer width="399px" height="36px">
+    <InputContainer width="424px" height="36px">
       <form onSubmit={onFormSubmit} className="form">
         <Input type="text" value={input} required onChange={onInputChange} />
         <Button type="submit">
