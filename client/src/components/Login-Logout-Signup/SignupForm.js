@@ -3,23 +3,34 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import DarkLineButton from "../Button/DarkLineButton";
 import DarkMintButton from "../Button/DarkMintButton";
-import MintCard from "../Card/MintCard";
 import ShortInput from "../Input/ShortInput";
 
+export const MintCard = styled.div`
+  height: ${(props) => (props.height ? props.height : "auto")};
+  width: ${(props) => (props.width ? props.width : "auto")};
+  color: hsl(0, 0%, 32%);
+  background-color: hsl(0, 0%, 100%);
+  border: 1px solid hsl(180, 32%, 54%);
+  border-radius: 35px;
+  box-shadow: 0px 0px 4px 2px #63aeae;
+  display: flex;
+  box-sizing: border-box;
+`;
 export const Move = styled.div`
-  position: relative;
+  flex-direction: column;
   z-index: 2;
-  margin-top: -402px;
+  margin-top: 40px;
 `;
 
 export const InputContainer = styled.div`
-  margin: 57.56px 0px 22.14px 0px;
   padding-left: 57.26px;
   padding-right: 57.26px;
+  margin-bottom: 10px;
 `;
 
 export const ButtonContainer = styled.div`
   text-align: center;
+  margin-bottom: 25px;
 `;
 
 export const SignupForm = () => {
@@ -35,8 +46,8 @@ export const SignupForm = () => {
 
   const isValid = (type, value) => {
     const pattern = {
-      // 숫자, 영어, 한국어와 언더스코어, 공백 허용, 최소 2자 닉네임
-      nickname: /^[가-힣ㄱ-ㅎa-zA-Z0-9]{2,}\$/,
+      // 2자 이상 16자 이하, 영어 또는 숫자 또는 한글로 구성
+      nickname: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/,
       // 숫자 (0~9) or 알파벳 (a~z, A~Z) 으로 시작하며 중간에 -_. 문자가 있을 수 있으며 그 후 숫자 (0~9) or 알파벳 (a~z, A~Z)이 올 수도 있고 연달아 올 수도 있고 없을 수도 있다.
       // @ 는 반드시 존재하며 . 도 반드시 존재하고 a~z, A~Z 의 문자가 2,3개 존재하고 i = 대소문자 구분 안한다.
       email: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
@@ -57,7 +68,9 @@ export const SignupForm = () => {
       setNameErrMsg("닉네임을 입력해주세요.");
       return false;
     } else if (!isValid("name", name)) {
-      setNameErrMsg("닉네임은 2자의 한글, 영문 대소문자와 숫자로만 입력하여 주세요.");
+      setNameErrMsg("닉네임은 2자 이상 16자 이하, 영어 또는 숫자 또는 한글로만 입력하여 주세요.");
+    } else {
+      setNameErrMsg("");
     }
 
     if (email.length <= 0) {
@@ -65,6 +78,8 @@ export const SignupForm = () => {
       return false;
     } else if (!isValid("email", email)) {
       setEmailErrMsg("올바른 이메일 형식이 아닙니다.");
+    } else {
+      setEmailErrMsg("");
     }
 
     // 비번 과 비번확인 같아야 함
@@ -73,11 +88,15 @@ export const SignupForm = () => {
       return false;
     } else if (!isValid("password", password)) {
       setPwdErrMsg("Password는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+    } else {
+      setPwdErrMsg("");
     }
 
     if (password.length !== password2.length) {
       setPwdErrMsg2("비밀번호가 일치하지 않습니다. 다시 확인하여 입력해주세요");
       return false;
+    } else {
+      setPwdErrMsg2("");
     }
 
     return true;
@@ -86,7 +105,7 @@ export const SignupForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!checkInputVal) {
+    if (!checkInputVal()) {
       return false;
     }
 
@@ -109,28 +128,36 @@ export const SignupForm = () => {
 
   return (
     <>
-      <MintCard width="500px" height="400px" />
-      <Move>
-        <InputContainer>
-          <ShortInput title="Display name" text="닉네임" value={name} handleValue={setName} errorMsg={nameErrMsg} />
-          <ShortInput text="이메일입력" value={email} handleValue={setEmail} errorMsg={emailErrMsg} />
-          <ShortInput text="비밀번호" value={password} handleValue={setPassword} errorMsg={pwdErrMsg} type="password" />
-          <ShortInput
-            text="비밀번호 확인"
-            value={password2}
-            handleValue={setPassword2}
-            errorMsg={pwdErrMsg2}
-            type="password"
-          />
-        </InputContainer>
-        <ButtonContainer>
-          <Link to="/login">
-            <DarkMintButton width="74px" text="로그인" />
-          </Link>
-          {/* 가입 후 로그인 페이지로 이동 */}
-          <DarkLineButton width="74px" text="가입하기" handleSubmit={handleSubmit} />
-        </ButtonContainer>
-      </Move>
+      {/* height="420px" */}
+      <MintCard width="500px">
+        <Move>
+          <InputContainer>
+            <ShortInput title="Display name" text="닉네임" value={name} handleValue={setName} errorMsg={nameErrMsg} />
+            <ShortInput text="이메일입력" value={email} handleValue={setEmail} errorMsg={emailErrMsg} />
+            <ShortInput
+              text="비밀번호"
+              value={password}
+              handleValue={setPassword}
+              errorMsg={pwdErrMsg}
+              type="password"
+            />
+            <ShortInput
+              text="비밀번호 확인"
+              value={password2}
+              handleValue={setPassword2}
+              errorMsg={pwdErrMsg2}
+              type="password"
+            />
+          </InputContainer>
+          <ButtonContainer>
+            <Link to="/login">
+              <DarkLineButton width="74px" text="로그인" />
+            </Link>
+            {/* 가입 후 로그인 페이지로 이동 */}
+            <DarkMintButton width="74px" text="가입하기" handleSubmit={handleSubmit} />
+          </ButtonContainer>
+        </Move>
+      </MintCard>
     </>
   );
 };

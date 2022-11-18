@@ -1,15 +1,16 @@
 import { useState } from "react";
 import styled from "styled-components";
 import DarkMintButton from "../Button/DarkMintButton";
-import MintCard from "../Card/MintCard";
 import ShortInput from "../Input/ShortInput";
-import { ButtonContainer, InputContainer } from "./SignupForm";
+import { ButtonContainer, InputContainer, MintCard } from "./SignupForm";
 
 export const Move = styled.div`
   background-color: transparent;
   position: relative;
   z-index: 2;
-  margin-top: -252px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 `;
 
 export const LoginForm = () => {
@@ -37,6 +38,8 @@ export const LoginForm = () => {
       return false;
     } else if (!isValid("email", email)) {
       setEmailErrMsg("올바른 이메일 형식이 아닙니다.");
+    } else {
+      setEmailErrMsg("");
     }
 
     if (password.length <= 0) {
@@ -44,15 +47,17 @@ export const LoginForm = () => {
       return false;
     } else if (!isValid("password", password)) {
       setPwdErrMsg("Password는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+    } else {
+      setPwdErrMsg("");
     }
+
+    return true;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("로그인 완료!");
-
-    if (!checkInputVal) {
+    if (!checkInputVal()) {
       return false;
     }
 
@@ -77,17 +82,25 @@ export const LoginForm = () => {
 
   return (
     <>
-      <MintCard width="500px" height="240px" />
-      <Move>
-        <InputContainer>
-          <ShortInput text="이메일" name="email" value={email} handlevalue={setEmail} errorMsg={emailErrMsg} />
-          <ShortInput text="비밀번호" type="password" value={password} handlevalue={setPassword} errorMsg={pwdErrMsg} />
-          {/* onChange={({ target }) => console.log(target.value)} */}
-        </InputContainer>
-        <ButtonContainer>
-          <DarkMintButton width="74px" text="로그인" handleSubmit={handleSubmit} />
-        </ButtonContainer>
-      </Move>
+      {/* height="240px" */}
+      <MintCard width="500px">
+        <Move>
+          <InputContainer>
+            <ShortInput text="이메일" name="email" value={email} handleValue={setEmail} errorMsg={emailErrMsg} />
+            <ShortInput
+              text="비밀번호"
+              type="password"
+              value={password}
+              handleValue={setPassword}
+              errorMsg={pwdErrMsg}
+            />
+            {/* onChange={({ target }) => console.log(target.value)} */}
+          </InputContainer>
+          <ButtonContainer>
+            <DarkMintButton width="74px" text="로그인" handleSubmit={handleSubmit} />
+          </ButtonContainer>
+        </Move>
+      </MintCard>
     </>
   );
 };
