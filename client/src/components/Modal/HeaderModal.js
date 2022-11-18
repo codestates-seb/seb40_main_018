@@ -20,7 +20,7 @@ export const Container = styled.div`
 export const Inside = styled.div`
   font-size: 14px;
   color: #535353;
-  line-height: 1.8;
+  line-height: 2;
   text-align: center;
   > .word-break {
     > a {
@@ -56,6 +56,7 @@ export const ModalBtn = styled.button`
   cursor: pointer;
   font-size: 14px;
   color: #535353;
+  background-color: white;
 `;
 
 export const ModalView = styled.div`
@@ -129,6 +130,9 @@ export const HeaderModal = () => {
         <Inside>
           <div className="word-break">
             <Link to="/mypage">마이페이지</Link>
+          </div>
+          <div className="word-break">
+            <Link to="/mylist">마이리스트</Link>
           </div>
         </Inside>
       </Container>
