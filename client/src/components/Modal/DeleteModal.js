@@ -1,54 +1,68 @@
 import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import styled from "styled-components";
 import MintLineButton from "../Button/MintLineButton";
-import { BottomButton, Container, Inside, MintButton3, ModalBackdrop, ModalView } from "./HeaderModal";
+import { Container, Inside, MintButton3, ModalBackdrop, ModalView } from "./HeaderModal";
 
 export const ModalBtn2 = styled.button`
-  width: 100%;
-  line-height: 1;
-  white-space: nowrap;
-  text-decoration: none;
   border: none;
   cursor: pointer;
   font-size: 12px;
-  background-color: none;
+  background-color: #fbfbfb;
+  margin-left: 5px;
   color: #afafaf;
 `;
 
-function DeleteModal() {
-  const [isOpen2, setIsOpen2] = useState(false);
+const Box = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const YesBtn = styled.div`
+  margin-right: 14px;
+`;
 
+function DeleteModal() {
+  const navigate = useNavigate();
+
+  const [isOpen2, setIsOpen2] = useState(false);
   const openModal2 = () => {
     setIsOpen2(!isOpen2);
   };
+
+  const submitHandler = () => {
+    // axios delete
+    console.log("삭제");
+    navigate("/");
+  };
   return (
-    <Container>
-      <Inside>
-        <ModalBtn2 onClick={openModal2}>삭제</ModalBtn2>
-        {isOpen2 === true ? (
-          <ModalBackdrop onClick={openModal2}>
-            <ModalView onClick={(e) => e.stopPropagation()}>
-              <span className="close-btn">
-                <IoIosClose className="close" size={30} onClick={openModal2}></IoIosClose>
-              </span>
-              <div className="desc">정말 삭제하시겠습니까?</div>
-              <BottomButton>
-                <Link to="/" className="yes">
-                  <MintLineButton text="네" />
-                </Link>
-                <button onClick={openModal2} className="no">
-                  <MintButton3 width="66px" height="30px">
+    <>
+      <ModalBtn2 onClick={openModal2}>삭제</ModalBtn2>
+      <Container>
+        <Inside>
+          {isOpen2 === true ? (
+            <ModalBackdrop onClick={openModal2}>
+              <ModalView onClick={(e) => e.stopPropagation()}>
+                <span className="close-btn">
+                  <IoIosClose className="close" size={30} onClick={openModal2}></IoIosClose>
+                </span>
+                <div className="desc">정말 삭제하시겠습니까?</div>
+                <Box>
+                  <YesBtn>
+                    <MintLineButton text="네" handleSubmit={submitHandler} />
+                  </YesBtn>
+                  <MintButton3 width="66px" height="30px" onClick={openModal2} className="no">
                     아니오
                   </MintButton3>
-                </button>
-              </BottomButton>
-            </ModalView>
-          </ModalBackdrop>
-        ) : null}
-      </Inside>
-    </Container>
+                </Box>
+              </ModalView>
+            </ModalBackdrop>
+          ) : null}
+        </Inside>
+      </Container>
+    </>
   );
 }
 

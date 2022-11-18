@@ -237,7 +237,6 @@ const Detail = () => {
             <DateInfo>
               <DateText>{day}일</DateText>
             </DateInfo>
-
             <Weather>{weather}</Weather>
           </DateArea>
         </TitleArea>
