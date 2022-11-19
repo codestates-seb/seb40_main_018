@@ -1,10 +1,10 @@
 import LoginHeader from "../components/Header/LoginHeader";
-import MyList from "./MyList";
+import PriceFilter from "../Filter/PriceFilter";
 export default function MainPage() {
   return (
     <>
       <LoginHeader />
-      <MyList />
+      <PriceFilter />
     </>
   );
 }

@@ -7,6 +7,7 @@ import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import SimpleImageSlider from "react-simple-image-slider";
 import DeleteModal from "../components/Modal/DeleteModal";
+import { v4 as uuidv4 } from "uuid";
 // import { useNavigate } from "react-router-dom";
 
 const Section = styled.section`
@@ -161,13 +162,14 @@ const CommentInputArea = styled.div`
   width: 100%;
   margin-bottom: 16px;
 `;
-const CommentsArea = styled.div`
+const CommentsArea = styled.li`
   display: flex;
   justify-content: space-between;
   width: 100%;
   padding: 14px 16px;
   background-color: #f1f1f1;
   border-radius: 10px;
+  margin-bottom: 12px;
 `;
 const CommentTextArea = styled.div``;
 const CommentNickname = styled.div`
@@ -179,6 +181,7 @@ const CommentNickname = styled.div`
 const Comment = styled.div`
   font-size: 13px;
   color: #535353;
+  width: 600px;
 `;
 const CommentBtnArea = styled.div``;
 const CommentEditBtn = styled(EditBtn)`
@@ -187,8 +190,16 @@ const CommentEditBtn = styled(EditBtn)`
 const CommentDeleteBtn = styled(DeleteBtn)`
   background-color: #f1f1f1;
 `;
+const CommentEditInput = styled.input`
+  outline-style: none;
+  /* border: none; */
+  background-color: #f1f1f1;
+  width: 600px;
+`;
 const Detail = () => {
   // const navigate =useNavigate()
+  // const inputRef = useRef("");
+
   const images = [
     { url: "images/1.jpg" },
     { url: "images/2.jpg" },
@@ -212,14 +223,91 @@ const Detail = () => {
   const price = 150000;
   const tags = ["밤바다", "장범준", "회쏘"];
 
+  const comments = [
+    {
+      commentId: 1,
+      userName: "jisoo",
+      comment: "어머어머 글이 너무 감성적이시네요~~ 짱짱맨",
+    },
+    {
+      commentId: 2,
+      userName: "jennie",
+      comment:
+        "우와 대박이다 ! 이렇게 길게 쓰면 어떻게 되지? 우와 대박이다 ! 이렇게 길게 쓰면 어떻게 되지? 우와 대박이다 ! 이렇게 길게 쓰면 어떻게 되지?",
+    },
+  ];
   const [like, setLike] = useState(false);
-  // const [Comment , setComment] = useState("");
+  const [input, setInput] = useState("");
+  const [commentArray, setCommentArray] = useState(comments);
+  const [isEdit, setIsEdit] = useState(false);
+  const [editComment, setEditComment] = useState(null);
+  // const [isSaved, setIsSaved] = useState(false);
+
+  // 하트
   const onClickHandler = () => {
     setLike(!like);
   };
-  const editHandler = () => {
+
+  // 다이어리 본문 수정버튼
+  const editBtnHandler = () => {
     console.log("수정페이지로 이동");
     // navigate("/diaryedit/:id")
+  };
+
+  // 댓글 추가
+  // axios post
+  const onChangeHandler = (e) => {
+    setInput(e.target.value);
+  };
+
+  const commentAddHandler = (e) => {
+    e.preventDefault();
+    if (input === "") {
+      return;
+    } else {
+      setCommentArray([...commentArray, { commentId: uuidv4(), userName: "kim", comment: input }]);
+      setInput("");
+    }
+  };
+
+  // New Edit
+  const updateComment = (commentId, userName, comment) => {
+    const newComment = commentArray.map((el) => (el.commentId === commentId ? (commentId, userName, comment) : el));
+    setCommentArray(newComment);
+    setEditComment("");
+  };
+  // 댓글 수정버튼
+  // const commentEditInputHandler = (e) => {
+  //   setCommentInput(e.target.value);
+  // };
+
+  const commentEditBtn = ({ id }) => {
+    const filtered = commentArray.filter((el) => el.id === id);
+    console.log("filtered", filtered[0].id);
+    setIsEdit(true);
+  };
+
+  // 댓글 수정 완료하면 server로 보내기 -> 보내고 다시 get? 아니면 그냥 update가 되나? 아니면 useEffect get(){,[여기함수를 써줘야할까...?]}
+  const commentSaveBtn = () => {
+    // axios patch?
+    setIsEdit(false);
+    console.log("댓글 수정완료");
+  };
+
+  const commentSubmit = (e) => {
+    e.preventDefault();
+    if (!editComment) {
+      setCommentArray([...commentArray, { commentId: uuidv4(), userName: "kim", comment: input }]);
+    } else {
+      updateComment(input, editComment.commentId, editComment.userName);
+    }
+  };
+
+  // 댓글 삭제
+  const commentDeleteHandler = ({ commentId }) => {
+    // axios delete
+    console.log("댓글 삭제");
+    setCommentArray(commentArray.filter((el) => el.commentId !== commentId));
   };
 
   return (
@@ -237,7 +325,6 @@ const Detail = () => {
             <DateInfo>
               <DateText>{day}일</DateText>
             </DateInfo>
-
             <Weather>{weather}</Weather>
           </DateArea>
         </TitleArea>
@@ -283,7 +370,8 @@ const Detail = () => {
           ))}
         </TagsArea>
         <BtnArea>
-          <EditBtn onClick={editHandler}>수정</EditBtn>
+          <EditBtn onClick={editBtnHandler}>수정</EditBtn>
+          {/* props로 일기id 내려주기 */}
           <DeleteModal />
         </BtnArea>
       </DiaryContainer>
@@ -293,18 +381,39 @@ const Detail = () => {
           <IoIosArrowDropdown color="#535353" size="22" />
         </CommentTitleArea>
         <CommentInputArea>
-          <CheckListInput width="100%" height="36px" placeholder="댓글을 입력해주세요." />
+          <CheckListInput
+            value={input}
+            onChange={onChangeHandler}
+            width="100%"
+            height="36px"
+            placeholder="댓글을 입력해주세요."
+            onSubmit={commentAddHandler}
+          />
         </CommentInputArea>
-        <CommentsArea>
-          <CommentTextArea>
-            <CommentNickname>jisoo</CommentNickname>
-            <Comment>어머어머 글이 너무 감성적이시네요~~ 짱짱맨</Comment>
-          </CommentTextArea>
-          <CommentBtnArea>
-            <CommentEditBtn>수정</CommentEditBtn>
-            <CommentDeleteBtn>삭제</CommentDeleteBtn>
-          </CommentBtnArea>
-        </CommentsArea>
+        {commentArray.length > 0 &&
+          commentArray.map((el) => (
+            <CommentsArea key={el.commentId}>
+              <CommentTextArea>
+                <CommentNickname>{el.userName}</CommentNickname>
+                {isEdit ? (
+                  <form onSubmit={commentSubmit}>
+                    <CommentEditInput type="text" defaultValue={el.comment} />
+                  </form>
+                ) : (
+                  <Comment>{el.comment}</Comment>
+                )}
+              </CommentTextArea>
+
+              <CommentBtnArea>
+                {isEdit ? (
+                  <CommentEditBtn onClick={() => commentSaveBtn()}>저장</CommentEditBtn>
+                ) : (
+                  <CommentEditBtn onClick={() => commentEditBtn(el)}>수정</CommentEditBtn>
+                )}
+                <CommentDeleteBtn onClick={() => commentDeleteHandler(el)}>삭제</CommentDeleteBtn>
+              </CommentBtnArea>
+            </CommentsArea>
+          ))}
       </CommentContainer>
     </Section>
   );

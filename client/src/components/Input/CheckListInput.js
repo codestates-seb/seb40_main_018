@@ -4,7 +4,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 export const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "350px")};
   height: ${(props) => (props.height ? props.height : "58px")};
-  padding: 18px 20px;
+  padding: 8px 20px;
   border-radius: 35px;
   box-shadow: 0 2px 2px 1px #0000002e;
   background-color: white;
@@ -12,6 +12,14 @@ export const InputContainer = styled.div`
   align-content: center;
   align-items: center;
   justify-content: space-between;
+`;
+
+const Form = styled.form`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
 `;
 export const Input = styled.input`
   outline-style: none;
@@ -35,13 +43,15 @@ export const Button = styled.button`
   }
 `;
 
-const CheckListInput = ({ width, height, placeholder }) => {
+const CheckListInput = ({ value, onChange, width, height, placeholder, onSubmit }) => {
   return (
     <InputContainer width={width} height={height}>
-      <Input placeholder={placeholder} />
-      <Button>
-        <AiOutlinePlusCircle className="add" color="5E5E5E" size="18" />
-      </Button>
+      <Form onSubmit={onSubmit}>
+        <Input value={value} onChange={onChange} placeholder={placeholder} />
+        <Button type="submit">
+          <AiOutlinePlusCircle className="add" color="5E5E5E" size="18" />
+        </Button>
+      </Form>
     </InputContainer>
   );
 };
