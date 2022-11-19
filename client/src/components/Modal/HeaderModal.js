@@ -8,9 +8,6 @@ export const Container = styled.div`
   width: 100%;
   padding: 16px 62px;
   border-bottom: 1px solid #dcdcdc;
-  &:last-child {
-    border-bottom: 1px solid red;
-  }
   @media screen and (max-width: 875px) {
     display: flex;
     flex-flow: row wrap;
@@ -122,6 +119,8 @@ const LogoutAsk = styled.div`
   justify-content: center;
   margin-bottom: 14px;
   width: 100%;
+  color: #535353;
+  font-size: 20px;
   @media screen and (max-width: 640px) {
     font-size: 18px;
   }
@@ -174,7 +173,7 @@ export const HeaderModal = () => {
           <ModalBackdrop onClick={openModal}>
             <ModalView onClick={(e) => e.stopPropagation()}>
               <span className="close-btn">
-                <IoIosClose className="close" size={30} onClick={openModal}></IoIosClose>
+                <IoIosClose className="close" size={30} onClick={openModal} color="#535353"></IoIosClose>
               </span>
               <TextArea>
                 <LogoutAsk>로그아웃 하시겠습니까?</LogoutAsk>
