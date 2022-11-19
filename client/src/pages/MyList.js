@@ -14,7 +14,13 @@ const Block = styled.div`
 const Box = styled.div`
   display: flex;
   column-gap: 84px;
+
+  @media screen and (max-width: 1160px) {
+    flex-direction: column;
+    row-gap: 84px;
+  }
 `;
+
 function MyList() {
   return (
     <Block>
