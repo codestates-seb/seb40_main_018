@@ -33,7 +33,7 @@ function DeleteModal() {
   };
 
   const submitHandler = () => {
-    // axios delete
+    // axios
     console.log("삭제");
     navigate("/");
   };

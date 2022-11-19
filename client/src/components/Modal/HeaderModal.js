@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { IoIosClose } from "react-icons/io";
 import MintLineButton from "../Button/MintLineButton";
@@ -8,8 +8,8 @@ export const Container = styled.div`
   width: 100%;
   padding: 16px 62px;
   border-bottom: 1px solid #dcdcdc;
-  :last-child {
-    border: none;
+  &:last-child {
+    border-bottom: 1px solid red;
   }
   @media screen and (max-width: 875px) {
     display: flex;
@@ -17,11 +17,16 @@ export const Container = styled.div`
   }
 `;
 
+const Container2 = styled(Container)`
+  border-bottom: none;
+`;
+
 export const Inside = styled.div`
   font-size: 14px;
   color: #535353;
   line-height: 2;
   text-align: center;
+
   > .word-break {
     > a {
       display: inline-block;
@@ -73,14 +78,6 @@ export const ModalView = styled.div`
     float: right;
     margin: 20px 20px 0 0;
   }
-  > div.desc {
-    margin: 40px 0px 10px 45px;
-    color: #535353;
-    font-size: 20px;
-    @media screen and (max-width: 640px) {
-      font-size: 18px;
-    }
-  }
 `;
 
 export const BottomButton = styled.button`
@@ -111,7 +108,36 @@ export const MintButton3 = styled.button`
   }
 `;
 
+const TextArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+`;
+const LogoutAsk = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  width: 100%;
+  @media screen and (max-width: 640px) {
+    font-size: 18px;
+  }
+`;
+
+const Box = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const YesBtn = styled.div`
+  margin-right: 14px;
+`;
+
 export const HeaderModal = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(!isOpen);
@@ -136,34 +162,36 @@ export const HeaderModal = () => {
           </div>
         </Inside>
       </Container>
-      <Container>
+      <Container2>
         <Inside>
-          <ModalContainer>
-            <ModalBtn onClick={openModal}>로그아웃</ModalBtn>
-            {isOpen === true ? (
-              <ModalBackdrop onClick={openModal}>
-                <ModalView onClick={(e) => e.stopPropagation()}>
-                  <span className="close-btn">
-                    <IoIosClose className="close" size={30} onClick={openModal}></IoIosClose>
-                  </span>
-                  <div className="desc">로그아웃 하시겠습니까?</div>
-                  <BottomButton>
-                    {/* UserInfo.js / onClick={logoutHandler} */}
-                    <Link to="/" className="yes">
-                      <MintLineButton text="네" />
-                    </Link>
-                    <button onClick={openModal} className="no">
-                      <MintButton3 width="66px" height="30px">
-                        아니오
-                      </MintButton3>
-                    </button>
-                  </BottomButton>
-                </ModalView>
-              </ModalBackdrop>
-            ) : null}
-          </ModalContainer>
+          <ModalBtn onClick={openModal} className="last">
+            로그아웃
+          </ModalBtn>
         </Inside>
-      </Container>
+      </Container2>
+      <ModalContainer>
+        {isOpen === true ? (
+          <ModalBackdrop onClick={openModal}>
+            <ModalView onClick={(e) => e.stopPropagation()}>
+              <span className="close-btn">
+                <IoIosClose className="close" size={30} onClick={openModal}></IoIosClose>
+              </span>
+              <TextArea>
+                <LogoutAsk>로그아웃 하시겠습니까?</LogoutAsk>
+                <Box>
+                  {/* UserInfo.js / onClick={logoutHandler} */}
+                  <YesBtn>
+                    <MintLineButton text="네" handleSubmit={() => navigate("/")} />
+                  </YesBtn>
+                  <MintButton3 width="66px" height="30px" onClick={openModal}>
+                    아니오
+                  </MintButton3>
+                </Box>
+              </TextArea>
+            </ModalView>
+          </ModalBackdrop>
+        ) : null}
+      </ModalContainer>
     </>
   );
 };
