@@ -48,7 +48,6 @@ export const ModalBackdrop = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  border: 1px solid yellow;
   padding-top: 260px;
 `;
 
@@ -95,13 +94,13 @@ export const FilterPriceSlide = styled.div`
 `;
 
 export const FilterPriceSlideInner = styled.div`
+  /* 보이지 않지만 기능 문제 없음  */
   position: absolute;
   left: ${(props) => props.rangeMinPercent}%;
   right: ${(props) => props.rangeMaxPercent}%;
   height: 4px;
   border-radius: 10px;
   background-color: #b0b0b0;
-  border: 1px solid green;
 `;
 
 const FilterPriceRangeWrap = styled.div`
