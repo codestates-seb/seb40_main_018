@@ -237,20 +237,15 @@ const Detail = () => {
     },
   ];
   const [like, setLike] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [commentArray, setCommentArray] = useState(comments);
   const [isEdit, setIsEdit] = useState(false);
-  const [commentInput, setCommentInput] = useState(input);
+  const [editComment, setEditComment] = useState(null);
   // const [isSaved, setIsSaved] = useState(false);
 
   // 하트
   const onClickHandler = () => {
     setLike(!like);
-  };
-
-  const commentOpenHandler = () => {
-    setIsOpen(!isOpen);
   };
 
   // 다이어리 본문 수정버튼
@@ -275,10 +270,16 @@ const Detail = () => {
     }
   };
 
-  // 댓글 수정버튼
-  const commentEditInputHandler = (e) => {
-    setCommentInput(e.target.value);
+  // New Edit
+  const updateComment = (commentId, userName, comment) => {
+    const newComment = commentArray.map((el) => (el.commentId === commentId ? (commentId, userName, comment) : el));
+    setCommentArray(newComment);
+    setEditComment("");
   };
+  // 댓글 수정버튼
+  // const commentEditInputHandler = (e) => {
+  //   setCommentInput(e.target.value);
+  // };
 
   const commentEditBtn = ({ id }) => {
     const filtered = commentArray.filter((el) => el.id === id);
@@ -290,18 +291,23 @@ const Detail = () => {
   const commentSaveBtn = () => {
     // axios patch?
     setIsEdit(false);
-    console.log(commentInput);
     console.log("댓글 수정완료");
   };
-  // const commentSubmit = (e) => {
-  //   e.preventDefault();
-  // };
+
+  const commentSubmit = (e) => {
+    e.preventDefault();
+    if (!editComment) {
+      setCommentArray([...commentArray, { commentId: uuidv4(), userName: "kim", comment: input }]);
+    } else {
+      updateComment(input, editComment.commentId, editComment.userName);
+    }
+  };
 
   // 댓글 삭제
-  const commentDeleteHandler = ({ id }) => {
+  const commentDeleteHandler = ({ commentId }) => {
     // axios delete
     console.log("댓글 삭제");
-    setCommentArray(commentArray.filter((el) => el.id !== id));
+    setCommentArray(commentArray.filter((el) => el.commentId !== commentId));
   };
 
   return (
@@ -372,9 +378,8 @@ const Detail = () => {
       <CommentContainer>
         <CommentTitleArea>
           <CommentTitle>댓글</CommentTitle>
-          <IoIosArrowDropdown color="#535353" size="22" onClick={commentOpenHandler} />
+          <IoIosArrowDropdown color="#535353" size="22" />
         </CommentTitleArea>
-        {isOpen ? <div>hello</div> : null}
         <CommentInputArea>
           <CheckListInput
             value={input}
@@ -391,11 +396,14 @@ const Detail = () => {
               <CommentTextArea>
                 <CommentNickname>{el.userName}</CommentNickname>
                 {isEdit ? (
-                  <CommentEditInput type="text" defaultValue={el.comment} onChange={commentEditInputHandler} />
+                  <form onSubmit={commentSubmit}>
+                    <CommentEditInput type="text" defaultValue={el.comment} />
+                  </form>
                 ) : (
                   <Comment>{el.comment}</Comment>
                 )}
               </CommentTextArea>
+
               <CommentBtnArea>
                 {isEdit ? (
                   <CommentEditBtn onClick={() => commentSaveBtn()}>저장</CommentEditBtn>
