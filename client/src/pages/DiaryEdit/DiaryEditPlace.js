@@ -23,7 +23,7 @@ const PlaceContainer = styled.div`
 `;
 
 const PlaceArea = styled(InputContainer)`
-  width: 322px;
+  width: 341px;
 `;
 const Tags = styled.div`
   margin-left: 10px;

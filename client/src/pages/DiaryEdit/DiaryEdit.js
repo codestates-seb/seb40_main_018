@@ -3,13 +3,13 @@ import { Location } from "../Diary/Location";
 import styled from "styled-components";
 import LoginHeader from "../../components/Header/LoginHeader";
 import MintLineButton from "../../components/Button/MintLineButton";
-import MintButton from "../../components/Button/MintButton";
 import DiaryEditTitle from "./DiaryEditTitle";
 import DiaryEditImg from "./DiaryEditImg";
 import DiaryEditText from "./DiaryEditText";
 import DiaryEditPrice from "./DiaryEditPrice";
 import DiaryEditPlace from "./DiaryEditPlace";
 import DiaryEditHashtag from "./DiaryEditHashtag";
+import CancelModal from "../../components/Modal/CancelModal";
 
 const Section = styled.section`
   display: flex;
@@ -30,6 +30,7 @@ const BtnArea = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap;
   > button {
     margin-left: 20px;
   }
@@ -114,7 +115,7 @@ const DiaryEdit = () => {
           <DiaryEditHashtag tags={tags} setTags={setTags} />
           <BtnArea>
             <MintLineButton className="submit" text="수정" handleSubmit={submitHandler}></MintLineButton>
-            <MintButton className="cancel" text="취소"></MintButton>
+            <CancelModal />
           </BtnArea>
         </Container>
       </Section>

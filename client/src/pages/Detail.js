@@ -103,7 +103,7 @@ const PlaceAndPrice = styled.div`
   display: flex;
 `;
 const PlaceArea = styled(InputContainer)`
-  width: 110px;
+  width: 112px;
   height: 34px;
   margin-right: 24px;
   font-size: 12px;
