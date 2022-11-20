@@ -3,8 +3,8 @@ package project.danim.member.domain;
 import project.danim.exeption.BusinessLogicException;
 import project.danim.exeption.ExceptionCode;
 
-public class MemberExistException extends BusinessLogicException {
-    public MemberExistException(ExceptionCode exceptionCode) {
+public class MemberExistsException extends BusinessLogicException {
+    public MemberExistsException(ExceptionCode exceptionCode) {
         super(exceptionCode);
     }
 }
