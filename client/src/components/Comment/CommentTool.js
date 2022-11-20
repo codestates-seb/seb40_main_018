@@ -3,7 +3,7 @@ import { Avatar } from "@mui/material";
 import { Box } from "@mui/system";
 
 // 프로필 아이콘 글자 한글일때 구분
-export const check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+// export const check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 
 // time
 export function timeForToday(time) {
@@ -43,7 +43,7 @@ export const Item = styled(Box)(({ theme }) => ({
 }));
 
 export const ProfileIcon = styled(Avatar)(() => ({
-  backgroundColor: "#40d8d8",
-  width: "2rem",
-  height: "2rem",
+  // backgroundColor: "#40d8d8",
+  // width: "2rem",
+  // height: "2rem",
 }));

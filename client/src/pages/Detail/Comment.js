@@ -25,19 +25,19 @@ const Comment = ({ user }) => {
   const editorRef = useRef();
   const date = new Date(); // 작성 시간
 
-  // open editor to edit comment
   const [openEditor, setOpenEditor] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    // 마크다운 변환
+    // 마크다운 변환(4줄)
+    // 값 가져오기
     const editorInstance = editorRef.current.getInstance();
+    // 마크다운 텍스트를 추출해주는 내장 메서드 getMarkdown() 이용
     const getContent = editorInstance.getMarkdown();
     setDisplay(!display);
 
     // 데이터 저장
-    // setCommentValule(text);
     const data = {
       content: getContent,
       writer: user,
@@ -51,10 +51,8 @@ const Comment = ({ user }) => {
 
   // Edit comment
   const onEdit = (commentId) => {
-    // console.log(commentId);
     const editorInstance = editorRef.current.getInstance();
     const getContent = editorInstance.getMarkdown();
-    console.log(getContent);
 
     let data = { commentId: commentId, content: getContent };
     dispatch(editComment(data));
@@ -68,6 +66,7 @@ const Comment = ({ user }) => {
   useEffect(() => {
     localStorage.setItem("reply", JSON.stringify(comments));
     setLocal(comments.filter((comment) => comment.responseTo === "root"));
+    // console.log(local);
   }, [comments]);
 
   return (

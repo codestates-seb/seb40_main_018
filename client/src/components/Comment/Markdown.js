@@ -1,7 +1,7 @@
 import "@toast-ui/editor/dist/toastui-editor.css";
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { coyWithoutShadows } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 import ReactMarkdown from "react-markdown";
 
@@ -18,7 +18,7 @@ const Markdown = ({ comment }) => {
               <SyntaxHighlighter
                 // eslint-disable-next-line react/no-children-prop
                 children={String(children).replace(/\n$/, "")}
-                style={dark}
+                style={coyWithoutShadows}
                 language={match[1]}
                 PreTag="div"
                 {...props}
