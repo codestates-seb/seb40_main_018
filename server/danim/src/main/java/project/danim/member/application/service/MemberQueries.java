@@ -14,7 +14,7 @@ import project.danim.member.domain.MemberNotFoundException;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberQueries implements MemberQueriesUseCase {
-    MemberRepositoryPersistenceAdapter memberPersistenceAdapter;
+    private final MemberRepositoryPersistenceAdapter memberPersistenceAdapter;
 
     @Override
     public MemberResponseForProfile getMyProfile(String email) {
