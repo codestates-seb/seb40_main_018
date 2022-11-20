@@ -193,10 +193,6 @@ const Detail = () => {
   //   },
   // ];
   const [like, setLike] = useState(false);
-  // const [commentArray, setCommentArray] = useState(comments);
-
-  // const [isEdit, setIsEdit] = useState(false);
-  // const [isSaved, setIsSaved] = useState(false);
 
   // 하트
   const onClickHandler = () => {
@@ -213,34 +209,6 @@ const Detail = () => {
   // axios post
   // const onChangeHandler = (e) => {
   //   setInput(e.target.value);
-  // };
-
-  // const commentAddHandler = (e) => {
-  //   e.preventDefault();
-  //   if (input === "") {
-  //     return;
-  //   } else {
-  //     setCommentArray([...commentArray, { commentId: uuidv4(), userName: "kim", comment: input }]);
-  //     setInput("");
-  //   }
-  // };
-
-  // 댓글 수정버튼
-  // const commentEditInputHandler = (e) => {
-  //   setCommentInput(e.target.value);
-  // };
-
-  // const commentEditBtn = ({ id }) => {
-  //   const filtered = commentArray.filter((el) => el.id === id);
-  //   console.log("filtered", filtered[0].id);
-  //   setIsEdit(true);
-  // };
-
-  // 댓글 수정 완료하면 server로 보내기 -> 보내고 다시 get? 아니면 그냥 update가 되나? 아니면 useEffect get(){,[여기함수를 써줘야할까...?]}
-  // const commentSaveBtn = () => {
-  //   // axios patch?
-  //   setIsEdit(false);
-  //   console.log("댓글 수정완료");
   // };
 
   const [user, setUser] = useState("Jisoo");
