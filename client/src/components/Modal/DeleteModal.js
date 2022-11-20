@@ -1,6 +1,7 @@
+import axios from "axios";
 import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import styled from "styled-components";
 import MintLineButton from "../Button/MintLineButton";
@@ -52,6 +53,7 @@ const YesBtn = styled.div`
 
 function DeleteModal() {
   const navigate = useNavigate();
+  const id = useParams().id;
 
   const [isOpen2, setIsOpen2] = useState(false);
   const openModal2 = () => {
@@ -60,8 +62,11 @@ function DeleteModal() {
 
   const submitHandler = () => {
     // axios
-    console.log("삭제");
-    navigate("/");
+    axios.delete(`http://localhost:4000/diary/` + id).then((res) => {
+      console.log(res.status);
+      console.log("삭제");
+      navigate("/");
+    });
   };
   return (
     <>
