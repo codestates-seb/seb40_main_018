@@ -2,6 +2,8 @@ import styled from "styled-components";
 import LoginHeader from "../components/Header/LoginHeader";
 import { Card } from "../components/Main/Card";
 import { MainTab } from "../components/Main/MainTab";
+import PriceFilter from "../Filter/PriceFilter";
+
 
 const Main = styled.div`
   display: flex;
@@ -9,9 +11,7 @@ const Main = styled.div`
   align-items: center;
   background-color: #fbfbfb;
 `;
-// const Wrapper = styled.div`
-//   margin: 100px 100px 100px 100px;
-// `;
+
 export default function MainPage() {
   return (
     <Main>
@@ -21,5 +21,9 @@ export default function MainPage() {
         <Card />
       </div>
     </Main>
+
+      <PriceFilter />
+    </>
+
   );
 }

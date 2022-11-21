@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "content": "ㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇ",
+      "writer": "Jisoo",
+      "postId": "123123",
+      "created_at": "Mon Nov 21 2022 18:38:01 GMT+0900 (한국 표준시)",
+      "responseTo": "root",
+      "exist": true,
+      "id": 1
+    },
+    {
+      "content": "ㅇㄴ??????",
+      "writer": "Jisoo",
+      "postId": "123123",
+      "created_at": "Mon Nov 21 2022 20:51:30 GMT+0900 (한국 표준시)",
+      "responseTo": "root",
+      "exist": true,
+      "id": 2
+    }
+  ]
+}

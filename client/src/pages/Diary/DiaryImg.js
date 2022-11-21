@@ -64,13 +64,9 @@ const UploadBtn = styled.button`
 `;
 const fileTypes = ["JPG", "PNG", "GIF"];
 
-const DiaryImg = () => {
-  const [imageList, setImageList] = useState([]);
-  // if (imageList.length > 10) {
-  //   alert("max10");
-  // }
-  console.log(imageList);
+const DiaryImg = ({ imageList, setImageList }) => {
   const [isDrag, setIsDrag] = useState(false);
+
   const imageRegistHandler = (files) => {
     let tempImagelist = [...imageList];
     for (let i = 0; i < files.length; i++) {
@@ -113,7 +109,7 @@ const DiaryImg = () => {
           </ImgSliderBox>
         )}
       </InputContainer>
-      {/* <InputContainer2> */}
+
       <UlStyle>
         {imageList.map((image, index) => {
           return (
@@ -137,7 +133,6 @@ const DiaryImg = () => {
           <UploadBtn type="button">{!isDrag && <MdUploadFile />}</UploadBtn>
         </FileUploader>
       </UlStyle>
-      {/* </InputContainer2> */}
     </>
   );
 };

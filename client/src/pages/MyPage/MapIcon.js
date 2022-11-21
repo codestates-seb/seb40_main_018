@@ -8,8 +8,8 @@ const Container = styled.div`
   margin-top: 10px;
 `;
 const SVG = styled.svg`
-  background-color: #fcfcfc;
-  width: 700px;
+  background-color: #fbfbfb;
+  width: 522px;
   /* height: 100vh; */
 `;
 

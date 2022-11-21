@@ -32,15 +32,18 @@ const Input = styled.input`
 
 const ErrorMessage = styled.p`
   color: #de4f54 !important;
+  font-size: 12px;
 `;
 
 const ShortInput = ({ width, height, text, type, value, handleValue, errorMsg }) => {
   return (
-    <InputContainer width={width} height={height}>
-      <InputTitle>{text}</InputTitle>
-      <Input type={type} value={value} handleValue={handleValue} onChange={({ target }) => console.log(target.value)} />
+    <>
+      <InputContainer width={width} height={height}>
+        <InputTitle>{text}</InputTitle>
+        <Input type={type} value={value} onChange={({ target }) => handleValue(target.value)} />
+      </InputContainer>
       <ErrorMessage>{errorMsg}</ErrorMessage>
-    </InputContainer>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Test = styled.div`
-  margin: 19px 0 19px 0px;
+  margin: 32px 0 19px 0px;
   > .list-item {
     width: 100%;
     display: flex;

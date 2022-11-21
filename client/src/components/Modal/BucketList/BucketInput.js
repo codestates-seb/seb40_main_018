@@ -9,7 +9,6 @@ export const InputContainer = styled.div`
   height: ${(props) => (props.height ? props.height : "58px")};
   border-radius: 35px;
   box-shadow: 0 2px 2px 1px #0000002e;
-  background-color: white;
   display: flex;
   > .form {
     display: flex;
@@ -20,7 +19,7 @@ export const Input = styled.input`
   outline-style: none;
   border: none;
   font-size: 14px;
-  width: 341.12px;
+  width: 365px;
   color: #535353;
   margin-top: -2px;
   margin-left: 20px;
@@ -66,7 +65,7 @@ export const BucketInput = ({ input, setInput, todos, setTodos, editTodo, setEdi
     }
   };
   return (
-    <InputContainer width="399px" height="36px">
+    <InputContainer width="424px" height="36px">
       <form onSubmit={onFormSubmit} className="form">
         <Input type="text" value={input} required onChange={setInputChange} />
         <Button type="submit">

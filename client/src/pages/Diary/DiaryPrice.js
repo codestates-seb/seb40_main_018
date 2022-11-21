@@ -33,11 +33,14 @@ const Price = styled.input`
   }
 `;
 
-const DiaryPrice = () => {
+const DiaryPrice = ({ price, setPrice }) => {
+  const onChangeHandler = (e) => {
+    setPrice(e.target.value);
+  };
   return (
     <PriceArea>
       <TitleText>경비 :</TitleText>
-      <Price type="number" />
+      <Price type="number" value={price} onChange={onChangeHandler} />
       <BiWon />
     </PriceArea>
   );
