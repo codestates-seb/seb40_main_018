@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CheckInput } from "./CheckInput";
+// import { CheckInput } from "./CheckInput";
 import { CheckList } from "./CheckList";
 import styled from "styled-components";
 import axios from "axios";
@@ -56,13 +56,14 @@ export const CheckListModal = () => {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState(initialState);
   const [editTodo, setEditTodo] = useState(null);
+  const [completed, setcompleted] = useState(false);
 
   // useEffect(() => {
   //   localStorage.setItem("todos", JSON.stringify(todos));
   // }, [todos]);
 
   useEffect(() => {
-    axios.get("http://localhost:4002/todos").then((result) => {
+    axios.get("http://localhost:4000/todos").then((result) => {
       setTodos(result.data);
     });
   }, []);
@@ -73,17 +74,28 @@ export const CheckListModal = () => {
       <Container>
         <ListHeader />
         <ListInput>
-          <CheckInput
+          {/* <CheckInput
             input={input}
             setInput={setInput}
             todos={todos}
             setTodos={setTodos}
             editTodo={editTodo}
             setEditTodo={setEditTodo}
-          />
+            completed={completed}
+            setcompleted={setcompleted}
+          /> */}
         </ListInput>
         <div>
-          <CheckList todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} />
+          <CheckList
+            input={input}
+            setInput={setInput}
+            todos={todos}
+            setTodos={setTodos}
+            setEditTodo={setEditTodo}
+            editTodo={editTodo}
+            completed={completed}
+            setcompleted={setcompleted}
+          />
         </div>
       </Container>
     </Block>
