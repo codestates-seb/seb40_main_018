@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-test'
@@ -29,8 +29,8 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	implementation 'com.google.code.gson:gson'
 
-	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	implementation 'io.springfox:springfox-swagger2:2.9.2'
+	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 
 	implementation "org.mapstruct:mapstruct:1.5.3.Final"
 	compileOnly 'org.projectlombok:lombok:1.18.24'
