@@ -101,7 +101,6 @@ const Diary = () => {
       .post("http://localhost:4000/diary", diaryInfo)
       .then((res) => navigate(`/detail/${res.data.id}`))
       .then((err) => console.log(err));
-    // console.log(diaryInfo);
   };
   return (
     <>

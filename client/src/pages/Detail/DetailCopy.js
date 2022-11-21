@@ -207,9 +207,7 @@ const CommentEditInput = styled.input`
 const DetailCopy = () => {
   const id = useParams().id;
   const navigate = useNavigate();
-  // const navigate =useNavigate()
 
-  // const inputRef = useRef("");
   const images = [
     { url: "images/1.jpg" },
     { url: "images/2.jpg" },

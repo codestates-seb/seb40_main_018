@@ -269,7 +269,7 @@ function PriceFilter() {
                     <div className="flex">
                       <span>₩</span>
                       <InputContainer>
-                        <input autoComplete="off" type="text" width="120" value={rangeMinValue} />
+                        <input autoComplete="off" type="text" width="120" value={rangeMinValue} readOnly />
                       </InputContainer>
                     </div>
                   </Min>
@@ -279,7 +279,7 @@ function PriceFilter() {
                     <div className="flex">
                       <span>₩</span>
                       <InputContainer>
-                        <input autoComplete="off" type="text" value={rangeMaxValue} />
+                        <input autoComplete="off" type="text" value={rangeMaxValue} readOnly />
                       </InputContainer>
                     </div>
                   </Max>

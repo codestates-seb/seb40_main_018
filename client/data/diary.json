@@ -64,26 +64,6 @@
     },
     {
       "nickname": "dlwlrma",
-      "title": "찐막테스트",
-      "year": "2021",
-      "month": "10",
-      "day": "30",
-      "weather": "황사",
-      "imageList": [],
-      "question": "이번 여행에서 맛있게 먹은 음식은 무엇인가요?",
-      "counter": 1,
-      "diary": "꺄아아아아아 마지막 테스트!!!",
-      "price": "30000",
-      "selected": "충청북도",
-      "city": "증평군",
-      "tags": [
-        "찐막",
-        "굿"
-      ],
-      "id": 4
-    },
-    {
-      "nickname": "dlwlrma",
       "title": "hello ",
       "year": "2022",
       "month": "11",
@@ -159,6 +139,27 @@
         "ㅇㄹㄴㅇㄹ"
       ],
       "id": 7
+    },
+    {
+      "nickname": "dlwlrma",
+      "title": "테스트중아ㅜ이;ㅏㄹㄴ이;ㅏ",
+      "year": "2020",
+      "month": "08",
+      "day": "29",
+      "weather": "안개",
+      "imageList": [],
+      "question": "여행에서 자주 들은 노래는 무엇인가요?",
+      "counter": 1,
+      "diary": "ㄴㅇㄹㄴㅇㄹㄴ",
+      "price": "111",
+      "selected": "서울특별시",
+      "city": "종로구",
+      "tags": [
+        "태그",
+        "확인중",
+        "수정용"
+      ],
+      "id": 8
     }
   ]
 }
