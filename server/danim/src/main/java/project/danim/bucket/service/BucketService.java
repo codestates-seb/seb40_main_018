@@ -8,7 +8,6 @@ import project.danim.bucket.dto.BucketPatchDto;
 import project.danim.bucket.dto.BucketPostDto;
 import project.danim.bucket.dto.BucketResponseDto;
 import project.danim.bucket.repository.BucketRepository;
-import project.danim.check.domain.Check;
 import project.danim.exeption.BusinessLogicException;
 import project.danim.exeption.ExceptionCode;
 

@@ -3,7 +3,6 @@ package project.danim.bucket.dto;
 import lombok.Getter;
 
 @Getter
-
 public class BucketDeleteDto {
 
     private Long bucketId;
