@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { HiFilter } from "react-icons/hi";
 import { useState } from "react";
+import { IoIosClose } from "react-icons/io";
 
 export const Block = styled.div`
   margin-top: 185px;
@@ -42,12 +43,11 @@ export const ModalContainer = styled.div`
 
 export const ModalBackdrop = styled.div`
   position: absolute;
-  /* z-index: 999; // card 보다 높다 */
+  /* z-index: 999; // card 보다 높이 지정 */
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  border: 1px solid yellow;
   padding-top: 260px;
 `;
 
@@ -60,13 +60,19 @@ export const Container = styled.div`
 
 const Box = styled.div`
   position: relative;
-  border: 1px solid blue;
+  /* border: 1px solid pink; */
 `;
 
 export const Text = styled.div`
   margin: 10px 0 6px 19px;
   font-size: 14px;
   color: #63aeae;
+`;
+
+const CloseBtn = styled.span`
+  cursor: pointer;
+  float: right;
+  margin: -30px 10px 0 0;
 `;
 
 export const Content = styled.div`
@@ -81,14 +87,16 @@ export const Content = styled.div`
 export const FilterPriceSlide = styled.div`
   position: relative;
   height: 4px;
-  width: 214px;
+  width: 220px;
   border-radius: 10px;
   background-color: #dddddd;
+  margin-left: 21px;
 `;
 
 export const FilterPriceSlideInner = styled.div`
+  /* 보이지 않지만 기능 문제 없음  */
   position: absolute;
-  left: ${(props) => props.rangeMinPercent}%; // %
+  left: ${(props) => props.rangeMinPercent}%;
   right: ${(props) => props.rangeMaxPercent}%;
   height: 4px;
   border-radius: 10px;
@@ -97,18 +105,19 @@ export const FilterPriceSlideInner = styled.div`
 
 const FilterPriceRangeWrap = styled.div`
   position: relative;
-  border: 1px solid yellow;
-  width: 214px;
+  /* border: 1px solid green; */
+  width: 224px;
+  margin-left: 20px;
 `;
 
 const FilterPriceRangeMin = styled.input`
   position: absolute;
-  top: -12px;
+  top: -10px;
   width: 100%;
   background: none;
   -webkit-appearance: none;
-  border: 1px solid;
   pointer-events: none;
+  width: 224px;
   &::-webkit-slider-thumb {
     height: 15px;
     width: 15px;
@@ -121,37 +130,68 @@ const FilterPriceRangeMin = styled.input`
 `;
 
 const FilterPriceRangeMax = styled(FilterPriceRangeMin)`
-  border: 1px solid pink;
-  /* top: 10px; // 지우기 */
+  width: 224px;
+`;
+
+const InputContainer = styled.div`
+  > input {
+    border: none;
+    outline: none;
+    font-size: 8px;
+    width: 80px;
+    margin-left: 2px;
+  }
 `;
 
 const PriceBox = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
 `;
 
 const Min = styled.div`
   border-radius: 8px !important;
   box-shadow: rgb(176 176 176) 0px 0px 0px 1px inset;
-  > .price {
-    outline: none;
-    border: none;
+  font-size: 6px;
+  width: 100px;
+  padding: 5px;
+
+  > .text {
+    /* border: 1px solid red; */
+    color: #535353;
+  }
+
+  > .flex {
+    display: flex;
   }
 `;
 
 const Max = styled.div`
   border-radius: 8px !important;
   box-shadow: rgb(176 176 176) 0px 0px 0px 1px inset;
+  font-size: 8px;
+  width: 100px;
+  padding: 5px;
+
+  > .text {
+    /* border: 1px solid red; */
+    color: #535353;
+  }
+  > .flex {
+    display: flex;
+  }
 `;
 const Mid = styled.div`
   margin: 8px;
 `;
 
 function PriceFilter() {
-  const fixedMinPrice = 100;
-  const fixedMaxPrice = 100000;
-  const priceGap = 10000;
+  // 막대 필터 적용시 자동 필터 검색
+  const fixedMinPrice = 10000;
+  const fixedMaxPrice = 1000000;
+  const priceGap = 100000;
   const [rangeMinValue, setRangeMinValue] = useState(fixedMinPrice);
   const [rangeMaxValue, setRangeMaxValue] = useState(fixedMaxPrice);
   const [rangeMinPercent, setRangeMinPercent] = useState(0);
@@ -189,6 +229,9 @@ function PriceFilter() {
             <Container onClick={openModal}>
               <Box onClick={(e) => e.stopPropagation()}>
                 <Text>가격 범위</Text>
+                <CloseBtn>
+                  <IoIosClose className="close" size={30} onClick={openModal} color="#535353"></IoIosClose>
+                </CloseBtn>
                 <Content>
                   <div>총 예산</div>
                 </Content>
@@ -222,15 +265,23 @@ function PriceFilter() {
                 </FilterPriceRangeWrap>
                 <PriceBox>
                   <Min>
-                    <div>최저예산</div>
-                    <span>₩</span>
-                    <input className="price" autoComplete="off" type="text" value="23020"></input>
+                    <div className="text">최저예산</div>
+                    <div className="flex">
+                      <span>₩</span>
+                      <InputContainer>
+                        <input autoComplete="off" type="text" width="120" value={rangeMinValue} />
+                      </InputContainer>
+                    </div>
                   </Min>
                   <Mid>-</Mid>
                   <Max>
-                    <div>최고예산</div>
-                    <span>₩</span>
-                    <input className="price" autoComplete="off" type="text" value="23020"></input>
+                    <div className="text">최고예산</div>
+                    <div className="flex">
+                      <span>₩</span>
+                      <InputContainer>
+                        <input autoComplete="off" type="text" value={rangeMaxValue} />
+                      </InputContainer>
+                    </div>
                   </Max>
                 </PriceBox>
               </Box>
