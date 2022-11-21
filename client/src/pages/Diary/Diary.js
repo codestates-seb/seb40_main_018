@@ -77,6 +77,9 @@ const Diary = () => {
 
   //post
   const submitHandler = () => {
+    const formData = new FormData();
+    formData.append("file", imageList);
+    console.log("formData", formData);
     const diaryInfo = {
       // Id: Id,
       nickname: "dlwlrma",

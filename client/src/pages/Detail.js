@@ -104,7 +104,7 @@ const PlaceAndPrice = styled.div`
   display: flex;
 `;
 const PlaceArea = styled(InputContainer)`
-  width: 112px;
+  width: 140px;
   height: 34px;
   margin-right: 24px;
   font-size: 12px;
@@ -117,6 +117,7 @@ const PriceArea = styled(InputContainer)`
 const TagsArea = styled.div`
   width: 700px;
 `;
+
 const BtnArea = styled.div`
   font-size: 12px;
   display: flex;
@@ -367,7 +368,8 @@ const Detail = () => {
           <PriceArea>총 예산 : {diaryDetail.price} ₩</PriceArea>
         </PlaceAndPrice>
         <TagsArea>
-          {diaryDetail.tags && diaryDetail.tags.map((el, index) => <DarkMintButton key={index} text={el} />)}
+          {diaryDetail.tags &&
+            diaryDetail.tags.map((el, index) => <DarkMintButton key={index} text={el} width="auto" />)}
         </TagsArea>
         <BtnArea>
           <EditBtn onClick={editBtnHandler}>수정</EditBtn>

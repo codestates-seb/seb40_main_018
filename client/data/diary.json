@@ -81,6 +81,84 @@
         "굿"
       ],
       "id": 4
+    },
+    {
+      "nickname": "dlwlrma",
+      "title": "hello ",
+      "year": "2022",
+      "month": "11",
+      "day": "20",
+      "weather": "맑음",
+      "imageList": [],
+      "question": "나는 어떤 취향의 여행자일까요?",
+      "counter": 1,
+      "diary": "꺄아아아아아아아아아",
+      "price": "100",
+      "selected": "충청남도",
+      "city": "홍성군",
+      "tags": [
+        "난난난",
+        "나나나",
+        "꺄아아",
+        "rmsepdlrprlfrpTmaus",
+        "dlrpdlqfurgkfeosms",
+        "answprk djqtdjdy",
+        "dkakwsp",
+        "xormrkdjacjdrlf",
+        "rmekdmadpaghkd",
+        "dmfahdskdgos"
+      ],
+      "id": 5
+    },
+    {
+      "nickname": "dlwlrma",
+      "title": "나나난난난",
+      "year": "2020",
+      "month": "09",
+      "day": "29",
+      "weather": "안개",
+      "imageList": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ],
+      "question": "나는 어떤 취향의 여행자일까요?",
+      "counter": 1,
+      "diary": "이미지 테스트 중s",
+      "price": "1499",
+      "selected": "서울특별시",
+      "city": "종로구",
+      "tags": [
+        "난난나",
+        "나나"
+      ],
+      "id": 6
+    },
+    {
+      "nickname": "dlwlrma",
+      "title": "이거는 삭제한거 확인용",
+      "year": "2021",
+      "month": "11",
+      "day": "30",
+      "weather": "안개",
+      "imageList": [],
+      "question": "다음에 이곳에 다시 여행을 온다면 누구와 함께 오고 싶나요?",
+      "counter": 1,
+      "diary": "ㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴ",
+      "price": "1",
+      "selected": "충청북도",
+      "city": "종로구",
+      "tags": [
+        "ㅇㄹㄴㅇㄹ"
+      ],
+      "id": 7
     }
   ]
 }
