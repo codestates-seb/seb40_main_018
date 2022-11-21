@@ -1,5 +1,7 @@
+import { UserEditBox } from "../components/UserEdit/UserEdit";
+
 function UserEdit() {
-  return <div>UserEdit</div>;
+  return <UserEditBox />;
 }
 
 export default UserEdit;

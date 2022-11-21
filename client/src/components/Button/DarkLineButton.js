@@ -8,6 +8,7 @@ const DarkLineButtonStyle = styled.button`
   border: 1px solid hsl(180, 32%, 54%);
   border-radius: 35px;
   font-size: 12px;
+
   &:hover {
     background-color: hsl(180, 12%, 96%);
   }

@@ -2,13 +2,15 @@ import styled from "styled-components";
 
 const DarkMintTagStyle = styled.button`
   padding: 0px 26px 0px 26px;
-  height: 30px;
+  width: ${(props) => (props.width ? props.width : "auto")};
+  height: ${(props) => (props.height ? props.height : "30px")};
   clear: both;
   float: left;
   color: hsl(0, 0%, 100%);
   background-color: hsl(180, 32%, 64%);
   border-radius: 35px;
   font-size: 12px;
+  border: none;
   &:hover {
     background-color: hsl(180, 36%, 53%);
   }
@@ -16,9 +18,12 @@ const DarkMintTagStyle = styled.button`
     background-color: hsl(180, 36%, 49%);
   }
 `;
-
-const DarkMintTag = ({ text, handleSubmit }) => {
-  return <DarkMintTagStyle onClick={handleSubmit}>{text}</DarkMintTagStyle>;
+const DarkMintTag = ({ text, handleSubmit, width, height }) => {
+  return (
+    <DarkMintTagStyle onClick={handleSubmit} width={width} height={height}>
+      {text}
+    </DarkMintTagStyle>
+  );
 };
 
 export default DarkMintTag;
