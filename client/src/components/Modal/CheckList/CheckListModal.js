@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CheckInput } from "./CheckInput";
 import { CheckList } from "./CheckList";
 import styled from "styled-components";
-// import axios from "axios";
+import axios from "axios";
 
 const DarkMintShadowButton = styled.button`
   height: 30px;
@@ -57,15 +57,16 @@ export const CheckListModal = () => {
   const [todos, setTodos] = useState(initialState);
   const [editTodo, setEditTodo] = useState(null);
 
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
-
   // useEffect(() => {
-  //   axios.get("https://jsonplaceholder.typicode.com/todos").then((result) => {
-  //     setTodos(result.data);
-  //   });
-  // }, []);
+  //   localStorage.setItem("todos", JSON.stringify(todos));
+  // }, [todos]);
+
+  useEffect(() => {
+    axios.get("http://localhost:4002/todos").then((result) => {
+      setTodos(result.data);
+    });
+  }, []);
+
   return (
     <Block>
       <DarkMintShadowButton>체크리스트</DarkMintShadowButton>

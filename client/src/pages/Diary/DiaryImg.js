@@ -66,6 +66,7 @@ const fileTypes = ["JPG", "PNG", "GIF"];
 
 const DiaryImg = ({ imageList, setImageList }) => {
   const [isDrag, setIsDrag] = useState(false);
+
   const imageRegistHandler = (files) => {
     let tempImagelist = [...imageList];
     for (let i = 0; i < files.length; i++) {

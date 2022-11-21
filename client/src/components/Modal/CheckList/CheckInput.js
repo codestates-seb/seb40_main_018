@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { MdOutlineUpdate } from "react-icons/md";
+import axios from "axios";
 
 export const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "350px")};
@@ -43,6 +44,7 @@ export const CheckInput = ({ input, setInput, todos, setTodos, editTodo, setEdit
     setTodos(newTodo);
     setEditTodo("");
   };
+
   useEffect(() => {
     if (editTodo) {
       setInput(editTodo.title);
@@ -63,6 +65,21 @@ export const CheckInput = ({ input, setInput, todos, setTodos, editTodo, setEdit
     } else {
       updateTodo(input, editTodo.id, editTodo.completed);
     }
+    // useEffect(() => {
+    const todoPost = {
+      title: input,
+      completed: false,
+    };
+    axios
+      .post("http://localhost:4002/todos", todoPost)
+      .then((res) => console.log(res.data))
+      .then((err) => console.log(err));
+    // }, []);
+
+    axios
+      .patch(`http://localhost:4002/todos/` + editTodo.id, todoPost)
+      .then((res) => console.log(res.data))
+      .then((err) => console.log(err));
   };
   return (
     <InputContainer width="424px" height="36px">

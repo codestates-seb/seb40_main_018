@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { Location } from "./Location";
 import styled from "styled-components";
@@ -12,6 +13,7 @@ import DiaryPrice from "./DiaryPrice";
 import DiaryPlace from "./DiaryPlace";
 import DiaryHashtag from "./DiaryHashtag";
 import CancelModal from "../../components/Modal/CancelModal";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.section`
   display: flex;
@@ -38,6 +40,7 @@ const BtnArea = styled.div`
 `;
 
 const Diary = () => {
+  const navigate = useNavigate();
   const randomQuestions = [
     "이번 여행에서 맛있게 먹은 음식은 무엇인가요?",
     "가장 좋았던 장소는 어디였나요?",
@@ -74,8 +77,12 @@ const Diary = () => {
 
   //post
   const submitHandler = () => {
+    const formData = new FormData();
+    formData.append("file", imageList);
+    console.log("formData", formData);
     const diaryInfo = {
-      // memberId: memberId,
+      // Id: Id,
+      nickname: "dlwlrma",
       title: title,
       year: year,
       month: month,
@@ -90,7 +97,10 @@ const Diary = () => {
       city: city,
       tags: tags,
     };
-    console.log(diaryInfo);
+    axios
+      .post("http://localhost:4000/diary", diaryInfo)
+      .then((res) => navigate(`/detail/${res.data.id}`))
+      .then((err) => console.log(err));
   };
   return (
     <>

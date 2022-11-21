@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import axios from "axios";
 
 export const Test = styled.div`
   margin: 32px 0 19px 0px;
@@ -95,6 +96,10 @@ export const CheckList = ({ todos, setTodos, setEditTodo }) => {
 
   const handleDelete = ({ id }) => {
     setTodos(todos.filter((todos) => todos.id !== id));
+    axios
+      .delete(`http://localhost:4002/todos/` + id)
+      .then((res) => console.log(res))
+      .then((err) => console.log(err));
   };
 
   return (
