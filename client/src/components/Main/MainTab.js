@@ -1,13 +1,16 @@
 import styled from "styled-components";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
+import { FaHeart } from "react-icons/fa";
+const MainContainer = styled.div`
+  background-color: #fbfbfb;
+`;
 
 const FilterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  margin-top: 18px;
-  padding: 0;
+  margin-top: 90px;
   flex-flow: wrap;
   @media screen and (max-width: 982px) {
     display: flex;
@@ -15,30 +18,25 @@ const FilterContainer = styled.div`
   }
   > .input-search {
     display: flex;
-    max-width: calc(4rem * 3);
-    margin: 0;
-    flex-direction: row;
-    align-items: stretch;
+    max-width: 200px;
     height: 100%;
-    flex-wrap: nowrap;
-    flex-shrink: 10000;
     flex-grow: 1;
     position: relative;
     padding: 5px 5px;
     background-color: #ffffff;
-    border: 1px solid #babfc4;
-    border-radius: 4px;
+    border: 1px solid #86c1c1;
+    border-radius: 35px;
     box-sizing: inherit;
     &:focus-within {
-      box-shadow: 0px 0px 3px 3px rgba(107, 186, 247, 0.5);
+      box-shadow: 0px 0px 1px 1px #5da7a7;
       border: none;
       outline: 0;
     }
     > input {
       font-size: 12px;
       width: 100%;
-      flex-grow: 1;
-      height: 14.994px;
+      height: 30px;
+      align-items: center;
       border: none;
       :focus {
         outline: none;
@@ -46,13 +44,12 @@ const FilterContainer = styled.div`
     }
   }
   > .sort {
-    /* 우측 정렬 */
     margin-bottom: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     @media screen and (max-width: 640px) {
-      font-size: 15.4px;
+      font-size: 14px;
       flex-direction: column !important;
       align-items: flex-start;
       gap: 10px;
@@ -60,11 +57,14 @@ const FilterContainer = styled.div`
     }
     > .question-sort {
       margin-bottom: 12px;
+      border-bottom: solid 3px #c2c2c2;
+
       > button {
-        font-size: 12px;
-        border: 1px solid hsl(210, 8%, 55%);
-        padding: 8px 10px;
-        color: hsl(210, 8%, 45%);
+        font-size: 20px;
+        border: none;
+        padding: 8px 24px;
+        color: #535353;
+        background-color: #fbfbfb;
         @media screen and (max-width: 640px) {
           height: 35.44px;
           padding-left: 0.4em;
@@ -72,29 +72,13 @@ const FilterContainer = styled.div`
           flex-direction: column-reverse;
         }
         cursor: pointer;
-        :first-child {
-          border-radius: 3px;
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-        :last-child {
-          border-radius: 3px;
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-        }
-        :not(:last-child) {
-          border-right: none;
-        }
         :hover {
-          background-color: hsl(210, 8%, 97.5%);
+          background-color: #f3f3f3;
         }
         &.is-selected {
-          background-color: hsl(210, 8%, 90%);
-          color: hsl(210, 8%, 25%);
-          border: 1px solid hsl(210, 8%, 55%);
-          :not(:last-child) {
-            border-right: none;
-          }
+          height: 10px;
+          background-color: #fbfbfb;
+          border-bottom: #40d8d8 solid 15px;
         }
       }
     }
@@ -118,28 +102,31 @@ export const MainTab = () => {
     }
   };
   return (
-    <FilterContainer>
-      <div className="sort">
-        <div className="question-sort">
-          <button onClick={sortClick} className={selected === "Newest" ? "is-selected" : ""} value={"Newest"}>
-            최신순
-          </button>
-          <button
-            onClick={sortClick}
-            className={selected === "Registration" ? "is-selected" : ""}
-            value={"Registration"}
-          >
-            등록순
-          </button>
-          <button onClick={sortClick} className={selected === "Like" ? "is-selected" : ""} value={"Like"}>
-            LIKE!
-          </button>
+    <MainContainer>
+      <FilterContainer>
+        <div className="sort">
+          <div className="question-sort">
+            <button onClick={sortClick} className={selected === "Newest" ? "is-selected" : ""} value={"Newest"}>
+              등록순
+            </button>
+            <button
+              onClick={sortClick}
+              className={selected === "Registration" ? "is-selected" : ""}
+              value={"Registration"}
+            >
+              조회순
+            </button>
+            <button onClick={sortClick} className={selected === "Like" ? "is-selected" : ""} value={"Like"}>
+              LIKE!
+              <FaHeart color="#DF4949" />
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="input-search">
-        <AiOutlineSearch size={20} color="#838C95" />
-        <input type="text" className="logo-search" placeholder="Filter by tag name" />
-      </div>
-    </FilterContainer>
+        <div className="input-search">
+          <AiOutlineSearch size={25} color="#838C95" />
+          <input type="text" className="logo-search" placeholder="태그를 입력하세요" />
+        </div>
+      </FilterContainer>
+    </MainContainer>
   );
 };
