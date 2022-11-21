@@ -1,14 +1,22 @@
 {
   "comments": [
     {
-      "commentId": 1,
-      "userName": "jisoo",
-      "comment": "어머어머 글이 너무 감성적이시네요~~ 짱짱맨"
+      "content": "ㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇ",
+      "writer": "Jisoo",
+      "postId": "123123",
+      "created_at": "Mon Nov 21 2022 18:38:01 GMT+0900 (한국 표준시)",
+      "responseTo": "root",
+      "exist": true,
+      "id": 1
     },
     {
-      "commentId": 2,
-      "userName": "jennie",
-      "comment": "우와 대박이다 ! 이렇게 길게 쓰면 어떻게 되지? 우와 대박이다 ! 이렇게 길게 쓰면 어떻게 되지? 우와 대박이다 ! 이렇게 길게 쓰면 어떻게 되지?"
+      "content": "ㅇㄴ??????",
+      "writer": "Jisoo",
+      "postId": "123123",
+      "created_at": "Mon Nov 21 2022 20:51:30 GMT+0900 (한국 표준시)",
+      "responseTo": "root",
+      "exist": true,
+      "id": 2
     }
   ]
 }
