@@ -65,7 +65,7 @@ public class DiaryService {
         Optional.ofNullable(diary.getCost())
                 .ifPresent(diaryCost -> findDiary.setCost(diaryCost));
 
-        findDiary.setModifiedDate(LocalDateTime.now());
+      //  findDiary.setModifiedDate(LocalDateTime.now());
 
         Diary updatedDiaries = diaryRepository.save(findDiary);
 

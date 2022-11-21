@@ -25,10 +25,9 @@ public class DiaryPostDto {
       weather 데이터를 어떻게 가져올 것인가?
      */
   //  @NotBlank
-  //  private int weather;
+  //  private String weather;
 
 
-   // @NotBlank  ===> String만 받을 수 있음
     @NotNull
     private int cost;
 

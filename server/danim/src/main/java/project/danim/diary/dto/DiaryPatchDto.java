@@ -23,13 +23,11 @@ public class DiaryPatchDto {
   @NotBlank(message = "Patch your Trip")
   private String content;
 
-  /*
-   weather 데이터를 어떻게 수정할 것인가?
-   */
-//  @NotBlank
-//  private  int weather;
 
-  //@NotBlank  =? String 일때만 사용 가능
+
+//  @NotBlank
+//  private  String weather;
+
   @NotNull
   private int cost;
 

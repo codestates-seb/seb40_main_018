@@ -49,7 +49,7 @@ public class DiaryController {
                 (diaryMapper.diaryToDiaryResponseDto(postdiary)),HttpStatus.CREATED);
     }
 
-   @ApiOperation(value = "특정 Diary 조회", response = Diary.class)
+    @ApiOperation(value = "특정 Diary 조회", response = Diary.class)
     @GetMapping("/{diary-id}")
     public ResponseEntity getDiary(@Positive @PathVariable("diary-id") @NotNull long diaryId) {
             Diary finddiary = diaryService.findDiary(diaryId);
@@ -57,7 +57,7 @@ public class DiaryController {
         return new ResponseEntity<>((diaryMapper.diaryToDiaryResponseDtos(finddiary)),HttpStatus.OK);
     }
 
-  @ApiOperation(value = "모든 Diary 조회", response = Diary.class)
+    @ApiOperation(value = "모든 Diary 조회", response = Diary.class)
     @GetMapping
     public ResponseEntity getDiaries() {
             List<Diary> diaries = diaryService.findDiaries();
@@ -70,11 +70,10 @@ public class DiaryController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-   @ApiOperation(value = "Diary 수정", response = Diary.class)
+    @ApiOperation(value = "Diary 수정", response = Diary.class)
     @PatchMapping("/{diary-id}")
     public ResponseEntity patchDiary(@PathVariable("diary-id") @Positive @NotNull long diaryId,
                                      @Valid @RequestBody DiaryPatchDto diaryPatchDto) {
-
         diaryPatchDto.setDiaryId(diaryId);
         Diary diary = diaryMapper.diaryPatchDtoTodiary(diaryPatchDto);
         Diary updatedDiary = diaryService.updateDiary(diary);
@@ -86,10 +85,11 @@ public class DiaryController {
     /*
      다이어리 삭제 구현
      */
-   @ApiOperation(value = "Diary 삭제", response = Diary.class)
+    @ApiOperation(value = "Diary 삭제", response = Diary.class)
     @DeleteMapping("/{diary-id}")
     public ResponseEntity deleteDiary(@Positive @PathVariable("diary-id") long diaryId) {
         diaryService.deleteDiary(diaryId);
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
