@@ -4,8 +4,7 @@ import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
 
 export const Block = styled.div`
-  margin-top: 185px;
-  margin-right: 114px;
+  margin-top: -8px;
   float: right;
 `;
 
@@ -38,7 +37,7 @@ export const ModalContainer = styled.div`
   z-index: 999;
   /* 오른쪽 정렬 코드 */
   float: right;
-  margin-right: 114px;
+  margin-right: 106px;
 `;
 
 export const ModalBackdrop = styled.div`
@@ -48,7 +47,7 @@ export const ModalBackdrop = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  padding-top: 260px;
+  padding-top: 155px;
 `;
 
 export const Container = styled.div`
@@ -56,6 +55,7 @@ export const Container = styled.div`
   border: 1px solid #63aeae;
   border-radius: 20px;
   box-shadow: 0 0 1px #63aeae, 0 0 1px #63aeae, 0 0 5px #63aeae;
+  background-color: #ffffff;
 `;
 
 const Box = styled.div`
