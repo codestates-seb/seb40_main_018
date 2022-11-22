@@ -1,0 +1,16 @@
+{
+  "signup": [
+    {
+      "id": 1,
+      "name": "Lisa",
+      "email": "lisa&ggg.com",
+      "password": "Lisa1234"
+    },
+    {
+      "name": "first",
+      "email": "ggg@ggg.com",
+      "password": "ggg1234",
+      "id": 2
+    }
+  ]
+}

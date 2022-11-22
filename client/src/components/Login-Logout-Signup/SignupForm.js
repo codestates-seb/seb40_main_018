@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import DarkLineButton from "../Button/DarkLineButton";
 import DarkMintButton from "../Button/DarkMintButton";
 import ShortInput from "../Input/ShortInput";
+import axios from "axios";
 
 export const MintCard = styled.div`
   height: ${(props) => (props.height ? props.height : "auto")};
@@ -30,7 +31,7 @@ export const InputContainer = styled.div`
 
 export const ButtonContainer = styled.div`
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 `;
 
 export const SignupForm = () => {
@@ -42,7 +43,7 @@ export const SignupForm = () => {
   const [password2, setPassword2] = useState("");
   const [pwdErrMsg, setPwdErrMsg] = useState("");
   const [pwdErrMsg2, setPwdErrMsg2] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const isValid = (type, value) => {
     const pattern = {
@@ -109,21 +110,22 @@ export const SignupForm = () => {
       return false;
     }
 
-    // axios
-    //   // eslint-disable-next-line no-undef
-    //   .post("http://localhost:4000/signup", {
-    //     NAME: name,
-    //     EMAIL: email,
-    //     PASSWORD: password,
-    //   })
-    //   .then(() => {
-    //     alert("회원가입 성공!");
-    //     navigate("/login");
-    //   })
-    //   .catch((error) => {
-    //     alert("회원가입 실패!");
-    //     console.log(error);
-    //   });
+    const postSignup = {
+      name: name,
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post("http://localhost:4002/signup", postSignup)
+      .then(() => {
+        alert("회원가입 성공!");
+        navigate("/login");
+      })
+      .catch((error) => {
+        alert("회원가입 실패!");
+        console.log(error);
+      });
   };
 
   return (
@@ -151,10 +153,10 @@ export const SignupForm = () => {
           </InputContainer>
           <ButtonContainer>
             <Link to="/login">
-              <DarkLineButton width="74px" text="로그인" />
+              <DarkMintButton width="78px" text="로그인" />
             </Link>
             {/* 가입 후 로그인 페이지로 이동 */}
-            <DarkMintButton width="74px" text="가입하기" handleSubmit={handleSubmit} />
+            <DarkLineButton width="78px" text="가입하기" handleSubmit={handleSubmit} />
           </ButtonContainer>
         </Move>
       </MintCard>

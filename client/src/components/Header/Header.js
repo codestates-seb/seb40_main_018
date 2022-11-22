@@ -11,7 +11,7 @@ export const BtnArea = styled.div`
 
 export const AddStyle = styled.div``;
 
-export const Header = () => {
+function Header() {
   return (
     <Box>
       <HeaderContainer>
@@ -35,4 +35,6 @@ export const Header = () => {
       </HeaderContainer>
     </Box>
   );
-};
+}
+
+export default Header;
