@@ -53,13 +53,13 @@ const DiaryPlace = ({ Location, selected, setSelected, city, setCity, select1 })
         <TitleText>다녀온 지역 :</TitleText>
         <Tags>
           <Select name="." onChange={handleSelect} value={selected}>
-            {select1.map((el) => (
-              <option key={el.id}>{el}</option>
+            {select1.map((el, index) => (
+              <option key={index}>{el}</option>
             ))}
           </Select>
           <Select name="." onChange={handleCitySelect} value={city}>
-            {Location[selected].map((el) => (
-              <option key={el.id}>{el}</option>
+            {Location[selected].map((el, index) => (
+              <option key={index}>{el}</option>
             ))}
           </Select>
         </Tags>

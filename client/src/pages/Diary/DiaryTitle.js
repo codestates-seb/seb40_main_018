@@ -92,6 +92,7 @@ const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  z-index: 1;
 `;
 const WeatherArea = styled.div`
   display: flex;
@@ -136,6 +137,7 @@ const DiaryTitle = ({ title, setTitle, weather, setWeather, year, setYear, month
 
   const onClickHandler = (e) => {
     setWeather(e.target.textContent);
+    setIsOpen(!isOpen);
   };
 
   const onChangeHandler = (e) => {
@@ -247,8 +249,8 @@ const DiaryTitle = ({ title, setTitle, weather, setWeather, year, setYear, month
         <ModalContainer>
           <MdClose size="18" color="#63aeae" onClick={openModal} />
           <WeatherArea>
-            {weatherTxt.map((el) => (
-              <ModalBtn onClick={onClickHandler} key={el.id}>
+            {weatherTxt.map((el, index) => (
+              <ModalBtn onClick={onClickHandler} key={index}>
                 <ModalTxt>{el}</ModalTxt>
               </ModalBtn>
             ))}
