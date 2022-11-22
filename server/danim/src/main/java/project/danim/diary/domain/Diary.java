@@ -7,9 +7,13 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import project.danim.audit.BaseTime;
+import project.danim.likes.domain.Likes;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -96,5 +100,10 @@ public class Diary extends BaseTime {
      */
 
     //private AggregateReference<Member, Long> memberId;
+/*
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
+    Set<Likes> likes = new HashSet<>();
+
+ */
 
 }

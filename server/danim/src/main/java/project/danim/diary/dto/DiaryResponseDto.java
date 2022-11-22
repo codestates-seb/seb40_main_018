@@ -16,7 +16,7 @@ public class DiaryResponseDto {
     private String area;
     private int cost;
   //  private long memberId;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
 }
