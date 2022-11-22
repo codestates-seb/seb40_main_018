@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { IoIosClose } from "react-icons/io";
 import MintLineButton from "../Button/MintLineButton";
+import { useDispatch } from "react-redux";
+import { getLoginStatus } from "../../redux/userAction";
 
 export const Container = styled.div`
   width: 100%;
@@ -136,10 +138,21 @@ const YesBtn = styled.div`
 `;
 
 export const HeaderModal = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const user = useSelector((state) => state.userReducer.data);
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(!isOpen);
+  };
+
+  const logoutHandler = () => {
+    console.log("로그아웃 완료");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    dispatch(getLoginStatus({ isLogin: false }));
+    navigate("/");
+    window.location.reload(); // 효과
   };
 
   return (
@@ -178,9 +191,8 @@ export const HeaderModal = () => {
               <TextArea>
                 <LogoutAsk>로그아웃 하시겠습니까?</LogoutAsk>
                 <Box>
-                  {/* UserInfo.js / onClick={logoutHandler} */}
                   <YesBtn>
-                    <MintLineButton text="네" handleSubmit={() => navigate("/")} />
+                    <MintLineButton handleSubmit={logoutHandler} text="네" />
                   </YesBtn>
                   <MintButton3 width="66px" height="30px" onClick={openModal}>
                     아니오

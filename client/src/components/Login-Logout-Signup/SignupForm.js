@@ -4,7 +4,10 @@ import styled from "styled-components";
 import DarkLineButton from "../Button/DarkLineButton";
 import DarkMintButton from "../Button/DarkMintButton";
 import ShortInput from "../Input/ShortInput";
-import axios from "axios";
+// import axios from "axios";
+import useFetch from "../../redux/useFetch";
+import { useDispatch } from "react-redux";
+import { getLoginStatus, getmyInfo } from "../../redux/userAction";
 
 export const MintCard = styled.div`
   height: ${(props) => (props.height ? props.height : "auto")};
@@ -44,6 +47,7 @@ export const SignupForm = () => {
   const [pwdErrMsg, setPwdErrMsg] = useState("");
   const [pwdErrMsg2, setPwdErrMsg2] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const isValid = (type, value) => {
     const pattern = {
@@ -103,7 +107,7 @@ export const SignupForm = () => {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!checkInputVal()) {
@@ -116,16 +120,39 @@ export const SignupForm = () => {
       password: password,
     };
 
-    axios
-      .post("http://localhost:4002/signup", postSignup)
-      .then(() => {
-        alert("회원가입 성공!");
-        navigate("/login");
-      })
-      .catch((error) => {
-        alert("회원가입 실패!");
-        console.log(error);
-      });
+    // 회원가입 요청
+    const res = await useFetch("POST", "http://localhost:4002/signup", postSignup);
+    // 이메일은 있으나 비밀번호가 다른경우
+    if (res === 409) {
+      alert("회원가입 실패!");
+    } else if (res === 204) {
+      // 입력 정보가 이미 있으면 로그인
+      await useFetch("POST", "http://localhost:4003/login", { email, password });
+
+      //내 정보 가져오기
+      // 본인 회원 정보 조회 api가 따로 있음
+      const myInfo = await useFetch("GET", "http://localhost:4002/signup");
+      dispatch(getLoginStatus({ isLogin: true }));
+      dispatch(getmyInfo(myInfo));
+
+      alert("이미 가입되어 있는 정보입니다");
+      navigate("/");
+    } else {
+      navigate("/login");
+      alert("회원가입 성공!");
+    }
+
+    //   })
+    // axios
+    //   .post("http://localhost:4002/signup", postSignup)
+    //   .then(() => {
+    //     alert("회원가입 성공!");
+    //     navigate("/login");
+    //   })
+    //   .catch((error) => {
+    //     alert("회원가입 실패!");
+    //     console.log(error);
+    //   });
   };
 
   return (

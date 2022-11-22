@@ -1,5 +1,11 @@
+// import axios from "axios";
+// import axios from "axios";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import useFetch from "../../redux/useFetch";
+import { getLoginStatus } from "../../redux/userAction";
 import DarkMintButton from "../Button/DarkMintButton";
 import ShortInput from "../Input/ShortInput";
 import { ButtonContainer, InputContainer, MintCard } from "./SignupForm";
@@ -18,6 +24,8 @@ export const LoginForm = () => {
   const [emailErrMsg, setEmailErrMsg] = useState("");
   const [password, setPassword] = useState("");
   const [pwdErrMsg, setPwdErrMsg] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const isValid = (type, value) => {
     const pattern = {
@@ -54,30 +62,40 @@ export const LoginForm = () => {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!checkInputVal()) {
+      alert("로그인 실패!");
       return false;
     }
 
-    // axios
-    // // eslint-disable-next-line no-undef
-    // .post("http://localhost:4000/login", {
-    //     EMAIL: email,
-    //     PASSWORD: password,
-    // })
-    // .then((res) => {
-    //   if (res.headers.authorization) {
-    //     localStorage.setItem("accessToken", res.headers.authorization); -> cookie
-    //     localStorage.setItem("refreshToken", res.headers.refresh); -> cookie
-    //   }
+    const postLogin = {
+      email: email,
+      password: password,
+    };
 
-    //   setIsLogin(true); - mainpage
-    //   setUserInfo(res.data.data);
+    const res = await useFetch("POST", "http://localhost:4003/login", postLogin);
+
+    if (res === 401) {
+      alert("회원정보가 없습니다.");
+      return false;
+    }
+
+    dispatch(getLoginStatus({ isLogin: true }));
+    navigate("/");
+    alert("로그인 성공!");
+    // axios
+    // .post("http://localhost:4003/login", postLogin)
+    // .then((res) => {
+    //   console.log(res.data);
+    //   alert("로그인 성공!");
     //   navigate("/");
     // })
-    // .catch((error) => console.log(error));
+    // .catch((error) => {
+    //   alert("로그인 실패!");
+    //   console.log(error);
+    // });
   };
 
   return (
