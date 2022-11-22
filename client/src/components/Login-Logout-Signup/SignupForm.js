@@ -1,10 +1,10 @@
+// import axios from "axios";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import DarkLineButton from "../Button/DarkLineButton";
 import DarkMintButton from "../Button/DarkMintButton";
 import ShortInput from "../Input/ShortInput";
-// import axios from "axios";
 import useFetch from "../../redux/useFetch";
 import { useDispatch } from "react-redux";
 import { getLoginStatus, getmyInfo } from "../../redux/userAction";
@@ -56,7 +56,8 @@ export const SignupForm = () => {
       // 숫자 (0~9) or 알파벳 (a~z, A~Z) 으로 시작하며 중간에 -_. 문자가 있을 수 있으며 그 후 숫자 (0~9) or 알파벳 (a~z, A~Z)이 올 수도 있고 연달아 올 수도 있고 없을 수도 있다.
       // @ 는 반드시 존재하며 . 도 반드시 존재하고 a~z, A~Z 의 문자가 2,3개 존재하고 i = 대소문자 구분 안한다.
       email: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-      password: /^[a-zA-Z0-9]{4,12}$/,
+      // 8~16자 영문대소문자, 숫자, 특수문자 혼합 사용
+      password: /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]|.*[0-9]).{8,16}$/,
     };
 
     if (type === "name") {
@@ -71,28 +72,22 @@ export const SignupForm = () => {
   const checkInputVal = () => {
     if (name.length <= 0) {
       setNameErrMsg("닉네임을 입력해주세요.");
-      return false;
     } else if (!isValid("name", name)) {
       setNameErrMsg("닉네임은 2자 이상 16자 이하, 영어 또는 숫자 또는 한글로만 입력하여 주세요.");
     } else {
       setNameErrMsg("");
     }
-
     if (email.length <= 0) {
       setEmailErrMsg("이메일 주소를 입력해주세요.");
-      return false;
     } else if (!isValid("email", email)) {
       setEmailErrMsg("올바른 이메일 형식이 아닙니다.");
-    } else {
+    } else if (isValid("email", email)) {
       setEmailErrMsg("");
     }
-
-    // 비번 과 비번확인 같아야 함
     if (password.length <= 0) {
       setPwdErrMsg("비밀번호를 입력해주세요.");
-      return false;
     } else if (!isValid("password", password)) {
-      setPwdErrMsg("Password는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+      setPwdErrMsg("Password는 8~16자의 비밀번호를 입력하여 주세요.");
     } else {
       setPwdErrMsg("");
     }
@@ -121,17 +116,17 @@ export const SignupForm = () => {
     };
 
     // 회원가입 요청
-    const res = await useFetch("POST", "http://localhost:4002/signup", postSignup);
+    const res = await useFetch("POST", "http://localhost:3000/users", postSignup);
     // 이메일은 있으나 비밀번호가 다른경우
-    if (res === 409) {
+    if (res === 400) {
       alert("회원가입 실패!");
-    } else if (res === 204) {
+    } else if (res === 304) {
       // 입력 정보가 이미 있으면 로그인
-      await useFetch("POST", "http://localhost:4003/login", { email, password });
+      await useFetch("POST", "http://localhost:3000/login", { email, password });
 
       //내 정보 가져오기
       // 본인 회원 정보 조회 api가 따로 있음
-      const myInfo = await useFetch("GET", "http://localhost:4002/signup");
+      const myInfo = await useFetch("GET", "http://localhost:3000/users");
       dispatch(getLoginStatus({ isLogin: true }));
       dispatch(getmyInfo(myInfo));
 
@@ -141,19 +136,18 @@ export const SignupForm = () => {
       navigate("/login");
       alert("회원가입 성공!");
     }
-
-    //   })
-    // axios
-    //   .post("http://localhost:4002/signup", postSignup)
-    //   .then(() => {
-    //     alert("회원가입 성공!");
-    //     navigate("/login");
-    //   })
-    //   .catch((error) => {
-    //     alert("회원가입 실패!");
-    //     console.log(error);
-    //   });
   };
+
+  // axios
+  //   .post("http://localhost:4002/signup", postSignup)
+  //   .then(() => {
+  //     alert("회원가입 성공!");
+  //     navigate("/login");
+  //   })
+  //   .catch((error) => {
+  //     alert("회원가입 실패!");
+  //     console.log(error);
+  //   });
 
   return (
     <>
