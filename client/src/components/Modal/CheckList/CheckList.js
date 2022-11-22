@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { MdOutlineUpdate } from "react-icons/md";
 // import { useParams } from "react-router-dom";
 export const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "350px")};
@@ -29,9 +28,6 @@ export const Button = styled.button`
   border: none;
   margin-top: 4px;
   background-color: transparent;
-  > .update {
-    cursor: pointer;
-  }
   > .add {
     cursor: pointer;
   }
@@ -79,6 +75,18 @@ export const ButtonContainer = styled.div`
   align-items: center;
 `;
 
+export const Update = styled.button`
+  cursor: pointer;
+  border: none;
+  background-color: #ffffff;
+  color: #535353;
+  width: 39px;
+`;
+export const Box = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const MintLineButton2 = styled.button`
   height: 30px;
   width: ${(props) => (props.width ? props.width : "auto")};
@@ -114,7 +122,7 @@ export const MintButton2 = styled.button`
 `;
 
 export const CheckList = ({ input, setInput, todos, setTodos, editTodo, setEditTodo, completed }) => {
-  // const id = useParams();
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
     if (editTodo) {
@@ -130,17 +138,15 @@ export const CheckList = ({ input, setInput, todos, setTodos, editTodo, setEditT
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    if (!editTodo) {
-      setTodos([...todos, { title: input, completed: completed }]);
-      setInput("");
-    }
+    setTodos([...todos, { title: input, completed: completed }]);
+    setInput("");
     // else {
     //   updateTodo(input, editTodo.id, editTodo.completed);
     // }
     // useEffect(() => {
     const todoPost = {
       title: input,
-      completed: !completed,
+      completed: false,
     };
     axios
       .post("http://localhost:4000/todos", todoPost)
@@ -149,36 +155,12 @@ export const CheckList = ({ input, setInput, todos, setTodos, editTodo, setEditT
     // }, []);
   };
 
-  // const updateTodo = (title, id) => {
-  //   const newTodo = todos.map((todo) => (todo.id === id ? { title, id, completed } : todo));
-  //   setTodos(newTodo);
-  //   setEditTodo("");
-  // };
-
-  const updateHandler = ({ id }) => {
-    if (todos.find((todo) => todo.id === id)) {
-      setTodos(todos.map((todo) => (todo.id === id ? { input, id, completed } : todo)));
-    }
-    console.log("patchid", id);
-
-    setTodos([
-      ...todos,
-      {
-        title: input,
-        completed: !completed,
-      },
-    ]);
-
-    const editTodos = {
-      title: input,
-      completed: !completed,
-    };
-
-    axios
-      .patch(`http://localhost:4000/todos/` + id, editTodos)
-      .then(() => setTodos(todos))
-      .then((err) => console.log(err));
+  const updateTodo = (title, id) => {
+    const newTodo = todos.map((todo) => (todo.id === id ? { title, id, completed } : todo));
+    setTodos(newTodo);
+    setEditTodo("");
   };
+
   const handleComplete = (todo) => {
     setTodos(
       todos.map((item) => {
@@ -188,19 +170,40 @@ export const CheckList = ({ input, setInput, todos, setTodos, editTodo, setEditT
         return item;
       }),
     );
+
+    const patch2 = {
+      title: todo.title,
+      completed: !todo.completed,
+    };
+
+    axios
+      .patch(`http://localhost:4000/todos/` + todo.id, patch2)
+      .then((res) => console.log(res))
+      .then((err) => console.log("res1", err));
+  };
+
+  const updateHandler = () => {
+    updateTodo(input, editTodo.id, editTodo.completed);
+    // console.log("patchid", editTodo.id);
+
+    const patch2 = {
+      title: input,
+      completed: completed,
+    };
+
+    axios
+      .patch(`http://localhost:4000/todos/` + editTodo.id, patch2)
+      .then((res) => console.log(res))
+      .then((err) => console.log("res2", err));
+
+    setIsEdit(!isEdit);
   };
 
   const handleEdit = ({ id }) => {
     const findTodo = todos.find((todo) => todo.id === id);
     setEditTodo(findTodo);
 
-    // axios
-    //   .patch(`http://localhost:4002/todos/` + id, {
-    //     title: findTodo.title,
-    //     completed: !findTodo.completed,
-    //   })
-    //   .then((res) => console.log(res.data))
-    //   .then((err) => console.log(err));
+    setIsEdit(!isEdit);
   };
 
   const handleDelete = ({ id }) => {
@@ -210,18 +213,21 @@ export const CheckList = ({ input, setInput, todos, setTodos, editTodo, setEditT
 
   return (
     <>
-      <InputContainer width="424px" height="36px">
-        <form onSubmit={onFormSubmit} className="form">
-          <Input type="text" value={input} required onChange={onInputChange} />
-          <Button type="submit">
-            {editTodo ? (
-              <MdOutlineUpdate className="update" color="5E5E5E" size="18" onClick={(todos) => updateHandler(todos)} />
-            ) : (
+      <Box>
+        <InputContainer width="424px" height="36px">
+          <form onSubmit={onFormSubmit} className="form">
+            <Input type="text" value={input} required onChange={onInputChange} />
+            <Button type="submit">
               <AiOutlinePlusCircle className="add" color="5E5E5E" size="18" />
-            )}
-          </Button>
-        </form>
-      </InputContainer>
+            </Button>
+          </form>
+        </InputContainer>
+        {isEdit ? (
+          <Update color="5E5E5E" size="18" onClick={(todos) => updateHandler(todos)}>
+            저장
+          </Update>
+        ) : null}
+      </Box>
       <Test>
         {todos.map((todo) => (
           <li className="list-item" key={todo.id}>
