@@ -11,6 +11,8 @@ import javax.validation.constraints.Positive;
 @RestController
 @RequestMapping("/likes")
 public class LikesController {
+
+    /*
     @GetMapping("/{diary-id}")
     public String getLikeMembers(@Positive @PathVariable("diary-id") long dairyId) {
         return "Like click members!!";
@@ -20,6 +22,8 @@ public class LikesController {
     /*
     JWT를 이용한 로그인 정보 필요... 사용자가 로그인 된 사용자인가?  LoginMember  ..
      */
+
+    /*
     @PostMapping("/{diary-id}")
     public ResponseEntity<String>addLike (@PathVariable Long diaryId){
 
@@ -27,5 +31,5 @@ public class LikesController {
 
         return "I Like this!";
     }
-
+*/
 }
