@@ -37,7 +37,7 @@ export const ModalContainer = styled.div`
   z-index: 999;
   /* 오른쪽 정렬 코드 */
   float: right;
-  margin-right: 106px;
+  margin-right: 261px;
 `;
 
 export const ModalBackdrop = styled.div`
