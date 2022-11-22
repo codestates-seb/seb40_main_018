@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import LoginHeader from "../components/Header/LoginHeader";
+import Header from "../components/Header/Header";
 import { Card } from "../components/Main/Card";
 import { MainTab } from "../components/Main/MainTab";
+import { useSelector } from "react-redux";
+import LoginHeader from "../components/Header/LoginHeader";
 
 const Main = styled.div`
   display: flex;
@@ -11,9 +13,10 @@ const Main = styled.div`
 `;
 
 export default function MainPage() {
+  const user = useSelector((state) => state.userReducer);
   return (
     <Main>
-      <LoginHeader />
+      {user.isLogin ? <LoginHeader /> : <Header />}
       <div>
         <MainTab />
         <Card />
