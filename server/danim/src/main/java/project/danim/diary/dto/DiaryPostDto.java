@@ -1,6 +1,8 @@
 package project.danim.diary.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
@@ -8,13 +10,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 //@Setter
 public class DiaryPostDto {
-
-  //  @Positive
-   // @NotNull
-  //  private Long memberId;
-
+/*
+    @NotNull
+    private Long memberId;
+*/
     @NotBlank(message = "Post Title")
     private String title;
 

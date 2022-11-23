@@ -45,7 +45,9 @@ public class DiaryService {
         return (List<Diary>) diaryRepository.findAll();
     }
 
-
+   public void savedLikesCount(Diary diary){
+        diaryRepository.save(diary);
+    }
     /*
 
     다이어리 수정
@@ -86,8 +88,6 @@ public class DiaryService {
     public void deleteDiary(long diaryId){
         diaryRepository.deleteById(diaryId);
     }
-
-
 
 
 
