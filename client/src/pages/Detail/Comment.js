@@ -166,7 +166,7 @@ const Comment = ({ user }) => {
       )}
 
       {comment.map((comment, index) => (
-        <Box sx={{ mb: 2, p: 2, bgcolor: "#f1f1f1", borderRadius: 3 }} key={comment.id}>
+        <Box sx={{ mb: 2, p: 2, bgcolor: "#f1f1f1", borderRadius: 3 }} key={index}>
           {/* writer 정보, 작성 시간 */}
           <Stack direction="row" spacing={2}>
             {/* <ProfileIcon>

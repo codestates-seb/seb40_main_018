@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { BiWon } from "react-icons/bi";
 
-const InputContainer = styled.div`
+const InputContainer = styled.form`
   width: ${(props) => (props.width ? props.width : "700px")};
   height: ${(props) => (props.height ? props.height : "55px")};
   padding: 0 18px;
@@ -35,12 +35,14 @@ const Price = styled.input`
 
 const DiaryPrice = ({ price, setPrice }) => {
   const onChangeHandler = (e) => {
+    e.preventDefault();
     setPrice(e.target.value);
   };
+
   return (
     <PriceArea>
       <TitleText>경비 :</TitleText>
-      <Price type="number" value={price} onChange={onChangeHandler} />
+      <Price type="number" value={price || ""} onChange={onChangeHandler} min="1" />
       <BiWon />
     </PriceArea>
   );
