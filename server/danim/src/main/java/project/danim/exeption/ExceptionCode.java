@@ -20,6 +20,11 @@ public enum ExceptionCode {
     // 태그
     TAG_NOT_FOUND(404, "태그를 찾을 수 없습니다"),
 
+    // 사진 올리기
+    INTERNAL_SERVER_ERROR(404, "이미지 업로드에 실패했습니다."),
+    BAD_REQUEST(404, "잘못된 형식의 파일"),
+
+
     // 체크리스트
     CHECK_LIST_NOT_FOUND(404, "체크 리스트를 찾을 수 없습니다."),
 
