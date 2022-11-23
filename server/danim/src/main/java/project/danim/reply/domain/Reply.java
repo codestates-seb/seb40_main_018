@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.danim.audit.BaseTime;
+import project.danim.diary.domain.Diary;
 
 import javax.persistence.*;
 
@@ -21,6 +22,10 @@ public class Reply extends BaseTime {
 
     @Column(length = 500)
     private String replyContent;
+
+    @ManyToOne
+    @JoinColumn(name = "DIARY")
+    private Diary diary;
 
     @Builder
     public Reply(Long replyId, String replyContent) {
