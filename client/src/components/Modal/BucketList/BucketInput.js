@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { MdOutlineUpdate } from "react-icons/md";
+import axios from "axios";
+import { Update } from "../CheckList/CheckInput";
 
 export const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "350px")};
@@ -29,15 +29,23 @@ export const Button = styled.button`
   border: none;
   margin-top: 4px;
   background-color: transparent;
-  > .update {
-    cursor: pointer;
-  }
+
   > .add {
     cursor: pointer;
   }
 `;
 
-export const BucketInput = ({ input, setInput, todos, setTodos, editTodo, setEditTodo }) => {
+export const BucketInput = ({
+  input,
+  setInput,
+  todos,
+  setTodos,
+  editTodo,
+  setEditTodo,
+  completed,
+  isEdit,
+  setIsEdit,
+}) => {
   const updateTodo = (title, id, completed) => {
     const newTodo = todos.map((todo) => (todo.id === id ? { title, id, completed } : todo));
     setTodos(newTodo);
@@ -55,27 +63,56 @@ export const BucketInput = ({ input, setInput, todos, setTodos, editTodo, setEdi
     setInput(event.target.value);
   };
 
-  const onFormSubmit = (event) => {
+  const onFormSubmit = async (event) => {
     event.preventDefault();
-    if (!editTodo) {
-      setTodos([...todos, { id: uuidv4(), title: input, completed: false }]);
-      setInput("");
-    } else {
-      updateTodo(input, editTodo.id, editTodo.completed);
-    }
+    setTodos([...todos, { title: input, completed: completed }]);
+    setInput("");
+
+    const todoPost = {
+      title: input,
+      completed: false,
+    };
+    await axios
+      .post("http://localhost:4005/btodos", todoPost)
+      .then((res) => console.log(res))
+      .then((err) => console.log(err));
+
+    await axios.get("http://localhost:4005/btodos").then((result) => {
+      setTodos(result.data);
+    });
+  };
+
+  const updateHandler = () => {
+    updateTodo(input, editTodo.id, editTodo.completed);
+    // console.log("patchid", editTodo.id);
+
+    const patch2 = {
+      title: input,
+      completed: completed,
+    };
+
+    axios
+      .patch(`http://localhost:4005/btodos/` + editTodo.id, patch2)
+      .then((res) => console.log(res))
+      .then((err) => console.log("res2", err));
+
+    setIsEdit(!isEdit);
   };
   return (
-    <InputContainer width="424px" height="36px">
-      <form onSubmit={onFormSubmit} className="form">
-        <Input type="text" value={input} required onChange={setInputChange} />
-        <Button type="submit">
-          {editTodo ? (
-            <MdOutlineUpdate className="update" color="5E5E5E" size="18" />
-          ) : (
+    <>
+      <InputContainer width="424px" height="36px">
+        <form onSubmit={onFormSubmit} className="form">
+          <Input type="text" value={input} required onChange={setInputChange} />
+          <Button type="submit">
             <AiOutlinePlusCircle className="add" color="5E5E5E" size="18" />
-          )}
-        </Button>
-      </form>
-    </InputContainer>
+          </Button>
+        </form>
+      </InputContainer>
+      {isEdit ? (
+        <Update color="5E5E5E" size="18" onClick={(todos) => updateHandler(todos)}>
+          저장
+        </Update>
+      ) : null}
+    </>
   );
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import { CheckInput } from "./CheckInput";
+import { CheckInput } from "./CheckInput";
 import { CheckList } from "./CheckList";
 import styled from "styled-components";
 import axios from "axios";
@@ -57,10 +57,7 @@ export const CheckListModal = () => {
   const [todos, setTodos] = useState(initialState);
   const [editTodo, setEditTodo] = useState(null);
   const [completed, setcompleted] = useState(false);
-
-  // useEffect(() => {
-  //   localStorage.setItem("todos", JSON.stringify(todos));
-  // }, [todos]);
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:4000/todos").then((result) => {
@@ -74,7 +71,7 @@ export const CheckListModal = () => {
       <Container>
         <ListHeader />
         <ListInput>
-          {/* <CheckInput
+          <CheckInput
             input={input}
             setInput={setInput}
             todos={todos}
@@ -83,18 +80,19 @@ export const CheckListModal = () => {
             setEditTodo={setEditTodo}
             completed={completed}
             setcompleted={setcompleted}
-          /> */}
+            isEdit={isEdit}
+            setIsEdit={setIsEdit}
+          ></CheckInput>
         </ListInput>
         <div>
           <CheckList
-            input={input}
-            setInput={setInput}
             todos={todos}
             setTodos={setTodos}
             setEditTodo={setEditTodo}
-            editTodo={editTodo}
             completed={completed}
             setcompleted={setcompleted}
+            isEdit={isEdit}
+            setIsEdit={setIsEdit}
           />
         </div>
       </Container>

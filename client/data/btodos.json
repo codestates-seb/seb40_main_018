@@ -1,0 +1,14 @@
+{
+  "btodos": [
+    {
+      "title": "bucket도 잘 된다",
+      "completed": false,
+      "id": 1
+    },
+    {
+      "title": "patch도 잘 되니? 응 잘 돼.",
+      "completed": false,
+      "id": 2
+    }
+  ]
+}
