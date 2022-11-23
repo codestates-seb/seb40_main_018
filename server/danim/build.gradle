@@ -29,6 +29,9 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	implementation 'com.google.code.gson:gson'
 
+	implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
+	implementation 'com.amazonaws:aws-java-sdk-s3'
+
 	implementation 'io.springfox:springfox-swagger2:2.9.2'
 	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 
