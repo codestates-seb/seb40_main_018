@@ -10,7 +10,6 @@ import project.danim.bucket.dto.BucketPatchDto;
 import project.danim.bucket.dto.BucketPostDto;
 import project.danim.bucket.dto.BucketResponseDto;
 import project.danim.bucket.service.BucketService;
-import project.danim.check.domain.Check;
 import project.danim.response.SingleResponseDto;
 
 import javax.validation.Valid;
