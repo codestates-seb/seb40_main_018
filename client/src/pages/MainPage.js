@@ -1,27 +1,30 @@
 import styled from "styled-components";
-import LoginHeader from "../components/Header/LoginHeader";
+import Header from "../components/Header/Header";
 import { Card } from "../components/Main/Card";
 import { MainTab } from "../components/Main/MainTab";
-import PriceFilter from "../Filter/PriceFilter";
+import { useSelector } from "react-redux";
+import LoginHeader from "../components/Header/LoginHeader";
+
 
 const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #fbfbfb;
+  /* background-color: #fbfbfb; */
 `;
 
 export default function MainPage() {
+  const user = useSelector((state) => state.userReducer);
   return (
-    <>
-      <Main>
-        <LoginHeader />
-        <div>
-          <MainTab />
-          <Card />
-        </div>
-      </Main>
-      <PriceFilter />
-    </>
+
+    <Main>
+      {user.isLogin ? <LoginHeader /> : <Header />}
+      <div>
+        <MainTab />
+        <Card />
+      </div>
+    </Main>
+
   );
 }

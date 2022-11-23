@@ -1,0 +1,40 @@
+{
+  "signup": [
+    {
+      "id": 1,
+      "name": "Lisa",
+      "email": "lisa&ggg.com",
+      "password": "Lisa1234"
+    },
+    {
+      "name": "first",
+      "email": "ggg@ggg.com",
+      "password": "ggg1234",
+      "id": 2
+    },
+    {
+      "name": "test1",
+      "email": "test1@ggg.com",
+      "password": "test1234",
+      "id": 3
+    },
+    {
+      "name": "amitie",
+      "email": "amitie@ggg.com",
+      "password": "amitie1234",
+      "id": 4
+    },
+    {
+      "name": "third",
+      "email": "third@ggg.com",
+      "password": "tomato123",
+      "id": 5
+    },
+    {
+      "name": "third",
+      "email": "third@ggg.com",
+      "password": "tomato123",
+      "id": 6
+    }
+  ]
+}

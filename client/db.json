@@ -1,0 +1,52 @@
+{
+  "users": [
+    {
+      "email": "abc@abc.com",
+      "password": "$2a$10$d17.gKfdjm6rt.3xDBLEhetru.QTQ4ondBcOFw53T4/19XWyNgv72",
+      "name": "abc",
+      "id": 1
+    },
+    {
+      "email": "first@first.com",
+      "password": "$2a$10$cqPIpjjtXC4LLdjuDw0CaOKNU9tAapzShTl/Jjxdm6TjVcm8NjcWe",
+      "name": "first",
+      "id": 2
+    },
+    {
+      "email": "second@second.com",
+      "password": "$2a$10$Zub9F2nEiCjXFM0l8YeFEeFRuj86y2AwkNlU/oUklnb7vwdw9nmeO",
+      "name": "second",
+      "id": 3
+    },
+    {
+      "email": "third@third.com",
+      "password": "$2a$10$G71KlQh2T/uQb/D2BzRCmeiOrdbB5yOPTjvE8UiyJKeMh1hThSbeu",
+      "name": "third",
+      "id": 4
+    },
+    {
+      "email": "fourth@fourth.com",
+      "password": "$2a$10$5yuSlDH8oy0LBPq5HQanzuzt2A0ELT5qLncEK.CHvRuKft14ZpsRu",
+      "name": "fourth",
+      "id": 5
+    },
+    {
+      "email": "last@third.com",
+      "password": "$2a$10$5EQs36/Hw29zoayij1AS8eo4WDDBXvNf3xK.DFsKQQsQyi.tHuT..",
+      "name": "last",
+      "id": 6
+    },
+    {
+      "email": "last@last.com",
+      "password": "$2a$10$flHEdYxTe.R9ms0z/x2MAu0u1OwhSK9DYQnXTDvhJSYdYznntrT92",
+      "name": "last",
+      "id": 7
+    },
+    {
+      "email": "last@first.com",
+      "password": "$2a$10$rx623H2rS67/dC8SM5J3jO4apXpWsKoKqtmuwW9op9vqnVJH6tbm2",
+      "name": "first",
+      "id": 8
+    }
+  ]
+}

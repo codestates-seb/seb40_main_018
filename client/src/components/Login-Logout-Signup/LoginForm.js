@@ -1,5 +1,10 @@
+// import axios from "axios";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import useFetch from "../../redux/useFetch";
+import { getLoginStatus } from "../../redux/userAction";
 import DarkMintButton from "../Button/DarkMintButton";
 import ShortInput from "../Input/ShortInput";
 import { ButtonContainer, InputContainer, MintCard } from "./SignupForm";
@@ -18,16 +23,19 @@ export const LoginForm = () => {
   const [emailErrMsg, setEmailErrMsg] = useState("");
   const [password, setPassword] = useState("");
   const [pwdErrMsg, setPwdErrMsg] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const isValid = (type, value) => {
     const pattern = {
-      email: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-      password: /^[a-zA-Z0-9]{4,12}$/,
+      email: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
+      // 8~16자 영문대소문자, 숫자, 특수문자 혼합 사용
+      password: /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]|.*[0-9]).{8,16}$/,
     };
 
     if (type === "email") {
       return pattern.email.test(value);
-    } else {
+    } else if (type === "password") {
       return pattern.password.test(value);
     }
   };
@@ -35,18 +43,15 @@ export const LoginForm = () => {
   const checkInputVal = () => {
     if (email.length <= 0) {
       setEmailErrMsg("이메일 주소를 입력해주세요.");
-      return false;
     } else if (!isValid("email", email)) {
       setEmailErrMsg("올바른 이메일 형식이 아닙니다.");
-    } else {
+    } else if (isValid("email", email)) {
       setEmailErrMsg("");
     }
-
-    if (password.length <= 0) {
+    if (password.trim() === "") {
       setPwdErrMsg("비밀번호를 입력해주세요.");
-      return false;
     } else if (!isValid("password", password)) {
-      setPwdErrMsg("Password는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+      setPwdErrMsg("Password는 8~16자의 비밀번호를 입력하여 주세요.");
     } else {
       setPwdErrMsg("");
     }
@@ -54,31 +59,43 @@ export const LoginForm = () => {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!checkInputVal()) {
+      alert("회원정보가 없습니다.");
       return false;
     }
 
-    // axios
-    // // eslint-disable-next-line no-undef
-    // .post("http://localhost:4000/login", {
-    //     EMAIL: email,
-    //     PASSWORD: password,
-    // })
-    // .then((res) => {
-    //   if (res.headers.authorization) {
-    //     localStorage.setItem("accessToken", res.headers.authorization); -> cookie
-    //     localStorage.setItem("refreshToken", res.headers.refresh); -> cookie
-    //   }
+    const postLogin = {
+      email: email,
+      password: password,
+    };
 
-    //   setIsLogin(true); - mainpage
-    //   setUserInfo(res.data.data);
-    //   navigate("/");
-    // })
-    // .catch((error) => console.log(error));
+    const res = await useFetch("POST", "http://localhost:3000/login", postLogin);
+    console.log("res", res);
+
+    if (res === 400) {
+      alert("로그인 실패!");
+      return false;
+    } else {
+      dispatch(getLoginStatus({ isLogin: true }));
+      navigate("/");
+      alert("로그인 성공!");
+    }
   };
+
+  // axios
+  // .post("http://localhost:4003/login", postLogin)
+  // .then((res) => {
+  //   console.log(res.data);
+  //   alert("로그인 성공!");
+  //   navigate("/");
+  // })
+  // .catch((error) => {
+  //   alert("로그인 실패!");
+  //   console.log(error);
+  // });
 
   return (
     <>

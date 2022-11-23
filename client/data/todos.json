@@ -1,8 +1,12 @@
 {
   "todos": [
     {
-      "userId": 12,
-      "title": "오",
+      "title": "잘 된다잉",
+      "completed": false,
+      "id": 1
+    },
+    {
+      "title": "patch가 잘 안된다잉..",
       "completed": false,
       "id": 2
     }

@@ -160,6 +160,96 @@
         "수정용"
       ],
       "id": 8
+    },
+    {
+      "nickname": "dlwlrma",
+      "title": "sdfe",
+      "year": "2017",
+      "month": "09",
+      "day": "27",
+      "weather": "맑음",
+      "question": "이번 여행에서 맛있게 먹은 음식은 무엇인가요?",
+      "counter": 0,
+      "diary": "sdfe",
+      "price": "117",
+      "selected": "서울특별시",
+      "city": "종로구",
+      "tags": [
+        "df"
+      ],
+      "id": 9
+    },
+    {
+      "nickname": "dlwlrma",
+      "title": "",
+      "weather": "날씨",
+      "imageList": [
+        {},
+        {},
+        {},
+        {},
+        {}
+      ],
+      "question": "이번 여행에서 맛있게 먹은 음식은 무엇인가요?",
+      "counter": 0,
+      "diary": "",
+      "selected": "서울특별시",
+      "city": "종로구",
+      "tags": [],
+      "id": 10
+    },
+    {
+      "nickname": "dlwlrma",
+      "title": "dfsfd",
+      "year": "2018",
+      "month": "07",
+      "day": "26",
+      "weather": "맑음",
+      "imageList": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ],
+      "question": "이번 여행에서 맛있게 먹은 음식은 무엇인가요?",
+      "counter": 0,
+      "diary": "sdfw",
+      "price": "150000",
+      "selected": "서울특별시",
+      "city": "종로구",
+      "tags": [
+        "fds",
+        "gweg"
+      ],
+      "id": 11
+    },
+    {
+      "nickname": "dlwlrma",
+      "title": "ㄴㅇㅎㅂㅎ",
+      "year": "2020",
+      "month": "11",
+      "day": "27",
+      "weather": "천둥번개",
+      "imageList": [
+        {},
+        {},
+        {},
+        {}
+      ],
+      "question": "이번 여행에서 맛있게 먹은 음식은 무엇인가요?",
+      "counter": 0,
+      "diary": "ㄴㅇㄹㅈㄷㅎㄴㅇ",
+      "price": "15000000",
+      "selected": "서울특별시",
+      "city": "종로구",
+      "tags": [
+        "ㄹㅇㄴㄹ",
+        "ㅎㅈㄷㅎ"
+      ],
+      "id": 12
     }
   ]
 }

@@ -59,7 +59,7 @@ const Diary = () => {
     "이번 여행 중 나만 알고 싶은 사진 명소는 어디인가요?",
     "여행에서 자주 들은 노래는 무엇인가요?",
   ];
-
+  const nickname = "dlwlrma";
   const [title, setTitle] = useState("");
   const [year, setYear] = useState();
   const [month, setMonth] = useState();
@@ -76,13 +76,10 @@ const Diary = () => {
   const [tags, setTags] = useState([]);
 
   //post
+
   const submitHandler = () => {
-    const formData = new FormData();
-    formData.append("file", imageList);
-    console.log("formData", formData);
     const diaryInfo = {
-      // Id: Id,
-      nickname: "dlwlrma",
+      nickname: nickname,
       title: title,
       year: year,
       month: month,
@@ -97,10 +94,37 @@ const Diary = () => {
       city: city,
       tags: tags,
     };
+
+    const formData = new FormData();
+
+    Array.from(imageList).forEach((el) => {
+      formData.append("file", el);
+    });
+
+    console.log("imageList", imageList);
+
+    for (const key of formData.keys()) {
+      console.log("key", key);
+    }
+
+    for (const value of formData.values()) {
+      console.log("value", value);
+    }
+    console.log("formData", formData.getAll("file"));
+
     axios
       .post("http://localhost:4000/diary", diaryInfo)
       .then((res) => navigate(`/detail/${res.data.id}`))
-      .then((err) => console.log(err));
+      .then((err) => console.log("DiaryErr", err));
+
+    axios
+      .post("http://localhost:4002/image", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => console.log("res:", res))
+      .then((err) => console.log("IMGErr", err));
   };
   return (
     <>
@@ -142,7 +166,6 @@ const Diary = () => {
           <BtnArea>
             <MintLineButton className="submit" text="등록" handleSubmit={submitHandler}></MintLineButton>
             <CancelModal />
-            {/* <MintButton className="cancel" text="취소"></MintButton> */}
           </BtnArea>
         </Container>
       </Section>

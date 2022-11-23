@@ -25,12 +25,12 @@ const Comment = ({ user }) => {
   const [openEditor, setOpenEditor] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:4000/comments").then((result) => {
+    axios.get("http://localhost:4001/comments").then((result) => {
       setComment(result.data);
     });
   }, []);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     // 마크다운 변환(4줄)
@@ -71,10 +71,14 @@ const Comment = ({ user }) => {
       responseTo: "root",
       exist: true,
     };
-    axios
-      .post("http://localhost:4000/comments", addComment)
+    await axios
+      .post("http://localhost:4001/comments", addComment)
       .then((res) => console.log(res.data))
       .then((err) => console.log(err));
+
+    await axios.get("http://localhost:4001/comments").then((result) => {
+      setComment(result.data);
+    });
   };
 
   // Edit comment
@@ -110,7 +114,7 @@ const Comment = ({ user }) => {
       exist: true,
     };
     axios
-      .patch(`http://localhost:4000/comments/` + id, editComment)
+      .patch(`http://localhost:4001/comments/` + id, editComment)
       .then(() => setComment(comment))
       .then((err) => console.log(err));
   };
@@ -122,7 +126,7 @@ const Comment = ({ user }) => {
       setComment(comment.filter((item) => item.id !== id));
     }
     axios
-      .delete(`http://localhost:4000/comments/` + id)
+      .delete(`http://localhost:4001/comments/` + id)
       .then((res) => console.log(res))
       .then((err) => console.log(err));
   };
@@ -166,7 +170,7 @@ const Comment = ({ user }) => {
       )}
 
       {comment.map((comment, index) => (
-        <Box sx={{ mb: 2, p: 2, bgcolor: "#f1f1f1", borderRadius: 3 }} key={comment.id}>
+        <Box sx={{ mb: 2, p: 2, bgcolor: "#f1f1f1", borderRadius: 3 }} key={index}>
           {/* writer 정보, 작성 시간 */}
           <Stack direction="row" spacing={2}>
             {/* <ProfileIcon>
