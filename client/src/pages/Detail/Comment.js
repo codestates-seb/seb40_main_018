@@ -30,7 +30,7 @@ const Comment = ({ user }) => {
     });
   }, []);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     // 마크다운 변환(4줄)
@@ -71,10 +71,14 @@ const Comment = ({ user }) => {
       responseTo: "root",
       exist: true,
     };
-    axios
+    await axios
       .post("http://localhost:4001/comments", addComment)
       .then((res) => console.log(res.data))
       .then((err) => console.log(err));
+
+    await axios.get("http://localhost:4001/comments").then((result) => {
+      setComment(result.data);
+    });
   };
 
   // Edit comment
