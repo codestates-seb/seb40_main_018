@@ -1,29 +1,74 @@
 package project.danim.reply.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.danim.diary.service.DiaryService;
+import project.danim.reply.domain.Reply;
+import project.danim.reply.dto.ReplyDeleteDto;
+import project.danim.reply.dto.ReplyPatchDto;
+import project.danim.reply.dto.ReplyPostDto;
+import project.danim.reply.dto.ReplyResponseDto;
+import project.danim.reply.service.ReplyService;
+import project.danim.response.SingleResponseDto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @RestController
 @RequestMapping("/reply")
 public class ReplyController {
-    @GetMapping("/{diary-id}")
-    public String getReply(@Positive @PathVariable("diary-id") long diaryId) {
-        return "Reply Get!";
+
+    private final ReplyService replyService;
+
+    private final DiaryService diaryService;
+
+    public ReplyController(ReplyService replyService, DiaryService diaryService) {
+        this.replyService = replyService;
+        this.diaryService = diaryService;
     }
 
-    @PostMapping("/{reply-id}")
-    public String postReply(@Positive @PathVariable("reply-id") long replyId) {
-        return "Reply Post!";
+    // 전체 조회
+    @GetMapping("/{reply-id}")
+    public List<Reply> getReplies() {
+
+        List<Reply> replies = replyService.findReplies();
+
+        return replies;
     }
 
+    // 댓글 생성
+    @PostMapping
+    public ResponseEntity<SingleResponseDto> postReply(@Valid @RequestBody ReplyPostDto request) {
+
+        ReplyResponseDto response = replyService.createReply(request);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response), HttpStatus.CREATED);
+
+    }
+
+    // 댓글 수정
     @PatchMapping("/{reply-id}")
-    public String patchReply(@Positive @PathVariable("reply-id") long replyId) {
-        return "Reply Patch!";
+    public ResponseEntity patchReply(
+            @Positive @PathVariable("reply-id") Long replyId,
+            @RequestBody ReplyPatchDto request) {
+
+        ReplyResponseDto response = replyService.updateReply(request, replyId);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response), HttpStatus.OK);
+
     }
 
+    // 댓글 삭제
     @DeleteMapping("/{reply-id}")
-    public String deleteReply(@Positive @PathVariable("reply-id") long replyId) {
-        return "Reply Delete!";
+    public ResponseEntity deleteReply(@Positive @PathVariable("reply-id") Long replyId) {
+
+        replyService.deleteReply(replyId);
+
+        return new ResponseEntity<>(new ReplyDeleteDto(replyId), HttpStatus.OK);
+
     }
 }
