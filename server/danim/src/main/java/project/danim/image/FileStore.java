@@ -2,19 +2,24 @@ package project.danim.image;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class FileStore {
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     private final AmazonS3 s3;
 
@@ -22,30 +27,41 @@ public class FileStore {
         this.s3 = s3;
     }
 
-    public void save(String path, String fileName, Optional<Map<String, String>> optionalMetadata, InputStream inputStream) {
+    public List<String> uploadImage(List<MultipartFile> multipartFile) {
+        List<String> fileNameList = new ArrayList<>();
 
-        ObjectMetadata metadata = new ObjectMetadata();
+        multipartFile.forEach(file -> {
+            String fileName = createFileName(file.getOriginalFilename());
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(file.getSize());
+            objectMetadata.setContentType(file.getContentType());
 
-        optionalMetadata.ifPresent(map -> {
-            if (!map.isEmpty()) {
-                map.forEach(metadata::addUserMetadata);
+            try(InputStream inputStream = file.getInputStream()) {
+                s3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+                        .withCannedAcl(CannedAccessControlList.PublicRead));
+            } catch(IOException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
             }
+
+            fileNameList.add(fileName);
         });
 
-        try {
-            s3.putObject(path, fileName, inputStream, metadata);
-        } catch (AmazonServiceException e) {
-            throw new IllegalStateException("Failed to store file to s3", e);
-        }
+        return fileNameList;
     }
 
-    public byte[] download(String path, String key) {
+    public void deleteImage(String fileName) {
+        s3.deleteObject(new DeleteObjectRequest(bucket, fileName));
+    }
+
+    private String createFileName(String fileName) {
+        return UUID.randomUUID().toString().concat(getFileExtension(fileName));
+    }
+
+    private String getFileExtension(String fileName) {
         try {
-            S3Object object = s3.getObject(path, key);
-            return IOUtils.toByteArray(object.getObjectContent());
-        } catch (AmazonServiceException | IOException e) {
-            throw new IllegalStateException("Failed to download file to s3", e);
+            return fileName.substring(fileName.lastIndexOf("."));
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 형식의 파일(" + fileName + ") 입니다.");
         }
     }
-    
 }
