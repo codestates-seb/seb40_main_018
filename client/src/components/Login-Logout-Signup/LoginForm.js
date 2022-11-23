@@ -3,8 +3,11 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import useFetch from "../../redux/useFetch";
-import { getLoginStatus } from "../../redux/userAction";
+import { loginUser } from "../../api/Users";
+import { SET_TOKEN } from "../../redux/store/Auth";
+// import useFetch from "../../redux/useFetch";
+// import { getLoginStatus } from "../../redux/userAction";
+import { setRefreshToken } from "../../storage/Cookie";
 import DarkMintButton from "../Button/DarkMintButton";
 import ShortInput from "../Input/ShortInput";
 import { ButtonContainer, InputContainer, MintCard } from "./SignupForm";
@@ -72,31 +75,37 @@ export const LoginForm = () => {
       password: password,
     };
 
-    const res = await useFetch("POST", "http://localhost:3000/login", postLogin);
-    console.log("res", res);
+    // 백으로부터 받은 응답
+    const response = await loginUser(postLogin);
 
-    if (res === 400) {
-      alert("로그인 실패!");
-      return false;
+    if (response.status) {
+      // 쿠키에 Refresh Token, store에 Access Token 저장
+      // 정상적인 응답이 왔을 경우 setRefreshToken 을 통해 Refresh Token을 쿠키에 저장, dispatch()를 통해 Access Token을 store에 저장한다.
+      setRefreshToken(response.json.refresh_token);
+      dispatch(SET_TOKEN(response.json.access_token));
+      // Cookie와 store에 데이터를 모두 저장한 이후 홈으로 이동한다.
+      return navigate("/");
     } else {
-      dispatch(getLoginStatus({ isLogin: true }));
-      navigate("/");
-      alert("로그인 성공!");
+      console.log(response.json);
     }
+
+    // const postLogin = {
+    //   email: email,
+    //   password: password,
+    // };
+
+    // const res = await useFetch("POST", "http://localhost:3000/login", postLogin);
+    // console.log("res", res);
+
+    // if (res === 400) {
+    //   alert("로그인 실패!");
+    //   return false;
+    // } else {
+    //   dispatch(getLoginStatus({ isLogin: true }));
+    //   navigate("/");
+    //   alert("로그인 성공!");
+    // }
   };
-
-  // axios
-  // .post("http://localhost:4003/login", postLogin)
-  // .then((res) => {
-  //   console.log(res.data);
-  //   alert("로그인 성공!");
-  //   navigate("/");
-  // })
-  // .catch((error) => {
-  //   alert("로그인 실패!");
-  //   console.log(error);
-  // });
-
   return (
     <>
       {/* height="240px" */}

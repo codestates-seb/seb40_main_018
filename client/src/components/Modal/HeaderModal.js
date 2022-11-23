@@ -3,9 +3,11 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { IoIosClose } from "react-icons/io";
 import MintLineButton from "../Button/MintLineButton";
-import { useDispatch } from "react-redux";
-import { getLoginStatus } from "../../redux/userAction";
-import { Cookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
+// import { getLoginStatus } from "../../redux/userAction";
+import { getCookieToken, removeCookieToken } from "../../storage/Cookie";
+import { logoutUser } from "../../api/Users";
+import { DELETE_TOKEN } from "../../redux/store/Auth";
 
 export const Container = styled.div`
   width: 100%;
@@ -146,19 +148,38 @@ export const HeaderModal = () => {
   const openModal = () => {
     setIsOpen(!isOpen);
   };
-  const cookies = new Cookies();
+  // store에 저장된 Access Token 정보를 받아 온다
+  const accessToken = useSelector((state) => state.token);
 
-  const removeCookieToken = () => {
-    return cookies.remove("refresh_token", { sameSite: "strict", path: "/" });
+  // Cookie에 저장된 Refresh Token 정보를 받아 온다
+  const refreshToken = getCookieToken();
+
+  const logoutHandler = async () => {
+    // 백으로부터 받은 응답
+    const data = await logoutUser({ refresh_token: refreshToken }, accessToken);
+
+    // 정상적인 응답이 왔을 경우 removeCookieToken 을 통해 Cookie에 저장된 Refresh Token 정보와 dispatch()를 통해 store에 저장된 Access Token 정보를 모두 삭제한다
+    if (data.status) {
+      // store에 저장된 Access Token 정보를 삭제
+      dispatch(DELETE_TOKEN());
+      // Cookie에 저장된 Refresh Token 정보를 삭제
+      removeCookieToken();
+      return navigate("/");
+    } else {
+      window.location.reload();
+    }
+    // console.log("로그아웃 완료");
+    // removeCookieToken();
+    // dispatch(getLoginStatus({ isLogin: false }));
+    // navigate("/");
+    // window.location.reload(); // 효과
   };
 
-  const logoutHandler = () => {
-    console.log("로그아웃 완료");
-    removeCookieToken();
-    dispatch(getLoginStatus({ isLogin: false }));
-    navigate("/");
-    window.location.reload(); // 효과
-  };
+  // 해당 컴포넌트가 요청된 후 한 번만 실행되면 되기 때문에 useEffect 훅을 사용
+  // 로그아웃에 대한 요청은 해당 컴포넌트 요청 후 한 번만 실행되면 되기 때문에 useEffect 훅을 사용했으며, deps를 비워 두었다.
+  // useEffect(() => {
+  //   logoutHandler();
+  // }, []);
 
   return (
     <>

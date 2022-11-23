@@ -2,7 +2,7 @@ import { legacy_createStore as createStore, compose, applyMiddleware } from "red
 import { rootReducer } from "./reducer";
 import thunk from "redux-thunk";
 
-// export const store = createStore(rootReducer);
+// window 타입 정의
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
   : compose;
