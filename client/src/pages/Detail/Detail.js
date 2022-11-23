@@ -168,7 +168,8 @@ const Detail = () => {
     { url: "images/7.jpg" },
   ];
   const [diaryDetail, setDiaryDetail] = useState([]);
-  console.log(setDiaryDetail);
+  const [imageList, setImageList] = useState(images);
+  const [user, setUser] = useState("Jisoo");
   const [like, setLike] = useState(false);
 
   // const [isEdit, setIsEdit] = useState(false);
@@ -183,15 +184,28 @@ const Detail = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:4001/comments`)
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       setCommentArray(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4002/image/` + id, {
+        responseType: "blob",
+      })
+      // .then((res) => {
+      //   console.log(res.data);
+      //   // setImageList(res.data);
+      // })
+      .then((res) => {
+        console.log("res", res);
+        const myFile = new File("file[]");
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const previewImage = e.target.result;
+          setImageList(previewImage);
+        };
+        reader.readAsDataURL(myFile);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   // 하트
   const onClickHandler = () => {
     setLike(!like);
@@ -203,13 +217,7 @@ const Detail = () => {
     navigate(`/diaryedit/` + id);
   };
 
-  // 댓글 추가
-  // axios post
-  // const onChangeHandler = (e) => {
-  //   setInput(e.target.value);
-  // };
-
-  const [user, setUser] = useState("Jisoo");
+  const formatter = new Intl.NumberFormat("ko");
 
   return (
     <Section>
@@ -240,7 +248,10 @@ const Detail = () => {
             // images={imageList.map((item) => {
             //   return { url: URL.createObjectURL(item) };
             // })}
-            images={images}
+            images={imageList.map((item) => {
+              return item;
+            })}
+            // images={images}
             showBullets={true}
             showNavs={true}
             autoPlay={true}
@@ -263,10 +274,11 @@ const Detail = () => {
           <PlaceArea>
             {diaryDetail.selected} {diaryDetail.city}
           </PlaceArea>
-          <PriceArea>총 예산 : {diaryDetail.price} ₩</PriceArea>
+          <PriceArea>총 예산 : {formatter.format(diaryDetail.price)} ₩</PriceArea>
         </PlaceAndPrice>
         <TagsArea>
-          {diaryDetail.tags && diaryDetail.tags.map((el) => <DarkMintButton key={el.id} text={el} width="auto" />)}
+          {diaryDetail.tags &&
+            diaryDetail.tags.map((el, index) => <DarkMintButton key={index} text={el} width="auto" />)}
         </TagsArea>
         <BtnArea>
           <EditBtn onClick={editBtnHandler}>수정</EditBtn>

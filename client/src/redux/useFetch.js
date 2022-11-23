@@ -1,5 +1,12 @@
+import { Cookies } from "react-cookie";
+import { refreshToken } from "./refreshToken";
+
 const useFetch = (method, url, fetchData) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const cookies = new Cookies();
+
+  const getCookie = (name) => {
+    return cookies.get(name);
+  };
 
   // 기본 옵션
   const defaultOptions = {
@@ -7,7 +14,7 @@ const useFetch = (method, url, fetchData) => {
     headers: {
       "Content-Type": "application/json",
       //   "ngrok-skip-browser-warning": "skip",
-      Authorization: accessToken,
+      Authorization: `Bearer ${getCookie("myToken")}`,
     },
     body: JSON.stringify(fetchData),
   };
@@ -19,8 +26,9 @@ const useFetch = (method, url, fetchData) => {
 
       // 토큰이 있는 경우 (로그인)
     } else if (res.headers.get("authorization")) {
-      localStorage.setItem("accessToken", res.headers.get("authorization"));
-      localStorage.setItem("refreshToken", res.headers.get("refresh"));
+      // 쿠키에 Refresh Token, store에 Access Token 저장
+      refreshToken(res.json.refresh_token);
+      // dispatch(SET_TOKEN(res.json.access_token));
       return res;
     }
 

@@ -77,7 +77,7 @@ const DiaryImg = ({ imageList, setImageList }) => {
       tempImagelist = tempImagelist.slice(0, 10);
     }
 
-    setImageList(tempImagelist);
+    setImageList([...tempImagelist]);
   };
 
   const imageDeleteHandler = (index) => {
@@ -121,7 +121,7 @@ const DiaryImg = ({ imageList, setImageList }) => {
             </ListStyled>
           );
         })}
-
+        {/* <form encType="multipart/form-data"> */}
         <FileUploader
           handleChange={imageRegistHandler}
           name="file"
@@ -132,6 +132,7 @@ const DiaryImg = ({ imageList, setImageList }) => {
         >
           <UploadBtn type="button">{!isDrag && <MdUploadFile />}</UploadBtn>
         </FileUploader>
+        {/* </form> */}
       </UlStyle>
     </>
   );

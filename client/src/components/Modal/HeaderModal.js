@@ -5,6 +5,7 @@ import { IoIosClose } from "react-icons/io";
 import MintLineButton from "../Button/MintLineButton";
 import { useDispatch } from "react-redux";
 import { getLoginStatus } from "../../redux/userAction";
+import { Cookies } from "react-cookie";
 
 export const Container = styled.div`
   width: 100%;
@@ -145,11 +146,15 @@ export const HeaderModal = () => {
   const openModal = () => {
     setIsOpen(!isOpen);
   };
+  const cookies = new Cookies();
+
+  const removeCookieToken = () => {
+    return cookies.remove("refresh_token", { sameSite: "strict", path: "/" });
+  };
 
   const logoutHandler = () => {
     console.log("로그아웃 완료");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    removeCookieToken();
     dispatch(getLoginStatus({ isLogin: false }));
     navigate("/");
     window.location.reload(); // 효과
