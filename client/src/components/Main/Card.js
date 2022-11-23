@@ -6,8 +6,8 @@ import DarkMintTag from "../Tag/DarkMintTag";
 
 const Main = styled.div`
   display: grid;
-  gap: 100px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   @media screen and (max-width: 1260px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -124,6 +124,7 @@ export const Card = () => {
   const onClickHandler = () => {
     setLike(!like);
   };
+
   return (
     <>
       <Main>
