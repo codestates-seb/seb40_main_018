@@ -136,7 +136,7 @@ export const CheckList = ({ input, setInput, todos, setTodos, editTodo, setEditT
     setInput(event.target.value);
   };
 
-  const onFormSubmit = (event) => {
+  const onFormSubmit = async (event) => {
     event.preventDefault();
     setTodos([...todos, { title: input, completed: completed }]);
     setInput("");
@@ -148,10 +148,14 @@ export const CheckList = ({ input, setInput, todos, setTodos, editTodo, setEditT
       title: input,
       completed: false,
     };
-    axios
+    await axios
       .post("http://localhost:4000/todos", todoPost)
-      .then((res) => console.log(res.data))
+      .then((res) => console.log(res))
       .then((err) => console.log(err));
+
+    await axios.get("http://localhost:4000/todos").then((result) => {
+      setTodos(result.data);
+    });
     // }, []);
   };
 
@@ -229,8 +233,8 @@ export const CheckList = ({ input, setInput, todos, setTodos, editTodo, setEditT
         ) : null}
       </Box>
       <Test>
-        {todos.map((todo) => (
-          <li className="list-item" key={todo.id}>
+        {todos.map((todo, idx) => (
+          <li className="list-item" key={idx}>
             <Block2>
               <button onClick={() => handleComplete(todo)} className="complete-icon">
                 {todo.completed ? "🔳" : "⬜"}
