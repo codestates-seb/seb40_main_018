@@ -1,3 +1,4 @@
+import axios from "axios";
 import styled from "styled-components";
 
 export const Test = styled.div`
@@ -76,7 +77,7 @@ export const MintButton2 = styled.button`
   }
 `;
 
-export const BucketList = ({ todos, setTodos, setEditTodo }) => {
+export const BucketList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) => {
   const handleComplete = (todo) => {
     setTodos(
       todos.map((item) => {
@@ -86,21 +87,34 @@ export const BucketList = ({ todos, setTodos, setEditTodo }) => {
         return item;
       }),
     );
+
+    const patch2 = {
+      title: todo.title,
+      completed: !todo.completed,
+    };
+
+    axios
+      .patch(`http://localhost:4005/btodos/` + todo.id, patch2)
+      .then((res) => console.log(res))
+      .then((err) => console.log("res1", err));
   };
 
   const handleEdit = ({ id }) => {
     const findTodo = todos.find((todo) => todo.id === id);
     setEditTodo(findTodo);
+
+    setIsEdit(!isEdit);
   };
 
   const handleDelete = ({ id }) => {
     setTodos(todos.filter((todos) => todos.id !== id));
+    axios.delete(`http://localhost:4005/btodos/` + id);
   };
 
   return (
     <Test>
-      {todos.map((todo) => (
-        <li className="list-item" key={todo.id}>
+      {todos.map((todo, idx) => (
+        <li className="list-item" key={idx}>
           <Block2>
             <button onClick={() => handleComplete(todo)} className="complete-icon">
               {todo.completed ? "🔳" : "⬜"}

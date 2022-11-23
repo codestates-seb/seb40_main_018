@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { BucketInput } from "./BucketInput";
 import { BucketList } from "./BucketList";
 import { Block } from "../CheckList/CheckListModal";
+import axios from "axios";
 
 const DarkMintShadowButton = styled.button`
   height: 30px;
@@ -54,10 +55,15 @@ export const BucketListModal = () => {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState(initialState);
   const [editTodo, setEditTodo] = useState(null);
+  const [completed, setcompleted] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+    axios.get("http://localhost:4005/btodos").then((result) => {
+      setTodos(result.data);
+    });
+  }, []);
+
   return (
     <Block>
       <DarkMintShadowButton>버킷리스트</DarkMintShadowButton>
@@ -71,10 +77,22 @@ export const BucketListModal = () => {
             setTodos={setTodos}
             editTodo={editTodo}
             setEditTodo={setEditTodo}
+            completed={completed}
+            setcompleted={setcompleted}
+            isEdit={isEdit}
+            setIsEdit={setIsEdit}
           />
         </ListInput>
         <div>
-          <BucketList todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} />
+          <BucketList
+            todos={todos}
+            setTodos={setTodos}
+            setEditTodo={setEditTodo}
+            completed={completed}
+            setcompleted={setcompleted}
+            isEdit={isEdit}
+            setIsEdit={setIsEdit}
+          />
         </div>
       </Container>
     </Block>
