@@ -1,5 +1,8 @@
-function index() {
-  return <div>index2</div>;
-}
+import { configureStore } from "@reduxjs/toolkit";
+import tokenReducer from "./Auth";
 
-export default index;
+export default configureStore({
+  reducer: {
+    authToken: tokenReducer,
+  },
+});
