@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import PriceFilter from "../../Filter/PriceFilter";
 const MainContainer = styled.div`
   background-color: #fbfbfb;
 `;
@@ -27,6 +28,8 @@ const FilterContainer = styled.div`
     border: 1px solid #86c1c1;
     border-radius: 35px;
     box-sizing: inherit;
+    margin-left: auto;
+    margin-right: 18px;
     &:focus-within {
       box-shadow: 0px 0px 1px 1px #5da7a7;
       border: none;
@@ -126,6 +129,7 @@ export const MainTab = () => {
           <AiOutlineSearch size={25} color="#838C95" />
           <input type="text" className="logo-search" placeholder="태그를 입력하세요" />
         </div>
+        <PriceFilter />
       </FilterContainer>
     </MainContainer>
   );
