@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import project.danim.audit.BaseTime;
 import project.danim.likes.domain.Likes;
+import project.danim.member.domain.Member;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -44,6 +45,9 @@ public class Diary extends BaseTime {
     @Column(nullable = false)
     private int cost;
 
+    @Column(nullable = true, name ="likes_count")
+    private Integer likesCount;
+
     @CreatedDate
     private LocalDateTime createdDate = LocalDateTime.now();
 
@@ -64,11 +68,11 @@ public class Diary extends BaseTime {
 
     Diary : Nenber = > 다 대 1  관계
      */
-/*
+
     @ManyToOne   // (1)
     @JoinColumn(name = "MEMBER_ID")  // (2)
     private Member member;
-*/
+
 
     /*
     Diary : random  = > 다 대 1 관계
