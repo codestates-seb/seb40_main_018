@@ -1,4 +1,4 @@
-package project.danim.member.adapter.in.web;
+package project.danim.member.dto;
 
 import lombok.Getter;
 import lombok.Setter;
