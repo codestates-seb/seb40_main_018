@@ -1,41 +1,42 @@
-package project.danim.member.application.service;
+package project.danim.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.danim.exeption.ExceptionCode;
-import project.danim.member.adapter.out.persistence.MemberRepositoryPersistenceAdapter;
-import project.danim.member.application.port.in.request.CreateMemberCommand;
-import project.danim.member.application.port.in.CreateMemberUserCase;
 import project.danim.member.domain.Member;
 import project.danim.member.domain.MemberExistsException;
+import project.danim.member.dto.MemberCreateForm;
+import project.danim.member.dto.MemberProfilePatchForm;
+import project.danim.member.dto.MemberResponseForProfile;
+import project.danim.member.repository.MemberRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class MemberService implements CreateMemberUserCase {
+public class MemberService {
 
-    private final MemberRepositoryPersistenceAdapter memberPersistenceAdapter;
-    private final PasswordEncoder passwordEncoder;
+    private final MemberRepository memberRepository;
 
-    @Override
-    public void createMember(CreateMemberCommand createMemberCommand) {
-        verifyExistsEmail(createMemberCommand.getEmail());
+    public MemberResponseForProfile patchProfile(MemberProfilePatchForm memberProfilePatchForm) {
+        Member findMember = memberRepository.findById(memberProfilePatchForm.getMemberId()).get();
 
-        Member newMember = Member.builder()
-                .email(createMemberCommand.getEmail())
-                .password(passwordEncoder.encode(createMemberCommand.getPassword()))
-                .nickname(createMemberCommand.getNickname())
-                .build();
+        Optional.ofNullable(memberProfilePatchForm.getNickname())
+                .ifPresent(findMember::changeNickname);
+        Optional.ofNullable(memberProfilePatchForm.getProfileImg())
+                .ifPresent(findMember::updateProfileImg);
+        Optional.ofNullable(memberProfilePatchForm.getAboutMe())
+                .ifPresent(findMember::updateAboutMe);
 
-        memberPersistenceAdapter.createMember(newMember);
+        return MemberResponseForProfile.of(findMember);
     }
 
     private void verifyExistsEmail(String email) {
-        Optional<Member> member = memberPersistenceAdapter.findByEmail(email);
+        Optional<Member> member = memberRepository.findByEmail(email);
         if (member.isPresent()) {
             throw new MemberExistsException(ExceptionCode.MEMBER_EXISTS);
         }
