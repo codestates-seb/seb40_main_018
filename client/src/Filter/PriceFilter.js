@@ -9,7 +9,7 @@ export const Block = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  position: relative;
+  /* position: relative; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,22 +32,24 @@ export const ButtonContainer = styled.div`
 `;
 
 export const ModalContainer = styled.div`
+  position: absolute;
+  top: 54px;
+  right: 0;
   width: 100%;
-  max-width: 270px;
-  z-index: 999;
+  max-width: 343px;
   /* 오른쪽 정렬 코드 */
-  float: right;
-  margin-right: 261px;
+  /* float: right;
+  margin-right: 261px; */
 `;
 
 export const ModalBackdrop = styled.div`
   position: absolute;
-  /* z-index: 999; // card 보다 높이 지정 */
-  top: 0;
+  height: 100vh;
+  /*z-index: 999;   // card 보다 높이 지정 */
+  top: 5px;
   left: 0;
   bottom: 0;
   right: 0;
-  padding-top: 155px;
 `;
 
 export const Container = styled.div`
@@ -64,8 +66,9 @@ const Box = styled.div`
 `;
 
 export const Text = styled.div`
-  margin: 10px 0 6px 19px;
-  font-size: 14px;
+  margin: 15px 0 10px 19px;
+  font-size: 16px;
+  font-weight: 700;
   color: #63aeae;
 `;
 
@@ -73,11 +76,15 @@ const CloseBtn = styled.span`
   cursor: pointer;
   float: right;
   margin: -30px 10px 0 0;
+
+  > .close {
+    margin-top: -6px;
+  }
 `;
 
 export const Content = styled.div`
   margin-left: 19px;
-  font-size: 8px;
+  font-size: 12px;
   color: #63aeae;
   display: flex;
   flex-direction: column;
@@ -87,10 +94,10 @@ export const Content = styled.div`
 export const FilterPriceSlide = styled.div`
   position: relative;
   height: 4px;
-  width: 220px;
+  width: 294px;
   border-radius: 10px;
   background-color: #dddddd;
-  margin-left: 21px;
+  margin-left: 22px;
 `;
 
 export const FilterPriceSlideInner = styled.div`
@@ -106,8 +113,8 @@ export const FilterPriceSlideInner = styled.div`
 const FilterPriceRangeWrap = styled.div`
   position: relative;
   /* border: 1px solid green; */
-  width: 224px;
-  margin-left: 20px;
+  width: 294px;
+  margin-left: 22px;
 `;
 
 const FilterPriceRangeMin = styled.input`
@@ -117,7 +124,7 @@ const FilterPriceRangeMin = styled.input`
   background: none;
   -webkit-appearance: none;
   pointer-events: none;
-  width: 224px;
+  width: 294px;
   &::-webkit-slider-thumb {
     height: 15px;
     width: 15px;
@@ -130,16 +137,16 @@ const FilterPriceRangeMin = styled.input`
 `;
 
 const FilterPriceRangeMax = styled(FilterPriceRangeMin)`
-  width: 224px;
+  width: 295px;
 `;
 
 const InputContainer = styled.div`
   > input {
     border: none;
     outline: none;
-    font-size: 8px;
+    font-size: 16px;
     width: 80px;
-    margin-left: 2px;
+    margin-left: 4px;
   }
 `;
 
@@ -154,33 +161,39 @@ const PriceBox = styled.div`
 const Min = styled.div`
   border-radius: 8px !important;
   box-shadow: rgb(176 176 176) 0px 0px 0px 1px inset;
-  font-size: 6px;
-  width: 100px;
-  padding: 5px;
+  font-size: 12px;
+  width: 134px;
+  padding: 10px;
 
   > .text {
     /* border: 1px solid red; */
     color: #535353;
+    margin-left: 4px;
   }
 
   > .flex {
     display: flex;
+    font-size: 16px;
+    margin-left: 4px;
   }
 `;
 
 const Max = styled.div`
   border-radius: 8px !important;
   box-shadow: rgb(176 176 176) 0px 0px 0px 1px inset;
-  font-size: 8px;
-  width: 100px;
-  padding: 5px;
+  font-size: 12px;
+  width: 134px;
+  padding: 10px;
 
   > .text {
     /* border: 1px solid red; */
     color: #535353;
+    margin-left: 4px;
   }
   > .flex {
     display: flex;
+    font-size: 16px;
+    margin-left: 4px;
   }
 `;
 const Mid = styled.div`
@@ -218,6 +231,8 @@ function PriceFilter() {
       setRangeMaxPercent(100 - (rangeMaxValue / fixedMaxPrice) * 100);
     }
   };
+
+  const formatter = new Intl.NumberFormat("ko");
   return (
     <Block>
       <ButtonContainer onClick={openModal}>
@@ -269,7 +284,13 @@ function PriceFilter() {
                     <div className="flex">
                       <span>₩</span>
                       <InputContainer>
-                        <input autoComplete="off" type="text" width="120" value={rangeMinValue} readOnly />
+                        <input
+                          autoComplete="off"
+                          type="text"
+                          width="120"
+                          value={formatter.format(rangeMinValue)}
+                          readOnly
+                        />
                       </InputContainer>
                     </div>
                   </Min>
@@ -279,7 +300,7 @@ function PriceFilter() {
                     <div className="flex">
                       <span>₩</span>
                       <InputContainer>
-                        <input autoComplete="off" type="text" value={rangeMaxValue} readOnly />
+                        <input autoComplete="off" type="text" value={formatter.format(rangeMaxValue)} readOnly />
                       </InputContainer>
                     </div>
                   </Max>

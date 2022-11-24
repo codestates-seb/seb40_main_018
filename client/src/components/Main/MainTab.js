@@ -8,6 +8,7 @@ const MainContainer = styled.div`
 `;
 
 const FilterContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
