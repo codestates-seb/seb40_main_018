@@ -26,6 +26,6 @@ public class MemberAccessDeniedHandler implements AccessDeniedHandler {
         response.setStatus(HttpStatus.FORBIDDEN.value());
         response.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));
 
-        log.warn("접근이 제한되었습니다: {}", accessDeniedException.getMessage());
+        log.warn("권한이 없으므로 접근이 제한되었습니다: {}", accessDeniedException.getMessage());
     }
 }
