@@ -1,9 +1,6 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/62506973/203929283-17667046-5729-4a41-9a8b-0e935c36fdc4.png" alt="text" width="number" height="125px"/>
+  <img src="https://user-images.githubusercontent.com/62506973/203929283-17667046-5729-4a41-9a8b-0e935c36fdc4.png" alt="text" width="number" height="150px"/>
 </p>
-<!-- ![Component 1](https://user-images.githubusercontent.com/62506973/203929283-17667046-5729-4a41-9a8b-0e935c36fdc4.png) -->
-
-
 
 # About 다님 🌴
 **다님에 오신 걸 환영합니다! 다님과 함께 여행을 기록해볼까요?**
