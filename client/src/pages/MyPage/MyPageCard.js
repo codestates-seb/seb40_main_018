@@ -51,6 +51,7 @@ const DateInfo = styled.div`
 `;
 
 /* 링크연결 - 각 다이어리 상세페이지로 */
+// 확인용
 
 const MyPageCard = ({ cardList, obsRef, load }) => {
   return (
