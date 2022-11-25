@@ -3,6 +3,7 @@ import LoginHeader from "../../components/Header/LoginHeader";
 import MapIcon from "./MapIcon";
 import MyPageSearch from "./MyPageSearch";
 import MyPageCard from "./MyPageCard";
+import { UserEditBox } from "../../components/UserEdit/UserEdit";
 
 const MyPageContainer = styled.div`
   display: flex;
@@ -11,6 +12,7 @@ const MyPageContainer = styled.div`
   justify-content: center;
   align-content: center;
   background-color: #fbfbfb;
+  padding-top: 140px;
 `;
 
 const MyPage = () => {
@@ -19,6 +21,7 @@ const MyPage = () => {
     <>
       <LoginHeader />
       <MyPageContainer>
+        <UserEditBox />
         <MapIcon />
         <MyPageSearch />
         <MyPageCard />
