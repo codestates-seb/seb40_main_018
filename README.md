@@ -1,8 +1,7 @@
 <p align="center">
-<!--   <img src="https://user-images.githubusercontent.com/62506973/203925322-9af9c0be-a509-49a2-8708-88244460deda.png" alt="text" width="number" height="250px"/> -->
-  <img src="https://www.figma.com/file/dncKWTgiN85C3bdj9tiS3w/Danim?node-id=718%3A5&t=3FhfXUjvKuEF2UkT-4" alt="text" width="number" height="250px"/>
-
+<!--   <img src="https://user-images.githubusercontent.com/62506973/203929283-17667046-5729-4a41-9a8b-0e935c36fdc4.png" alt="text" width="number" height="250px"/> -->
 </p>
+<!-- ![Component 1](https://user-images.githubusercontent.com/62506973/203929283-17667046-5729-4a41-9a8b-0e935c36fdc4.png) -->
 
 
 
