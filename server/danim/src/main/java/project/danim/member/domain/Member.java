@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import project.danim.audit.BaseTime;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -35,26 +37,21 @@ public class Member extends BaseTime {
     @Column
     private String aboutMe;
 
+    @Column
+    private String refreshToken;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "member_role", joinColumns = @JoinColumn(name = "member_id"))
+    private List<String> roles;
+
     @Builder
-    public Member(String email, String password, String nickname) {
+    public Member(String email, String password, String nickname, List<String> roles) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.roles = roles;
         this.profileImg = makeDefaultProfileImg();
         this.aboutMe = makeDefaultAboutMe();
-    }
-
-    public enum MemberStatus {
-        MEMBER_ACTIVE("활동중"),
-        MEMBER_SLEEP("휴면 상태"),
-        MEMBER_QUIT("탈퇴 상태");
-
-        @Getter
-        private String status;
-
-        MemberStatus(String status) {
-            this.status = status;
-        }
     }
 
     public void changePassword(String currentPwd, String newPwd) {
@@ -69,6 +66,18 @@ public class Member extends BaseTime {
         this.nickname = newNickname;
     }
 
+    public void updateProfileImg(String newProfileImg) {
+        this.profileImg = newProfileImg;
+    }
+
+    public void updateAboutMe(String newAboutMe) {
+        this.aboutMe = newAboutMe;
+    }
+
+    public void saveRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
     private String makeDefaultProfileImg() {
         String defaultThumbUrl = "https://cdn.pixabay.com/photo/2019/02/28/04/54/car-4025379_1280.png";
         return defaultThumbUrl;
@@ -78,4 +87,5 @@ public class Member extends BaseTime {
         String defaultAboutMe = "자신을 소개해보세요 :)";
         return defaultAboutMe;
     }
+
 }
