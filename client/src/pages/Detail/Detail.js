@@ -184,6 +184,7 @@ const Detail = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
   useEffect(() => {
     axios
       .get(`http://localhost:4002/image/` + id, {
@@ -209,11 +210,11 @@ const Detail = () => {
   // 하트
   const onClickHandler = () => {
     setLike(!like);
+    //어디로 어떻게 보내야할까아아아아아아아아아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
   };
 
   // 다이어리 본문 수정버튼
   const editBtnHandler = () => {
-    console.log("수정페이지로 이동");
     navigate(`/diaryedit/` + id);
   };
 
