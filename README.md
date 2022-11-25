@@ -18,7 +18,7 @@ BE 김은진 | BE 유현아 | BE 임원용 | FE 김은서 | FE 김예린 | FE �
 [kim eunjin](https://github.com/2d3k)|[hyeonayou](https://github.com/hyeonayou)|[Im WonYong](https://github.com/ImWonYong)|[EUNSEO814](https://github.com/EUNSEO814)|[yelinz515](https://github.com/yelinz515)|[youthmn](https://github.com/youthmn)
 
 # SKILLS
-![image](https://user-images.githubusercontent.com/102038283/203927390-698dd57b-9b89-45d1-a2d7-4b768bb414d1.png)
+![image](https://user-images.githubusercontent.com/102038283/203927977-5d258e99-9ffd-4d5d-87fe-4474d657471a.png)
 
 # PROJECT ARCHITECTURE
 
