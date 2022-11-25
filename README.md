@@ -15,6 +15,7 @@
 BE 김은진 | BE 유현아 | BE 임원용 | FE 김은서 | FE 김예린 | FE 방혜민
 -- | -- | -- | -- | -- | --
   |   |   |   |   |  
+[kim eunjin](https://github.com/2d3k)|[hyeonayou](https://github.com/hyeonayou)|[Im WonYong](https://github.com/ImWonYong)|[EUNSEO814](https://github.com/EUNSEO814)|[yelinz515](https://github.com/yelinz515)|[youthmn](https://github.com/youthmn)
 
 # SKILLS
 
