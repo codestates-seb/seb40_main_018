@@ -1,6 +1,6 @@
 # About 다님 🌴
 다님에 오신 걸 환영합니다!! 다님과 함께 여행을 기록해볼까요?
-![Danim - MarkMaker Logo](https://user-images.githubusercontent.com/62506973/203925322-9af9c0be-a509-49a2-8708-88244460deda.png)
+<!-- ![Danim - MarkMaker Logo](https://user-images.githubusercontent.com/62506973/203925322-9af9c0be-a509-49a2-8708-88244460deda.png) -->
 
 
 # SERVICE
