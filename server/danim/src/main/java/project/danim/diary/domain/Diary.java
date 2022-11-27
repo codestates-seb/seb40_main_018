@@ -101,6 +101,10 @@ public class Diary extends BaseTime {
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();
 
+    public void addReply(Reply reply) {
+        this.replies = replies;
+    }
+
 
 
     //private AggregateReference<Member, Long> memberId;
