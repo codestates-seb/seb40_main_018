@@ -16,6 +16,9 @@ public class Check extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long checkId;
 
+    @Column(length = 20)
+    private String nickname;
+
     @Column(length = 100)
     private String checkContent;
 
