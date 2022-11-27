@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import project.danim.bucket.domain.Bucket;
-import project.danim.bucket.dto.BucketResponseDto;
+import project.danim.diary.domain.Diary;
 import project.danim.reply.domain.Reply;
 
 import java.time.LocalDateTime;
@@ -18,12 +17,14 @@ public class ReplyResponseDto {
 
     private Long replyId;
 
+    private Long diaryId;
+
     private String replyContent;
 
     private LocalDateTime createdAt;
 
     public static ReplyResponseDto of(Reply reply) {
-        return new ReplyResponseDto(reply.getReplyId(), reply.getReplyContent(), reply.getCreatedAt());
+        return new ReplyResponseDto(reply.getReplyId(),reply.getReplyId(),  reply.getReplyContent(), reply.getCreatedAt());
     }
 
 }

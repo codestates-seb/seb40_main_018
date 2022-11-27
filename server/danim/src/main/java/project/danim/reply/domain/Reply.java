@@ -24,8 +24,13 @@ public class Reply extends BaseTime {
     private String replyContent;
 
     @ManyToOne
-    @JoinColumn(name = "DIARY")
+    @JoinColumn(name = "DIARY_ID")
     private Diary diary;
+
+    public void addDiary(Diary diary) {
+        diary.addReply(this);
+        this.diary = diary;
+    }
 
     @Builder
     public Reply(Long replyId, String replyContent) {

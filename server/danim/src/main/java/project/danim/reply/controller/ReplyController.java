@@ -3,6 +3,7 @@ package project.danim.reply.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.danim.diary.domain.Diary;
 import project.danim.diary.service.DiaryService;
 import project.danim.reply.domain.Reply;
 import project.danim.reply.dto.ReplyDeleteDto;
@@ -30,19 +31,25 @@ public class ReplyController {
     }
 
     // 전체 조회
-    @GetMapping("/{reply-id}")
-    public List<Reply> getReplies() {
+    @GetMapping("/{diary-id}")
+    public List<Reply> getReplies(Long diaryId) {
 
-        List<Reply> replies = replyService.findReplies();
+        List<Reply> replies = replyService.findReplies(diaryId);
 
         return replies;
     }
 
     // 댓글 생성
-    @PostMapping
-    public ResponseEntity<SingleResponseDto> postReply(@Valid @RequestBody ReplyPostDto request) {
+    @PostMapping("/{diary-id}")
+    public ResponseEntity<SingleResponseDto> postReply(@Valid @RequestBody ReplyPostDto request,
+                                                       @PathVariable("diary-id") Long diaryId,
+                                                       Reply reply) {
 
-        ReplyResponseDto response = replyService.createReply(request);
+        request.setDiaryId(diaryId);
+
+        Diary diary = diaryService.findDiary(diaryId);
+
+        ReplyResponseDto response = replyService.createReply(request, reply, diary);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.CREATED);
