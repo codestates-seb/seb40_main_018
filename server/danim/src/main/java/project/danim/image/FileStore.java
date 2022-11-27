@@ -2,11 +2,10 @@ package project.danim.image;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 import project.danim.exeption.BusinessLogicException;
 import project.danim.exeption.ExceptionCode;
 
@@ -15,16 +14,13 @@ import java.io.InputStream;
 import java.util.*;
 
 @Service
-public class FileStore {
+@RequiredArgsConstructor
+public class AmazonService {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
     private final AmazonS3 s3;
-
-    public FileStore(AmazonS3 s3) {
-        this.s3 = s3;
-    }
 
     public List<String> uploadImage(List<MultipartFile> multipartFile) {
         List<String> fileNameList = new ArrayList<>();
