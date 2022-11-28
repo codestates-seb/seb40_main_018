@@ -19,6 +19,9 @@ public class Bucket extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bucketId;
 
+    @Column(length = 20)
+    private String nickname;
+
     @Column(length = 100)
     private String bucketContent;
 

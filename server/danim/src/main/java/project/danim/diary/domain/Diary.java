@@ -9,9 +9,11 @@ import org.springframework.data.annotation.LastModifiedDate;
 import project.danim.audit.BaseTime;
 import project.danim.likes.domain.Likes;
 import project.danim.member.domain.Member;
+import project.danim.reply.domain.Reply;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -93,15 +95,17 @@ public class Diary extends BaseTime {
     private List<Tag> tags = new ArrayList<>();
 */
 
-    /*
 
-     1대 다 관계
+//     1대 다 관계
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reply> replys = new ArrayList<>();
+    private List<Reply> replies = new ArrayList<>();
+
+    public void addReply(Reply reply) {
+        this.replies = replies;
+    }
 
 
-     */
 
     //private AggregateReference<Member, Long> memberId;
 /*
