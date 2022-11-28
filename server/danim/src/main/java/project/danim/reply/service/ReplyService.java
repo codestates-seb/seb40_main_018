@@ -14,9 +14,9 @@ import project.danim.reply.dto.ReplyResponseDto;
 import project.danim.reply.repository.ReplyRepository;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,9 +31,18 @@ public class ReplyService {
     }
 
     // 전체 조회
-    public List<Reply> findReplies(Long diaryId) {
+    public List<ReplyResponseDto> findReplies(Long diaryId) {
 
-        return replyRepository.findAllById(Collections.singleton(diaryId));
+        List<Reply> replies =  replyRepository.findAllByDiary_DiaryId(diaryId);
+
+        return replies.stream()
+                .map(reply -> ReplyResponseDto.builder()
+                        .replyContent(reply.getReplyContent())
+                        .diaryId(diaryId)
+                        .replyId(reply.getReplyId())
+                        .createdAt(reply.getCreatedAt())
+                        .build())
+                .collect(Collectors.toList());
 
     }
 
@@ -46,12 +55,13 @@ public class ReplyService {
         Diary findDiary = OptionalDiary.orElseThrow(() -> new BusinessLogicException(ExceptionCode.DIARY_NOT_FOUND));
 
         reply.setDiary(diary);
+        reply.setReplyContent(request.getReplyContent());
 
         Reply createReply = replyRepository.save(reply);
 
         return ReplyResponseDto.builder()
                 .diaryId(diary.getDiaryId())
-                .replyContent(request.getReplyContent())
+                .replyContent(createReply.getReplyContent())
                 .replyId(createReply.getReplyId())
                 .createdAt(createReply.getCreatedAt())
                 .build();

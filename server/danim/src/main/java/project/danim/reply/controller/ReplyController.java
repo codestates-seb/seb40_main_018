@@ -22,7 +22,6 @@ import java.util.List;
 public class ReplyController {
 
     private final ReplyService replyService;
-
     private final DiaryService diaryService;
 
     public ReplyController(ReplyService replyService, DiaryService diaryService) {
@@ -32,11 +31,10 @@ public class ReplyController {
 
     // 전체 조회
     @GetMapping("/{diary-id}")
-    public List<Reply> getReplies(Long diaryId) {
+    public ResponseEntity<SingleResponseDto> getReplies(@PathVariable("diary-id") Long diaryId) {
 
-        List<Reply> replies = replyService.findReplies(diaryId);
+        return new ResponseEntity<>(new SingleResponseDto<>(replyService.findReplies(diaryId)), HttpStatus.OK);
 
-        return replies;
     }
 
     // 댓글 생성
@@ -44,8 +42,6 @@ public class ReplyController {
     public ResponseEntity<SingleResponseDto> postReply(@Valid @RequestBody ReplyPostDto request,
                                                        @PathVariable("diary-id") Long diaryId,
                                                        Reply reply) {
-
-        request.setDiaryId(diaryId);
 
         Diary diary = diaryService.findDiary(diaryId);
 
@@ -78,4 +74,5 @@ public class ReplyController {
         return new ResponseEntity<>(new ReplyDeleteDto(replyId), HttpStatus.OK);
 
     }
+
 }

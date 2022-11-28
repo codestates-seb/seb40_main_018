@@ -20,10 +20,9 @@ public class Reply extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long replyId;
 
-    @Column(length = 500)
     private String replyContent;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DIARY_ID")
     private Diary diary;
 
