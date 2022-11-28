@@ -4,11 +4,37 @@ spring:
     url: jdbc:mysql://${RDS_URL}/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: ${RDS_USERNAME}
     password: ${RDS_PASSWORD}
+    port: ${RDS_PORT}
   jpa:
     hibernate:
       ddl-auto: update
+
+cloud:
+  aws:
+    credentials:
+      instance-profile: false
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_ACCESS_KEY}
+    region:
+      auto: false
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
+
+aws:
+  s3:
+    bucket: ${BUCKET_NAME}
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 400
+
+
