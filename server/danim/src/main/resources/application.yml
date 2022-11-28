@@ -5,21 +5,29 @@ spring:
     username: ${RDS_USERNAME}
     password: ${RDS_PASSWORD}
     port: ${RDS_PORT}
+
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: update  # (1) 스키마 자동 생성
+
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 cloud:
   aws:
     credentials:
       instance-profile: false
-      access-key: ${AWS_ACCESS_KEY}
-      secret-key: ${AWS_SECRET_ACCESS_KEY}
     region:
       auto: false
       static: ap-northeast-2
     stack:
       auto: false
+
+iam:
+  access-key: ${AWS_ACCESS_KEY}
+  secret-key: ${AWS_SECRET_ACCESS_KEY}
 
 logging:
   level:
