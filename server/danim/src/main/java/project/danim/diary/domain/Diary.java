@@ -10,6 +10,7 @@ import project.danim.audit.BaseTime;
 import project.danim.likes.domain.Likes;
 import project.danim.member.domain.Member;
 import project.danim.reply.domain.Reply;
+import project.danim.tag.domain.Tag;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -86,17 +87,12 @@ public class Diary extends BaseTime {
 
   */
 
-    /*
-    Diary : TAG  = > 1 대 다 관계
-     */
-
-   /*
-    @OneToMany(mappedBy = "diary")
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tags = new ArrayList<>();
-*/
 
-
-//     1대 다 관계
+    public void addTag(Tag tag) {
+        this.tags = tags;
+    }
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();
