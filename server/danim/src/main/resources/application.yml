@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${RDS_URL}/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://${RDS_URL}/danim?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC&reconnect=true
     username: ${RDS_USERNAME}
     password: ${RDS_PASSWORD}
     port: ${RDS_PORT}
