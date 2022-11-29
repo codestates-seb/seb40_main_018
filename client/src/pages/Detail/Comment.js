@@ -13,8 +13,10 @@ import { Editor } from "@toast-ui/react-editor";
 import { timeForToday, Item } from "../../components/Comment/CommentTool";
 import Markdown from "../../components/Comment/Markdown";
 import axios from "axios";
+import SkeletonComment from "../../components/Skeleton/SkeletonComment";
 
 const Comment = ({ user }) => {
+  const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState([]);
   // console.log(comment);
 
@@ -25,8 +27,13 @@ const Comment = ({ user }) => {
   const [openEditor, setOpenEditor] = useState("");
 
   useEffect(() => {
+    setLoading(true);
     axios.get("http://localhost:4001/comments").then((result) => {
-      setComment(result.data);
+      const timer = setTimeout(() => {
+        setComment(result.data);
+        setLoading(false);
+      }, 2000);
+      return () => clearTimeout(timer);
     });
   }, []);
 
@@ -168,7 +175,7 @@ const Comment = ({ user }) => {
           </div>
         </>
       )}
-
+      {loading && <SkeletonComment />}
       {comment.map((comment, index) => (
         <Box sx={{ mb: 2, p: 2, bgcolor: "#f1f1f1", borderRadius: 3 }} key={index}>
           {/* writer 정보, 작성 시간 */}
@@ -180,6 +187,7 @@ const Comment = ({ user }) => {
 
             <Item>{timeForToday(comment.created_at)}</Item>
           </Stack>
+
           {/* comment 글 내용 */}
           <Box
             key={index}

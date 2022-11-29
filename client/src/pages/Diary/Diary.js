@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Location } from "./Location";
 import styled from "styled-components";
 import LoginHeader from "../../components/Header/LoginHeader";
@@ -14,6 +14,7 @@ import DiaryPlace from "./DiaryPlace";
 import DiaryHashtag from "./DiaryHashtag";
 import CancelModal from "../../components/Modal/CancelModal";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Loading";
 
 const Section = styled.section`
   display: flex;
@@ -74,6 +75,7 @@ const Diary = () => {
   const [selected, setSelected] = useState(select1[0]);
   const [city, setCity] = useState(Location[selected][0]);
   const [tags, setTags] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   //post
 
@@ -137,49 +139,62 @@ const Diary = () => {
       .then((res) => console.log("res:", res))
       .then((err) => console.log("IMGErr", err));
   };
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
       <LoginHeader />
-      <Section>
-        <Container>
-          <DiaryTitle
-            title={title}
-            setTitle={setTitle}
-            weather={weather}
-            setWeather={setWeather}
-            year={year}
-            setYear={setYear}
-            month={month}
-            setMonth={setMonth}
-            day={day}
-            setDay={setDay}
-          />
-          <DiaryImg imageList={imageList} setImageList={setImageList} />
-          <DiaryText
-            question={question}
-            setQuestion={setQuestion}
-            counter={counter}
-            setCounter={setCounter}
-            diary={diary}
-            setDiary={setDiary}
-            randomQuestions={randomQuestions}
-          />
-          <DiaryPrice price={price} setPrice={setPrice} />
-          <DiaryPlace
-            Location={Location}
-            selected={selected}
-            setSelected={setSelected}
-            city={city}
-            setCity={setCity}
-            select1={select1}
-          />
-          <DiaryHashtag tags={tags} setTags={setTags} />
-          <BtnArea>
-            <MintLineButton className="submit" text="등록" handleSubmit={submitHandler}></MintLineButton>
-            <CancelModal />
-          </BtnArea>
-        </Container>
-      </Section>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Section>
+          <Container>
+            <DiaryTitle
+              title={title}
+              setTitle={setTitle}
+              weather={weather}
+              setWeather={setWeather}
+              year={year}
+              setYear={setYear}
+              month={month}
+              setMonth={setMonth}
+              day={day}
+              setDay={setDay}
+            />
+            <DiaryImg imageList={imageList} setImageList={setImageList} />
+            <DiaryText
+              question={question}
+              setQuestion={setQuestion}
+              counter={counter}
+              setCounter={setCounter}
+              diary={diary}
+              setDiary={setDiary}
+              randomQuestions={randomQuestions}
+            />
+            <DiaryPrice price={price} setPrice={setPrice} />
+            <DiaryPlace
+              Location={Location}
+              selected={selected}
+              setSelected={setSelected}
+              city={city}
+              setCity={setCity}
+              select1={select1}
+            />
+            <DiaryHashtag tags={tags} setTags={setTags} />
+            <BtnArea>
+              <MintLineButton className="submit" text="등록" handleSubmit={submitHandler}></MintLineButton>
+              <CancelModal />
+            </BtnArea>
+          </Container>
+        </Section>
+      )}
     </>
   );
 };

@@ -11,7 +11,6 @@ const Main = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #fbfbfb;
-  /* background-color: #fbfbfb; */
 `;
 
 export default function MainPage() {

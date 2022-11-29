@@ -4,6 +4,7 @@ import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import styled from "styled-components";
 import DarkMintTag from "../Tag/DarkMintTag";
+import SkeletonCard from "../Skeleton/SkeletonCard";
 
 const Main = styled.div`
   display: grid;
@@ -128,28 +129,31 @@ export const Card = () => {
   const [like, setLike] = useState(false);
   const [diaryList, setDiaryList] = useState([]);
   // const [completed, setcompleted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // const onClickHandler = () => {
   //   setLike(!like);
   // };
 
-  const onClickHandler = (like) => {
-    setLike(
-      like.map((item) => {
-        if (item.id === like.id) {
-          return { ...item, completed: !item.completed };
+  const onClickHandler = (list) => {
+    setLike(!like);
+
+    setDiaryList(
+      diaryList.map((item) => {
+        if (item.id === list.id) {
+          return { ...item, like: !item.like };
         }
         return item;
       }),
     );
 
     const patch2 = {
-      title: like.title,
-      completed: !like.completed,
+      title: list.title,
+      like: !list.like,
     };
 
     axios
-      .patch(`http://localhost:4000/diary/` + like.id, patch2)
+      .patch(`http://localhost:4000/diary/` + list.id, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
   };
@@ -163,48 +167,52 @@ export const Card = () => {
 
   useEffect(() => {
     // axios.get(`http://localhost:4000/diary/${id}`).then((res) => {
+    setLoading(true);
     axios.get("http://localhost:4000/diary").then((res) => {
-      console.log(res.data);
-      setDiaryList(res.data);
+      const timer = setTimeout(() => {
+        console.log(res.data);
+        setDiaryList(res.data);
+        setLoading(false);
+      }, 2000);
+      return () => clearTimeout(timer);
     });
   }, []);
 
   return (
     <>
-      <Main>
-        {diaryList.map((item, index) => (
-          <CardBox key={index}>
-            <Preview src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지">
-              <Heart>
-                <button onClick={() => onClickHandler(like)}>
-                  {like ? (
-                    <FaHeart color="#DF4949" onClick={onClickHandler} />
-                  ) : (
-                    <FiHeart color="#DF4949" fill="#646464" onClick={onClickHandler} />
-                  )}
-                </button>
-              </Heart>
-            </Preview>
-            <Id>{item.nickname}</Id>
-            <Cardtitle>{item.title}</Cardtitle>
-            <Cardcontents>{item.diary}</Cardcontents>
-            <MintWrapper>
-              <Region>
-                {item.selected}
-                {item.city}
-              </Region>
-              <Budget>{item.price}</Budget>
-            </MintWrapper>
-            <TagContainer>
-              {item.tags.map((tag, idx) => (
-                <li key={idx}>
-                  <DarkMintTag height="16px" text={tag}></DarkMintTag>
-                </li>
-              ))}
-            </TagContainer>
-          </CardBox>
-        ))}
-      </Main>
+      {loading && <SkeletonCard />}
+      {!loading && (
+        <Main>
+          {diaryList.map((list, index) => (
+            <CardBox key={index}>
+              <Preview src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지">
+                <Heart>
+                  <button onClick={() => onClickHandler(list)}>
+                    {list.like ? <FaHeart color="#DF4949" /> : <FiHeart color="#DF4949" fill="#646464" />}
+                  </button>
+                </Heart>
+              </Preview>
+              <Id>{list.nickname}</Id>
+              <Cardtitle>{list.title}</Cardtitle>
+              <Cardcontents>{list.diary}</Cardcontents>
+              <MintWrapper>
+                <Region>
+                  {list.selected}
+                  {list.city}
+                </Region>
+                <Budget>{list.price}</Budget>
+              </MintWrapper>
+              <TagContainer>
+                {list.tags.map((tag, idx) => (
+                  <li key={idx}>
+                    <DarkMintTag height="16px" text={tag}></DarkMintTag>
+                  </li>
+                ))}
+              </TagContainer>
+            </CardBox>
+          ))}
+        </Main>
+      )}
     </>
   );
 };

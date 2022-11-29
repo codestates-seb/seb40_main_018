@@ -53,7 +53,7 @@ const DateInfo = styled.div`
 /* 링크연결 - 각 다이어리 상세페이지로 */
 // 확인용
 
-const MyPageCard = ({ cardList, obsRef, load }) => {
+const MyPageCard = ({ cardList }) => {
   return (
     <CardContainer>
       {cardList && (
@@ -71,64 +71,8 @@ const MyPageCard = ({ cardList, obsRef, load }) => {
           ))}
         </>
       )}
-      <div ref={obsRef} />
-
-      {load ? <div>로딩 중</div> : <></>}
     </CardContainer>
   );
 };
 
 export default MyPageCard;
-{
-  /* <>
-  <div className="wrap min-h-[100vh]">
-    {cardList && (
-      <>
-        {cardList.map((li) => (
-          <img
-            key={li.id}
-            className="opacity-100 mx-auto mb-6"
-            src={li.url}
-            alt={li.dke}
-            width={"500px"}
-            height={"300px"}
-          />
-        ))}
-      </>
-    )}
-
-
-    {load ? <div className="py-3 bg-blue-500 text-center">로딩 중</div> : <></>}
-    <div ref={obsRef} className="py-3 bg-red-500 text-white text-center">
-      옵저버 Element
-    </div>
-  </div>
-</>; */
-}
-
-{
-  /* <>
-        <ul className="postList">
-          {
-            cardList &&
-            <>
-            {
-              cardList.map((post, idx) =>
-                <li key={idx}>post.title<li/>
-              )
-            }
-            </>            
-          }
-          {
-            load ?
-            <li className="spinner">
-				로딩 스피너
-            </li>
-            :
-            <></>
-          }
-          <li className='' ref={obsRef}>
-          	옵저버
-          </li>
-    </> */
-}
