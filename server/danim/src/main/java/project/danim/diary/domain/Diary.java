@@ -57,13 +57,17 @@ public class Diary extends BaseTime {
     @LastModifiedDate
     private LocalDateTime modifiedDate = LocalDateTime.now();
 
-    public Diary(long diaryId, String title, String content, String weather, String area, int cost){
+    @Column
+    private String imageUrl;
+
+    public Diary(long diaryId, String title, String content, String weather, String area, int cost, String imageUrl){
         this.diaryId = diaryId;
         this.title = title;
         this.content = content;
         this.weather = weather;
         this.area = area;
         this.cost = cost;
+        this.imageUrl = imageUrl;
     }
 
 
