@@ -7,7 +7,6 @@ import MainPage from "./pages/MainPage";
 import MyList from "./pages/MyList";
 import MyPage from "./pages/MyPage/MyPage";
 import { SignUp } from "./pages/SignUp";
-import UserEdit from "./pages/UserEdit";
 import { GlobalStyles } from "./style/GlobalStyle";
 import Detail from "./pages/Detail/Detail";
 // import axios from "axios";
@@ -91,7 +90,6 @@ function App() {
           <Route path="/mylist" element={<MyList />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/useredit" element={<UserEdit />} />
         </Routes>
       </Router>
     </>

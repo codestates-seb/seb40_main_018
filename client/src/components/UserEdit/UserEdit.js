@@ -54,6 +54,12 @@ const UserInformation = styled.div`
   flex-direction: column;
 `;
 
+const EditImg = styled.img`
+  border-radius: 100%;
+  transform: translate(50, 50);
+  object-fit: cover;
+`;
+
 const EditId = styled.input`
   background-color: white;
   font-size: 14px;
@@ -204,16 +210,16 @@ export const UserEditBox = () => {
             // 편집할때 나와야할 내용
             <>
               <UserImg>
-                <img className="icon" src={img} alt="img" />
+                <EditImg className="icon" src={img} alt="img" />
                 <ImgInput
                   type="file"
-                  accept="image/jpg,impge/png,image/gif"
+                  accept="image/*"
                   id="file"
                   style={{ display: "none" }}
                   onChange={(e) => onChangeFile(e)}
                 />
                 <label htmlFor="file">
-                  <FaRegEdit className="icon"></FaRegEdit>
+                  <FaRegEdit className="icon"></FaRegEdit>{" "}
                 </label>
               </UserImg>
               <Wrpper>
@@ -236,9 +242,9 @@ export const UserEditBox = () => {
             </>
           ) : (
             <>
-              {/* 편집 완료됬을때 나올 화면 */}
+              {/* 편집 완료됐을때 나올 화면 */}
               <UserImg>
-                <img className="icon" src={img} alt="img" />
+                <EditImg className="icon" src={img} alt="img" />
               </UserImg>
               <Wrpper>
                 <UserInformation>
