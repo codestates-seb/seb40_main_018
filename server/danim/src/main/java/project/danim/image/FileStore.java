@@ -53,10 +53,13 @@ public class FileStore {
     }
 
     private String getFileExtension(String fileName) {
+
         try {
             return fileName.substring(fileName.lastIndexOf("."));
         } catch (StringIndexOutOfBoundsException e) {
             throw new BusinessLogicException(ExceptionCode.BAD_REQUEST);
         }
+
     }
+
 }
