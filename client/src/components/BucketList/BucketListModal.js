@@ -52,9 +52,9 @@ export const ListInput = styled.div`
 export const Box = styled.div``;
 
 export const BucketListModal = () => {
-  const initialState = JSON.parse(localStorage.getItem("todos")) || [];
+  // const initialState = JSON.parse(localStorage.getItem("todos")) || [];
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState(initialState);
+  const [todos, setTodos] = useState([]);
   const [editTodo, setEditTodo] = useState(null);
   const [completed, setcompleted] = useState(false);
   const [isEdit, setIsEdit] = useState(false);

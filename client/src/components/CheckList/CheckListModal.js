@@ -53,9 +53,9 @@ export const ListInput = styled.div`
 `;
 
 export const CheckListModal = () => {
-  const initialState = JSON.parse(localStorage.getItem("todos")) || [];
+  // const initialState = JSON.parse(localStorage.getItem("todos")) || [];
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState(initialState);
+  const [todos, setTodos] = useState([]);
   const [editTodo, setEditTodo] = useState(null);
   const [completed, setcompleted] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -63,7 +63,7 @@ export const CheckListModal = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${process.env.REACT_APP_API_URL}/check-list`).then((result) => {
+    axios.get("http://localhost:4000/todos").then((result) => {
       // 로딩 시간이 짧아 settimeout 적용
       const timer = setTimeout(() => {
         setTodos(result.data);
