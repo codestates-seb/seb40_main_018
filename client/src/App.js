@@ -9,6 +9,7 @@ import MyPage from "./pages/MyPage/MyPage";
 import { SignUp } from "./pages/SignUp";
 import { GlobalStyles } from "./style/GlobalStyle";
 import Detail from "./pages/Detail/Detail";
+import UserEdit from "./pages/UserEdit";
 // import axios from "axios";
 // import { useDispatch, useSelector } from "react-redux";
 // import useFetch from "./redux/useFetch";
@@ -90,6 +91,7 @@ function App() {
           <Route path="/mylist" element={<MyList />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/useredit" element={<UserEdit />} />
         </Routes>
       </Router>
     </>
