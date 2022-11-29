@@ -56,7 +56,7 @@ const MyPageSearch = ({ cardList }) => {
     // updateText
     setInputValue(value);
 
-    // dropdown을 위한 기능
+    // dropdown과 같은 결과 값을 보여주기 위한 기능
     const filterRegex = new RegExp(value, "i");
     const resultOptions = city.filter((option) => option.match(filterRegex));
     setOptions(resultOptions);
