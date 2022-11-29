@@ -44,11 +44,11 @@ const City = styled.div`
   font-weight: bold;
   text-shadow: 2px 2px 4px gray;
 `;
-const DateInfo = styled.div`
-  font-size: 16px;
-  color: #fbfbfb;
-  text-shadow: 2px 2px 4px gray;
-`;
+// const DateInfo = styled.div`
+//   font-size: 16px;
+//   color: #fbfbfb;
+//   text-shadow: 2px 2px 4px gray;
+// `;
 
 /* 링크연결 - 각 다이어리 상세페이지로 */
 // 확인용
@@ -62,10 +62,7 @@ const MyPageCard2 = ({ cardList, options, handleDropDownClick }) => {
           <CardArea key={index} onClick={() => handleDropDownClick(option)}>
             <CardImg src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지" />
             <TextArea>
-              <City>{option.city}</City>
-              <DateInfo>
-                {option.year}.{option.month}.{option.day}
-              </DateInfo>
+              <City>{option}</City>
             </TextArea>
             <TextArea>
               {/* {cardList && (

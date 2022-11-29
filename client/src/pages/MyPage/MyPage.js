@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import LoginHeader from "../../components/Header/LoginHeader";
 import MapIcon from "./MapIcon";
-// import MyPageSearch from "./MyPageSearch";
-import MyPageCard from "./MyPageCard";
+import MyPageSearch from "./MyPageSearch";
+// import MyPageCard from "./MyPageCard";
 import { UserEditBox } from "../../components/UserEdit/UserEdit";
 import SkeletonDiary from "../../components/Skeleton/SkeletonDiary";
 
@@ -53,9 +53,9 @@ const MyPage = () => {
   //   }
   // };
   // new
-  useEffect(async () => {
+  useEffect(() => {
     setLoading(true);
-    await axios.get(`http://localhost:4000/diary`).then((res) => {
+    axios.get(`http://localhost:4000/diary`).then((res) => {
       const timer = setTimeout(() => {
         console.log(res.data);
         setCardList(res.data);
@@ -102,9 +102,9 @@ const MyPage = () => {
       <MyPageContainer>
         <UserEditBox />
         <MapIcon />
-        {/* <MyPageSearch /> */}
+        <MyPageSearch cardList={cardList} setCardList={setCardList} />
         {loading && <SkeletonDiary />}
-        <MyPageCard cardList={cardList} />
+        {/* <MyPageCard cardList={cardList} /> */}
       </MyPageContainer>
     </>
   );
