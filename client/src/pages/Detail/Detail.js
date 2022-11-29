@@ -70,6 +70,10 @@ const DiaryArea = styled.div`
 const HeartAndNickname = styled.div`
   margin-bottom: 16px;
   display: flex;
+
+  > button {
+    border: none;
+  }
 `;
 const Nickname = styled.div`
   font-size: 15px;
@@ -210,7 +214,15 @@ const Detail = () => {
   // 하트
   const onClickHandler = () => {
     setLike(!like);
-    //어디로 어떻게 보내야할까아아아아아아아아아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
+
+    const patch2 = {
+      like: !like,
+    };
+
+    axios
+      .patch(`http://localhost:4000/diary/` + id, patch2)
+      .then((res) => console.log(res))
+      .then((err) => console.log("res1", err));
   };
 
   // 다이어리 본문 수정버튼
@@ -261,11 +273,9 @@ const Detail = () => {
         </IMGArea>
         <DiaryArea>
           <HeartAndNickname>
-            {like ? (
-              <FaHeart color="#DF4949" onClick={onClickHandler} />
-            ) : (
-              <FiHeart color="#DF4949" fill="#646464" onClick={onClickHandler} />
-            )}
+            <button onClick={() => onClickHandler()}>
+              {like ? <FaHeart color="#DF4949" /> : <FiHeart color="#DF4949" fill="#646464" />}
+            </button>
             <Nickname>{diaryDetail.nickname}</Nickname>
           </HeartAndNickname>
           <RandomQuestion>{diaryDetail.question}</RandomQuestion>
