@@ -24,13 +24,13 @@ const FilterContainer = styled.div`
     height: 100%;
     flex-grow: 1;
     position: relative;
-    padding: 5px 5px;
+    padding: 6px 6px;
     background-color: #ffffff;
     border: 1px solid #86c1c1;
     border-radius: 35px;
     box-sizing: inherit;
     margin-left: auto;
-    margin-right: 18px;
+    margin-right: 20px;
     &:focus-within {
       box-shadow: 0px 0px 1px 1px #5da7a7;
       border: none;
@@ -40,6 +40,7 @@ const FilterContainer = styled.div`
       font-size: 12px;
       width: 100%;
       height: 30px;
+      margin-left: 4px;
       align-items: center;
       border: none;
       :focus {
@@ -70,10 +71,11 @@ const FilterContainer = styled.div`
         color: #535353;
         background-color: #fbfbfb;
         @media screen and (max-width: 640px) {
-          height: 35.44px;
+          height: 36px;
           padding-left: 0.4em;
           padding-right: 0.4em;
           flex-direction: column-reverse;
+          font-size: 18px;
         }
         cursor: pointer;
         :hover {
@@ -83,6 +85,12 @@ const FilterContainer = styled.div`
           height: 10px;
           background-color: #fbfbfb;
           border-bottom: #40d8d8 solid 15px;
+          @media screen and (max-width: 640px) {
+            border-top: #40d8d8 solid 15px;
+            border-bottom: none;
+            font-size: 18px;
+            padding-bottom: none;
+          }
         }
       }
     }
@@ -127,7 +135,7 @@ export const MainTab = () => {
           </div>
         </div>
         <div className="input-search">
-          <AiOutlineSearch size={25} color="#838C95" />
+          <AiOutlineSearch size={30} color="#86C1C1" />
           <input type="text" className="logo-search" placeholder="태그를 입력하세요" />
         </div>
         <PriceFilter />

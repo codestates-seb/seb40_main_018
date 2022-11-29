@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import styled from "styled-components";
@@ -113,6 +114,7 @@ const Budget = styled.div`
 
 const TagContainer = styled.div`
   display: flex;
+  word-break: break-all;
 `;
 const Heart = styled.div`
   margin-bottom: 240px;
@@ -124,159 +126,84 @@ const Heart = styled.div`
 `;
 export const Card = () => {
   const [like, setLike] = useState(false);
+  const [diaryList, setDiaryList] = useState([]);
+  // const [completed, setcompleted] = useState(false);
 
-  const onClickHandler = () => {
-    setLike(!like);
+  // const onClickHandler = () => {
+  //   setLike(!like);
+  // };
+
+  const onClickHandler = (like) => {
+    setLike(
+      like.map((item) => {
+        if (item.id === like.id) {
+          return { ...item, completed: !item.completed };
+        }
+        return item;
+      }),
+    );
+
+    const patch2 = {
+      title: like.title,
+      completed: !like.completed,
+    };
+
+    axios
+      .patch(`http://localhost:4000/diary/` + like.id, patch2)
+      .then((res) => console.log(res))
+      .then((err) => console.log("res1", err));
   };
+
+  // const onClickHandler = ({ id }) => {
+  //   const heartClick = like.find((todo) => todo.id === id);
+  //   setLike(heartClick);
+  //   console.log(heartClick);
+  //   setLike(!like);
+  // };
+
+  useEffect(() => {
+    // axios.get(`http://localhost:4000/diary/${id}`).then((res) => {
+    axios.get("http://localhost:4000/diary").then((res) => {
+      console.log(res.data);
+      setDiaryList(res.data);
+    });
+  }, []);
 
   return (
     <>
       <Main>
-        <CardBox>
-          <Preview>
-            <Heart>
-              {like ? (
-                <FaHeart color="#DF4949" onClick={onClickHandler} />
-              ) : (
-                <FiHeart color="#DF4949" fill="#646464" onClick={onClickHandler} />
-              )}
-            </Heart>
-          </Preview>
-          <Id>youthmn</Id>
-          <Cardtitle>아이유 스트로베리문 들어보세요</Cardtitle>
-          <Cardcontents>
-            달이 익어가니 서둘러 젊은 피야 민들레 한 송이 들고 사랑이 어지러이 떠다니는 밤이야 날아가 사뿐히 이루렴
-            팽팽한 어둠 사이로 떠오르는 기분 이 거대한 무중력에 혹 휘청해도 두렵진 않을 거야 푸르른 우리 위로 커다란
-            strawberry moon 한 스쿱 나에게 너를 맡겨볼래 eh oh 바람을 세로질러 날아오르는 기분 so cool 삶이 어떻게 더
-            완벽해 ooh 다시 마주하기 어려운 행운이야 온몸에 심장이 뛰어 Oh 오히려 기꺼이 헤매고픈 밤이야 너와 길 잃을 수
-            있다면 맞잡은 서로의 손으로 출입구를 허문 이 무한함의 끝과 끝 또 위아래로 비행을 떠날 거야 푸르른 우리 위로
-            커다란 strawberry moon 한 스쿱
-          </Cardcontents>
-          <MintWrapper>
-            <Region>전라북도 전주</Region>
-            <Budget>150,000₩</Budget>
-          </MintWrapper>
-          <TagContainer>
-            <DarkMintTag text="밤바다" height="16px" />
-            <DarkMintTag text="장범준" height="16px" />
-          </TagContainer>
-        </CardBox>
-        <CardBox>
-          <Preview>
-            <Heart>
-              {like ? (
-                <FaHeart color="#DF4949" onClick={onClickHandler} />
-              ) : (
-                <FiHeart color="#DF4949" fill="#646464" onClick={onClickHandler} />
-              )}
-            </Heart>
-          </Preview>
-          <Id>youthmn</Id>
-          <Cardtitle>아이유 스트로베리문 들어보세요</Cardtitle>
-          <Cardcontents>
-            달이 익어가니 서둘러 젊은 피야 민들레 한 송이 들고 사랑이 어지러이 떠다니는 밤이야 날아가 사뿐히 이루렴
-            팽팽한 어둠 사이로 떠오르는 기분 이 거대한 무중력에 혹 휘청해도 두렵진 않을 거야 푸르른 우리 위로 커다란
-            strawberry moon 한 스쿱 나에게 너를 맡겨볼래 eh oh 바람을 세로질러 날아오르는 기분 so cool 삶이 어떻게 더
-            완벽해 ooh 다시 마주하기 어려운 행운이야 온몸에 심장이 뛰어 Oh 오히려 기꺼이 헤매고픈 밤이야 너와 길 잃을 수
-            있다면 맞잡은 서로의 손으로 출입구를 허문 이 무한함의 끝과 끝 또 위아래로 비행을 떠날 거야 푸르른 우리 위로
-            커다란 strawberry moon 한 스쿱
-          </Cardcontents>
-          <MintWrapper>
-            <Region>전라북도 전주</Region>
-            <Budget>150,000₩</Budget>
-          </MintWrapper>
-          <TagContainer>
-            <DarkMintTag text="밤바다" height="16px" />
-            <DarkMintTag text="장범준" height="16px" />
-          </TagContainer>
-        </CardBox>
-        <CardBox>
-          <Preview>
-            <Heart>
-              {like ? (
-                <FaHeart color="#DF4949" onClick={onClickHandler} />
-              ) : (
-                <FiHeart color="#DF4949" fill="#646464" onClick={onClickHandler} />
-              )}
-            </Heart>
-          </Preview>
-          <Id>youthmn</Id>
-          <Cardtitle>아이유 스트로베리문 들어보세요</Cardtitle>
-          <Cardcontents>
-            달이 익어가니 서둘러 젊은 피야 민들레 한 송이 들고 사랑이 어지러이 떠다니는 밤이야 날아가 사뿐히 이루렴
-            팽팽한 어둠 사이로 떠오르는 기분 이 거대한 무중력에 혹 휘청해도 두렵진 않을 거야 푸르른 우리 위로 커다란
-            strawberry moon 한 스쿱 나에게 너를 맡겨볼래 eh oh 바람을 세로질러 날아오르는 기분 so cool 삶이 어떻게 더
-            완벽해 ooh 다시 마주하기 어려운 행운이야 온몸에 심장이 뛰어 Oh 오히려 기꺼이 헤매고픈 밤이야 너와 길 잃을 수
-            있다면 맞잡은 서로의 손으로 출입구를 허문 이 무한함의 끝과 끝 또 위아래로 비행을 떠날 거야 푸르른 우리 위로
-            커다란 strawberry moon 한 스쿱
-          </Cardcontents>
-          <MintWrapper>
-            <Region>전라북도 전주</Region>
-            <Budget>150,000₩</Budget>
-          </MintWrapper>
-          <TagContainer>
-            <DarkMintTag text="밤바다" height="16px" />
-            <DarkMintTag text="장범준" height="16px" />
-          </TagContainer>
-        </CardBox>
-        <CardBox>
-          <Preview>
-            <Heart>
-              {like ? (
-                <FaHeart color="#DF4949" onClick={onClickHandler} />
-              ) : (
-                <FiHeart color="#DF4949" fill="#646464" onClick={onClickHandler} />
-              )}
-            </Heart>
-          </Preview>
-          <Id>youthmn</Id>
-          <Cardtitle>아이유 스트로베리문 들어보세요</Cardtitle>
-          <Cardcontents>
-            달이 익어가니 서둘러 젊은 피야 민들레 한 송이 들고 사랑이 어지러이 떠다니는 밤이야 날아가 사뿐히 이루렴
-            팽팽한 어둠 사이로 떠오르는 기분 이 거대한 무중력에 혹 휘청해도 두렵진 않을 거야 푸르른 우리 위로 커다란
-            strawberry moon 한 스쿱 나에게 너를 맡겨볼래 eh oh 바람을 세로질러 날아오르는 기분 so cool 삶이 어떻게 더
-            완벽해 ooh 다시 마주하기 어려운 행운이야 온몸에 심장이 뛰어 Oh 오히려 기꺼이 헤매고픈 밤이야 너와 길 잃을 수
-            있다면 맞잡은 서로의 손으로 출입구를 허문 이 무한함의 끝과 끝 또 위아래로 비행을 떠날 거야 푸르른 우리 위로
-            커다란 strawberry moon 한 스쿱
-          </Cardcontents>
-          <MintWrapper>
-            <Region>전라북도 전주</Region>
-            <Budget>150,000₩</Budget>
-          </MintWrapper>
-          <TagContainer>
-            <DarkMintTag text="밤바다" height="16px" />
-            <DarkMintTag text="장범준" height="16px" />
-          </TagContainer>
-        </CardBox>
-        <CardBox>
-          <Preview>
-            <Heart>
-              {like ? (
-                <FaHeart color="#DF4949" onClick={onClickHandler} />
-              ) : (
-                <FiHeart color="#DF4949" fill="#646464" onClick={onClickHandler} />
-              )}
-            </Heart>
-          </Preview>
-          <Id>youthmn</Id>
-          <Cardtitle>아이유 스트로베리문 들어보세요</Cardtitle>
-          <Cardcontents>
-            달이 익어가니 서둘러 젊은 피야 민들레 한 송이 들고 사랑이 어지러이 떠다니는 밤이야 날아가 사뿐히 이루렴
-            팽팽한 어둠 사이로 떠오르는 기분 이 거대한 무중력에 혹 휘청해도 두렵진 않을 거야 푸르른 우리 위로 커다란
-            strawberry moon 한 스쿱 나에게 너를 맡겨볼래 eh oh 바람을 세로질러 날아오르는 기분 so cool 삶이 어떻게 더
-            완벽해 ooh 다시 마주하기 어려운 행운이야 온몸에 심장이 뛰어 Oh 오히려 기꺼이 헤매고픈 밤이야 너와 길 잃을 수
-            있다면 맞잡은 서로의 손으로 출입구를 허문 이 무한함의 끝과 끝 또 위아래로 비행을 떠날 거야 푸르른 우리 위로
-            커다란 strawberry moon 한 스쿱
-          </Cardcontents>
-          <MintWrapper>
-            <Region>전라북도 전주</Region>
-            <Budget>150,000₩</Budget>
-          </MintWrapper>
-          <TagContainer>
-            <DarkMintTag text="밤바다" height="16px" />
-            <DarkMintTag text="장범준" height="16px" />
-          </TagContainer>
-        </CardBox>
+        {diaryList.map((item, index) => (
+          <CardBox key={index}>
+            <Preview src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지">
+              <Heart>
+                <button onClick={() => onClickHandler(like)}>
+                  {like ? (
+                    <FaHeart color="#DF4949" onClick={onClickHandler} />
+                  ) : (
+                    <FiHeart color="#DF4949" fill="#646464" onClick={onClickHandler} />
+                  )}
+                </button>
+              </Heart>
+            </Preview>
+            <Id>{item.nickname}</Id>
+            <Cardtitle>{item.title}</Cardtitle>
+            <Cardcontents>{item.diary}</Cardcontents>
+            <MintWrapper>
+              <Region>
+                {item.selected}
+                {item.city}
+              </Region>
+              <Budget>{item.price}</Budget>
+            </MintWrapper>
+            <TagContainer>
+              {item.tags.map((tag, idx) => (
+                <li key={idx}>
+                  <DarkMintTag height="16px" text={tag}></DarkMintTag>
+                </li>
+              ))}
+            </TagContainer>
+          </CardBox>
+        ))}
       </Main>
     </>
   );
