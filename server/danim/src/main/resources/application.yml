@@ -23,6 +23,8 @@ cloud:
   aws:
     credentials:
       instance-profile: false
+    s3:
+      bucket: ${BUCKET_NAME}
     region:
       auto: false
       static: ap-northeast-2
@@ -32,17 +34,6 @@ cloud:
 iam:
   access-key: ${AWS_ACCESS_KEY}
   secret-key: ${AWS_SECRET_ACCESS_KEY}
-
-logging:
-  level:
-    com:
-      amazonaws:
-        util:
-          EC2MetadataUtils: error
-
-aws:
-  s3:
-    bucket: ${BUCKET_NAME}
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
