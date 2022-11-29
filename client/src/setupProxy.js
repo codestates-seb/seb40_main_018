@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     ["/comment", "/diary"],
     createProxyMiddleware({
-      // target: "서버 api주소",
+      target: "서버 api주소",
       changeOrigin: true,
     }),
   );

@@ -127,7 +127,7 @@ const Heart = styled.div`
 export const Card = () => {
   const [like, setLike] = useState(false);
   const [diaryList, setDiaryList] = useState([]);
-  // const [completed, setcompleted] = useState(false);
+  const [completed, setcompleted] = useState(false);
 
   // const onClickHandler = () => {
   //   setLike(!like);
