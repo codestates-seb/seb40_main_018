@@ -1,8 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import styled from "styled-components";
-import { useEffect } from "react";
 
 const Box = styled.div`
   background-color: white;
