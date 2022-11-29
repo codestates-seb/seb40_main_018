@@ -23,7 +23,7 @@ const Section = styled.section`
   justify-content: center;
   align-items: center;
   background-color: #fbfbfb;
-  margin-top: 90px;
+  padding-top: 90px;
   font-size: 14px;
 `;
 const Container = styled.div`

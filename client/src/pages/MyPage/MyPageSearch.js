@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import MyPageCard2 from "./MyPageCard2";
+// import MyPageCard2 from "./MyPageCard2";
 
 const Container = styled.div`
   display: flex;
@@ -30,53 +30,35 @@ const Input = styled.input`
   font-size: 14px;
 `;
 
-//  cardList
-const MyPageSearch = ({ cardList }) => {
-  const [hasText, setHasText] = useState(false);
-  const [inputValue, setInputValue] = useState("");
-  const city = cardList.map((item) => item.city);
-  const [options, setOptions] = useState(city);
-  console.log("cardList", cardList);
-  // console.log(Object.values(options));
+const MyPageSearch = ({ cardList, setCardList }) => {
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    if (inputValue === "") {
-      setHasText(false);
+    setSearchText(searchText);
+  }, [searchText]);
+
+  const onChangeHandler = (e) => {
+    setSearchText(e.target.value);
+    const city = cardList.map((el) => el.city);
+    if (city.includes(e.target.value)) {
+      setCardList(cardList.filter((el) => el.city === e.target.value));
+    } else if (searchText === "") {
+      setCardList(cardList);
     }
-  }, [inputValue]);
-
-  const onInput = (e) => {
-    console.log(e.target.value);
-    const { value } = e.target;
-    if (value.includes("\\")) return;
-
-    // input에 텍스트가 있는지 없는지 확인하는 코드
-    value ? setHasText(true) : setHasText(false);
-
-    // updateText
-    setInputValue(value);
-
-    // dropdown을 위한 기능
-    const filterRegex = new RegExp(value, "i");
-    const resultOptions = city.filter((option) => option.match(filterRegex));
-    setOptions(resultOptions);
-  };
-
-  const handleDropDownClick = (clickedOption) => {
-    setInputValue(clickedOption);
-    const resultOptions = city.filter((option) => option === clickedOption);
-    setOptions(resultOptions);
   };
 
   return (
     <Container>
-      <SearchBox hasText={hasText}>
+      <SearchBox>
         <AiOutlineSearch color="#63aeae" size="20" />
-        <Input id="search" type="text" value={inputValue} placeholder="지역을 입력해주세요." onChange={onInput} />
+        <Input
+          id="search"
+          type="text"
+          placeholder="지역을 입력해주세요."
+          value={searchText}
+          onChange={onChangeHandler}
+        />
       </SearchBox>
-
-      {/* 자동완성,결과 값 */}
-      {hasText ? <MyPageCard2 cardList={cardList} options={options} handleDropDownClick={handleDropDownClick} /> : null}
     </Container>
   );
 };

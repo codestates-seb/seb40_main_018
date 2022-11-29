@@ -146,6 +146,7 @@ const DiaryTitle2 = ({ register, errors }) => {
               name="year"
               {...register("year", {
                 required: { value: true, message: "날짜를 선택해주세요." },
+                valueAsNumber: true,
               })}
             >
               <Option value=""> ----</Option>
@@ -176,7 +177,13 @@ const DiaryTitle2 = ({ register, errors }) => {
             <DateText>년</DateText>
           </DateArea>
           <DateArea>
-            <Select name="month" {...register("month", { required: { value: true, message: "날짜를 선택해주세요." } })}>
+            <Select
+              name="month"
+              {...register("month", {
+                required: { value: true, message: "날짜를 선택해주세요." },
+                valueAsNumber: true,
+              })}
+            >
               <Option value="">--</Option>
               <Option value="12">12</Option>
               <Option value="11">11</Option>
@@ -194,7 +201,10 @@ const DiaryTitle2 = ({ register, errors }) => {
             <DateText>월</DateText>
           </DateArea>
           <DateArea>
-            <Select name="day" {...register("day", { required: { value: true, message: "날짜를 선택해주세요." } })}>
+            <Select
+              name="day"
+              {...register("day", { required: { value: true, message: "날짜를 선택해주세요." }, valueAsNumber: true })}
+            >
               <Option value="">--</Option>
               <Option value="31">31</Option>
               <Option value="30">30</Option>
