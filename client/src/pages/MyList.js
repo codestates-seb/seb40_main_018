@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import LoginHeader from "../components/Header/LoginHeader";
-import { BucketListModal } from "../components/Modal/BucketList/BucketListModal";
-import { CheckListModal } from "../components/Modal/CheckList/CheckListModal";
+import { BucketListModal } from "../components/BucketList/BucketListModal";
+import { CheckListModal } from "../components/CheckList/CheckListModal";
 
 const Block = styled.div`
   width: 100%;

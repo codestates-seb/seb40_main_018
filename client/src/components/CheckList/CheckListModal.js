@@ -63,7 +63,7 @@ export const CheckListModal = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get("http://localhost:4000/todos").then((result) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/check-list`).then((result) => {
       // 로딩 시간이 짧아 settimeout 적용
       const timer = setTimeout(() => {
         setTodos(result.data);

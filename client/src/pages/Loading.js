@@ -19,10 +19,11 @@ const Block = styled.div`
   z-index: 9999;
 `;
 
-export const Loading = () => {
+const Loading = () => {
   return (
     <Block>
       <SuperBalls size={45} speed={1.4} color="hsl(180, 66%, 55%)" />
     </Block>
   );
 };
+export default Loading;

@@ -12,6 +12,7 @@ import DiaryEditPrice from "./DiaryEditPrice";
 import DiaryEditPlace from "./DiaryEditPlace";
 import DiaryEditHashtag from "./DiaryEditHashtag";
 import CancelModal from "../../components/Modal/CancelModal";
+import Loading from "../Loading";
 
 const Section = styled.section`
   display: flex;
@@ -56,25 +57,31 @@ const DiaryEdit = () => {
   const [diary, setDiary] = useState("");
   const [price, setPrice] = useState(0);
   const [tags, setTags] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`http://localhost:4000/diary/` + id)
       .then((res) => {
         console.log(res.data);
-        setSelected(res.data.selected);
-        setCity(res.data.city);
-        setTitle(res.data.title);
-        setYear(res.data.year);
-        setMonth(res.data.month);
-        setDay(res.data.day);
-        setWeather(res.data.weather);
-        // setImageList()
-        setQuestion(res.data.question);
-        setCounter(res.data.counter);
-        setDiary(res.data.diary);
-        setPrice(res.data.price);
-        setTags(res.data.tags);
+        const timer = setTimeout(() => {
+          setSelected(res.data.selected);
+          setCity(res.data.city);
+          setTitle(res.data.title);
+          setYear(res.data.year);
+          setMonth(res.data.month);
+          setDay(res.data.day);
+          setWeather(res.data.weather);
+          // setImageList()
+          setQuestion(res.data.question);
+          setCounter(res.data.counter);
+          setDiary(res.data.diary);
+          setPrice(res.data.price);
+          setTags(res.data.tags);
+          setLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -105,45 +112,49 @@ const DiaryEdit = () => {
   return (
     <>
       <LoginHeader />
-      <Section>
-        <Container>
-          <DiaryEditTitle
-            title={title}
-            setTitle={setTitle}
-            weather={weather}
-            setWeather={setWeather}
-            year={year}
-            setYear={setYear}
-            month={month}
-            setMonth={setMonth}
-            day={day}
-            setDay={setDay}
-          />
-          <DiaryEditImg imageList={imageList} setImageList={setImageList} />
-          <DiaryEditText
-            question={question}
-            setQuestion={setQuestion}
-            counter={counter}
-            setCounter={setCounter}
-            diary={diary}
-            setDiary={setDiary}
-          />
-          <DiaryEditPrice price={price} setPrice={setPrice} />
-          <DiaryEditPlace
-            Location={Location}
-            selected={selected}
-            setSelected={setSelected}
-            city={city}
-            setCity={setCity}
-            select1={select1}
-          />
-          <DiaryEditHashtag tags={tags} setTags={setTags} />
-          <BtnArea>
-            <MintLineButton className="submit" text="수정" handleSubmit={submitHandler}></MintLineButton>
-            <CancelModal />
-          </BtnArea>
-        </Container>
-      </Section>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Section>
+          <Container>
+            <DiaryEditTitle
+              title={title}
+              setTitle={setTitle}
+              weather={weather}
+              setWeather={setWeather}
+              year={year}
+              setYear={setYear}
+              month={month}
+              setMonth={setMonth}
+              day={day}
+              setDay={setDay}
+            />
+            <DiaryEditImg imageList={imageList} setImageList={setImageList} />
+            <DiaryEditText
+              question={question}
+              setQuestion={setQuestion}
+              counter={counter}
+              setCounter={setCounter}
+              diary={diary}
+              setDiary={setDiary}
+            />
+            <DiaryEditPrice price={price} setPrice={setPrice} />
+            <DiaryEditPlace
+              Location={Location}
+              selected={selected}
+              setSelected={setSelected}
+              city={city}
+              setCity={setCity}
+              select1={select1}
+            />
+            <DiaryEditHashtag tags={tags} setTags={setTags} />
+            <BtnArea>
+              <MintLineButton className="submit" text="수정" handleSubmit={submitHandler}></MintLineButton>
+              <CancelModal />
+            </BtnArea>
+          </Container>
+        </Section>
+      )}
     </>
   );
 };

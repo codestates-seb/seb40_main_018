@@ -1,8 +1,8 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import styled from "styled-components";
-import { useEffect } from "react";
+import SkeletonUser from "../Skeleton/SkeletonUser";
 
 const Box = styled.div`
   background-color: white;
@@ -140,6 +140,7 @@ export const UserEditBox = () => {
   // const [diaryCount, setDiaryCount] = useState("1");
   const [isEdit, setIsEdit] = useState(false);
   const [img, setImg] = useState(defaultImg);
+  const [loading, setLoading] = useState(false);
 
   const editHandler = () => {
     setIsEdit(!isEdit);
@@ -159,7 +160,7 @@ export const UserEditBox = () => {
       userNickname: userNickname,
       userIntro: userIntro,
     };
-    axios.patch("http://localhost:4000/userProfile/1", editUserProfile).then((res) => console.log(res.data));
+    axios.patch("http://localhost:4006/userProfile/1", editUserProfile).then((res) => console.log(res.data));
   };
 
   const cancelHandler = () => {
@@ -181,70 +182,80 @@ export const UserEditBox = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:4000/userProfile/1").then((res) => {
-      console.log(res.data);
-      // setUserProfile(res.data);
-      setUserNickname(res.data.userNickname);
-      setUserIntro(res.data.userIntro);
+    setLoading(true);
+    axios.get("http://localhost:4006/userProfile/1").then((res) => {
+      const timer = setTimeout(() => {
+        console.log(res.data);
+        // setUserProfile(res.data);
+        setUserNickname(res.data.userNickname);
+        setUserIntro(res.data.userIntro);
+        setLoading(false);
+      }, 5000);
+      return () => clearTimeout(timer);
     });
   }, []);
 
   return (
-    <Box>
-      {isEdit ? (
-        // 편집할때 나와야할 내용
-        <>
-          <UserImg>
-            <img className="icon" src={img} alt="img" />
-            <ImgInput
-              type="file"
-              accept="image/jpg,impge/png,image/gif"
-              id="file"
-              style={{ display: "none" }}
-              onChange={(e) => onChangeFile(e)}
-            />
-            <label htmlFor="file">
-              <FaRegEdit className="icon"></FaRegEdit>{" "}
-            </label>
-          </UserImg>
-          <Wrpper>
-            <UserInformation>
-              <EditId onChange={userNameHandler} value={userNickname} />
-              <EditInformation onChange={useInfoHandler} value={userIntro} />
-              <Count></Count>
-            </UserInformation>
-            <Block>
-              <>
-                <SubmitBtn type="button" onClick={submitHandler}>
-                  저장하기
-                </SubmitBtn>{" "}
-                <SubmitBtn type="button" onClick={cancelHandler}>
-                  취소하기
-                </SubmitBtn>
-              </>
-            </Block>
-          </Wrpper>
-        </>
-      ) : (
-        <>
-          {/* 편집 완료됬을때 나올 화면 */}
-          <UserImg>
-            <img className="icon" src={img} alt="img" />
-          </UserImg>
-          <Wrpper>
-            <UserInformation>
-              <Id> {userNickname}</Id>
-              <Information> {userIntro}</Information>
-              <Count>게시글 1</Count>
-            </UserInformation>
-            <Block>
-              <SubmitBtn type="button" onClick={editHandler}>
-                프로필 편집
-              </SubmitBtn>
-            </Block>
-          </Wrpper>
-        </>
+    <>
+      {loading && <SkeletonUser />}
+      {!loading && (
+        <Box>
+          {isEdit ? (
+            // 편집할때 나와야할 내용
+            <>
+              <UserImg>
+                <img className="icon" src={img} alt="img" />
+                <ImgInput
+                  type="file"
+                  accept="image/jpg,impge/png,image/gif"
+                  id="file"
+                  style={{ display: "none" }}
+                  onChange={(e) => onChangeFile(e)}
+                />
+                <label htmlFor="file">
+                  <FaRegEdit className="icon"></FaRegEdit>
+                </label>
+              </UserImg>
+              <Wrpper>
+                <UserInformation>
+                  <EditId onChange={userNameHandler} value={userNickname} />
+                  <EditInformation onChange={useInfoHandler} value={userIntro} />
+                  <Count></Count>
+                </UserInformation>
+                <Block>
+                  <>
+                    <SubmitBtn type="button" onClick={submitHandler}>
+                      저장하기
+                    </SubmitBtn>{" "}
+                    <SubmitBtn type="button" onClick={cancelHandler}>
+                      취소하기
+                    </SubmitBtn>
+                  </>
+                </Block>
+              </Wrpper>
+            </>
+          ) : (
+            <>
+              {/* 편집 완료됬을때 나올 화면 */}
+              <UserImg>
+                <img className="icon" src={img} alt="img" />
+              </UserImg>
+              <Wrpper>
+                <UserInformation>
+                  <Id> {userNickname}</Id>
+                  <Information> {userIntro}</Information>
+                  <Count>게시글 1</Count>
+                </UserInformation>
+                <Block>
+                  <SubmitBtn type="button" onClick={editHandler}>
+                    프로필 편집
+                  </SubmitBtn>
+                </Block>
+              </Wrpper>
+            </>
+          )}
+        </Box>
       )}
-    </Box>
+    </>
   );
 };
