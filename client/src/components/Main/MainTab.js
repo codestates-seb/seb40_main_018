@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
-import PriceFilter from "../../Filter/PriceFilter";
+import PriceFilter from "./PriceFilter";
 const MainContainer = styled.div`
   background-color: #fbfbfb;
 `;
