@@ -95,7 +95,11 @@ const FilterContainer = styled.div`
     }
   }
 `;
-export const MainTab = ({ selected, setSelected }) => {
+
+export const MainTab = ({ selected, setSelected, diaryList }) => {
+  const tags = diaryList.map((el) => el.tags);
+  console.log("tags", tags);
+
   const sortClick = (e) => {
     // selected
     switch (e.target.value) {
@@ -119,10 +123,11 @@ export const MainTab = ({ selected, setSelected }) => {
     }
   };
 
-  // //태그검색
-  // //필터기능
+  //태그검색
+  //필터기능
   // const searchFilter = (data, keyword) => {
-  //   return data.filter((item) => item.includes(keyword));
+  //   console.log("data", data);
+  //   return data.filter((tags) => tags.includes(keyword));
   // };
 
   // const Container = document.querySelector(".container");
