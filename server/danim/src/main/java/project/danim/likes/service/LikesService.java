@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 import project.danim.diary.domain.Diary;
 import project.danim.diary.repository.DiaryRepository;
 import project.danim.diary.service.DiaryService;
+import project.danim.exeption.BusinessLogicException;
+import project.danim.exeption.ExceptionCode;
 import project.danim.likes.domain.Likes;
 import project.danim.likes.repository.LikesRepository;
 import project.danim.member.domain.Member;
+import project.danim.member.service.MemberService;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -24,6 +27,22 @@ public class LikesService {
 
     private final LikesRepository likesRepository;
     private final DiaryService diaryService;
+    private final MemberService memberService;
+
+    public void checkLike(long diaryId, String email) {
+        Member member = memberService.findMember(email);
+        Diary diary = diaryService.findDiary(diaryId);
+
+        if (isNotAlreadyLike(member.getMemberId(), diaryId)) {
+            Likes newLikes = new Likes(diaryId, member.getMemberId());
+            diary.plusLikesCount();
+            likesRepository.save(newLikes);
+        } else {
+            Likes findLike = likesRepository.findByDiaryIdAndMemberId(diaryId, member.getMemberId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
+            diary.minusLikesCount();
+            likesRepository.delete(findLike);
+        }
+    }
 
     public boolean booleanLike(Long memberId, Long diaryId){
 
@@ -44,17 +63,10 @@ public class LikesService {
     }
 
     public boolean isNotAlreadyLike(Long memberId, Long diaryId) {
-        return likesRepository.findByMemberIdAndDiaryId(memberId, diaryId).isEmpty();
+        return likesRepository.findByDiaryIdAndMemberId(diaryId, memberId).isEmpty();
     }
 
     public Likes findLikes(Long memberId, Long diaryId){
-        return likesRepository.findByMemberIdAndDiaryId(memberId, diaryId).orElse(null);
+        return likesRepository.findByDiaryIdAndMemberId(diaryId, memberId).orElse(null);
     }
-
-
-
 }
-
-
-    //@Transactional(readOnly = true)
-

@@ -3,11 +3,8 @@ package project.danim.likes.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.danim.diary.domain.Diary;
-import project.danim.member.domain.Member;
 
 import javax.persistence.*;
-import javax.validation.constraints.Positive;
 
 
 
@@ -20,18 +17,10 @@ public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Likes_ID;
+    private Long likeId;
 
-
-
-
-    //@ManyToOne   // (1)
-    //@JoinColumn(name = "MEMBER_ID", nullable = false )  // (2)
     private Long memberId;
 
-
-   // @ManyToOne
-   // @JoinColumn(name = "Diary_ID" , nullable = false)
     private Long diaryId;
 
 
@@ -39,5 +28,4 @@ public class Likes {
         this.diaryId = diaryId;
         this.memberId = memberId;
     }
-
 }
