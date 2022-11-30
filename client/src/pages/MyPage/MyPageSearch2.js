@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
-// import MyPageCard2 from "./MyPageCard2";
 
 const Container = styled.div`
   display: flex;
@@ -30,19 +29,10 @@ const Input = styled.input`
   font-size: 14px;
 `;
 
-const MyPageSearch = ({ cardList, setCardList }) => {
-  const [searchText, setSearchText] = useState("");
-
-
-  const onChangeHandler = (e) => {
-    setSearchText(e.target.value);
-    const city = cardList.map((el) => el.city);
-    if (city.includes(e.target.value)) {
-      setCardList(cardList.filter((el) => el.city === e.target.value));
-    } else if (searchText.length === 0) {
-      setCardList(cardList);
-    }
-  };
+//  cardList
+const MyPageSearch2 = ({ cardList }) => {
+  const [inputValue, setInputValue] = useState("");
+  const [filtered, setFiltered] = useState("");
 
   return (
     <Container>
@@ -52,12 +42,25 @@ const MyPageSearch = ({ cardList, setCardList }) => {
           id="search"
           type="text"
           placeholder="지역을 입력해주세요."
-          value={searchText}
-          onChange={onChangeHandler}
+          onChange={(e) => setInputValue(e.target.value)}
         />
       </SearchBox>
+      <div className="container">
+        {cardList
+          .filter((item) => item.toLocaleLowerCase().includes(filtered.toLocaleLowerCase()))
+          .map(({ city, year, month, day }, index) => (
+            <div className="animal-group" key={index}>
+              <h3>{city}</h3>
+              <h3>{year}</h3>
+              <h3>{month}</h3>
+              <h3>{day}</h3>
+            </div>
+          ))}
+      </div>
+
+      {/* 자동완성,결과 값 */}
     </Container>
   );
 };
 
-export default MyPageSearch;
+export default MyPageSearch2;

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Box, HeaderContainer, Logo2 } from "./LoginHeader";
 import styled from "styled-components";
-import { MintButton2, MintLineButton2 } from "../Modal/CheckList/CheckList";
+import { MintButton2, MintLineButton2 } from "../CheckList/CheckList";
 
 export const BtnArea = styled.div`
   display: flex;

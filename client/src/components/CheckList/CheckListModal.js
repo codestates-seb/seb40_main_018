@@ -3,6 +3,7 @@ import { CheckInput } from "./CheckInput";
 import { CheckList } from "./CheckList";
 import styled from "styled-components";
 import axios from "axios";
+import Loading from "../../pages/Loading";
 
 const DarkMintShadowButton = styled.button`
   height: 30px;
@@ -52,16 +53,23 @@ export const ListInput = styled.div`
 `;
 
 export const CheckListModal = () => {
-  const initialState = JSON.parse(localStorage.getItem("todos")) || [];
+  // const initialState = JSON.parse(localStorage.getItem("todos")) || [];
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState(initialState);
+  const [todos, setTodos] = useState([]);
   const [editTodo, setEditTodo] = useState(null);
   const [completed, setcompleted] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axios.get("http://localhost:4000/todos").then((result) => {
-      setTodos(result.data);
+      // 로딩 시간이 짧아 settimeout 적용
+      const timer = setTimeout(() => {
+        setTodos(result.data);
+        setLoading(false);
+      }, 1000);
+      return () => clearTimeout(timer);
     });
   }, []);
 
@@ -85,15 +93,19 @@ export const CheckListModal = () => {
           ></CheckInput>
         </ListInput>
         <div>
-          <CheckList
-            todos={todos}
-            setTodos={setTodos}
-            setEditTodo={setEditTodo}
-            completed={completed}
-            setcompleted={setcompleted}
-            isEdit={isEdit}
-            setIsEdit={setIsEdit}
-          />
+          {loading ? (
+            <Loading />
+          ) : (
+            <CheckList
+              todos={todos}
+              setTodos={setTodos}
+              setEditTodo={setEditTodo}
+              completed={completed}
+              setcompleted={setcompleted}
+              isEdit={isEdit}
+              setIsEdit={setIsEdit}
+            />
+          )}
         </div>
       </Container>
     </Block>

@@ -4,6 +4,7 @@ import { BucketInput } from "./BucketInput";
 import { BucketList } from "./BucketList";
 import { Block } from "../CheckList/CheckListModal";
 import axios from "axios";
+import Loading from "../../pages/Loading";
 
 const DarkMintShadowButton = styled.button`
   height: 30px;
@@ -51,16 +52,23 @@ export const ListInput = styled.div`
 export const Box = styled.div``;
 
 export const BucketListModal = () => {
-  const initialState = JSON.parse(localStorage.getItem("todos")) || [];
+  // const initialState = JSON.parse(localStorage.getItem("todos")) || [];
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState(initialState);
+  const [todos, setTodos] = useState([]);
   const [editTodo, setEditTodo] = useState(null);
   const [completed, setcompleted] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axios.get("http://localhost:4005/btodos").then((result) => {
-      setTodos(result.data);
+      // 로딩 시간이 짧아 settimeout 적용
+      const timer = setTimeout(() => {
+        setTodos(result.data);
+        setLoading(false);
+      }, 1000);
+      return () => clearTimeout(timer);
     });
   }, []);
 
@@ -84,15 +92,19 @@ export const BucketListModal = () => {
           />
         </ListInput>
         <div>
-          <BucketList
-            todos={todos}
-            setTodos={setTodos}
-            setEditTodo={setEditTodo}
-            completed={completed}
-            setcompleted={setcompleted}
-            isEdit={isEdit}
-            setIsEdit={setIsEdit}
-          />
+          {loading ? (
+            <Loading />
+          ) : (
+            <BucketList
+              todos={todos}
+              setTodos={setTodos}
+              setEditTodo={setEditTodo}
+              completed={completed}
+              setcompleted={setcompleted}
+              isEdit={isEdit}
+              setIsEdit={setIsEdit}
+            />
+          )}
         </div>
       </Container>
     </Block>

@@ -1,40 +1,22 @@
 {
   "comments": [
     {
-      "content": "ㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇsdfsd",
+      "content": "      responseTo: \"root\",\n      exist: true, 없으면 수정 삭제 버튼이 없어집니다",
       "writer": "Jisoo",
       "postId": "123123",
-      "created_at": "Tue Nov 22 2022 09:48:14 GMT+0900 (Korean Standard Time)",
+      "created_at": "Mon Nov 28 2022 18:34:08 GMT+0900 (한국 표준시)",
       "responseTo": "root",
       "exist": true,
       "id": 1
     },
     {
-      "content": "ㅇㄴ??????",
+      "content": "기본값으로 꼭 넣어주세요!!! 감사함다~",
       "writer": "Jisoo",
       "postId": "123123",
-      "created_at": "Mon Nov 21 2022 20:51:30 GMT+0900 (한국 표준시)",
+      "created_at": "Mon Nov 28 2022 18:35:26 GMT+0900 (한국 표준시)",
       "responseTo": "root",
       "exist": true,
       "id": 2
-    },
-    {
-      "content": "sssggg",
-      "writer": "Jisoo",
-      "postId": "123123",
-      "created_at": "Tue Nov 22 2022 09:46:29 GMT+0900 (Korean Standard Time)",
-      "responseTo": "root",
-      "exist": true,
-      "id": 3
-    },
-    {
-      "content": "sdfsd",
-      "writer": "Jisoo",
-      "postId": "123123",
-      "created_at": "Tue Nov 22 2022 09:48:06 GMT+0900 (Korean Standard Time)",
-      "responseTo": "root",
-      "exist": true,
-      "id": 4
     }
   ]
 }
