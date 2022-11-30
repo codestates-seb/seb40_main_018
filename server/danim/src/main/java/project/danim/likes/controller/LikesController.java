@@ -18,6 +18,7 @@ import java.util.Objects;
 @Api(tags = {"Likes API"})
 @Slf4j
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/likes")
 public class LikesController {
 

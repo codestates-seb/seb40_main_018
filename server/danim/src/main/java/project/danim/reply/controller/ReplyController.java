@@ -18,6 +18,7 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/reply")
 public class ReplyController {
 
