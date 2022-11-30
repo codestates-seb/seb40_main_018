@@ -111,9 +111,8 @@ const Diary2 = () => {
 
     axios
       .post("http://localhost:4000/diary", diaryInfo)
-      .then((res) => console.log("테스트", res.data))
       .then((res) => navigate(`/detail/${res.data.id}`))
-      .then((err) => console.log("DiaryErr", err));
+      .catch((err) => console.log("DiaryErr", err));
 
     axios
       .post("http://localhost:4002/image", formData, {
@@ -121,7 +120,7 @@ const Diary2 = () => {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => console.log("res:", res))
+      .then((res) => console.log("IMGres:", res))
       .then((err) => console.log("IMGErr", err));
   };
   // console.log(watch());

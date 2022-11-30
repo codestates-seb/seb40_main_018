@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { useState } from "react";
 const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "700px")};
   height: ${(props) => (props.height ? props.height : "55px")};
@@ -41,6 +41,14 @@ const Select = styled.select`
 
 const DiaryPlace2 = ({ Location, register, errors }) => {
   const select1 = Object.keys(Location);
+  const [selected, setSelected] = useState(select1[0]);
+  // const [city, setCity] = useState(Location[selected][0]);
+
+  const onClickHandler = (e) => {
+    console.log("e", e.target.value);
+    setSelected(e.target.value);
+  };
+
   return (
     <>
       <PlaceContainer>
@@ -49,6 +57,7 @@ const DiaryPlace2 = ({ Location, register, errors }) => {
           <Tags>
             <Select
               name="selected"
+              onClick={onClickHandler}
               {...register("selected", {
                 required: { value: true, message: "지역을 선택해주세요." },
               })}
@@ -59,7 +68,7 @@ const DiaryPlace2 = ({ Location, register, errors }) => {
                 </option>
               ))}
             </Select>
-            {/* <Select
+            <Select
               name="city"
               {...register("city", {
                 required: { value: true, message: "지역을 선택해주세요." },
@@ -68,7 +77,7 @@ const DiaryPlace2 = ({ Location, register, errors }) => {
               {Location[selected].map((el, index) => (
                 <option key={index}>{el}</option>
               ))}
-            </Select> */}
+            </Select>
           </Tags>
         </PlaceArea>
       </PlaceContainer>
