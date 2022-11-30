@@ -2,7 +2,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = function (app) {
   app.use(
-    ["/comment", "/diary"],
+    ["comment", "diary"],
     createProxyMiddleware({
       target: "서버 api주소",
       changeOrigin: true,
