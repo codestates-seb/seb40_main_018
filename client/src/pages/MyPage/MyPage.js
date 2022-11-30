@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import LoginHeader from "../../components/Header/LoginHeader";
 import MapIcon from "./MapIcon";
-import MyPageSearch from "./MyPageSearch";
 import MyPageCard from "./MyPageCard";
 import { UserEditBox } from "../../components/UserEdit/UserEdit";
 import SkeletonDiary from "../../components/Skeleton/SkeletonDiary";
+import MyPageSearch from "./MyPageSearch";
 
 const MyPageContainer = styled.div`
   display: flex;
