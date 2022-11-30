@@ -118,6 +118,25 @@ export const MainTab = ({ selected, setSelected }) => {
         break;
     }
   };
+
+  // //태그검색
+  // //필터기능
+  // const searchFilter = (data, keyword) => {
+  //   return data.filter((item) => item.includes(keyword));
+  // };
+
+  // const Container = document.querySelector(".container");
+  // //array 안에 있는 요소들 html에 맵핑
+  // Container.innerHTML = tags.map((tag) => `${tag}`).join("");
+
+  // //검색 input
+  // const input = document.querySelector(".input");
+  // input.addEventListener("keyup", (e) => {
+  //   const keyword = e.target.value;
+  //   const filterTags = searchFilter(tags, keyword);
+  //   Container.innerHTML = filterTags.map((tag) => `${tag}`).join("");
+  // });
+
   return (
     <MainContainer>
       <FilterContainer>

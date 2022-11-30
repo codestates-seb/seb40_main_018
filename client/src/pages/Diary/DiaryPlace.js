@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { useState } from "react";
 const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "700px")};
   height: ${(props) => (props.height ? props.height : "55px")};
@@ -39,32 +39,50 @@ const Select = styled.select`
   background-color: #fbfbfb;
 `;
 
-const DiaryPlace = ({ Location, selected, setSelected, city, setCity, select1 }) => {
-  const handleSelect = (e) => {
+const DiaryPlace = ({ Location, register, errors }) => {
+  const select1 = Object.keys(Location);
+  const [selected, setSelected] = useState(select1[0]);
+  // const [city, setCity] = useState(Location[selected][0]);
+
+  const onClickHandler = (e) => {
+    console.log("e", e.target.value);
     setSelected(e.target.value);
-  };
-  const handleCitySelect = (e) => {
-    setCity(e.target.value);
   };
 
   return (
-    <PlaceContainer>
-      <PlaceArea>
-        <TitleText>다녀온 지역 :</TitleText>
-        <Tags>
-          <Select name="." onChange={handleSelect} value={selected}>
-            {select1.map((el, index) => (
-              <option key={index}>{el}</option>
-            ))}
-          </Select>
-          <Select name="." onChange={handleCitySelect} value={city}>
-            {Location[selected].map((el, index) => (
-              <option key={index}>{el}</option>
-            ))}
-          </Select>
-        </Tags>
-      </PlaceArea>
-    </PlaceContainer>
+    <>
+      <PlaceContainer>
+        <PlaceArea>
+          <TitleText>다녀온 지역 :</TitleText>
+          <Tags>
+            <Select
+              name="selected"
+              onClick={onClickHandler}
+              {...register("selected", {
+                required: { value: true, message: "지역을 선택해주세요." },
+              })}
+            >
+              {select1.map((el, index) => (
+                <option key={index} value={el.id}>
+                  {el}
+                </option>
+              ))}
+            </Select>
+            <Select
+              name="city"
+              {...register("city", {
+                required: { value: true, message: "지역을 선택해주세요." },
+              })}
+            >
+              {Location[selected].map((el, index) => (
+                <option key={index}>{el}</option>
+              ))}
+            </Select>
+          </Tags>
+        </PlaceArea>
+      </PlaceContainer>
+      {errors.selected && errors.city && <div role="alert">{errors.selected.message}</div>}
+    </>
   );
 };
 export default DiaryPlace;

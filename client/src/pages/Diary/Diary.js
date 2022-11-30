@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { Location } from "./Location";
 import styled from "styled-components";
 import LoginHeader from "../../components/Header/LoginHeader";
-
 import MintLineButton from "../../components/Button/MintLineButton";
-// import MintButton from "../../components/Button/MintButton";
 import DiaryTitle from "./DiaryTitle";
 import DiaryImg from "./DiaryImg";
 import DiaryText from "./DiaryText";
@@ -15,6 +13,7 @@ import DiaryHashtag from "./DiaryHashtag";
 import CancelModal from "../../components/Modal/CancelModal";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
+import { useForm } from "react-hook-form";
 
 const Section = styled.section`
   display: flex;
@@ -26,7 +25,7 @@ const Section = styled.section`
   padding-top: 90px;
   font-size: 14px;
 `;
-const Container = styled.div`
+const Container = styled.form`
   width: 700px;
   margin-bottom: 40px;
 `;
@@ -61,31 +60,25 @@ const Diary = () => {
     "여행에서 자주 들은 노래는 무엇인가요?",
   ];
   const nickname = "dlwlrma";
-  const [title, setTitle] = useState("");
-  const [year, setYear] = useState();
-  const [month, setMonth] = useState();
-  const [day, setDay] = useState();
-  const [weather, setWeather] = useState("날씨");
   const [imageList, setImageList] = useState([]);
   const [question, setQuestion] = useState(randomQuestions[0]);
   let [counter, setCounter] = useState(0);
-  const [diary, setDiary] = useState("");
-  const [price, setPrice] = useState();
-  const select1 = Object.keys(Location);
-  const [selected, setSelected] = useState(select1[0]);
-  const [city, setCity] = useState(Location[selected][0]);
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  //post
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const submitHandler = () => {
+  const onSubmit = (data) => {
+    console.log(data);
     if (imageList.length === 0) {
       console.log("imageList:", imageList);
       alert("이미지를 추가해 주세요.");
       return false;
     }
-
     if (tags.length === 0) {
       console.log("tags:", tags);
       alert("태그를 한개 이상 등록해 주세요.");
@@ -93,21 +86,14 @@ const Diary = () => {
     }
 
     const diaryInfo = {
+      ...data,
       nickname: nickname,
-      title: title,
-      year: year,
-      month: month,
-      day: day,
-      weather: weather,
       question: question,
       counter: counter,
-      diary: diary,
-      price: price,
-      selected: selected,
-      city: city,
       tags: tags,
     };
 
+    console.log("diaryInfo", diaryInfo);
     const formData = new FormData();
 
     Array.from(imageList).forEach((el) => {
@@ -128,7 +114,7 @@ const Diary = () => {
     axios
       .post("http://localhost:4000/diary", diaryInfo)
       .then((res) => navigate(`/detail/${res.data.id}`))
-      .then((err) => console.log("DiaryErr", err));
+      .catch((err) => console.log("DiaryErr", err));
 
     axios
       .post("http://localhost:4002/image", formData, {
@@ -136,8 +122,8 @@ const Diary = () => {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => console.log("res:", res))
-      .then((err) => console.log("IMGErr", err));
+      .then((res) => console.log("IMGres:", res))
+      .catch((err) => console.log("IMGErr", err));
   };
 
   useEffect(() => {
@@ -155,41 +141,23 @@ const Diary = () => {
         <Loading />
       ) : (
         <Section>
-          <Container>
-            <DiaryTitle
-              title={title}
-              setTitle={setTitle}
-              weather={weather}
-              setWeather={setWeather}
-              year={year}
-              setYear={setYear}
-              month={month}
-              setMonth={setMonth}
-              day={day}
-              setDay={setDay}
-            />
+          <Container onSubmit={handleSubmit(onSubmit)}>
+            <DiaryTitle register={register} errors={errors} />
             <DiaryImg imageList={imageList} setImageList={setImageList} />
             <DiaryText
               question={question}
               setQuestion={setQuestion}
               counter={counter}
               setCounter={setCounter}
-              diary={diary}
-              setDiary={setDiary}
               randomQuestions={randomQuestions}
+              register={register}
+              errors={errors}
             />
-            <DiaryPrice price={price} setPrice={setPrice} />
-            <DiaryPlace
-              Location={Location}
-              selected={selected}
-              setSelected={setSelected}
-              city={city}
-              setCity={setCity}
-              select1={select1}
-            />
+            <DiaryPrice register={register} errors={errors} />
+            <DiaryPlace Location={Location} register={register} errors={errors} />
             <DiaryHashtag tags={tags} setTags={setTags} />
             <BtnArea>
-              <MintLineButton className="submit" text="등록" handleSubmit={submitHandler}></MintLineButton>
+              <MintLineButton type="submit" text="등록"></MintLineButton>
               <CancelModal />
             </BtnArea>
           </Container>

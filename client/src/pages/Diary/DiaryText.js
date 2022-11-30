@@ -72,7 +72,11 @@ const RandomArea = styled.div`
 const NumCount = styled.div`
   margin-right: 5px;
 `;
-const DiaryText = ({ question, setQuestion, counter, setCounter, diary, setDiary, randomQuestions }) => {
+
+const Error = styled.div`
+  color: red;
+`;
+const DiaryText = ({ question, setQuestion, counter, setCounter, randomQuestions, register, errors }) => {
   let pop = Math.floor(Math.random() * randomQuestions.length);
   const onClickHandler = () => {
     if (counter >= 3) {
@@ -82,9 +86,7 @@ const DiaryText = ({ question, setQuestion, counter, setCounter, diary, setDiary
       setCounter(counter + 1);
     }
   };
-  const onChangeHandler = (e) => {
-    setDiary(e.target.value);
-  };
+
   return (
     <TextArea>
       <QuestionArea>
@@ -95,9 +97,12 @@ const DiaryText = ({ question, setQuestion, counter, setCounter, diary, setDiary
         </RandomArea>
       </QuestionArea>
       <WriteArea>
-        <DiaryWrite placeholder="이곳에 여행일지를 기록 해주세요." onChange={onChangeHandler} value={diary}>
-          {diary}
-        </DiaryWrite>
+        <DiaryWrite
+          placeholder="이곳에 여행일지를 기록 해주세요."
+          name="diary"
+          {...register("diary", { required: { value: true, message: "일기를 입력해주세요." } })}
+        ></DiaryWrite>
+        {errors.diary && <Error role="alert">{errors.diary.message}</Error>}
       </WriteArea>
     </TextArea>
   );

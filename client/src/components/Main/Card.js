@@ -69,12 +69,12 @@ const Preview = styled.div`
 `;
 
 const MintWrapper = styled.div`
-  width: 160px;
+  width: auto;
   height: 30px;
   font-size: 12px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 6px;
 `;
 
 const Region = styled.div`
@@ -83,13 +83,15 @@ const Region = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 74px;
+  width: auto;
   height: 16px;
   color: #535353;
+  padding: 8px;
   background-color: hsl(0, 0%, 100%);
   border: 1px solid hsl(180, 32%, 54%);
   border-radius: 35px;
   font-size: 10px;
+
   &:hover {
     background-color: hsl(180, 12%, 96%);
   }
@@ -104,13 +106,15 @@ const Budget = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 74px;
+  width: auto;
+  padding: 8px;
   height: 16px;
   color: #535353;
   background-color: hsl(0, 0%, 100%);
   border: 1px solid hsl(180, 32%, 54%);
   border-radius: 35px;
   font-size: 10px;
+
   &:hover {
     background-color: hsl(180, 12%, 96%);
   }
@@ -122,14 +126,18 @@ const Budget = styled.div`
 const TagContainer = styled.div`
   display: flex;
   word-break: break-all;
+  gap: 6px;
+  flex-wrap: wrap;
 `;
 const Heart = styled.div`
   margin-bottom: 240px;
   margin-left: 240px;
   cursor: pointer;
-  /* display: flex;
-  justify-content: flex-end;
-  align-items: flex-start; */
+  > .heartBtn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
 `;
 // { selected }
 export const Card = () => {
@@ -138,13 +146,9 @@ export const Card = () => {
   // const [completed, setcompleted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // const onClickHandler = () => {
-  //   setLike(!like);
-  // };
-
   const onClickHandler = (list) => {
     setLike(!like);
-
+    
     setDiaryList(
       diaryList.map((item) => {
         if (item.id === list.id) {

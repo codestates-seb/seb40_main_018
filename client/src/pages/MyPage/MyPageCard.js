@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Link } from "react-router-dom";
+
 
 const CardContainer = styled.div`
   /* height: 1000px; */
@@ -87,10 +89,12 @@ const MyPageCard = ({ cardList, setCardList, hasMore, setHasMore, result, setRes
         }
       >
         {/* 리스트 */}
-        <CardContainer>
-          {cardList && (
+    <CardContainer>
+      {cardList && (
+        <>
+          {cardList.map((item, index) => (
             <>
-              {cardList.map((item, index) => (
+              <Link to={`/detail/${item.id}`}>
                 <CardArea key={index}>
                   <CardImg
                     src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg"
@@ -104,6 +108,7 @@ const MyPageCard = ({ cardList, setCardList, hasMore, setHasMore, result, setRes
                   </TextArea>
                 </CardArea>
               ))}
+              </Link>
             </>
           )}
         </CardContainer>
