@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import styled from "styled-components";
@@ -140,15 +140,14 @@ const Heart = styled.div`
   }
 `;
 // { selected }
-export const Card = () => {
+export const Card = ({ diaryList, setDiaryList, hasMore, setHasMore, result, setResult, loading }) => {
   const [like, setLike] = useState(false);
-  const [diaryList, setDiaryList] = useState([]);
+
   // const [completed, setcompleted] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const onClickHandler = (list) => {
     setLike(!like);
-    
+
     setDiaryList(
       diaryList.map((item) => {
         if (item.id === list.id) {
@@ -175,26 +174,6 @@ export const Card = () => {
   //   console.log(heartClick);
   //   setLike(!like);
   // };
-
-  useEffect(() => {
-    // axios.get(`http://localhost:4000/diary/${id}`).then((res) => {
-    setLoading(true);
-    axios.get("http://localhost:4000/diary").then((res) => {
-      const timer = setTimeout(() => {
-        console.log(res.data);
-        let response = res.data;
-        setDiaryList(response.slice(0, 12)); // 받아온 데이터에서 12개만 먼저 result state에 저장
-        response = response.slice(12);
-        setResult(response); // 저장한 데이터 모두 저장
-        setLoading(false);
-      }, 2000);
-      return () => clearTimeout(timer);
-    });
-  }, []);
-
-  // yerin
-  const [hasMore, setHasMore] = useState(true);
-  const [result, setResult] = useState([]);
 
   // 스크롤 시에 데이터를 추가적으로 받아오는 함수
   const fetchMoreData = () => {
@@ -231,7 +210,7 @@ export const Card = () => {
               <CardBox key={index}>
                 <Preview src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지">
                   <Heart>
-                    <button onClick={() => onClickHandler(list)}>
+                    <button className="heartBtn" onClick={() => onClickHandler(list)}>
                       {list.like ? <FaHeart color="#DF4949" /> : <FiHeart color="#DF4949" fill="#646464" />}
                     </button>
                   </Heart>
