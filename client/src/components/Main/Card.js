@@ -148,7 +148,7 @@ export const Card = () => {
 
   const onClickHandler = (list) => {
     setLike(!like);
-    
+
     setDiaryList(
       diaryList.map((item) => {
         if (item.id === list.id) {
