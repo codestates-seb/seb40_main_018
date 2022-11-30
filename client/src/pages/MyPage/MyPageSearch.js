@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // import MyPageCard2 from "./MyPageCard2";
 
 const Container = styled.div`
@@ -33,16 +33,12 @@ const Input = styled.input`
 const MyPageSearch = ({ cardList, setCardList }) => {
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    setSearchText(searchText);
-  }, [searchText]);
-
   const onChangeHandler = (e) => {
     setSearchText(e.target.value);
     const city = cardList.map((el) => el.city);
     if (city.includes(e.target.value)) {
       setCardList(cardList.filter((el) => el.city === e.target.value));
-    } else if (searchText === "") {
+    } else if (searchText.length === 0) {
       setCardList(cardList);
     }
   };
