@@ -73,7 +73,6 @@ const DiaryEdit = () => {
           setMonth(res.data.month);
           setDay(res.data.day);
           setWeather(res.data.weather);
-          // setImageList()
           setQuestion(res.data.question);
           setCounter(res.data.counter);
           setDiary(res.data.diary);

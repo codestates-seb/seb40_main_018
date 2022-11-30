@@ -1,7 +1,12 @@
 import styled from "styled-components";
 import { BiWon } from "react-icons/bi";
 
-const InputContainer = styled.form`
+const ErrSet = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+`;
+const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "700px")};
   height: ${(props) => (props.height ? props.height : "55px")};
   padding: 0 18px;
@@ -11,7 +16,6 @@ const InputContainer = styled.form`
   align-content: center;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 40px;
 `;
 
 const PriceArea = styled(InputContainer)`
@@ -32,19 +36,28 @@ const Price = styled.input`
     -webkit-appearance: none;
   }
 `;
+const Err = styled.div`
+  color: red;
+  margin-left: 15px;
+`;
 
-const DiaryPrice = ({ price, setPrice }) => {
-  const onChangeHandler = (e) => {
-    e.preventDefault();
-    setPrice(e.target.value);
-  };
-
+const DiaryPrice = ({ register, errors }) => {
   return (
-    <PriceArea>
-      <TitleText>경비 :</TitleText>
-      <Price type="number" value={price || ""} onChange={onChangeHandler} min="1" />
-      <BiWon />
-    </PriceArea>
+    <ErrSet>
+      <PriceArea>
+        <TitleText>경비 :</TitleText>
+        <Price
+          type="number"
+          name="price"
+          {...register("price", {
+            required: { value: true, message: "경비를 입력해주세요." },
+            valueAsNumber: true,
+          })}
+        />
+        <BiWon />
+      </PriceArea>
+      {errors.price && <Err role="alert">{errors.price.message}</Err>}
+    </ErrSet>
   );
 };
 export default DiaryPrice;
