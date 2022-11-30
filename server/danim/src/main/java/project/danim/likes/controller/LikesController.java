@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import project.danim.diary.domain.Diary;
 import project.danim.likes.service.LikesService;
@@ -33,25 +34,14 @@ public class LikesController {
     }
 
 */
-    /*
-    JWT를 이용한 로그인 정보 필요... .. 인증된 사용자 정보 가져요기
-     */
-    @ApiOperation(value = "좋아요 등록")
-    @PostMapping("/{diary-id}")
-    public ResponseEntity<String> addLike(@Positive @PathVariable("diary-id") long diaryId,
-                                          @RequestParam("memberId") @Positive long memberId
-                                          ){
+        @ApiOperation(value = "좋아요 등록")
+        @GetMapping("/{diary-id}")
+        public ResponseEntity addLike(@Positive @PathVariable("diary-id") long diaryId){
+            String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            likesService.checkLike(diaryId, email);
 
-     //  log.info("===================좋아요 클릭=======================");
-        boolean result = false;
-
-        if (memberId != 0) {
-            result = likesService.booleanLike(memberId, diaryId);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return result ?
-                new ResponseEntity<>("좋아요 추가", HttpStatus.CREATED) :
-                new ResponseEntity<>("좋아요 삭제", HttpStatus.OK);
-    }
 
     }
 

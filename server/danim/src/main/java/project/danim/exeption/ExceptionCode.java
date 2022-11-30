@@ -24,6 +24,8 @@ public enum ExceptionCode {
     INTERNAL_SERVER_ERROR(404, "이미지 업로드에 실패했습니다."),
     BAD_REQUEST(404, "잘못된 형식의 파일"),
 
+    // like
+    LIKE_NOT_FOUND(404, "다이어리 ID나 맴버 ID가 올바르지 않습니다."),
 
     // 체크리스트
     CHECK_LIST_NOT_FOUND(404, "체크 리스트를 찾을 수 없습니다."),

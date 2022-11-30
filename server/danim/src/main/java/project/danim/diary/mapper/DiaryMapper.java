@@ -15,12 +15,17 @@ public interface DiaryMapper {
     /*
       MemberId 추가 필요!!  -> PostDto @NotNull 주석 처리 함
      */
-    default Diary diaryPostDtoToDiary(DiaryPostDto diaryPostDto){
-        Diary diary = new Diary();
+    default Diary diaryPostDtoToDiary(DiaryPostDto diaryPostDto, long memberId){
+        Diary diary = new Diary(diaryPostDto.getTitle(),
+                diaryPostDto.getContent(),
+                diaryPostDto.getWeather(),
+                diaryPostDto.getArea(),
+                diaryPostDto.getCity(),
+                diaryPostDto.getCost(),
+                0,
+                memberId,
+                diaryPostDto.getTravelDate());
 
-        diary.setTitle(diaryPostDto.getTitle());
-        diary.setContent(diaryPostDto.getContent());
-        diary.setCost(diaryPostDto.getCost());
         return diary;
     }
 
@@ -49,9 +54,10 @@ public interface DiaryMapper {
         diaryResponseDto.setWeather(diary.getWeather());
         diaryResponseDto.setArea(diary.getArea());
         diaryResponseDto.setCost(diary.getCost());
-        //diaryResponseDto.setCreatedDate(diary.getCreatedDate());
-       // diaryResponseDto.setModifiedDate(diary.getModifiedDate());
-       // diaryResponseDto.setMemberId(diary.getMember().getMemberId());
+        diaryResponseDto.setCreatedAt(diary.getCreatedDate());
+        diaryResponseDto.setModifiedAt(diary.getModifiedDate());
+        diaryResponseDto.setTravelDate(diary.getTravelDate());
+        diaryResponseDto.setMemberId(diary.getMemberId());
 
         return diaryResponseDto;
     }

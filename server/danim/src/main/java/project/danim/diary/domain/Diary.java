@@ -13,6 +13,7 @@ import project.danim.reply.domain.Reply;
 import project.danim.tag.domain.Tag;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -45,11 +46,15 @@ public class Diary extends BaseTime {
 
     @Column(nullable = true)
     private String area;
+
+    @Column(nullable = false)
+    private String city;
+
     @Column(nullable = false)
     private int cost;
 
     @Column(nullable = true, name ="likes_count")
-    private Integer likesCount;
+    private int likesCount;
 
     @CreatedDate
     private LocalDateTime createdDate = LocalDateTime.now();
@@ -57,28 +62,40 @@ public class Diary extends BaseTime {
     @LastModifiedDate
     private LocalDateTime modifiedDate = LocalDateTime.now();
 
-    @Column
-    private String imageUrl;
+    @Column(nullable = false)
+    private Long memberId;
 
-    public Diary(long diaryId, String title, String content, String weather, String area, int cost, String imageUrl){
-        this.diaryId = diaryId;
+    @Column(nullable = false)
+    private LocalDate travelDate;
+
+    public Diary(String title, String content, String weather, String area, String city, int cost, int likesCount, Long memberId, LocalDate travelDate){
         this.title = title;
         this.content = content;
         this.weather = weather;
         this.area = area;
+        this.city = city;
         this.cost = cost;
-        this.imageUrl = imageUrl;
+        this.likesCount = likesCount;
+        this.memberId = memberId;
+        this.travelDate = travelDate;
     }
 
+    public void plusLikesCount() {
+        this.likesCount = this.likesCount + 1;
+    }
+
+    public void minusLikesCount() {
+        this.likesCount = this.likesCount - 1;
+    }
 
     /*
 
     Diary : Nenber = > 다 대 1  관계
      */
 
-    @ManyToOne   // (1)
-    @JoinColumn(name = "MEMBER_ID")  // (2)
-    private Member member;
+//    @ManyToOne   // (1)
+//    @JoinColumn(name = "MEMBER_ID")  // (2)
+//    private Member member;
 
 
     /*

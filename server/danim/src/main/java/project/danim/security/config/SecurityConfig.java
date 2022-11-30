@@ -62,6 +62,8 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.POST, "/member/register").permitAll()
                         .antMatchers(HttpMethod.GET, "/member/me/**").authenticated()
                         .antMatchers(HttpMethod.POST, "/member/me").authenticated()
+                        .antMatchers(HttpMethod.POST, "/diary").authenticated()
+                        .antMatchers(HttpMethod.POST, "/likes/*").authenticated()
 //                        .antMatchers(HttpMethod.GET, "/member/*/diaries").hasAnyRole("USER") // 이친구는 모두가 볼 수 있어야 하나??
                         .antMatchers("bucket-list/{bucket-list}").hasRole("ROLE_USER")
                         .antMatchers("check-list/{check-id}").hasRole("ROLE_USER")

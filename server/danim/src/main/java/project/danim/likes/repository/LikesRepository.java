@@ -10,6 +10,6 @@ import java.util.Optional;
 
 
 public interface LikesRepository extends JpaRepository<Likes, Long> {
-
-    Optional<Likes> findByMemberIdAndDiaryId(Long memberId, Long diaryId);
+    Optional<Likes> findByDiaryIdAndMemberId(Long diaryId, Long memberId);
+    void delete(Likes likes);
 }
