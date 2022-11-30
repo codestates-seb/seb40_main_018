@@ -6,6 +6,8 @@ import styled from "styled-components";
 import DarkMintTag from "../Tag/DarkMintTag";
 import SkeletonCard from "../Skeleton/SkeletonCard";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Link } from "react-router-dom";
+// import { MainTab } from "./MainTab";
 
 const Main = styled.div`
   display: grid;
@@ -37,11 +39,13 @@ const CardBox = styled.div`
 const Id = styled.div`
   width: 280px;
   font-size: 12px;
+  color: #000000;
 `;
 
 const Cardtitle = styled.div`
   width: 280px;
   font-size: 12px;
+  color: #000000;
 `;
 
 const Cardcontents = styled.div`
@@ -52,6 +56,7 @@ const Cardcontents = styled.div`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  color: #000000;
 `;
 
 const Preview = styled.div`
@@ -126,6 +131,7 @@ const Heart = styled.div`
   justify-content: flex-end;
   align-items: flex-start; */
 `;
+// { selected }
 export const Card = () => {
   const [like, setLike] = useState(false);
   const [diaryList, setDiaryList] = useState([]);
@@ -216,6 +222,7 @@ export const Card = () => {
         {/* 리스트 */}
         {!loading && (
           <Main>
+            {/* 정렬 - diaryList?.sort(MainTab(selected)) */}
             {diaryList.map((list, index) => (
               <CardBox key={index}>
                 <Preview src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지">
@@ -225,9 +232,11 @@ export const Card = () => {
                     </button>
                   </Heart>
                 </Preview>
-                <Id>{list.nickname}</Id>
-                <Cardtitle>{list.title}</Cardtitle>
-                <Cardcontents>{list.diary}</Cardcontents>
+                <Link to={`/detail/${list.id}`}>
+                  <Id>{list.nickname}</Id>
+                  <Cardtitle>{list.title}</Cardtitle>
+                  <Cardcontents>{list.diary}</Cardcontents>
+                </Link>
                 <MintWrapper>
                   <Region>
                     {list.selected}

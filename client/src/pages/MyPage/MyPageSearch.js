@@ -46,6 +46,7 @@ const MyPageSearch = ({ cardList, setCardList }) => {
   //   setInputValue(clickedOption);
   //   const resultOptions = city.filter((option) => option === clickedOption);
   //   setOptions(resultOptions);
+  // };
 
   const onChangeHandler = (e) => {
     setSearchText(e.target.value);

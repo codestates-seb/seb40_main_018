@@ -115,6 +115,8 @@ export const SignupForm = () => {
       password: password,
     };
 
+    // ^^
+
     // 회원가입 요청
     const res = await useFetch("POST", "http://localhost:3000/users", postSignup);
     // 이메일은 있으나 비밀번호가 다른경우

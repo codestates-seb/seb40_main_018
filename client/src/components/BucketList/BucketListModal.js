@@ -62,7 +62,7 @@ export const BucketListModal = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get("http://localhost:4005/btodos").then((result) => {
+    axios.get(`http://ec2-43-201-50-74.ap-northeast-2.compute.amazonaws.com:8080/bucket-list`).then((result) => {
       // 로딩 시간이 짧아 settimeout 적용
       const timer = setTimeout(() => {
         setTodos(result.data);

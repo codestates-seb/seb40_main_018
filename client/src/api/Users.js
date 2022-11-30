@@ -37,6 +37,7 @@ export const loginUser = async (credentials) => {
     body: JSON.stringify(credentials),
   };
 
+  // ^^
   // 실질적으로 백으로 로그인 요청을 보내는 함수
   const data = await getPromise("http://localhost:3000/login", option).catch(() => {
     return statusError;
