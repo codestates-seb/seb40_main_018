@@ -33,7 +33,6 @@ const Input = styled.input`
 const MyPageSearch = ({ cardList, setCardList }) => {
   const [searchText, setSearchText] = useState("");
 
-
   const onChangeHandler = (e) => {
     setSearchText(e.target.value);
     const city = cardList.map((el) => el.city);

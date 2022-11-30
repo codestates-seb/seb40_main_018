@@ -74,20 +74,20 @@ export const CheckInput = ({
 
   const onFormSubmit = async (event) => {
     event.preventDefault();
-    setTodos([...todos, { title: input, completed: completed }]);
+    setTodos([...todos, { checkContent: input, isCheck: completed }]);
     setInput("");
 
     // useEffect(() => {
     const todoPost = {
-      title: input,
-      completed: false,
+      checkContent: input,
+      isCheck: false,
     };
     await axios
-      .post("http://localhost:4000/todos", todoPost)
+      .post(`${process.env.REACT_APP_API_URL}check-list`, todoPost)
       .then((res) => console.log(res))
       .then((err) => console.log(err));
 
-    await axios.get("http://localhost:4000/todos").then((result) => {
+    await axios.get(`${process.env.REACT_APP_API_URL}check-list`).then((result) => {
       setTodos(result.data);
     });
     // }, []);
@@ -98,12 +98,13 @@ export const CheckInput = ({
     // console.log("patchid", editTodo.id);
 
     const patch2 = {
-      title: input,
-      completed: completed,
+      checkContent: input,
+      isCheck: completed,
     };
 
+    // ^^editTodo.id
     axios
-      .patch(`http://localhost:4000/todos/` + editTodo.id, patch2)
+      .patch(`${process.env.REACT_APP_API_URL}check-list/{check-id}` + editTodo.id, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res2", err));
 

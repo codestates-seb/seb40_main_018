@@ -6,6 +6,8 @@ import styled from "styled-components";
 import DarkMintTag from "../Tag/DarkMintTag";
 import SkeletonCard from "../Skeleton/SkeletonCard";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Link } from "react-router-dom";
+// import { MainTab } from "./MainTab";
 
 const Main = styled.div`
   display: grid;
@@ -37,11 +39,13 @@ const CardBox = styled.div`
 const Id = styled.div`
   width: 280px;
   font-size: 12px;
+  color: #000000;
 `;
 
 const Cardtitle = styled.div`
   width: 280px;
   font-size: 12px;
+  color: #000000;
 `;
 
 const Cardcontents = styled.div`
@@ -52,6 +56,7 @@ const Cardcontents = styled.div`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  color: #000000;
 `;
 
 const Preview = styled.div`
@@ -134,6 +139,7 @@ const Heart = styled.div`
     cursor: pointer;
   }
 `;
+// { selected }
 export const Card = () => {
   const [like, setLike] = useState(false);
   const [diaryList, setDiaryList] = useState([]);
@@ -176,7 +182,10 @@ export const Card = () => {
     axios.get("http://localhost:4000/diary").then((res) => {
       const timer = setTimeout(() => {
         console.log(res.data);
-        setDiaryList(res.data);
+        let response = res.data;
+        setDiaryList(response.slice(0, 12)); // 받아온 데이터에서 12개만 먼저 result state에 저장
+        response = response.slice(12);
+        setResult(response); // 저장한 데이터 모두 저장
         setLoading(false);
       }, 2000);
       return () => clearTimeout(timer);
@@ -185,19 +194,19 @@ export const Card = () => {
 
   // yerin
   const [hasMore, setHasMore] = useState(true);
-  // const [items, setItems] = useState(Array.from({ length: 20 }));
+  const [result, setResult] = useState([]);
 
+  // 스크롤 시에 데이터를 추가적으로 받아오는 함수
   const fetchMoreData = () => {
     if (diaryList.length >= 50) {
       setHasMore(!hasMore);
       return;
     }
-    // a fake async api call like which sends
-    // 20 more records in .5 secs
+    // 가장 유력한 수정 후보
     setTimeout(() => {
-      // setItems(items.concat(Array.from({ length: 10 })));
-      setDiaryList(diaryList.concat(diaryList.slice(0, 10))); // 가장 유력한 수정 후보
-    }, 1000);
+      setDiaryList(diaryList.concat(result.slice(0, 12))); // 12개씩 커팅하기로 결정 -> 12개씩 slice
+      setResult(result.slice(12));
+    }, 1500);
   };
   return (
     <>
@@ -207,7 +216,6 @@ export const Card = () => {
         dataLength={diaryList.length}
         next={fetchMoreData}
         hasMore={hasMore}
-        // height={500}
         loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
@@ -218,6 +226,7 @@ export const Card = () => {
         {/* 리스트 */}
         {!loading && (
           <Main>
+            {/* 정렬 - diaryList?.sort(MainTab(selected)) */}
             {diaryList.map((list, index) => (
               <CardBox key={index}>
                 <Preview src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지">
@@ -227,9 +236,11 @@ export const Card = () => {
                     </button>
                   </Heart>
                 </Preview>
-                <Id>{list.nickname}</Id>
-                <Cardtitle>{list.title}</Cardtitle>
-                <Cardcontents>{list.diary}</Cardcontents>
+                <Link to={`/detail/${list.id}`}>
+                  <Id>{list.nickname}</Id>
+                  <Cardtitle>{list.title}</Cardtitle>
+                  <Cardcontents>{list.diary}</Cardcontents>
+                </Link>
                 <MintWrapper>
                   <Region>
                     {list.selected}

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import PriceFilter from "./PriceFilter";
 const MainContainer = styled.div`
@@ -96,18 +95,24 @@ const FilterContainer = styled.div`
     }
   }
 `;
-export const MainTab = () => {
-  const [selected, setSelected] = useState("Newest");
+export const MainTab = ({ selected, setSelected }) => {
   const sortClick = (e) => {
+    // selected
     switch (e.target.value) {
-      case "Newest":
-        setSelected("Newest");
+      case "등록순":
+        setSelected("등록순");
+        // 실제 diary get 할 때 createdAt 있음
+        // setSelected((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         break;
-      case "Registration":
-        setSelected("Registration");
+      case "조회순":
+        setSelected("조회순");
+        // ?
+        // setSelected((a, b) => b.views - a.views);
         break;
       case "Like":
         setSelected("Like");
+        // 실제 diary get 할 때 likesCount 있음
+        // setSelected((a, b) => b.likesCount - a.likesCount);
         break;
       default:
         break;
@@ -137,14 +142,10 @@ export const MainTab = () => {
       <FilterContainer>
         <div className="sort">
           <div className="question-sort">
-            <button onClick={sortClick} className={selected === "Newest" ? "is-selected" : ""} value={"Newest"}>
+            <button onClick={sortClick} className={selected === "등록순" ? "is-selected" : ""} value={"등록순"}>
               등록순
             </button>
-            <button
-              onClick={sortClick}
-              className={selected === "Registration" ? "is-selected" : ""}
-              value={"Registration"}
-            >
+            <button onClick={sortClick} className={selected === "조회순" ? "is-selected" : ""} value={"조회순"}>
               조회순
             </button>
             <button onClick={sortClick} className={selected === "Like" ? "is-selected" : ""} value={"Like"}>

@@ -111,19 +111,21 @@ export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) =
     setTodos(
       todos.map((item) => {
         if (item.id === todo.id) {
-          return { ...item, completed: !item.completed };
+          return { ...item, isCheck: !item.isCheck };
         }
         return item;
       }),
     );
 
     const patch2 = {
-      title: todo.title,
-      completed: !todo.completed,
+      checkContent: todo.checkContent,
+      isCheck: !todo.isCheck,
     };
 
+    // ^^todo.id
+
     axios
-      .patch(`http://localhost:4000/todos/` + todo.id, patch2)
+      .patch(`${process.env.REACT_APP_API_URL}check-list/{check-id}` + todo.id, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
   };
@@ -135,9 +137,11 @@ export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) =
     setIsEdit(!isEdit);
   };
 
+  // ^^id
+
   const handleDelete = ({ id }) => {
     setTodos(todos.filter((todos) => todos.id !== id));
-    axios.delete(`http://localhost:4000/todos/` + id);
+    axios.delete(`${process.env.REACT_APP_API_URL}check-list/{check-id}` + id);
   };
 
   return (
@@ -146,13 +150,13 @@ export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) =
         <li className="list-item" key={idx}>
           <Block2>
             <button onClick={() => handleComplete(todo)} className="complete-icon">
-              {todo.completed ? "🔳" : "⬜"}
+              {todo.isCheck ? "🔳" : "⬜"}
             </button>
             <input
               type="text"
-              value={todo.title}
+              value={todo.checkContent}
               // 완료 시 밑줄 그어짐
-              className={`list ${todo.completed ? "complete" : ""}`}
+              className={`list ${todo.isCheck ? "complete" : ""}`}
               onChange={(e) => e.preventDefault()}
             />
           </Block2>

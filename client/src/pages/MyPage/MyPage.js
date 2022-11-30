@@ -27,12 +27,19 @@ const MyPage = () => {
     axios.get(`http://localhost:4000/diary`).then((res) => {
       const timer = setTimeout(() => {
         console.log(res.data);
-        setCardList(res.data);
+        let response = res.data;
+        setCardList(response.slice(0, 10));
+        response = response.slice(10);
+        setResult(response);
         setLoading(false);
       }, 2000);
       return () => clearTimeout(timer);
     });
   }, []);
+
+  // yerin
+  const [hasMore, setHasMore] = useState(true);
+  const [result, setResult] = useState([]);
 
   return (
     <>
@@ -42,7 +49,14 @@ const MyPage = () => {
         <MapIcon cardList={cardList} />
         <MyPageSearch cardList={cardList} setCardList={setCardList} />
         {loading && <SkeletonDiary />}
-        <MyPageCard cardList={cardList} />
+        <MyPageCard
+          cardList={cardList}
+          setCardList={setCardList}
+          hasMore={hasMore}
+          setHasMore={setHasMore}
+          result={result}
+          setResult={setResult}
+        />
       </MyPageContainer>
     </>
   );
