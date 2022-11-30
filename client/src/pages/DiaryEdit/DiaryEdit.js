@@ -51,9 +51,7 @@ const DiaryEdit = () => {
   const [day, setDay] = useState("");
   const [weather, setWeather] = useState("");
   const [imageList, setImageList] = useState([]);
-  // 랜덤 퀘스천이랑 카운트는 변경 불가함, 그냥 받아서 잘 뿌려주기! text는 변경 가능함
   const [question, setQuestion] = useState("");
-  let [counter, setCounter] = useState(0);
   const [diary, setDiary] = useState("");
   const [price, setPrice] = useState(0);
   const [tags, setTags] = useState([]);
@@ -66,7 +64,7 @@ const DiaryEdit = () => {
       .then((res) => {
         console.log(res.data);
         const timer = setTimeout(() => {
-          setSelected(res.data.selected);
+          setSelected(res.data.area);
           setCity(res.data.city);
           setTitle(res.data.title);
           setYear(res.data.year);
@@ -74,9 +72,8 @@ const DiaryEdit = () => {
           setDay(res.data.day);
           setWeather(res.data.weather);
           setQuestion(res.data.question);
-          setCounter(res.data.counter);
-          setDiary(res.data.diary);
-          setPrice(res.data.price);
+          setDiary(res.data.content);
+          setPrice(res.data.cost);
           setTags(res.data.tags);
           setLoading(false);
         }, 1000);
@@ -87,19 +84,30 @@ const DiaryEdit = () => {
 
   // patch
   const submitHandler = () => {
+    if (imageList.length === 0) {
+      console.log("imageList:", imageList);
+      alert("이미지를 추가해 주세요.");
+      return false;
+    }
+    if (tags.length === 0) {
+      console.log("tags:", tags);
+      alert("태그를 한개 이상 등록해 주세요.");
+      return false;
+    }
+
+    const yearNum = parseInt(year);
+    const monthNum = parseInt(month);
+    const dayNum = parseInt(day);
     const diaryInfo = {
-      // memberId: memberId,
       title: title,
-      year: year,
-      month: month,
-      day: day,
+      year: yearNum,
+      month: monthNum,
+      day: dayNum,
       weather: weather,
-      // imageList: imageList,
       question: question,
-      counter: counter,
-      diary: diary,
-      price: price,
-      selected: selected,
+      content: diary,
+      cost: price,
+      area: selected,
       city: city,
       tags: tags,
     };
@@ -129,14 +137,7 @@ const DiaryEdit = () => {
               setDay={setDay}
             />
             <DiaryEditImg imageList={imageList} setImageList={setImageList} />
-            <DiaryEditText
-              question={question}
-              setQuestion={setQuestion}
-              counter={counter}
-              setCounter={setCounter}
-              diary={diary}
-              setDiary={setDiary}
-            />
+            <DiaryEditText question={question} setQuestion={setQuestion} diary={diary} setDiary={setDiary} />
             <DiaryEditPrice price={price} setPrice={setPrice} />
             <DiaryEditPlace
               Location={Location}

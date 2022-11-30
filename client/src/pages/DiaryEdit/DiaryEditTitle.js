@@ -1,6 +1,6 @@
-import { useState } from "react";
+// import { useState } from "react";
 import styled from "styled-components";
-import { MdClose } from "react-icons/md";
+// import { MdClose } from "react-icons/md";
 
 const TitleArea = styled.div`
   position: relative;
@@ -41,14 +41,14 @@ const DateText = styled.div`
   font-family: "shinbttf";
   font-size: 16px;
 `;
-const WeatherBtn = styled.button`
-  border: 0;
-  outline: 0;
-  background: none;
-  color: #535353;
-  font-family: "shinbttf";
-  font-size: 16px;
-`;
+// const WeatherBtn = styled.button`
+//   border: 0;
+//   outline: 0;
+//   background: none;
+//   color: #535353;
+//   font-family: "shinbttf";
+//   font-size: 16px;
+// `;
 
 const Select = styled.select`
   font-size: 16px;
@@ -77,66 +77,66 @@ const Option = styled.option`
   font-family: "shinbttf";
   padding: 3px 10px;
 `;
-const ModalContainer = styled.div`
-  background-color: #fbfbfb;
-  position: absolute;
-  /* top: 158px;
-  right: 163px; */
-  top: 60px;
-  right: 0;
-  width: 280px;
-  height: 260px;
-  padding: 15px 18px;
-  border-radius: 35px;
-  box-shadow: 0 0 5px 2px #63aeae;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
-const WeatherArea = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 10px 0;
-`;
-const ModalBtn = styled.button`
-  outline: none;
-  border: none;
-  background-color: #fbfbfb;
-  font-size: 16px;
-  padding: 0 10px;
-`;
-const ModalTxt = styled.div`
-  font-family: "shinbttf";
-`;
+// const ModalContainer = styled.div`
+//   background-color: #fbfbfb;
+//   position: absolute;
+//   /* top: 158px;
+//   right: 163px; */
+//   top: 60px;
+//   right: 0;
+//   width: 280px;
+//   height: 260px;
+//   padding: 15px 18px;
+//   border-radius: 35px;
+//   box-shadow: 0 0 5px 2px #63aeae;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-end;
+// `;
+// const WeatherArea = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+//   flex-direction: row;
+//   justify-content: space-evenly;
+//   align-items: center;
+//   width: 100%;
+//   height: 100%;
+//   padding: 10px 0;
+// `;
+// const ModalBtn = styled.button`
+//   outline: none;
+//   border: none;
+//   background-color: #fbfbfb;
+//   font-size: 16px;
+//   padding: 0 10px;
+// `;
+// const ModalTxt = styled.div`
+//   font-family: "shinbttf";
+// `;
 
 const DiaryEditTitle = ({ title, setTitle, weather, setWeather, year, setYear, month, setMonth, day, setDay }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
-  const weatherTxt = [
-    "태풍",
-    "미세먼지",
-    "맑음",
-    "안개",
-    "구름적음",
-    "흐림",
-    "황사",
-    "천둥번개",
-    "소나기",
-    "비",
-    "구름많음",
-    "눈",
-  ];
+  // const weatherTxt = [
+  //   "태풍",
+  //   "미세먼지",
+  //   "맑음",
+  //   "안개",
+  //   "구름적음",
+  //   "흐림",
+  //   "황사",
+  //   "천둥번개",
+  //   "소나기",
+  //   "비",
+  //   "구름많음",
+  //   "눈",
+  // ];
   const onChangeHandler = (e) => {
     setTitle(e.target.value);
   };
-  const openModal = () => {
-    setIsOpen(!isOpen);
-  };
+  // const openModal = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   const onClickHandler = (e) => {
     setWeather(e.target.textContent);
@@ -240,20 +240,22 @@ const DiaryEditTitle = ({ title, setTitle, weather, setWeather, year, setYear, m
           </Select>
           <DateText>일</DateText>
         </DateArea>
-        <WeatherBtn onClick={openModal}>{weather}</WeatherBtn>
+        <Select defaultValue={weather} onClick={onClickHandler}>
+          <Option value="">날씨</Option>
+          <Option value="태풍">태풍</Option>
+          <Option value="미세먼지">미세먼지</Option>
+          <Option value="맑음">맑음</Option>
+          <Option value="안개">안개</Option>
+          <Option value="구름적음">구름적음</Option>
+          <Option value="흐림">흐림</Option>
+          <Option value="황사">황사</Option>
+          <Option value="천둥번개">천둥번개</Option>
+          <Option value="소나기">소나기</Option>
+          <Option value="비">비</Option>
+          <Option value="구름많음">구름많음</Option>
+          <Option value="눈">눈</Option>
+        </Select>
       </InputContainer>
-      {isOpen ? (
-        <ModalContainer>
-          <MdClose size="18" color="#63aeae" onClick={openModal} />
-          <WeatherArea>
-            {weatherTxt.map((el) => (
-              <ModalBtn onClick={onClickHandler} key={el.id}>
-                <ModalTxt>{el}</ModalTxt>
-              </ModalBtn>
-            ))}
-          </WeatherArea>
-        </ModalContainer>
-      ) : null}
     </TitleArea>
   );
 };
