@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import parsingData from "./parsingData";
+import parsingData2 from "./parsingData2";
 // import { useEffect, useState } from "react";
 // import axios from "axios";
 
@@ -21,40 +21,32 @@ const Path = styled.path`
     fill: #5f6caf;
   }
 `;
-const MapIcon = ({ cardList }) => {
+const MapIcon2 = () => {
   const newData = {
     data: {
-      서울특별시: 8,
-      부산광역시: 5,
-      대구광역시: 3,
-      인천광역시: 0,
-      광주광역시: 4,
-      대전광역시: 7,
-      울산광역시: 1,
-      경기도: 2,
-      강원도: 9,
-      충청북도: 10,
-      충청남도: 6,
-      전라북도: 7,
-      전라남도: 5,
-      경상북도: 4,
-      경상남도: 9,
-      제주특별자치도: 5,
-      세종특별자치시: 4,
+      서울특별시: { posts: 8, color: "" },
+      부산광역시: { posts: 5, color: "" },
+      대구광역시: { posts: 1, color: "" },
+      인천광역시: { posts: 0, color: "" },
+      광주광역시: { posts: 2, color: "" },
+      대전광역시: { posts: 7, color: "" },
+      울산광역시: { posts: 9, color: "" },
+      경기도: { posts: 3, color: "" },
+      강원도: { posts: 4, color: "" },
+      충청북도: { posts: 7, color: "" },
+      충청남도: { posts: 5, color: "" },
+      전라북도: { posts: 2, color: "" },
+      전라남도: { posts: 6, color: "" },
+      경상북도: { posts: 7, color: "" },
+      경상남도: { posts: 10, color: "" },
+      제주특별자치도: { posts: 8, color: "" },
+      세종특별자치시: { posts: 5, color: "" },
     },
   };
-  console.log("newData", newData);
-  // console.log("newData", Object.keys(newData.data));
-  const newCityObj = {};
-  const newCityName = Object.keys(newData.data);
-  console.log("newCityName", newCityName);
-  console.log(newCityObj);
-  // const mapCity = newCityName.map((el) =>
-  // const cityName = el.
-  // newCityObj[el]);
-  // console.log("mapCity", mapCity);
-  const cityObj = parsingData(cardList);
-  // console.log("cityObj", cityObj);
+  //   console.log("newData2", newData.data);
+
+  const cityObj = parsingData2(newData.data);
+
   return (
     <Container>
       <SVG xmlns="http://www.w3.org/2000/svg">
@@ -165,4 +157,4 @@ const MapIcon = ({ cardList }) => {
   );
 };
 
-export default MapIcon;
+export default MapIcon2;
