@@ -10,6 +10,7 @@ import { IoIosArrowDropdown } from "react-icons/io";
 import Comment from "./Comment";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import LoginHeader from "../../components/Header/LoginHeader";
 
 const Section = styled.section`
   display: flex;
@@ -233,78 +234,81 @@ const Detail = () => {
   const formatter = new Intl.NumberFormat("ko");
 
   return (
-    <Section>
-      <DiaryContainer>
-        <TitleArea>
-          <Title>{diaryDetail.title}</Title>
-          <DateArea>
-            <DateInfo>
-              <DateText>{diaryDetail.year}년</DateText>
-            </DateInfo>
-            <DateInfo>
-              <DateText>{diaryDetail.month}월</DateText>
-            </DateInfo>
-            <DateInfo>
-              <DateText>{diaryDetail.day}일</DateText>
-            </DateInfo>
-            <Weather>{diaryDetail.weather}</Weather>
-          </DateArea>
-        </TitleArea>
-        <IMGArea>
-          <SimpleImageSlider
-            style={{
-              backgroundSize: "contain",
-              backgroundRepeat: "none",
-            }}
-            width={"700px"}
-            height={"480px"}
-            // images={imageList.map((item) => {
-            //   return { url: URL.createObjectURL(item) };
-            // })}
-            images={imageList.map((item) => {
-              return item;
-            })}
-            // images={images}
-            showBullets={true}
-            showNavs={true}
-            autoPlay={true}
-            loop={true}
-          />
-        </IMGArea>
-        <DiaryArea>
-          <HeartAndNickname>
-            <button onClick={() => onClickHandler()}>
-              {like ? <FaHeart color="#DF4949" /> : <FiHeart color="#DF4949" fill="#646464" />}
-            </button>
-            <Nickname>{diaryDetail.nickname}</Nickname>
-          </HeartAndNickname>
-          <RandomQuestion>{diaryDetail.question}</RandomQuestion>
-          <DiaryText>{diaryDetail.diary}</DiaryText>
-        </DiaryArea>
-        <PlaceAndPrice>
-          <PlaceArea>
-            {diaryDetail.selected} {diaryDetail.city}
-          </PlaceArea>
-          <PriceArea>총 예산 : {formatter.format(diaryDetail.price)} ₩</PriceArea>
-        </PlaceAndPrice>
-        <TagsArea>
-          {diaryDetail.tags &&
-            diaryDetail.tags.map((el, index) => <DarkMintButton key={index} text={el} width="auto" />)}
-        </TagsArea>
-        <BtnArea>
-          <EditBtn onClick={editBtnHandler}>수정</EditBtn>
-          {/* props로 일기id 내려주기 */}
-          <DeleteModal />
-        </BtnArea>
-      </DiaryContainer>
-      <CommentContainer>
-        <CommentTitleArea>
-          <CommentTitle>댓글</CommentTitle>
-          <IoIosArrowDropdown color="#535353" size="22" />
-        </CommentTitleArea>
-      </CommentContainer>
-      <Comment user={user} setUser={setUser} />
-    </Section>
+    <>
+      <LoginHeader />
+      <Section>
+        <DiaryContainer>
+          <TitleArea>
+            <Title>{diaryDetail.title}</Title>
+            <DateArea>
+              <DateInfo>
+                <DateText>{diaryDetail.year}년</DateText>
+              </DateInfo>
+              <DateInfo>
+                <DateText>{diaryDetail.month}월</DateText>
+              </DateInfo>
+              <DateInfo>
+                <DateText>{diaryDetail.day}일</DateText>
+              </DateInfo>
+              <Weather>{diaryDetail.weather}</Weather>
+            </DateArea>
+          </TitleArea>
+          <IMGArea>
+            <SimpleImageSlider
+              style={{
+                backgroundSize: "contain",
+                backgroundRepeat: "none",
+              }}
+              width={"700px"}
+              height={"480px"}
+              // images={imageList.map((item) => {
+              //   return { url: URL.createObjectURL(item) };
+              // })}
+              images={imageList.map((item) => {
+                return item;
+              })}
+              // images={images}
+              showBullets={true}
+              showNavs={true}
+              autoPlay={true}
+              loop={true}
+            />
+          </IMGArea>
+          <DiaryArea>
+            <HeartAndNickname>
+              <button onClick={() => onClickHandler()}>
+                {like ? <FaHeart color="#DF4949" /> : <FiHeart color="#DF4949" fill="#646464" />}
+              </button>
+              <Nickname>{diaryDetail.nickname}</Nickname>
+            </HeartAndNickname>
+            <RandomQuestion>{diaryDetail.question}</RandomQuestion>
+            <DiaryText>{diaryDetail.diary}</DiaryText>
+          </DiaryArea>
+          <PlaceAndPrice>
+            <PlaceArea>
+              {diaryDetail.selected} {diaryDetail.city}
+            </PlaceArea>
+            <PriceArea>총 예산 : {formatter.format(diaryDetail.price)} ₩</PriceArea>
+          </PlaceAndPrice>
+          <TagsArea>
+            {diaryDetail.tags &&
+              diaryDetail.tags.map((el, index) => <DarkMintButton key={index} text={el} width="auto" />)}
+          </TagsArea>
+          <BtnArea>
+            <EditBtn onClick={editBtnHandler}>수정</EditBtn>
+            {/* props로 일기id 내려주기 */}
+            <DeleteModal />
+          </BtnArea>
+        </DiaryContainer>
+        <CommentContainer>
+          <CommentTitleArea>
+            <CommentTitle>댓글</CommentTitle>
+            <IoIosArrowDropdown color="#535353" size="22" />
+          </CommentTitleArea>
+        </CommentContainer>
+        <Comment user={user} setUser={setUser} />
+      </Section>
+    </>
   );
 };
 

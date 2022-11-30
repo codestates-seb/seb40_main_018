@@ -1,6 +1,6 @@
-import { useState } from "react";
+// import { useState } from "react";
 import styled from "styled-components";
-import { MdClose } from "react-icons/md";
+// import { MdClose } from "react-icons/md";
 
 const TitleArea = styled.div`
   position: relative;
@@ -8,6 +8,11 @@ const TitleArea = styled.div`
   flex-direction: row;
   align-content: center;
   justify-content: space-between;
+  margin-bottom: 40px;
+`;
+const TitleErr = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const InputContainer = styled.div`
@@ -20,7 +25,6 @@ const InputContainer = styled.div`
   align-content: center;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 40px;
 `;
 
 const Title = styled.input`
@@ -33,6 +37,9 @@ const Title = styled.input`
   font-size: 16px;
 `;
 
+// const Err = styled.div`
+//   display: flex;
+// `;
 const DateArea = styled.div`
   display: flex;
 `;
@@ -41,14 +48,14 @@ const DateText = styled.div`
   font-family: "shinbttf";
   font-size: 16px;
 `;
-const WeatherBtn = styled.button`
-  border: 0;
-  outline: 0;
-  background: none;
-  color: #535353;
-  font-family: "shinbttf";
-  font-size: 16px;
-`;
+// const WeatherBtn = styled.button`
+//   border: 0;
+//   outline: 0;
+//   background: none;
+//   color: #535353;
+//   font-family: "shinbttf";
+//   font-size: 16px;
+// `;
 
 const Select = styled.select`
   font-size: 16px;
@@ -77,186 +84,184 @@ const Option = styled.option`
   font-family: "shinbttf";
   padding: 3px 10px;
 `;
-const ModalContainer = styled.div`
-  background-color: #fbfbfb;
-  position: absolute;
-  /* top: 158px;
-  right: 163px; */
-  top: 60px;
-  right: 0;
-  width: 280px;
-  height: 260px;
-  padding: 15px 18px;
-  border-radius: 35px;
-  box-shadow: 0 0 5px 2px #63aeae;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  z-index: 1;
-`;
-const WeatherArea = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 10px 0;
-`;
-const ModalBtn = styled.button`
-  outline: none;
-  border: none;
-  background-color: #fbfbfb;
-  font-size: 16px;
-  padding: 0 10px;
-`;
-const ModalTxt = styled.div`
-  font-family: "shinbttf";
+// const ModalContainer = styled.div`
+//   background-color: #fbfbfb;
+//   position: absolute;
+//   /* top: 158px;
+//   right: 163px; */
+//   top: 60px;
+//   right: 0;
+//   width: 280px;
+//   height: 260px;
+//   padding: 15px 18px;
+//   border-radius: 35px;
+//   box-shadow: 0 0 5px 2px #63aeae;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-end;
+//   z-index: 1;
+// `;
+// const WeatherArea = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+//   flex-direction: row;
+//   justify-content: space-evenly;
+//   align-items: center;
+//   width: 100%;
+//   height: 100%;
+//   padding: 10px 0;
+// `;
+// const ModalBtn = styled.button`
+//   outline: none;
+//   border: none;
+//   background-color: #fbfbfb;
+//   font-size: 16px;
+//   padding: 0 10px;
+// `;
+// const ModalTxt = styled.div`
+//   font-family: "shinbttf";
+// `;
+const ErrorMSG = styled.div`
+  margin-top: 10px;
+  color: red;
 `;
 
-const DiaryTitle = ({ title, setTitle, weather, setWeather, year, setYear, month, setMonth, day, setDay }) => {
-  const weatherTxt = [
-    "태풍",
-    "미세먼지",
-    "맑음",
-    "안개",
-    "구름적음",
-    "흐림",
-    "황사",
-    "천둥번개",
-    "소나기",
-    "비",
-    "구름많음",
-    "눈",
-  ];
-  const [isOpen, setIsOpen] = useState(false);
-  const openModal = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const onClickHandler = (e) => {
-    setWeather(e.target.textContent);
-    setIsOpen(!isOpen);
-  };
-
-  const onChangeHandler = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const selectYearHandler = (e) => {
-    setYear(e.target.value);
-  };
-  const selectMonthHandler = (e) => {
-    setMonth(e.target.value);
-  };
-  const selectDayHandler = (e) => {
-    setDay(e.target.value);
-  };
+const DiaryTitle = ({ register, errors }) => {
   return (
     <TitleArea>
-      <InputContainer width="380px">
-        <Title placeholder="제목" onChange={onChangeHandler} value={title} />
-      </InputContainer>
-      <InputContainer width="280px">
-        <DateArea>
-          <Select defaultValue={year} onClick={selectYearHandler}>
-            <Option> ----</Option>
-            <Option>2022</Option>
-            <Option>2021</Option>
-            <Option>2020</Option>
-            <Option>2019</Option>
-            <Option>2018</Option>
-            <Option>2017</Option>
-            <Option>2016</Option>
-            <Option>2015</Option>
-            <Option>2014</Option>
-            <Option>2013</Option>
-            <Option>2012</Option>
-            <Option>2011</Option>
-            <Option>2010</Option>
-            <Option>2009</Option>
-            <Option>2008</Option>
-            <Option>2007</Option>
-            <Option>2006</Option>
-            <Option>2005</Option>
-            <Option>2004</Option>
-            <Option>2003</Option>
-            <Option>2002</Option>
-            <Option>2001</Option>
-            <Option>2000</Option>
+      <TitleErr>
+        <InputContainer width="380px">
+          <Title
+            name="title"
+            placeholder="제목"
+            {...register("title", { required: { value: true, message: "제목은 필수 입력입니다." } })}
+          />
+        </InputContainer>
+        {errors.title && <ErrorMSG role="alert">{errors.title.message}</ErrorMSG>}
+      </TitleErr>
+      <TitleErr>
+        <InputContainer width="280px">
+          <DateArea>
+            <Select
+              name="year"
+              {...register("year", {
+                required: { value: true, message: "날짜를 선택해주세요." },
+                valueAsNumber: true,
+              })}
+            >
+              <Option value=""> ----</Option>
+              <Option value="2022">2022</Option>
+              <Option value="2021">2021</Option>
+              <Option value="2020">2020</Option>
+              <Option value="2019">2019</Option>
+              <Option value="2018">2018</Option>
+              <Option value="2017">2017</Option>
+              <Option value="2016">2016</Option>
+              <Option value="2015">2015</Option>
+              <Option value="2014">2014</Option>
+              <Option value="2013">2013</Option>
+              <Option value="2012">2012</Option>
+              <Option value="2011">2011</Option>
+              <Option value="2010">2010</Option>
+              <Option value="2009">2009</Option>
+              <Option value="2008">2008</Option>
+              <Option value="2007">2007</Option>
+              <Option value="2006">2006</Option>
+              <Option value="2005">2005</Option>
+              <Option value="2004">2004</Option>
+              <Option value="2003">2003</Option>
+              <Option value="2002">2002</Option>
+              <Option value="2001">2001</Option>
+              <Option value="2000">2000</Option>
+            </Select>
+            <DateText>년</DateText>
+          </DateArea>
+          <DateArea>
+            <Select
+              name="month"
+              {...register("month", {
+                required: { value: true, message: "날짜를 선택해주세요." },
+                valueAsNumber: true,
+              })}
+            >
+              <Option value="">--</Option>
+              <Option value="12">12</Option>
+              <Option value="11">11</Option>
+              <Option value="10">10</Option>
+              <Option value="09">09</Option>
+              <Option value="08">08</Option>
+              <Option value="07">07</Option>
+              <Option value="06">06</Option>
+              <Option value="05">05</Option>
+              <Option value="04">04</Option>
+              <Option value="03">03</Option>
+              <Option value="02">02</Option>
+              <Option value="01">01</Option>
+            </Select>
+            <DateText>월</DateText>
+          </DateArea>
+          <DateArea>
+            <Select
+              name="day"
+              {...register("day", { required: { value: true, message: "날짜를 선택해주세요." }, valueAsNumber: true })}
+            >
+              <Option value="">--</Option>
+              <Option value="31">31</Option>
+              <Option value="30">30</Option>
+              <Option value="29">29</Option>
+              <Option value="28">28</Option>
+              <Option value="27">27</Option>
+              <Option value="26">26</Option>
+              <Option value="25">25</Option>
+              <Option value="24">24</Option>
+              <Option value="23">23</Option>
+              <Option value="22">22</Option>
+              <Option value="21">21</Option>
+              <Option value="20">20</Option>
+              <Option value="19">19</Option>
+              <Option value="18">18</Option>
+              <Option value="17">17</Option>
+              <Option value="16">16</Option>
+              <Option value="15">15</Option>
+              <Option value="14">14</Option>
+              <Option value="13">13</Option>
+              <Option value="12">12</Option>
+              <Option value="11">11</Option>
+              <Option value="10">10</Option>
+              <Option value="09">09</Option>
+              <Option value="08">08</Option>
+              <Option value="07">07</Option>
+              <Option value="06">06</Option>
+              <Option value="05">05</Option>
+              <Option value="04">04</Option>
+              <Option value="03">03</Option>
+              <Option value="02">02</Option>
+              <Option value="01">01</Option>
+            </Select>
+            <DateText>일</DateText>
+          </DateArea>
+          <Select
+            name="weather"
+            {...register("weather", { required: { value: true, message: "날씨를 선택해주세요." } })}
+          >
+            <Option value="">날씨</Option>
+            <Option value="태풍">태풍</Option>
+            <Option value="미세먼지">미세먼지</Option>
+            <Option value="맑음">맑음</Option>
+            <Option value="안개">안개</Option>
+            <Option value="구름적음">구름적음</Option>
+            <Option value="흐림">흐림</Option>
+            <Option value="황사">황사</Option>
+            <Option value="천둥번개">천둥번개</Option>
+            <Option value="소나기">소나기</Option>
+            <Option value="비">비</Option>
+            <Option value="구름많음">구름많음</Option>
+            <Option value="눈">눈</Option>
           </Select>
-          <DateText>년</DateText>
-        </DateArea>
-        <DateArea>
-          <Select defaultValue={month} onClick={selectMonthHandler}>
-            <Option>--</Option>
-            <Option>12</Option>
-            <Option>11</Option>
-            <Option>10</Option>
-            <Option>09</Option>
-            <Option>08</Option>
-            <Option>07</Option>
-            <Option>06</Option>
-            <Option>05</Option>
-            <Option>04</Option>
-            <Option>03</Option>
-            <Option>02</Option>
-            <Option>01</Option>
-          </Select>
-          <DateText>월</DateText>
-        </DateArea>
-        <DateArea>
-          <Select defaultValue={day} onClick={selectDayHandler}>
-            <Option>--</Option>
-            <Option>31</Option>
-            <Option>30</Option>
-            <Option>29</Option>
-            <Option>28</Option>
-            <Option>27</Option>
-            <Option>26</Option>
-            <Option>25</Option>
-            <Option>24</Option>
-            <Option>23</Option>
-            <Option>22</Option>
-            <Option>21</Option>
-            <Option>20</Option>
-            <Option>19</Option>
-            <Option>18</Option>
-            <Option>17</Option>
-            <Option>16</Option>
-            <Option>15</Option>
-            <Option>14</Option>
-            <Option>13</Option>
-            <Option>12</Option>
-            <Option>11</Option>
-            <Option>10</Option>
-            <Option>09</Option>
-            <Option>08</Option>
-            <Option>07</Option>
-            <Option>06</Option>
-            <Option>05</Option>
-            <Option>04</Option>
-            <Option>03</Option>
-            <Option>02</Option>
-            <Option>01</Option>
-          </Select>
-          <DateText>일</DateText>
-        </DateArea>
-        <WeatherBtn onClick={openModal}>{weather}</WeatherBtn>
-      </InputContainer>
-      {isOpen ? (
-        <ModalContainer>
-          <MdClose size="18" color="#63aeae" onClick={openModal} />
-          <WeatherArea>
-            {weatherTxt.map((el, index) => (
-              <ModalBtn onClick={onClickHandler} key={index}>
-                <ModalTxt>{el}</ModalTxt>
-              </ModalBtn>
-            ))}
-          </WeatherArea>
-        </ModalContainer>
-      ) : null}
+        </InputContainer>
+        {(errors.year && errors.month && errors.day && <ErrorMSG role="alert">{errors.year.message}</ErrorMSG>) ||
+          (errors.weather && <ErrorMSG role="alert">{errors.weather.message}</ErrorMSG>)}
+      </TitleErr>
     </TitleArea>
   );
 };
