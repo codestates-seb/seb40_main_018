@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @Validated
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/bucket-list")
 public class BucketController {
 

@@ -19,7 +19,6 @@ import javax.validation.constraints.Positive;
 
 @RestController
 @Validated
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/tag")
 public class TagController {
 

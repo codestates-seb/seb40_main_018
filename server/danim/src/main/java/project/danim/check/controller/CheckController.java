@@ -19,7 +19,6 @@ import java.util.List;
 
 @RestController
 @Validated
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/check-list")
 public class CheckController {
 

@@ -63,8 +63,14 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.GET, "/member/me/**").authenticated()
                         .antMatchers(HttpMethod.POST, "/member/me").authenticated()
 //                        .antMatchers(HttpMethod.GET, "/member/*/diaries").hasAnyRole("USER") // 이친구는 모두가 볼 수 있어야 하나??
-                        .anyRequest().permitAll()
-                );
+                        .antMatchers("bucket-list/{bucket-list}").hasRole("ROLE_USER")
+                        .antMatchers("check-list/{check-id}").hasRole("ROLE_USER")
+                        .antMatchers("diary/{diary-id}").hasRole("ROLE_USER")
+                        .antMatchers("likes/{diary-id}").hasRole("ROLE_USER")
+                        .antMatchers("reply/{reply-id}").hasRole("ROLE_USER")
+                        .antMatchers("reply/{diary-id}").hasRole("ROLE_USER")
+                        .antMatchers("tag/{diary-id}").hasRole("ROLE_USER")
+                        .antMatchers("/**").permitAll());
 
         return http.build();
     }
