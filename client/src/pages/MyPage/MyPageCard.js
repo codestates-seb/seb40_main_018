@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const CardContainer = styled.div`
   /* height: 1000px; */
@@ -59,15 +60,22 @@ const MyPageCard = ({ cardList }) => {
       {cardList && (
         <>
           {cardList.map((item, index) => (
-            <CardArea key={index}>
-              <CardImg src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지" />
-              <TextArea>
-                <City>{item.city}</City>
-                <DateInfo>
-                  {item.year}.{item.month}.{item.day}
-                </DateInfo>
-              </TextArea>
-            </CardArea>
+            <>
+              <Link to={`/detail/${item.id}`}>
+                <CardArea key={index}>
+                  <CardImg
+                    src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg"
+                    alt="이미지"
+                  />
+                  <TextArea>
+                    <City>{item.city}</City>
+                    <DateInfo>
+                      {item.year}.{item.month}.{item.day}
+                    </DateInfo>
+                  </TextArea>
+                </CardArea>
+              </Link>
+            </>
           ))}
         </>
       )}
