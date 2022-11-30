@@ -62,12 +62,12 @@ const Preview = styled.div`
 `;
 
 const MintWrapper = styled.div`
-  width: 160px;
+  width: auto;
   height: 30px;
   font-size: 12px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 6px;
 `;
 
 const Region = styled.div`
@@ -76,13 +76,15 @@ const Region = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 74px;
+  width: auto;
   height: 16px;
   color: #535353;
+  padding: 8px;
   background-color: hsl(0, 0%, 100%);
   border: 1px solid hsl(180, 32%, 54%);
   border-radius: 35px;
   font-size: 10px;
+
   &:hover {
     background-color: hsl(180, 12%, 96%);
   }
@@ -97,13 +99,15 @@ const Budget = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 74px;
+  width: auto;
+  padding: 8px;
   height: 16px;
   color: #535353;
   background-color: hsl(0, 0%, 100%);
   border: 1px solid hsl(180, 32%, 54%);
   border-radius: 35px;
   font-size: 10px;
+
   &:hover {
     background-color: hsl(180, 12%, 96%);
   }
@@ -115,41 +119,42 @@ const Budget = styled.div`
 const TagContainer = styled.div`
   display: flex;
   word-break: break-all;
+  gap: 6px;
+  flex-wrap: wrap;
 `;
 const Heart = styled.div`
   margin-bottom: 240px;
   margin-left: 240px;
   cursor: pointer;
-  /* display: flex;
-  justify-content: flex-end;
-  align-items: flex-start; */
+  > .heartBtn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
 `;
 export const Card = () => {
   const [like, setLike] = useState(false);
   const [diaryList, setDiaryList] = useState([]);
-  const [completed, setcompleted] = useState(false);
 
-  // const onClickHandler = () => {
-  //   setLike(!like);
-  // };
+  const onClickHandler = (list) => {
+    setLike(!like);
 
-  const onClickHandler = (like) => {
-    setLike(
-      like.map((item) => {
-        if (item.id === like.id) {
-          return { ...item, completed: !item.completed };
+    setDiaryList(
+      diaryList.map((item) => {
+        if (item.id === list.id) {
+          return { ...item, like: !item.like };
         }
         return item;
       }),
     );
 
     const patch2 = {
-      title: like.title,
-      completed: !like.completed,
+      title: list.title,
+      like: !list.like,
     };
 
     axios
-      .patch(`http://localhost:4000/diary/` + like.id, patch2)
+      .patch(`http://localhost:4000/diary/` + list.id, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
   };
@@ -172,31 +177,26 @@ export const Card = () => {
   return (
     <>
       <Main>
-        {diaryList.map((item, index) => (
+        {diaryList.map((list, index) => (
           <CardBox key={index}>
             <Preview src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지">
               <Heart>
-                <button onClick={() => onClickHandler(like)}>
-                  {like ? (
-                    <FaHeart color="#DF4949" onClick={onClickHandler} />
-                  ) : (
-                    <FiHeart color="#DF4949" fill="#646464" onClick={onClickHandler} />
-                  )}
+                <button className="heartBtn" onClick={() => onClickHandler(list)}>
+                  {list.like ? <FaHeart color="#DF4949" /> : <FiHeart color="#DF4949" fill="#646464" />}
                 </button>
               </Heart>
             </Preview>
-            <Id>{item.nickname}</Id>
-            <Cardtitle>{item.title}</Cardtitle>
-            <Cardcontents>{item.diary}</Cardcontents>
+            <Id>{list.nickname}</Id>
+            <Cardtitle>{list.title}</Cardtitle>
+            <Cardcontents>{list.diary}</Cardcontents>
             <MintWrapper>
               <Region>
-                {item.selected}
-                {item.city}
+                {list.selected} {list.city}
               </Region>
-              <Budget>{item.price}</Budget>
+              <Budget>{list.price}</Budget>
             </MintWrapper>
             <TagContainer>
-              {item.tags.map((tag, idx) => (
+              {list.tags.map((tag, idx) => (
                 <li key={idx}>
                   <DarkMintTag height="16px" text={tag}></DarkMintTag>
                 </li>

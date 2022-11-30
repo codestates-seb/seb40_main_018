@@ -17,7 +17,8 @@
         "장범준",
         "밤바다",
         "회쏘"
-      ]
+      ],
+      "like": false
     },
     {
       "title": "첫번째 테스트",
@@ -39,7 +40,8 @@
         "첫번째",
         "테스트"
       ],
-      "id": 2
+      "id": 2,
+      "like": false
     },
     {
       "title": "두번째 테스트",
@@ -60,7 +62,8 @@
         "가격이",
         "이상하네"
       ],
-      "id": 3
+      "id": 3,
+      "like": false
     },
     {
       "nickname": "dlwlrma",
@@ -88,7 +91,8 @@
         "rmekdmadpaghkd",
         "dmfahdskdgos"
       ],
-      "id": 5
+      "id": 5,
+      "like": false
     },
     {
       "nickname": "dlwlrma",
@@ -138,7 +142,8 @@
       "tags": [
         "ㅇㄹㄴㅇㄹ"
       ],
-      "id": 7
+      "id": 7,
+      "like": false
     },
     {
       "nickname": "dlwlrma",
@@ -159,7 +164,8 @@
         "확인중",
         "수정용"
       ],
-      "id": 8
+      "id": 8,
+      "like": false
     },
     {
       "nickname": "dlwlrma",
