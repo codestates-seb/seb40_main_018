@@ -2,7 +2,6 @@ import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
 
-
 const CardContainer = styled.div`
   /* height: 1000px; */
   width: 1000px;
@@ -89,26 +88,27 @@ const MyPageCard = ({ cardList, setCardList, hasMore, setHasMore, result, setRes
         }
       >
         {/* 리스트 */}
-    <CardContainer>
-      {cardList && (
-        <>
-          {cardList.map((item, index) => (
+        <CardContainer>
+          {cardList && (
             <>
-              <Link to={`/detail/${item.id}`}>
-                <CardArea key={index}>
-                  <CardImg
-                    src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg"
-                    alt="이미지"
-                  />
-                  <TextArea>
-                    <City>{item.city}</City>
-                    <DateInfo>
-                      {item.year}.{item.month}.{item.day}
-                    </DateInfo>
-                  </TextArea>
-                </CardArea>
+              {cardList.map((item, index) => (
+                <>
+                  <Link to={`/detail/${item.id}`}>
+                    <CardArea key={index}>
+                      <CardImg
+                        src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg"
+                        alt="이미지"
+                      />
+                      <TextArea>
+                        <City>{item.city}</City>
+                        <DateInfo>
+                          {item.year}.{item.month}.{item.day}
+                        </DateInfo>
+                      </TextArea>
+                    </CardArea>
+                  </Link>
+                </>
               ))}
-              </Link>
             </>
           )}
         </CardContainer>
