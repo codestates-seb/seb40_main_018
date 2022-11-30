@@ -1,10 +1,13 @@
 package project.danim.diary.service;
 
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import project.danim.diary.domain.Diary;
 import project.danim.diary.dto.DiaryPostDto;
 import project.danim.diary.dto.DiaryResponseDto;
@@ -18,12 +21,15 @@ import project.danim.member.service.MemberService;
 import project.danim.member.service.MemberServiceHelper;
 import project.danim.response.MultiResponseDto;
 
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class DiaryService {
     private final DiaryRepository diaryRepository;
     private final DiaryMapper diaryMapper;
@@ -46,8 +52,12 @@ public class DiaryService {
     }
 
     private Diary findVerifiedDiary(long diaryId){
+
+
+    public Diary findVerifiedDiary(long diaryId) {
+
         Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
-        Diary findDiary = optionalDiary.orElseThrow(()->
+        Diary findDiary = optionalDiary.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.DIARY_NOT_FOUND));
         return findDiary;
     }
@@ -71,7 +81,6 @@ public class DiaryService {
 
         return new MultiResponseDto<>(diaries, diaryPage);
     }
-
     public MultiResponseDto findDiariesFilterCost(int min, int max, int size, int page) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("diaryId").descending());
         Page<Diary> diaryPage = diaryRepository.findAllDiaryByCost(min, max, pageable);
@@ -82,15 +91,18 @@ public class DiaryService {
 
         return new MultiResponseDto<>(diaries, diaryPage);
     }
-    public void savedLikesCount(Diary diary){
+    
+    public void savedLikesCount(Diary diary) {
+
         diaryRepository.save(diary);
     }
+
     /*
 
     다이어리 수정
 
      */
-    public Diary updateDiary(Diary diary){
+    public Diary updateDiary(Diary diary) {
 
         Diary findDiary = findVerifiedDiary(diary.getDiaryId()); // 요청된 일기가 DB에 없으면 에러
         //diaryRepository.findById(diaryId);
@@ -104,7 +116,7 @@ public class DiaryService {
         Optional.ofNullable(diary.getCost())
                 .ifPresent(diaryCost -> findDiary.setCost(diaryCost));
 
-      //  findDiary.setModifiedDate(LocalDateTime.now());
+        //  findDiary.setModifiedDate(LocalDateTime.now());
 
         Diary updatedDiaries = diaryRepository.save(findDiary);
 
@@ -122,10 +134,20 @@ public class DiaryService {
     /*
     특정 다이어리 삭제
      */
-    public void deleteDiary(long diaryId){
+    public void deleteDiary(long diaryId) {
         diaryRepository.deleteById(diaryId);
     }
 
+    public Long keepDiary(MultipartFile image, Diary diary) throws IOException {
 
+        if (!image.isEmpty()) {
+            String storedFileName = awsS3Service.upload(image, "images");
+            diary.setImageUrl(storedFileName);
+        }
 
+        Diary savedDiary = diaryRepository.save(diary);
+
+        return savedDiary.getDiaryId();
+
+    }
 }

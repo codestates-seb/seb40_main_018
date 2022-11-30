@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import project.danim.diary.domain.Diary;
-
+import java.util.Optional;
 import java.util.List;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
@@ -17,4 +17,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     @Query("SELECT d FROM Diary d WHERE d.cost BETWEEN :min and :max")
     Page<Diary> findAllDiaryByCost(@Param("min") int min, @Param("max") int max, Pageable pageable);
+
+    Optional<Diary> findByDiaryId(Long diaryId);
 }

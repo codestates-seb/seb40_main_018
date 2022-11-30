@@ -4,33 +4,34 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import project.danim.diary.domain.Diary;
+import project.danim.diary.service.DiaryService;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/s3")
 public class AwsS3Controller {
 
-    private final FileStore fileStore;
+    private final DiaryService diaryService;
 
-    @PostMapping("/image")
-    public ResponseEntity<List<String>> uploadImage(@RequestPart List<MultipartFile> multipartFile) {
-        return new ResponseEntity<>(fileStore.uploadImage(multipartFile), HttpStatus.OK);
+    @ResponseBody
+    @PostMapping(value = "/diary/new", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Long saveDiary(HttpServletRequest request, @RequestParam(value="image") MultipartFile image, Diary diary) throws IOException {
+
+        Long diaryId = diaryService.keepDiary(image, diary);
+
+        return diaryId;
+
     }
 
-    @DeleteMapping("/image")
-    public ResponseEntity<Void> deleteImage(@RequestParam String fileName) {
-        fileStore.deleteImage(fileName);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }
