@@ -15,7 +15,6 @@ import project.danim.response.SingleResponseDto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.util.List;
 
 @RestController
 @RequestMapping("/reply")
