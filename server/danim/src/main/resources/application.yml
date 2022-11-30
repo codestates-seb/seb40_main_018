@@ -22,6 +22,8 @@ spring:
 cloud:
   aws:
     credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_ACCESS_KEY}
       instance-profile: false
     s3:
       bucket: ${BUCKET_NAME}
@@ -31,9 +33,6 @@ cloud:
     stack:
       auto: false
 
-iam:
-  access-key: ${AWS_ACCESS_KEY}
-  secret-key: ${AWS_SECRET_ACCESS_KEY}
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
