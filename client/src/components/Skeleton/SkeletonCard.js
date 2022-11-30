@@ -2,7 +2,9 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import styled from "styled-components";
 
-export const Box = styled.div``;
+export const Box = styled.div`
+  height: 100vh;
+`;
 const List = styled.div`
   padding: 20px;
   display: grid;
