@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import project.danim.audit.BaseTime;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor

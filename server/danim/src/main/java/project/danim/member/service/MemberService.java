@@ -1,18 +1,15 @@
 package project.danim.member.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.danim.exeption.ExceptionCode;
 import project.danim.member.domain.Member;
-import project.danim.member.domain.MemberExistsException;
-import project.danim.member.dto.MemberCreateForm;
+import project.danim.member.domain.MemberNotFoundException;
 import project.danim.member.dto.MemberProfilePatchForm;
 import project.danim.member.dto.MemberResponseForProfile;
 import project.danim.member.repository.MemberRepository;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +19,10 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    public Member findMember(String email) {
+        return memberRepository.findByEmail(email).orElseThrow(() ->
+                new MemberNotFoundException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
     public MemberResponseForProfile patchProfile(MemberProfilePatchForm memberProfilePatchForm) {
         Member findMember = memberRepository.findById(memberProfilePatchForm.getMemberId()).get();
 
@@ -33,12 +34,5 @@ public class MemberService {
                 .ifPresent(findMember::updateAboutMe);
 
         return MemberResponseForProfile.of(findMember);
-    }
-
-    private void verifyExistsEmail(String email) {
-        Optional<Member> member = memberRepository.findByEmail(email);
-        if (member.isPresent()) {
-            throw new MemberExistsException(ExceptionCode.MEMBER_EXISTS);
-        }
     }
 }

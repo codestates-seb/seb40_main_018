@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import project.danim.member.dto.MemberCreateForm;
 import project.danim.member.dto.MemberProfilePatchForm;
 import project.danim.member.dto.MemberResponseForProfile;
 import project.danim.member.service.MemberQueries;
@@ -14,6 +13,7 @@ import project.danim.member.service.MemberService;
 import project.danim.response.SingleResponseDto;
 
 import javax.validation.constraints.Positive;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,8 +43,21 @@ public class MemberController {
     }
 
     @GetMapping("/me/diaries")
-    public String getMyDiaries() {
-        return "This is my Diaries";
+    public ResponseEntity getMyDiaries(@Positive @RequestParam int page,
+                                       @Positive @RequestParam int size) {
+
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return new ResponseEntity<>(memberQueries.getMyDiaries(email, page, size), HttpStatus.OK);
+    }
+
+    @GetMapping("/me/map")
+    public ResponseEntity getMyMap() {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Map<String, Integer> map = memberQueries.getMyMap(email);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(map), HttpStatus.OK);
     }
 
     @GetMapping("/me/likes")
@@ -52,9 +65,19 @@ public class MemberController {
         return "This is Liked Diaries";
     }
 
+
+    @GetMapping("/{member-id}")
+    public ResponseEntity getMemberProfile(@Positive @PathVariable("member-id") long memberId) {
+        MemberResponseForProfile member = memberQueries.getMemberProfile(memberId);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(member), HttpStatus.OK);
+    }
+
     @GetMapping("/{member-id}/diaries")
-    public String getMemberDiaries(@Positive @PathVariable("member-id") long memberId) {
-        return memberId + "'s diaries";
+    public ResponseEntity getMemberDiaries(@Positive @PathVariable("member-id") long memberId,
+                                           @Positive @RequestParam int page,
+                                           @Positive @RequestParam int size) {
+        return new ResponseEntity<>(memberQueries.getMemberProfileDiaries(memberId, page, size), HttpStatus.OK);
     }
 
 }
