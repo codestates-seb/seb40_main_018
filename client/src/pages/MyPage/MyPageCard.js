@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const CardContainer = styled.div`
   /* height: 1000px; */
@@ -53,25 +54,61 @@ const DateInfo = styled.div`
 /* 링크연결 - 각 다이어리 상세페이지로 */
 // 확인용
 
-const MyPageCard = ({ cardList }) => {
+const MyPageCard = ({ cardList, setCardList, hasMore, setHasMore, result, setResult }) => {
+  // yerin
+  // 스크롤 시에 데이터를 추가적으로 받아오는 함수
+  const fetchMoreData = () => {
+    if (cardList.length >= 50) {
+      setHasMore(!hasMore);
+      return;
+    }
+    // a fake async api call like which sends
+    // 20 more records in .5 secs
+    // 가장 유력한 수정 후보
+    setTimeout(() => {
+      // setItems(items.concat(Array.from({ length: 10 })));
+      setCardList(cardList.concat(result.slice(0, 10))); // 10개씩 커팅하기로 결정 -> 10개씩 slice
+      setResult(result.slice(10)); // 호출하여 10개씩 커팅할때마다 원본 데이터인 result 또한 10개씩 줄여줌
+
+      // setDiaryList(diaryList.concat(diaryList.slice(0, 10)));
+    }, 1500);
+  };
   return (
-    <CardContainer>
-      {cardList && (
-        <>
-          {cardList.map((item, index) => (
-            <CardArea key={index}>
-              <CardImg src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지" />
-              <TextArea>
-                <City>{item.city}</City>
-                <DateInfo>
-                  {item.year}.{item.month}.{item.day}
-                </DateInfo>
-              </TextArea>
-            </CardArea>
-          ))}
-        </>
-      )}
-    </CardContainer>
+    <>
+      <InfiniteScroll
+        dataLength={cardList.length}
+        next={fetchMoreData}
+        hasMore={hasMore}
+        loader={<h4>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+      >
+        {/* 리스트 */}
+        <CardContainer>
+          {cardList && (
+            <>
+              {cardList.map((item, index) => (
+                <CardArea key={index}>
+                  <CardImg
+                    src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg"
+                    alt="이미지"
+                  />
+                  <TextArea>
+                    <City>{item.city}</City>
+                    <DateInfo>
+                      {item.year}.{item.month}.{item.day}
+                    </DateInfo>
+                  </TextArea>
+                </CardArea>
+              ))}
+            </>
+          )}
+        </CardContainer>
+      </InfiniteScroll>
+    </>
   );
 };
 

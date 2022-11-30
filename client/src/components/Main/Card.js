@@ -172,7 +172,10 @@ export const Card = () => {
     axios.get("http://localhost:4000/diary").then((res) => {
       const timer = setTimeout(() => {
         console.log(res.data);
-        setDiaryList(res.data);
+        let response = res.data;
+        setDiaryList(response.slice(0, 12)); // 받아온 데이터에서 12개만 먼저 result state에 저장
+        response = response.slice(12);
+        setResult(response); // 저장한 데이터 모두 저장
         setLoading(false);
       }, 2000);
       return () => clearTimeout(timer);
@@ -181,19 +184,19 @@ export const Card = () => {
 
   // yerin
   const [hasMore, setHasMore] = useState(true);
-  // const [items, setItems] = useState(Array.from({ length: 20 }));
+  const [result, setResult] = useState([]);
 
+  // 스크롤 시에 데이터를 추가적으로 받아오는 함수
   const fetchMoreData = () => {
     if (diaryList.length >= 50) {
       setHasMore(!hasMore);
       return;
     }
-    // a fake async api call like which sends
-    // 20 more records in .5 secs
+    // 가장 유력한 수정 후보
     setTimeout(() => {
-      // setItems(items.concat(Array.from({ length: 10 })));
-      setDiaryList(diaryList.concat(diaryList.slice(0, 10))); // 가장 유력한 수정 후보
-    }, 1000);
+      setDiaryList(diaryList.concat(result.slice(0, 12))); // 12개씩 커팅하기로 결정 -> 12개씩 slice
+      setResult(result.slice(12));
+    }, 1500);
   };
   return (
     <>
@@ -203,7 +206,6 @@ export const Card = () => {
         dataLength={diaryList.length}
         next={fetchMoreData}
         hasMore={hasMore}
-        // height={500}
         loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
