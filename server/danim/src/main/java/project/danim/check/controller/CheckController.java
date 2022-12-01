@@ -2,6 +2,7 @@ package project.danim.check.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.danim.check.domain.Check;
@@ -51,7 +52,9 @@ public class CheckController {
     @PostMapping
     public ResponseEntity<SingleResponseDto> postCheck(@Valid @RequestBody CheckPostDto request) {
 
-        CheckResponseDto response = checkService.createCheck(request);
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        CheckResponseDto response = checkService.createCheck(request, email);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.CREATED);
