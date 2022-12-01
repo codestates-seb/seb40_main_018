@@ -64,6 +64,8 @@ public class ReplyService {
                 .replyContent(createReply.getReplyContent())
                 .replyId(createReply.getReplyId())
                 .createdAt(createReply.getCreatedAt())
+                .responseTo(createReply.getResponseTo())
+                .exist(createReply.getExist())
                 .build();
 
     }

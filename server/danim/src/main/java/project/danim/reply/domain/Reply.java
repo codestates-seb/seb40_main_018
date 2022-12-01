@@ -22,7 +22,7 @@ public class Reply extends BaseTime {
 
     private String replyContent;
 
-    private String responseTo;
+    private String responseTo = "root";
 
     private Boolean exist = true;
 
