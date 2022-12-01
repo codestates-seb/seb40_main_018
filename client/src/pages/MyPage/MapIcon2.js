@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import parsingData2 from "./parsingData2";
 // import { useEffect, useState } from "react";
-// import axios from "axios";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -22,30 +23,44 @@ const Path = styled.path`
   }
 `;
 const MapIcon2 = () => {
-  const newData = {
-    data: {
-      서울특별시: { posts: 8, color: "" },
-      부산광역시: { posts: 5, color: "" },
-      대구광역시: { posts: 1, color: "" },
-      인천광역시: { posts: 0, color: "" },
-      광주광역시: { posts: 2, color: "" },
-      대전광역시: { posts: 7, color: "" },
-      울산광역시: { posts: 9, color: "" },
-      경기도: { posts: 3, color: "" },
-      강원도: { posts: 4, color: "" },
-      충청북도: { posts: 7, color: "" },
-      충청남도: { posts: 5, color: "" },
-      전라북도: { posts: 2, color: "" },
-      전라남도: { posts: 6, color: "" },
-      경상북도: { posts: 7, color: "" },
-      경상남도: { posts: 10, color: "" },
-      제주특별자치도: { posts: 8, color: "" },
-      세종특별자치시: { posts: 5, color: "" },
-    },
-  };
+  const [mapData, setMapData] = useState({});
+  // console.log("mapData", mapData);
+  const accessToken = localStorage.getItem("accessToken");
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}member/me/map`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => setMapData(res.data.data));
+  }, []);
+
+  // const newData = {
+  //   data: {
+  //     서울특별시: { posts: 8, color: "" },
+  //     부산광역시: { posts: 5, color: "" },
+  //     대구광역시: { posts: 1, color: "" },
+  //     인천광역시: { posts: 0, color: "" },
+  //     광주광역시: { posts: 2, color: "" },
+  //     대전광역시: { posts: 7, color: "" },
+  //     울산광역시: { posts: 9, color: "" },
+  //     경기도: { posts: 3, color: "" },
+  //     강원도: { posts: 4, color: "" },
+  //     충청북도: { posts: 7, color: "" },
+  //     충청남도: { posts: 5, color: "" },
+  //     전라북도: { posts: 2, color: "" },
+  //     전라남도: { posts: 6, color: "" },
+  //     경상북도: { posts: 7, color: "" },
+  //     경상남도: { posts: 10, color: "" },
+  //     제주특별자치도: { posts: 8, color: "" },
+  //     세종특별자치시: { posts: 5, color: "" },
+  //   },
+  // };
   //   console.log("newData2", newData.data);
 
-  const cityObj = parsingData2(newData.data);
+  // const cityObj = parsingData2(newData.data);
+  const cityObj = parsingData2(mapData);
 
   return (
     <Container>

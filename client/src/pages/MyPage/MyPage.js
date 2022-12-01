@@ -21,23 +21,28 @@ const MyPageContainer = styled.div`
 const MyPage = () => {
   const [cardList, setCardList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_API_URL}member/me/diaries?size=10&page=1`)
-      // .then((res) => {
-      //   const timer = setTimeout(() => {
-      //     console.log(res.data);
-      //     let response = res.data;
-      //     setCardList(response.slice(0, 10));
-      //     response = response.slice(10);
-      //     setResult(response);
-      //     setLoading(false);
-      //   }, 2000);
-      //   return () => clearTimeout(timer);
-      // });
-      .then((res) => console.log(res.data))
+      .get(`${process.env.REACT_APP_API_URL}member/me/diaries?size=10&page=1`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => {
+        const timer = setTimeout(() => {
+          console.log(res.data);
+          let response = res.data.data;
+          setCardList(response.slice(0, 10));
+          response = response.slice(10);
+          setResult(response);
+          setLoading(false);
+        }, 2000);
+        return () => clearTimeout(timer);
+      })
+      // .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
   }, []);
 

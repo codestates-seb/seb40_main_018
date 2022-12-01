@@ -19,7 +19,7 @@ const cityArr = [
 ];
 
 const parsingData2 = (data) => {
-  console.log("data", data);
+  // console.log("data", data);
 
   const notInData = cityArr.filter((i) => !Object.keys(data).includes(i));
 
@@ -50,7 +50,7 @@ const parsingData2 = (data) => {
       data[i].color = "#000";
     }
   });
-  console.log("cityObj2", data);
+  // console.log("cityObj2", data);
   return data;
   //   const cityObj = {};
   //   console.log("cityObj2", cityObj);
