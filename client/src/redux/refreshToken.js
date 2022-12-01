@@ -1,36 +1,18 @@
-import { Cookies } from "react-cookie";
-
-export const refreshToken = async (refreshToken) => {
-  const cookies = new Cookies();
-
-  const getCookie = (name) => {
-    return cookies.get(name);
-  };
-
-  const setCookie = (name, value, option) => {
-    return cookies.set(name, value, { ...option });
-  };
-
-  const today = new Date();
-  const expireDate = today.setDate(today.getDate() + 7);
+export const refreshToken = async () => {
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
 
   const options = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      //   "ngrok-skip-browser-warning": "skip",
-      Authorization: `Bearer ${getCookie("myToken")}`,
-      Refresh: setCookie("myToken", refreshToken, {
-        path: "/",
-        secure: true,
-        sameSite: "strict",
-        expires: new Date(expireDate),
-      }),
+      Authorization: accessToken,
+      Refresh: refreshToken,
     },
   };
   const res = await fetch("/token", options);
   console.log(res);
   console.log("토큰 재발급 완료");
-  // cookies.set("accessToken", res.headers.get("authorization"));
-  // cookies.set("refreshToken", res.headers.get("refresh"));
+  localStorage.setItem("accessToken", res.headers.get("authorization"));
+  localStorage.setItem("refreshToken", res.headers.get("refresh"));
 };
