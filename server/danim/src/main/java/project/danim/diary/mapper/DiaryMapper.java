@@ -52,8 +52,10 @@ public interface DiaryMapper {
         diaryResponseDto.setTitle(diary.getTitle());
         diaryResponseDto.setContent(diary.getContent());
         diaryResponseDto.setWeather(diary.getWeather());
+        diaryResponseDto.setCity(diary.getCity());
         diaryResponseDto.setArea(diary.getArea());
         diaryResponseDto.setCost(diary.getCost());
+        diaryResponseDto.setTags(diary.getTags());
         diaryResponseDto.setCreatedAt(diary.getCreatedDate());
         diaryResponseDto.setModifiedAt(diary.getModifiedDate());
         diaryResponseDto.setTravelDate(diary.getTravelDate());
@@ -68,12 +70,18 @@ public interface DiaryMapper {
    default DiaryResponseDto diaryToDiaryResponseDtos(Diary diary){
 
         DiaryResponseDto diaryResponseDto = new DiaryResponseDto();
-        diaryResponseDto.setDiaryId(diary.getDiaryId());
-        diaryResponseDto.setTitle(diary.getTitle());
-        diaryResponseDto.setContent(diary.getContent());
-        diaryResponseDto.setWeather(diary.getWeather());
-        diaryResponseDto.setArea(diary.getArea());
-        diaryResponseDto.setCost(diary.getCost());
+       diaryResponseDto.setDiaryId(diary.getDiaryId());
+       diaryResponseDto.setTitle(diary.getTitle());
+       diaryResponseDto.setContent(diary.getContent());
+       diaryResponseDto.setWeather(diary.getWeather());
+       diaryResponseDto.setCity(diary.getCity());
+       diaryResponseDto.setArea(diary.getArea());
+       diaryResponseDto.setCost(diary.getCost());
+       diaryResponseDto.setTags(diary.getTags());
+       diaryResponseDto.setCreatedAt(diary.getCreatedDate());
+       diaryResponseDto.setModifiedAt(diary.getModifiedDate());
+       diaryResponseDto.setTravelDate(diary.getTravelDate());
+       diaryResponseDto.setMemberId(diary.getMemberId());
        // diaryResponseDto.setCreatedDate(diary.getCreatedDate());
       //  diaryResponseDto.setModifiedDate(diary.getModifiedDate());
         //diaryResponseDto.setMemberId(diary.getMember().getMemberId());
