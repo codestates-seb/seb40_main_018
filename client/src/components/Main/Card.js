@@ -141,6 +141,7 @@ const Heart = styled.div`
 `;
 // { selected }
 export const Card = ({ diaryList, setDiaryList, hasMore, setHasMore, result, setResult, loading }) => {
+  console.log("diaryList2", diaryList);
   const [like, setLike] = useState(false);
 
   // const [completed, setcompleted] = useState(false);

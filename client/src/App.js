@@ -19,6 +19,8 @@ import { useEffect } from "react";
 // import { refreshToken } from "./redux/refreshToken";
 import jwt_decode from "jwt-decode";
 import { setRefreshToken } from "./storage/Cookie";
+import LoginHeader from "./components/Header/LoginHeader";
+import Header from "./components/Header/Header";
 // import { Cookies } from "react-cookie";
 
 // axios.defaults.withCredentials = true;
@@ -26,6 +28,9 @@ import { setRefreshToken } from "./storage/Cookie";
 function App() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.userReducer.isLogin);
+  const user = useSelector((state) => state.userReducer);
+  console.log("user", user);
+
   // 내 정보 가져오기
   const userLoad = async () => {
     const myInfo = await useFetch("GET", `${process.env.REACT_APP_API_URL}member/me`);
@@ -122,6 +127,7 @@ function App() {
     <>
       <GlobalStyles />
       <Router>
+        {user.isLogin ? <LoginHeader /> : <Header />}
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/detail/:id" element={<Detail />} />

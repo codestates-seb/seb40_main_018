@@ -63,23 +63,35 @@ export const BucketInput = ({
     setInput(event.target.value);
   };
 
+  const accessToken = localStorage.getItem("accessToken");
+
   const onFormSubmit = async (event) => {
     event.preventDefault();
-    setTodos([...todos, { title: input, completed: completed }]);
+    setTodos([...todos, { bucketContent: input, isCheck: completed }]);
     setInput("");
 
     const todoPost = {
-      title: input,
-      completed: false,
+      bucketContent: input,
+      isCheck: false,
     };
     await axios
-      .post("http://localhost:4005/btodos", todoPost)
+      .post(`${process.env.REACT_APP_API_URL}bucket-list`, todoPost, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
       .then((res) => console.log(res))
       .then((err) => console.log(err));
 
-    await axios.get("http://localhost:4005/btodos").then((result) => {
-      setTodos(result.data);
-    });
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}bucket-list`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((result) => {
+        setTodos(result.data);
+      });
   };
 
   const updateHandler = () => {
@@ -87,8 +99,8 @@ export const BucketInput = ({
     // console.log("patchid", editTodo.id);
 
     const patch2 = {
-      title: input,
-      completed: completed,
+      bucketContent: input,
+      isCheck: completed,
     };
 
     axios

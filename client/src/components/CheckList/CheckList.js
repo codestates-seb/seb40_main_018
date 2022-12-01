@@ -125,7 +125,7 @@ export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) =
     // ^^todo.id
 
     axios
-      .patch(`${process.env.REACT_APP_API_URL}check-list/{check-id}` + todo.id, patch2)
+      .patch(`${process.env.REACT_APP_API_URL}check-list/{check-id}` + patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
   };

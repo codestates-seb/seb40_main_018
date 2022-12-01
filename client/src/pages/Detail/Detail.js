@@ -10,7 +10,7 @@ import { IoIosArrowDropdown } from "react-icons/io";
 import Comment from "./Comment";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import LoginHeader from "../../components/Header/LoginHeader";
+// import LoginHeader from "../../components/Header/LoginHeader";
 
 const Section = styled.section`
   display: flex;
@@ -240,7 +240,7 @@ const Detail = () => {
 
   return (
     <>
-      <LoginHeader />
+      {/* <LoginHeader /> */}
       <Section>
         <DiaryContainer>
           <TitleArea>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Location } from "./Location";
 import styled from "styled-components";
-import LoginHeader from "../../components/Header/LoginHeader";
+// import LoginHeader from "../../components/Header/LoginHeader";
 import MintLineButton from "../../components/Button/MintLineButton";
 import DiaryTitle from "./DiaryTitle";
 import DiaryImg from "./DiaryImg";
@@ -11,7 +11,7 @@ import DiaryPrice from "./DiaryPrice";
 import DiaryPlace from "./DiaryPlace";
 import DiaryHashtag from "./DiaryHashtag";
 import CancelModal from "../../components/Modal/CancelModal";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
 import { useForm } from "react-hook-form";
 
@@ -40,7 +40,7 @@ const BtnArea = styled.div`
 `;
 
 const Diary = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const randomQuestions = [
     "이번 여행에서 맛있게 먹은 음식은 무엇인가요?",
     "가장 좋았던 장소는 어디였나요?",
@@ -120,8 +120,8 @@ const Diary = () => {
           Authorization: accessToken,
         },
       })
-      // .then((res) => console.log(res.data))
-      .then((res) => navigate(`/detail/${res.data.id}`))
+      .then((res) => console.log(res.data))
+      // .then((res) => navigate(`/detail/${res.data.id}`))
       .catch((err) => console.log("DiaryErr", err));
 
     axios
@@ -146,7 +146,7 @@ const Diary = () => {
 
   return (
     <>
-      <LoginHeader />
+      {/* <LoginHeader /> */}
       {loading ? (
         <Loading />
       ) : (

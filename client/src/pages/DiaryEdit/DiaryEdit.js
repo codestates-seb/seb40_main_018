@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Location } from "../Diary/Location";
 import styled from "styled-components";
-import LoginHeader from "../../components/Header/LoginHeader";
+// import LoginHeader from "../../components/Header/LoginHeader";
 import MintLineButton from "../../components/Button/MintLineButton";
 import DiaryEditTitle from "./DiaryEditTitle";
 import DiaryEditImg from "./DiaryEditImg";
@@ -121,7 +121,7 @@ const DiaryEdit = () => {
   };
   return (
     <>
-      <LoginHeader />
+      {/* <LoginHeader /> */}
       {loading ? (
         <Loading />
       ) : (

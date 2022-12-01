@@ -96,9 +96,9 @@ const FilterContainer = styled.div`
   }
 `;
 
-export const MainTab = ({ selected, setSelected, diaryList }) => {
-  const tags = diaryList.map((el) => el.tags);
-  console.log("tags", tags);
+export const MainTab = ({ selected, setSelected }) => {
+  // const tags = diaryList.map((el) => el.tags);
+  // console.log("tags", tags);
 
   const sortClick = (e) => {
     // selected
