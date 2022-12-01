@@ -65,15 +65,16 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.POST, "/diary").authenticated()
                         .antMatchers(HttpMethod.POST, "/likes/*").authenticated()
 //                        .antMatchers(HttpMethod.GET, "/member/*/diaries").hasAnyRole("USER") // 이친구는 모두가 볼 수 있어야 하나??
-                        .antMatchers("bucket-list/{bucket-list}").hasRole("ROLE_USER")
-                        .antMatchers("check-list/{check-id}").hasRole("ROLE_USER")
-                        .antMatchers("diary/cost").hasRole("ROLE_USER")
-                        .antMatchers("diary/{diary-id}").hasRole("ROLE_USER")
-                        .antMatchers("likes/{diary-id}").hasRole("ROLE_USER")
-                        .antMatchers("reply/{reply-id}").hasRole("ROLE_USER")
-                        .antMatchers("reply/{diary-id}").hasRole("ROLE_USER")
-                        .antMatchers("tag/{diary-id}").hasRole("ROLE_USER")
-                        .antMatchers("/**").permitAll());
+                        .antMatchers(HttpMethod.GET, "/diary").permitAll()
+                        .antMatchers(HttpMethod.GET,"/bucket-list").authenticated()
+                        .antMatchers(HttpMethod.POST,"/bucket-list").authenticated()
+                        .antMatchers(HttpMethod.GET, "/check-list").permitAll()
+                        .antMatchers(HttpMethod.POST,"/check-list").authenticated()
+                        .antMatchers(HttpMethod.GET,"/reply").permitAll()
+                        .antMatchers(HttpMethod.POST,"/reply/{diary-id}").authenticated()
+                        .antMatchers(HttpMethod.GET,"/tag").permitAll()
+                        .antMatchers(HttpMethod.POST,"/tag/{diary-id}").authenticated()
+                        .anyRequest().permitAll());
 
         return http.build();
     }
