@@ -51,9 +51,6 @@ public class DiaryService {
         return diaryMapper.diaryToDiaryResponseDto(diary);
     }
 
-    private Diary findVerifiedDiary(long diaryId){
-
-
     public Diary findVerifiedDiary(long diaryId) {
 
         Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
@@ -91,16 +88,14 @@ public class DiaryService {
 
         return new MultiResponseDto<>(diaries, diaryPage);
     }
-    
+
     public void savedLikesCount(Diary diary) {
 
         diaryRepository.save(diary);
     }
 
     /*
-
     다이어리 수정
-
      */
     public Diary updateDiary(Diary diary) {
 
@@ -138,16 +133,4 @@ public class DiaryService {
         diaryRepository.deleteById(diaryId);
     }
 
-    public Long keepDiary(MultipartFile image, Diary diary) throws IOException {
-
-        if (!image.isEmpty()) {
-            String storedFileName = awsS3Service.upload(image, "images");
-            diary.setImageUrl(storedFileName);
-        }
-
-        Diary savedDiary = diaryRepository.save(diary);
-
-        return savedDiary.getDiaryId();
-
-    }
 }
