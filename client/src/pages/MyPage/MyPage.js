@@ -58,14 +58,16 @@ const MyPage = () => {
         <MapIcon2 cardList={cardList} />
         <MyPageSearch cardList={cardList} setCardList={setCardList} />
         {loading && <SkeletonDiary />}
-        <MyPageCard
-          cardList={cardList}
-          setCardList={setCardList}
-          hasMore={hasMore}
-          setHasMore={setHasMore}
-          result={result}
-          setResult={setResult}
-        />
+        {!loading && (
+          <MyPageCard
+            cardList={cardList}
+            setCardList={setCardList}
+            hasMore={hasMore}
+            setHasMore={setHasMore}
+            result={result}
+            setResult={setResult}
+          />
+        )}
       </MyPageContainer>
     </>
   );
