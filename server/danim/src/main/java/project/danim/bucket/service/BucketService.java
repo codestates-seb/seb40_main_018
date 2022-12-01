@@ -10,6 +10,8 @@ import project.danim.bucket.dto.BucketResponseDto;
 import project.danim.bucket.repository.BucketRepository;
 import project.danim.exeption.BusinessLogicException;
 import project.danim.exeption.ExceptionCode;
+import project.danim.member.domain.Member;
+import project.danim.member.service.MemberService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,8 +23,11 @@ public class BucketService {
 
     private final BucketRepository bucketRepository;
 
-    public BucketService(BucketRepository bucketRepository) {
+    private final MemberService memberService;
+
+    public BucketService(BucketRepository bucketRepository, MemberService memberService) {
         this.bucketRepository = bucketRepository;
+        this.memberService = memberService;
     }
 
     // 1개 조회
@@ -41,9 +46,10 @@ public class BucketService {
     }
 
     // 체크리스트 생성
-    public BucketResponseDto createBucket(@Valid @RequestBody BucketPostDto request) {
+    public BucketResponseDto createBucket(@Valid @RequestBody BucketPostDto request, String email) {
 
-        // TODO 회원 확인 필요
+        Member findMember = memberService.findMember(email);
+
 
         Bucket bucket = Bucket.builder()
                 .bucketContent(request.getBucketContent())

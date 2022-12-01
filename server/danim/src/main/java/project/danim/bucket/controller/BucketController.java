@@ -2,6 +2,7 @@ package project.danim.bucket.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.danim.bucket.domain.Bucket;
@@ -50,7 +51,9 @@ public class BucketController {
     @PostMapping
     public ResponseEntity<SingleResponseDto> postBucket(@Valid @RequestBody BucketPostDto request) {
 
-        BucketResponseDto response = bucketService.createBucket(request);
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        BucketResponseDto response = bucketService.createBucket(request, email);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.CREATED);
