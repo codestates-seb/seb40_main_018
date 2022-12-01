@@ -3,11 +3,12 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { IoIosClose } from "react-icons/io";
 import MintLineButton from "../Button/MintLineButton";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getLoginStatus } from "../../redux/userAction";
 // import { getLoginStatus } from "../../redux/userAction";
-import { getCookieToken, removeCookieToken } from "../../storage/Cookie";
-import { logoutUser } from "../../api/Users";
-import { DELETE_TOKEN } from "../../redux/store/Auth";
+// import { getCookieToken, removeCookieToken } from "../../storage/Cookie";
+// import { logoutUser } from "../../api/Users";
+// import { DELETE_TOKEN } from "../../redux/store/Auth";
 
 export const Container = styled.div`
   width: 100%;
@@ -149,30 +150,36 @@ export const HeaderModal = () => {
     setIsOpen(!isOpen);
   };
   // store에 저장된 Access Token 정보를 받아 온다
-  const accessToken = useSelector((state) => state.token);
+  // const accessToken = useSelector((state) => state.token);
 
   // Cookie에 저장된 Refresh Token 정보를 받아 온다
-  const refreshToken = getCookieToken();
+  // const refreshToken = getCookieToken();
 
   const logoutHandler = async () => {
-    // 백으로부터 받은 응답
-    const data = await logoutUser({ refresh_token: refreshToken }, accessToken);
+    // // 백으로부터 받은 응답
+    // const data = await logoutUser({ refresh_token: refreshToken }, accessToken);
 
-    // 정상적인 응답이 왔을 경우 removeCookieToken 을 통해 Cookie에 저장된 Refresh Token 정보와 dispatch()를 통해 store에 저장된 Access Token 정보를 모두 삭제한다
-    if (data.status) {
-      // store에 저장된 Access Token 정보를 삭제
-      dispatch(DELETE_TOKEN());
-      // Cookie에 저장된 Refresh Token 정보를 삭제
-      removeCookieToken();
-      return navigate("/");
-    } else {
-      window.location.reload();
-    }
-    // console.log("로그아웃 완료");
+    // // 정상적인 응답이 왔을 경우 removeCookieToken 을 통해 Cookie에 저장된 Refresh Token 정보와 dispatch()를 통해 store에 저장된 Access Token 정보를 모두 삭제한다
+    // if (data.status) {
+    //   // store에 저장된 Access Token 정보를 삭제
+    //   dispatch(DELETE_TOKEN());
+    //   // Cookie에 저장된 Refresh Token 정보를 삭제
+    //   removeCookieToken();
+    //   return navigate("/");
+    // } else {
+    //   window.location.reload();
+    // }
+
     // removeCookieToken();
     // dispatch(getLoginStatus({ isLogin: false }));
     // navigate("/");
     // window.location.reload(); // 효과
+    console.log("로그아웃 완료");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    dispatch(getLoginStatus({ isLogin: false }));
+    navigate("/");
+    window.location.reload();
   };
 
   // 해당 컴포넌트가 요청된 후 한 번만 실행되면 되기 때문에 useEffect 훅을 사용

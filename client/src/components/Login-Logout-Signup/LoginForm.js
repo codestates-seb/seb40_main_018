@@ -1,12 +1,14 @@
-import axios from "axios";
+// import { dispatch } from "gatsby-cli/lib/reporter/redux";
 import { useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import useFetch from "../../redux/useFetch";
+// import { getLoginStatus } from "../../redux/userAction";
 // import { loginUser } from "../../api/Users";
 // import { SET_TOKEN } from "../../redux/store/Auth";
 // import useFetch from "../../redux/useFetch";
-// import { getLoginStatus } from "../../redux/userAction";
+import { getLoginStatus } from "../../redux/userAction";
 // import { setRefreshToken } from "../../storage/Cookie";
 import DarkMintButton from "../Button/DarkMintButton";
 import ShortInput from "../Input/ShortInput";
@@ -26,8 +28,8 @@ export const LoginForm = () => {
   const [emailErrMsg, setEmailErrMsg] = useState("");
   const [password, setPassword] = useState("");
   const [pwdErrMsg, setPwdErrMsg] = useState("");
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const isValid = (type, value) => {
     const pattern = {
@@ -76,10 +78,15 @@ export const LoginForm = () => {
     };
     console.log("postLogin", postLogin);
 
-    axios
-      .post(`${process.env.REACT_APP_API_URL}auth/login`, postLogin)
-      .then((res) => console.log("res.headers", res.headers.authorization))
-      .catch((err) => console.log(err));
+    const res = await useFetch("POST", `${process.env.REACT_APP_API_URL}auth/login`, postLogin);
+    if (res === 404) {
+      alert("로그인 실패!");
+      return false;
+    } else {
+      dispatch(getLoginStatus({ isLogin: true }));
+      navigate("/");
+      alert("로그인 성공!");
+    }
 
     // 백으로부터 받은 응답
     // const response = await loginUser(postLogin);

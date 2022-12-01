@@ -9,18 +9,59 @@ import MyPage from "./pages/MyPage/MyPage";
 import { SignUp } from "./pages/SignUp";
 import { GlobalStyles } from "./style/GlobalStyle";
 import Detail from "./pages/Detail/Detail";
+import useFetch from "./redux/useFetch";
 // import axios from "axios";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getLoginStatus, getmyInfo } from "./redux/userAction";
 // import useFetch from "./redux/useFetch";
 // import { getLoginStatus, getmyInfo } from "./redux/userAction";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 // import { refreshToken } from "./redux/refreshToken";
-// import jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
+import { setRefreshToken } from "./storage/Cookie";
 // import { Cookies } from "react-cookie";
 
 // axios.defaults.withCredentials = true;
 
 function App() {
+  const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.userReducer.isLogin);
+  // 내 정보 가져오기
+  const userLoad = async () => {
+    const myInfo = await useFetch("GET", `${process.env.REACT_APP_API_URL}member/me`);
+    dispatch(getmyInfo(myInfo));
+    console.log("myInfo member/me", myInfo);
+  };
+
+  useEffect(() => {
+    if (isLogin) {
+      userLoad();
+    }
+
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      try {
+        const { exp } = jwt_decode(token);
+        // 토큰 만료
+        if (Date.now() >= exp * 1000) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          dispatch(getLoginStatus({ isLogin: false }));
+          window.reload();
+
+          // 토큰 만료 전 로그인 연장 필요
+        } else if (Date.now() >= exp * 1000 - 100000) {
+          dispatch(getLoginStatus({ isLogin: true }));
+          setRefreshToken();
+          // 토큰 유효
+        } else {
+          dispatch(getLoginStatus({ isLogin: true }));
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, [isLogin]);
   // const dispatch = useDispatch();
   // const isLogin = useSelector((state) => state.userReducer.isLogin);
   // const cookies = new Cookies();

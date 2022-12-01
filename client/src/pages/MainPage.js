@@ -3,7 +3,7 @@ import Header from "../components/Header/Header";
 import { Card } from "../components/Main/Card";
 import { MainTab } from "../components/Main/MainTab";
 import { useSelector } from "react-redux";
-import { SET_TOKEN, DELETE_TOKEN } from "../redux/store/Auth";
+// import { SET_TOKEN } from "../redux/store/Auth";
 import LoginHeader from "../components/Header/LoginHeader";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -16,10 +16,12 @@ const Main = styled.div`
 `;
 
 export default function MainPage() {
-  const user = useSelector(SET_TOKEN);
-  console.log("user", user.payload.userReducer.isLogin);
-  const accesstoken = useSelector(DELETE_TOKEN);
-  console.log("accesstoken", accesstoken);
+  // const user = useSelector(SET_TOKEN);
+  // console.log("user", user.payload.userReducer.isLogin);
+  const user = useSelector((state) => state.userReducer);
+  console.log("user", user);
+  // const accesstoken = useSelector(DELETE_TOKEN);
+  // console.log("accesstoken", accesstoken);
 
   const [selected, setSelected] = useState("등록순");
   const [diaryList, setDiaryList] = useState([]);
@@ -46,7 +48,7 @@ export default function MainPage() {
   const [result, setResult] = useState([]);
   return (
     <Main>
-      {user.payload.userReducer.isLogin ? <LoginHeader /> : <Header />}
+      {user.isLogin ? <LoginHeader /> : <Header />}
       <div>
         <MainTab selected={selected} setSelected={setSelected} diaryList={diaryList} />
         <Card

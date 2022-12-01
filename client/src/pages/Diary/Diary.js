@@ -11,7 +11,7 @@ import DiaryPrice from "./DiaryPrice";
 import DiaryPlace from "./DiaryPlace";
 import DiaryHashtag from "./DiaryHashtag";
 import CancelModal from "../../components/Modal/CancelModal";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
 import { useForm } from "react-hook-form";
 
@@ -40,7 +40,7 @@ const BtnArea = styled.div`
 `;
 
 const Diary = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const randomQuestions = [
     "이번 여행에서 맛있게 먹은 음식은 무엇인가요?",
     "가장 좋았던 장소는 어디였나요?",
@@ -111,11 +111,17 @@ const Diary = () => {
     }
     console.log("formData", formData.getAll("file"));
 
+    const accessToken = localStorage.getItem("accessToken");
+
     axios
       // .post("http://localhost:4000/diary", diaryInfo)
-      .post(`${process.env.REACT_APP_API_URL}diary`, diaryInfo)
-      .then((res) => console.log(res.data))
-      // .then((res) => navigate(`/detail/${res.data.id}`))
+      .post(`${process.env.REACT_APP_API_URL}diary`, diaryInfo, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      // .then((res) => console.log(res.data))
+      .then((res) => navigate(`/detail/${res.data.id}`))
       .catch((err) => console.log("DiaryErr", err));
 
     axios
@@ -123,6 +129,7 @@ const Diary = () => {
       .post(`${process.env.REACT_APP_API_URL}s3/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: accessToken,
         },
       })
       .then((res) => console.log("IMGres:", res))
