@@ -25,12 +25,12 @@ export default function MainPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // axios.get(`http://localhost:4000/diary/${id}`).then((res) => {
     setLoading(true);
-    axios.get(`${process.env.REACT_APP_API_URL}diary?size=12&page=1`).then((res) => {
+    axios.get(`http://localhost:4000/diary`).then((res) => {
+      // axios.get(`${process.env.REACT_APP_API_URL}diary?size=12&page=1`).then((res) => {
       const timer = setTimeout(() => {
         console.log(res.data.data);
-        let response = res.data.data;
+        let response = res.data;
         setDiaryList(response.slice(0, 12)); // 받아온 데이터에서 12개만 먼저 result state에 저장
         response = response.slice(12);
         setResult(response); // 저장한 데이터 모두 저장

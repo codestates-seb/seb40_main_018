@@ -91,9 +91,9 @@ const DiaryEdit = () => {
       alert("이미지를 추가해 주세요.");
       return false;
     }
-    if (tags.length === 0) {
+    if (tags.length < 3) {
       console.log("tags:", tags);
-      alert("태그를 한개 이상 등록해 주세요.");
+      alert("태그를 세개 이상 등록해 주세요.");
       return false;
     }
 

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
 
 export const Block = styled.div`
-  margin-top: -8px;
+  /* margin-top: -8px; */
   float: right;
 `;
 
@@ -13,12 +13,12 @@ export const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 58px;
-  width: 60px;
+  height: 44px;
+  width: 46px;
   color: hsl(0, 0%, 100%);
   background-color: hsl(180, 32%, 54%);
   border: none;
-  border-radius: 20px;
+  border-radius: 15px;
   cursor: pointer;
   &:hover {
     background-color: hsl(180, 25%, 35%);
@@ -236,7 +236,7 @@ function PriceFilter() {
   return (
     <Block>
       <ButtonContainer onClick={openModal}>
-        <HiFilter className="filter" size={30} />
+        <HiFilter className="filter" size={24} />
       </ButtonContainer>
       {isOpen ? (
         <ModalBackdrop onClick={openModal}>
