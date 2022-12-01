@@ -13,6 +13,7 @@ import project.danim.diary.repository.DiaryRepository;
 import project.danim.exeption.ExceptionCode;
 import project.danim.member.domain.Member;
 import project.danim.member.domain.MemberNotFoundException;
+import project.danim.member.dto.MemberResponseForMap;
 import project.danim.member.dto.MemberResponseForProfile;
 import project.danim.member.dto.MemberResponseForProfileDiaries;
 import project.danim.member.repository.MemberRepository;
@@ -48,17 +49,17 @@ public class MemberQueries {
         return new MultiResponseDto<>(memberResponseForProfileDiaries, diaries);
     }
 
-    public Map<String, Integer> getMyMap(String email) {
+    public Map<String, MemberResponseForMap> getMyMap(String email) {
         Member findMember = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberNotFoundException(ExceptionCode.MEMBER_NOT_FOUND));
 
         List<String> areas = MemberMap.getArea();
 
-        Map<String, Integer> result = new HashMap<>();
+        Map<String, MemberResponseForMap> result = new HashMap<>();
 
         for (String area : areas) {
             int count = diaryRepository.countByMemberIdAndAreaContains(findMember.getMemberId(), area);
-            result.put(area, count);
+            result.put(area, MemberResponseForMap.of(count));
         }
 
         return result;

@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.danim.member.dto.MemberProfilePatchForm;
+import project.danim.member.dto.MemberResponseForMap;
 import project.danim.member.dto.MemberResponseForProfile;
 import project.danim.member.service.MemberQueries;
 import project.danim.member.service.MemberService;
@@ -55,7 +56,7 @@ public class MemberController {
     public ResponseEntity getMyMap() {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Map<String, Integer> map = memberQueries.getMyMap(email);
+        Map<String, MemberResponseForMap> map = memberQueries.getMyMap(email);
 
         return new ResponseEntity<>(new SingleResponseDto<>(map), HttpStatus.OK);
     }
