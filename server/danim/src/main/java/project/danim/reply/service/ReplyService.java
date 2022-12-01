@@ -7,6 +7,8 @@ import project.danim.diary.domain.Diary;
 import project.danim.diary.repository.DiaryRepository;
 import project.danim.exeption.BusinessLogicException;
 import project.danim.exeption.ExceptionCode;
+import project.danim.member.domain.Member;
+import project.danim.member.service.MemberService;
 import project.danim.reply.domain.Reply;
 import project.danim.reply.dto.ReplyPatchDto;
 import project.danim.reply.dto.ReplyPostDto;
@@ -25,9 +27,12 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
     private final DiaryRepository diaryRepository;
 
-    public ReplyService(ReplyRepository replyRepository, DiaryRepository diaryRepository) {
+    private final MemberService memberService;
+
+    public ReplyService(ReplyRepository replyRepository, DiaryRepository diaryRepository, MemberService memberService) {
         this.replyRepository = replyRepository;
         this.diaryRepository = diaryRepository;
+        this.memberService = memberService;
     }
 
     // 전체 조회
@@ -47,9 +52,9 @@ public class ReplyService {
     }
 
     // 댓글 생성
-    public ReplyResponseDto createReply(ReplyPostDto request ,Reply reply, Diary diary) {
+    public ReplyResponseDto createReply(ReplyPostDto request ,Reply reply, Diary diary, String email) {
 
-        // TODO 회원 확인 필요
+        Member findMember = memberService.findMember(email);
 
         Optional<Diary> OptionalDiary = diaryRepository.findByDiaryId(diary.getDiaryId());
         Diary findDiary = OptionalDiary.orElseThrow(() -> new BusinessLogicException(ExceptionCode.DIARY_NOT_FOUND));
