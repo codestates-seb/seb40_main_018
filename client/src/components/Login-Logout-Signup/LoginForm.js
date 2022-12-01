@@ -1,13 +1,13 @@
-// import axios from "axios";
+import axios from "axios";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { loginUser } from "../../api/Users";
-import { SET_TOKEN } from "../../redux/store/Auth";
+// import { loginUser } from "../../api/Users";
+// import { SET_TOKEN } from "../../redux/store/Auth";
 // import useFetch from "../../redux/useFetch";
 // import { getLoginStatus } from "../../redux/userAction";
-import { setRefreshToken } from "../../storage/Cookie";
+// import { setRefreshToken } from "../../storage/Cookie";
 import DarkMintButton from "../Button/DarkMintButton";
 import ShortInput from "../Input/ShortInput";
 import { ButtonContainer, InputContainer, MintCard } from "./SignupForm";
@@ -26,8 +26,8 @@ export const LoginForm = () => {
   const [emailErrMsg, setEmailErrMsg] = useState("");
   const [password, setPassword] = useState("");
   const [pwdErrMsg, setPwdErrMsg] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
   const isValid = (type, value) => {
     const pattern = {
@@ -74,28 +74,36 @@ export const LoginForm = () => {
       email: email,
       password: password,
     };
+    console.log("postLogin", postLogin);
+
+    axios
+      .post(`${process.env.REACT_APP_API_URL}auth/login`, postLogin)
+      .then((res) => console.log("res.headers", res.headers.authorization))
+      .catch((err) => console.log(err));
 
     // 백으로부터 받은 응답
-    const response = await loginUser(postLogin);
+    // const response = await loginUser(postLogin);
+    // console.log("response5", response);
 
-    if (response.status) {
-      // 쿠키에 Refresh Token, store에 Access Token 저장
-      // 정상적인 응답이 왔을 경우 setRefreshToken 을 통해 Refresh Token을 쿠키에 저장, dispatch()를 통해 Access Token을 store에 저장한다.
-      setRefreshToken(response.json.refresh_token);
-      dispatch(SET_TOKEN(response.json.access_token));
-      // Cookie와 store에 데이터를 모두 저장한 이후 홈으로 이동한다.
-      return navigate("/");
-    } else {
-      console.log(response.json);
-    }
+    // if (response.status) {
+    //   // 쿠키에 Refresh Token, store에 Access Token 저장
+    //   // 정상적인 응답이 왔을 경우 setRefreshToken 을 통해 Refresh Token을 쿠키에 저장, dispatch()를 통해 Access Token을 store에 저장한다.
+    //   setRefreshToken(response.json.refresh_token);
+    //   console.log(response.json.refresh_token);
+    //   dispatch(SET_TOKEN(response.json.access_token));
+    //   // Cookie와 store에 데이터를 모두 저장한 이후 홈으로 이동한다.
+    //   return navigate("/");
+    // } else {
+    //   console.log(response.json);
+    // }
 
     // const postLogin = {
     //   email: email,
     //   password: password,
     // };
 
-    // const res = await useFetch("POST", "http://localhost:3000/login", postLogin);
-    // console.log("res", res);
+    // const res = await useFetch("POST", `${process.env.REACT_APP_API_URL}auth/login`, postLogin);
+    // console.log("res9", res);
 
     // if (res === 400) {
     //   alert("로그인 실패!");

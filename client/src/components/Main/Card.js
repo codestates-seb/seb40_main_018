@@ -147,7 +147,6 @@ export const Card = ({ diaryList, setDiaryList, hasMore, setHasMore, result, set
 
   const onClickHandler = (list) => {
     setLike(!like);
-
     setDiaryList(
       diaryList.map((item) => {
         if (item.id === list.id) {
@@ -215,17 +214,17 @@ export const Card = ({ diaryList, setDiaryList, hasMore, setHasMore, result, set
                     </button>
                   </Heart>
                 </Preview>
-                <Link to={`/detail/${list.id}`}>
+                <Link to={`/detail/${list.diaryId}`}>
                   <Id>{list.nickname}</Id>
                   <Cardtitle>{list.title}</Cardtitle>
-                  <Cardcontents>{list.diary}</Cardcontents>
+                  <Cardcontents>{list.content}</Cardcontents>
                 </Link>
                 <MintWrapper>
                   <Region>
-                    {list.selected}
+                    {list.area}
                     {list.city}
                   </Region>
-                  <Budget>{list.price}</Budget>
+                  <Budget>{list.cost}</Budget>
                 </MintWrapper>
                 <TagContainer>
                   {list.tags.map((tag, idx) => (

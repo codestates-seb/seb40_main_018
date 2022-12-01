@@ -56,9 +56,9 @@ const DiaryPlace = ({ Location, register, errors }) => {
           <TitleText>다녀온 지역 :</TitleText>
           <Tags>
             <Select
-              name="selected"
+              name="area"
               onClick={onClickHandler}
-              {...register("selected", {
+              {...register("area", {
                 required: { value: true, message: "지역을 선택해주세요." },
               })}
             >

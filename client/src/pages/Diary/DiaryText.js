@@ -99,8 +99,8 @@ const DiaryText = ({ question, setQuestion, counter, setCounter, randomQuestions
       <WriteArea>
         <DiaryWrite
           placeholder="이곳에 여행일지를 기록 해주세요."
-          name="diary"
-          {...register("diary", { required: { value: true, message: "일기를 입력해주세요." } })}
+          name="content"
+          {...register("content", { required: { value: true, message: "일기를 입력해주세요." } })}
         ></DiaryWrite>
         {errors.diary && <Error role="alert">{errors.diary.message}</Error>}
       </WriteArea>
