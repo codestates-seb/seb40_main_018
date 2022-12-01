@@ -48,14 +48,14 @@ function App() {
       try {
         const { exp } = jwt_decode(token);
         // 토큰 만료
-        if (Date.now() >= exp * 1000) {
+        if (Date.now() >= exp * 60 * 60 * 24 * 3) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           dispatch(getLoginStatus({ isLogin: false }));
           window.reload();
 
           // 토큰 만료 전 로그인 연장 필요
-        } else if (Date.now() >= exp * 1000 - 100000) {
+        } else if (Date.now() >= exp * 60 * 60 * 24 * 3 - 100000) {
           dispatch(getLoginStatus({ isLogin: true }));
           setRefreshToken();
           // 토큰 유효
