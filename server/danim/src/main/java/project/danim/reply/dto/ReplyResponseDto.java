@@ -23,8 +23,12 @@ public class ReplyResponseDto {
 
     private LocalDateTime createdAt;
 
+    private String responseTo = "root";
+
+    private Boolean exist = true;
+
     public static ReplyResponseDto of(Reply reply) {
-        return new ReplyResponseDto(reply.getReplyId(),reply.getReplyId(),  reply.getReplyContent(), reply.getCreatedAt());
+        return new ReplyResponseDto(reply.getReplyId(),reply.getReplyId(),  reply.getReplyContent(), reply.getCreatedAt(), reply.getResponseTo(), reply.getExist());
     }
 
 }

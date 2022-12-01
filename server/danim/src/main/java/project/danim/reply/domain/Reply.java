@@ -22,6 +22,10 @@ public class Reply extends BaseTime {
 
     private String replyContent;
 
+    private String responseTo;
+
+    private Boolean exist = true;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DIARY_ID")
     private Diary diary;
@@ -32,9 +36,10 @@ public class Reply extends BaseTime {
     }
 
     @Builder
-    public Reply(Long replyId, String replyContent) {
+    public Reply(Long replyId, String replyContent, String responseTo, Boolean exist) {
         this.replyId = replyId;
         this.replyContent = replyContent;
+        this.responseTo = responseTo;
+        this.exist = exist;
     }
-
 }
