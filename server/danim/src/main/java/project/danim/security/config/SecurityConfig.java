@@ -64,15 +64,12 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.POST, "/member/me").authenticated()
                         .antMatchers(HttpMethod.POST, "/diary").authenticated()
                         .antMatchers(HttpMethod.POST, "/likes/*").authenticated()
-//                        .antMatchers(HttpMethod.GET, "/member/*/diaries").hasAnyRole("USER") // 이친구는 모두가 볼 수 있어야 하나??
-                        .antMatchers(HttpMethod.GET, "/diary").permitAll()
+//                      .antMatchers(HttpMethod.GET,"/bucket-list").authenticated()
                         .antMatchers(HttpMethod.GET,"/bucket-list").authenticated()
                         .antMatchers(HttpMethod.POST,"/bucket-list").authenticated()
-                        .antMatchers(HttpMethod.GET, "/check-list").permitAll()
+                        .antMatchers(HttpMethod.GET, "/check-list").authenticated()
                         .antMatchers(HttpMethod.POST,"/check-list").authenticated()
-                        .antMatchers(HttpMethod.GET,"/reply").permitAll()
                         .antMatchers(HttpMethod.POST,"/reply/{diary-id}").authenticated()
-                        .antMatchers(HttpMethod.GET,"/tag").permitAll()
                         .antMatchers(HttpMethod.POST,"/tag/{diary-id}").authenticated()
                         .anyRequest().permitAll());
 
