@@ -89,8 +89,13 @@ public class DiaryController {
 
         return new ResponseEntity<>((diaryMapper.diaryToDiaryResponseDto(updatedDiary)),HttpStatus.OK);
     }
+/*
+    @GetMapping("search")
+    public ResponseEntity searchCost(@RequestParam("cost") int cost) {
 
-
+        return new ResponseEntity<>(diaryService.findDiaries(cost), HttpStatus.OK);
+    }
+*/
     /*
      다이어리 삭제 구현
      */

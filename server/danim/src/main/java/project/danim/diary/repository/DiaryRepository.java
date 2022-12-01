@@ -19,4 +19,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     Page<Diary> findAllDiaryByCost(@Param("min") int min, @Param("max") int max, Pageable pageable);
 
     Optional<Diary> findByDiaryId(Long diaryId);
+
+    List<Diary> findByCostContaining(int cost);
 }
