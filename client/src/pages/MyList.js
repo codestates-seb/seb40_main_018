@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import LoginHeader from "../components/Header/LoginHeader";
+// import LoginHeader from "../components/Header/LoginHeader";
 import { BucketListModal } from "../components/BucketList/BucketListModal";
 import { CheckListModal } from "../components/CheckList/CheckListModal";
 
@@ -24,7 +24,7 @@ const Box = styled.div`
 function MyList() {
   return (
     <Block>
-      <LoginHeader />
+      {/* <LoginHeader /> */}
       <Box>
         <CheckListModal />
         <BucketListModal />

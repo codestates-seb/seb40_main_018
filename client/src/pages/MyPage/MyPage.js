@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import LoginHeader from "../../components/Header/LoginHeader";
+// import LoginHeader from "../../components/Header/LoginHeader";
 import MapIcon2 from "./MapIcon2";
 import MyPageCard from "./MyPageCard";
 import { UserEditBox } from "../../components/UserEdit/UserEdit";
@@ -47,7 +47,7 @@ const MyPage = () => {
 
   return (
     <>
-      <LoginHeader />
+      {/* <LoginHeader /> */}
       <MyPageContainer>
         <UserEditBox />
         <MapIcon2 cardList={cardList} />

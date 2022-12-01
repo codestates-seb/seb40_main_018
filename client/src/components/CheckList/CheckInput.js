@@ -72,6 +72,8 @@ export const CheckInput = ({
     setInput(event.target.value);
   };
 
+  const accessToken = localStorage.getItem("accessToken");
+
   const onFormSubmit = async (event) => {
     event.preventDefault();
     setTodos([...todos, { checkContent: input, isCheck: completed }]);
@@ -83,13 +85,23 @@ export const CheckInput = ({
       isCheck: false,
     };
     await axios
-      .post(`${process.env.REACT_APP_API_URL}check-list`, todoPost)
+      .post(`${process.env.REACT_APP_API_URL}check-list`, todoPost, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
       .then((res) => console.log(res))
       .then((err) => console.log(err));
 
-    await axios.get(`${process.env.REACT_APP_API_URL}check-list`).then((result) => {
-      setTodos(result.data);
-    });
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}check-list`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((result) => {
+        setTodos(result.data);
+      });
     // }, []);
   };
 
