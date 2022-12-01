@@ -15,6 +15,9 @@ const useFetch = (method, url, fetchData) => {
       "Content-Type": "application/json",
       //   "ngrok-skip-browser-warning": "skip",
       Authorization: `Bearer ${getCookie("myToken")}`,
+      // Authorization: `Bearer ${getCookie(
+      //   "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZXVuc2VvNjg3OEBnbWFpbC5jb20iLCJzdWIiOiI4IiwiaWF0IjoxNjY5ODcyMDA4LCJleHAiOjE2Njk4NzM4MDh9.6WD1XoVbdbDei819Hk1ndCvN7s2QV9PZqXh6dfXoUSOFkn0eRNatquYKHHM7YlsT",
+      // )}`,
     },
     body: JSON.stringify(fetchData),
   };

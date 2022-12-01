@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import LoginHeader from "../../components/Header/LoginHeader";
-import MapIcon from "./MapIcon";
+import MapIcon2 from "./MapIcon2";
 import MyPageCard from "./MyPageCard";
 import { UserEditBox } from "../../components/UserEdit/UserEdit";
 import SkeletonDiary from "../../components/Skeleton/SkeletonDiary";
@@ -24,17 +24,21 @@ const MyPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`http://localhost:4000/diary`).then((res) => {
-      const timer = setTimeout(() => {
-        console.log(res.data);
-        let response = res.data;
-        setCardList(response.slice(0, 10));
-        response = response.slice(10);
-        setResult(response);
-        setLoading(false);
-      }, 2000);
-      return () => clearTimeout(timer);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}member/me/diaries?size=10&page=1`)
+      // .then((res) => {
+      //   const timer = setTimeout(() => {
+      //     console.log(res.data);
+      //     let response = res.data;
+      //     setCardList(response.slice(0, 10));
+      //     response = response.slice(10);
+      //     setResult(response);
+      //     setLoading(false);
+      //   }, 2000);
+      //   return () => clearTimeout(timer);
+      // });
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
   // yerin
@@ -46,7 +50,7 @@ const MyPage = () => {
       <LoginHeader />
       <MyPageContainer>
         <UserEditBox />
-        <MapIcon cardList={cardList} />
+        <MapIcon2 cardList={cardList} />
         <MyPageSearch cardList={cardList} setCardList={setCardList} />
         {loading && <SkeletonDiary />}
         <MyPageCard

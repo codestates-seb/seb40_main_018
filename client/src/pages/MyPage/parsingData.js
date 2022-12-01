@@ -19,12 +19,12 @@ const cityArr = [
 ];
 
 const parsingData = (data) => {
-  // console.log("data", data);
+  console.log("data", data);
   const cityObj = {};
 
   data.forEach((i) => {
     const cityName = i.selected;
-    // console.log("cityName", cityName);
+    console.log("cityName", cityName);
     if (!cityObj[cityName]) {
       cityObj[cityName] = { posts: [], color: "" };
       cityObj[cityName].posts.push(i);
@@ -62,7 +62,7 @@ const parsingData = (data) => {
       cityObj[i].color = "#000";
     }
   });
-
+  console.log("cityObj", cityObj);
   return cityObj;
 };
 

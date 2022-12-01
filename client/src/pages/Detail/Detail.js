@@ -182,7 +182,8 @@ const Detail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/diary/` + id)
+      // .get(`http://localhost:4000/diary/` + id)
+      .get(`${process.env.REACT_APP_API_URL}diary/{diary-id}`)
       .then((res) => {
         console.log(res.data);
         setDiaryDetail(res.data);
@@ -192,9 +193,13 @@ const Detail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4002/image/` + id, {
-        responseType: "blob",
-      })
+      .get(
+        // `http://localhost:4002/image/` + id,
+        `${process.env.REACT_APP_API_URL}image/{diary-id}`,
+        // , {
+        //   responseType: "blob",
+        // }
+      )
       // .then((res) => {
       //   console.log(res.data);
       //   // setImageList(res.data);
@@ -282,13 +287,13 @@ const Detail = () => {
               <Nickname>{diaryDetail.nickname}</Nickname>
             </HeartAndNickname>
             <RandomQuestion>{diaryDetail.question}</RandomQuestion>
-            <DiaryText>{diaryDetail.diary}</DiaryText>
+            <DiaryText>{diaryDetail.content}</DiaryText>
           </DiaryArea>
           <PlaceAndPrice>
             <PlaceArea>
-              {diaryDetail.selected} {diaryDetail.city}
+              {diaryDetail.area} {diaryDetail.city}
             </PlaceArea>
-            <PriceArea>총 예산 : {formatter.format(diaryDetail.price)} ₩</PriceArea>
+            <PriceArea>총 예산 : {formatter.format(diaryDetail.cost)} ₩</PriceArea>
           </PlaceAndPrice>
           <TagsArea>
             {diaryDetail.tags &&

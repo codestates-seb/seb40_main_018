@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MdOutlineChangeCircle } from "react-icons/md";
+// import { MdOutlineChangeCircle } from "react-icons/md";
 
 const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "700px")};
@@ -64,27 +64,22 @@ const DiaryWrite = styled.textarea`
   font-family: "shinbttf";
   font-size: 16px;
 `;
-const RandomArea = styled.div`
-  display: flex;
-  align-items: center;
-`;
+// const RandomArea = styled.div`
+//   display: flex;
+//   align-items: center;
+// `;
 
-const NumCount = styled.div`
-  margin-right: 5px;
-`;
-const DiaryEditText = ({ question, counter, diary, setDiary }) => {
+// const NumCount = styled.div`
+//   margin-right: 5px;
+// `;
+const DiaryEditText = ({ question, diary, setDiary }) => {
   const onChangeHandler = (e) => {
     setDiary(e.target.value);
   };
   return (
     <TextArea>
       <QuestionArea>
-        {/* 질문이랑 카운트 동적으로 받아오기 -변경은 불가함 */}
         <Question>Random Question : {question}</Question>
-        <RandomArea>
-          <NumCount>{counter}/3</NumCount>
-          <MdOutlineChangeCircle size="20" color="#535353" />
-        </RandomArea>
       </QuestionArea>
       <WriteArea>
         <DiaryWrite placeholder="이곳에 여행일지를 기록 해주세요." onChange={onChangeHandler} value={diary}>

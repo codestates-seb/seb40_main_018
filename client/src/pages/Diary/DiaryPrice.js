@@ -48,8 +48,8 @@ const DiaryPrice = ({ register, errors }) => {
         <TitleText>경비 :</TitleText>
         <Price
           type="number"
-          name="price"
-          {...register("price", {
+          name="cost"
+          {...register("cost", {
             required: { value: true, message: "경비를 입력해주세요." },
             valueAsNumber: true,
           })}
