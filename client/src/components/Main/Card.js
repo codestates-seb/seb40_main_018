@@ -187,6 +187,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, setHasMore, result, set
       setResult(result.slice(12));
     }, 1500);
   };
+
   return (
     <>
       {loading && <SkeletonCard />}
