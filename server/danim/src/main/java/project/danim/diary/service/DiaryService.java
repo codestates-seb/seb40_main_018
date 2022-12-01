@@ -88,16 +88,14 @@ public class DiaryService {
 
         return new MultiResponseDto<>(diaries, diaryPage);
     }
-    
+
     public void savedLikesCount(Diary diary) {
 
         diaryRepository.save(diary);
     }
 
     /*
-
     다이어리 수정
-
      */
     public Diary updateDiary(Diary diary) {
 
