@@ -182,7 +182,8 @@ const Detail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/diary/` + id)
+      // .get(`http://localhost:4000/diary/` + id)
+      .get(`${process.env.REACT_APP_API_URL}diary/{diary-id}`)
       .then((res) => {
         console.log(res.data);
         setDiaryDetail(res.data);
@@ -193,7 +194,8 @@ const Detail = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:4002/image/` + id,
+        // `http://localhost:4002/image/` + id,
+        `${process.env.REACT_APP_API_URL}image/{diary-id}`,
         // , {
         //   responseType: "blob",
         // }

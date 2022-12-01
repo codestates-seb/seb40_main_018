@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+// import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Location } from "../Diary/Location";
 import styled from "styled-components";
 import LoginHeader from "../../components/Header/LoginHeader";
@@ -40,7 +41,7 @@ const BtnArea = styled.div`
 `;
 
 const DiaryEdit = () => {
-  const id = useParams().id;
+  // const id = useParams().id;
   const navigate = useNavigate();
   const select1 = Object.keys(Location);
   const [selected, setSelected] = useState(select1[0]);
@@ -60,7 +61,8 @@ const DiaryEdit = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:4000/diary/` + id)
+      // .get(`http://localhost:4000/diary/` + id)
+      .get(`${process.env.REACT_APP_API_URL}diary/{diary-id}`)
       .then((res) => {
         console.log(res.data);
         const timer = setTimeout(() => {
@@ -112,7 +114,8 @@ const DiaryEdit = () => {
       tags: tags,
     };
     axios
-      .patch(`http://localhost:4000/diary/` + id, diaryInfo)
+      // .patch(`http://localhost:4000/diary/` + id, diaryInfo)
+      .patch(`${process.env.REACT_APP_API_URL}diary/{diary-id}`, diaryInfo)
       .then((res) => navigate(`/detail/${res.data.id}`))
       .then((err) => console.log(err));
   };

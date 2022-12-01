@@ -24,17 +24,21 @@ const MyPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`http://localhost:4000/diary`).then((res) => {
-      const timer = setTimeout(() => {
-        console.log(res.data);
-        let response = res.data;
-        setCardList(response.slice(0, 10));
-        response = response.slice(10);
-        setResult(response);
-        setLoading(false);
-      }, 2000);
-      return () => clearTimeout(timer);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}member/me/diaries?size=10&page=1`)
+      // .then((res) => {
+      //   const timer = setTimeout(() => {
+      //     console.log(res.data);
+      //     let response = res.data;
+      //     setCardList(response.slice(0, 10));
+      //     response = response.slice(10);
+      //     setResult(response);
+      //     setLoading(false);
+      //   }, 2000);
+      //   return () => clearTimeout(timer);
+      // });
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
   // yerin

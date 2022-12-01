@@ -174,11 +174,11 @@ export const Card = () => {
   //   console.log(heartClick);
   //   setLike(!like);
   // };
-
   useEffect(() => {
     // axios.get(`http://localhost:4000/diary/${id}`).then((res) => {
     setLoading(true);
-    axios.get("http://localhost:4000/diary").then((res) => {
+    // axios.get("http://localhost:4000/diary").then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}diary?size=10&page=1`).then((res) => {
       const timer = setTimeout(() => {
         console.log(res.data);
         let response = res.data;
@@ -235,17 +235,17 @@ export const Card = () => {
                     </button>
                   </Heart>
                 </Preview>
-                <Link to={`/detail/${list.id}`}>
+                <Link to={`/detail/${list.diaryId}`}>
                   <Id>{list.nickname}</Id>
                   <Cardtitle>{list.title}</Cardtitle>
-                  <Cardcontents>{list.diary}</Cardcontents>
+                  <Cardcontents>{list.content}</Cardcontents>
                 </Link>
                 <MintWrapper>
                   <Region>
-                    {list.selected}
+                    {list.area}
                     {list.city}
                   </Region>
-                  <Budget>{list.price}</Budget>
+                  <Budget>{list.cost}</Budget>
                 </MintWrapper>
                 <TagContainer>
                   {list.tags.map((tag, idx) => (
