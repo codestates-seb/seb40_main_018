@@ -7,6 +7,8 @@ import project.danim.diary.dto.DiaryPostDto;
 import project.danim.diary.dto.DiaryResponseDto;
 import project.danim.diary.service.DiaryService;
 
+import java.util.List;
+
 
 @Mapper(componentModel = "Spring")
 public interface DiaryMapper {
@@ -41,6 +43,7 @@ public interface DiaryMapper {
     }
 
 
+
     /*
   MemberId 추가 필요!!
  */
@@ -64,30 +67,9 @@ public interface DiaryMapper {
         return diaryResponseDto;
     }
 
+    List<DiaryResponseDto> diaryToCityResponseDtos(List<Diary> diaries);
       /*
   MemberId 추가 필요!!
  */
-   default DiaryResponseDto diaryToDiaryResponseDtos(Diary diary){
-
-        DiaryResponseDto diaryResponseDto = new DiaryResponseDto();
-       diaryResponseDto.setDiaryId(diary.getDiaryId());
-       diaryResponseDto.setTitle(diary.getTitle());
-       diaryResponseDto.setContent(diary.getContent());
-       diaryResponseDto.setWeather(diary.getWeather());
-       diaryResponseDto.setCity(diary.getCity());
-       diaryResponseDto.setArea(diary.getArea());
-       diaryResponseDto.setCost(diary.getCost());
-       diaryResponseDto.setTags(diary.getTags());
-       diaryResponseDto.setCreatedAt(diary.getCreatedDate());
-       diaryResponseDto.setModifiedAt(diary.getModifiedDate());
-       diaryResponseDto.setTravelDate(diary.getTravelDate());
-       diaryResponseDto.setMemberId(diary.getMemberId());
-       // diaryResponseDto.setCreatedDate(diary.getCreatedDate());
-      //  diaryResponseDto.setModifiedDate(diary.getModifiedDate());
-        //diaryResponseDto.setMemberId(diary.getMember().getMemberId());
-
-        return diaryResponseDto;
-    }
-
 
 }
