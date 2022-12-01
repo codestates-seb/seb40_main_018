@@ -161,12 +161,28 @@ export const UserEditBox = () => {
   };
 
   const submitHandler = () => {
+    const formData = new FormData();
+    // form Data 객체 생성
+    formData.append("nickname", "userNickname");
+    formData.append("aboutMe", "userIntro");
+    formData.append("profileImg", img.files[0]);
+
     setIsEdit(!isEdit);
-    const editUserProfile = {
-      userNickname: userNickname,
-      userIntro: userIntro,
-    };
-    axios.patch("http://localhost:4006/userProfile/1", editUserProfile).then((res) => console.log(res.data));
+    // const editUserProfile = {
+    //   nickname: userNickname,
+    //   aboutMe: userIntro,
+    //   profileImg: a,
+    // };
+    console.log("formData", formData);
+    axios
+      .patch(`${process.env.REACT_APP_API_URL}member/me`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   };
 
   const cancelHandler = () => {
@@ -186,19 +202,27 @@ export const UserEditBox = () => {
       setImg(resultImage);
     };
   };
+  const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     setLoading(true);
-    axios.get("http://localhost:4006/userProfile/1").then((res) => {
-      const timer = setTimeout(() => {
-        console.log(res.data);
-        // setUserProfile(res.data);
-        setUserNickname(res.data.userNickname);
-        setUserIntro(res.data.userIntro);
-        setLoading(false);
-      }, 5000);
-      return () => clearTimeout(timer);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}member/me`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => {
+        const timer = setTimeout(() => {
+          console.log("getTest", res.data.data);
+          // setUserProfile(res.data);
+          setUserNickname(res.data.data.nickname);
+          setUserIntro(res.data.data.aboutMe);
+          setImg(res.data.data.profileImg);
+          setLoading(false);
+        }, 5000);
+        return () => clearTimeout(timer);
+      });
   }, []);
 
   return (
