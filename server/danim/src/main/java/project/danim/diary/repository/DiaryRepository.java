@@ -20,5 +20,5 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     Optional<Diary> findByDiaryId(Long diaryId);
 
-    List<Diary> findByCostContaining(int cost);
+    List<Diary> findByCityContaining(String cityKeyword);
 }

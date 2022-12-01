@@ -8,6 +8,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,7 @@ import project.danim.diary.dto.DiaryPostDto;
 import project.danim.diary.dto.DiaryResponseDto;
 import project.danim.diary.mapper.DiaryMapper;
 import project.danim.diary.service.DiaryService;
+import project.danim.response.MultiResponseDto;
 import project.danim.response.SingleResponseDto;
 
 import javax.validation.Valid;
@@ -61,7 +65,7 @@ public class DiaryController {
     public ResponseEntity getDiary(@Positive @PathVariable("diary-id") @NotNull long diaryId) {
             Diary finddiary = diaryService.findDiary(diaryId);
 
-        return new ResponseEntity<>((diaryMapper.diaryToDiaryResponseDtos(finddiary)),HttpStatus.OK);
+        return new ResponseEntity<>((diaryMapper.diaryToDiaryResponseDto(finddiary)),HttpStatus.OK);
     }
 
     @ApiOperation(value = "모든 Diary 조회", response = Diary.class)
@@ -70,6 +74,20 @@ public class DiaryController {
                                      @Positive @RequestParam int page) {
         return new ResponseEntity<>(diaryService.findDiaries(size, page), HttpStatus.OK);
     }
+
+    @ApiOperation(value = "지역 검색", response = Diary.class)
+    @GetMapping("/search")
+    public ResponseEntity getDiaryCityList(@RequestParam("search") String cityKeyword,
+                                           @Positive @RequestParam int page,
+                                           @Positive @RequestParam int size,
+                                           @RequestParam String sort) {
+        Page<Diary> searchResult = diaryService.diarySearchCityList(cityKeyword, page - 1, size,sort);
+        List<Diary> diaries = searchResult.getContent();
+
+        return new ResponseEntity<>(new MultiResponseDto<>(diaryMapper.diaryToCityResponseDtos(diaries),searchResult),HttpStatus.OK);
+    }
+
+
 
     @GetMapping("/cost")
     public ResponseEntity getDiariesFilterCost(@Positive @RequestParam int min,

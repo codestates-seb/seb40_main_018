@@ -1,10 +1,7 @@
 package project.danim.diary.service;
 
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -87,6 +84,16 @@ public class DiaryService {
                 .collect(Collectors.toList());
 
         return new MultiResponseDto<>(diaries, diaryPage);
+    }
+
+    public Page<Diary> diarySearchCityList(String cityKeyword, int page, int size, String sort){
+        PageRequest pageRequest =PageRequest.of(page,size,Sort.by(sort).descending());
+        List<Diary> searchResult = diaryRepository.findByCityContaining(cityKeyword);
+
+        int start = (int)pageRequest.getOffset();
+        int end = Math.min((start + pageRequest.getPageSize()), searchResult.size());
+        Page<Diary> serchCity = new PageImpl<>(searchResult.subList(start, end), pageRequest, searchResult.size());
+        return serchCity;
     }
 
     public void savedLikesCount(Diary diary) {
