@@ -26,7 +26,7 @@ const MyPage = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_API_URL}member/me/diaries?size=10&page=1`, {
+      .get(`/member/me/diaries?size=10&page=1`, {
         headers: {
           Authorization: accessToken,
         },

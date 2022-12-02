@@ -39,7 +39,7 @@ export const loginUser = async (credentials) => {
 
   // ^^
   // 실질적으로 백으로 로그인 요청을 보내는 함수
-  const data = await getPromise(`${process.env.REACT_APP_API_URL}auth/login`, option).catch(() => {
+  const data = await getPromise(`/auth/login`, option).catch(() => {
     return statusError;
   });
 
@@ -71,7 +71,7 @@ export const logoutUser = async (credentials, accessToken) => {
     body: JSON.stringify(credentials),
   };
 
-  const data = await getPromise(`${process.env.REACT_APP_API_URL}auth/login`, option).catch(() => {
+  const data = await getPromise(`/auth/login`, option).catch(() => {
     return statusError;
   });
 
@@ -100,7 +100,7 @@ export const requestToken = async (refreshToken) => {
     body: JSON.stringify({ refresh_token: refreshToken }),
   };
 
-  const data = await getPromise(`${process.env.REACT_APP_API_URL}auth/login`, option).catch(() => {
+  const data = await getPromise(`/auth/login`, option).catch(() => {
     return statusError;
   });
 

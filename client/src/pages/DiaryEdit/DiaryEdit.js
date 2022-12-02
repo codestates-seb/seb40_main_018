@@ -62,7 +62,7 @@ const DiaryEdit = () => {
     setLoading(true);
     axios
       // .get(`http://localhost:4000/diary/` + id)
-      .get(`${process.env.REACT_APP_API_URL}diary/{diary-id}`)
+      .get(`/diary/{diary-id}`)
       .then((res) => {
         console.log(res.data);
         const timer = setTimeout(() => {
@@ -115,7 +115,7 @@ const DiaryEdit = () => {
     };
     axios
       // .patch(`http://localhost:4000/diary/` + id, diaryInfo)
-      .patch(`${process.env.REACT_APP_API_URL}diary/{diary-id}`, diaryInfo)
+      .patch(`/diary/{diary-id}`, diaryInfo)
       .then((res) => navigate(`/detail/${res.data.id}`))
       .then((err) => console.log(err));
   };

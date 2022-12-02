@@ -183,7 +183,7 @@ const Detail = () => {
   useEffect(() => {
     axios
       // .get(`http://localhost:4000/diary/` + id)
-      .get(`${process.env.REACT_APP_API_URL}diary/{diary-id}`)
+      .get(`/diary/{diary-id}`)
       .then((res) => {
         console.log(res.data);
         setDiaryDetail(res.data);
@@ -195,7 +195,7 @@ const Detail = () => {
     axios
       .get(
         // `http://localhost:4002/image/` + id,
-        `${process.env.REACT_APP_API_URL}image/{diary-id}`,
+        `/s3/image/{diary-id}`,
         // , {
         //   responseType: "blob",
         // }
@@ -226,7 +226,7 @@ const Detail = () => {
     };
 
     axios
-      .patch(`http://localhost:4000/diary/` + id, patch2)
+      .patch(`/diary/` + id, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
   };

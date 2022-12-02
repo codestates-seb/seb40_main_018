@@ -115,7 +115,7 @@ const Diary = () => {
 
     axios
       // .post("http://localhost:4000/diary", diaryInfo)
-      .post(`${process.env.REACT_APP_API_URL}diary`, diaryInfo, {
+      .post(`/diary`, diaryInfo, {
         headers: {
           Authorization: accessToken,
         },
