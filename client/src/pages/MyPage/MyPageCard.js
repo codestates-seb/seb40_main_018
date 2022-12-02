@@ -93,7 +93,7 @@ const MyPageCard = ({ cardList, setCardList, hasMore, setHasMore, result, setRes
             <>
               {cardList.map((item, index) => (
                 <>
-                  <Link to={`/detail/{${item.diaryId}}`}>
+                  <Link to={`/detail/${item.diaryId}`}>
                     <CardArea key={index}>
                       <CardImg
                         src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg"

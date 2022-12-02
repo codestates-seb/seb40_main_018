@@ -11,7 +11,7 @@ import DiaryPrice from "./DiaryPrice";
 import DiaryPlace from "./DiaryPlace";
 import DiaryHashtag from "./DiaryHashtag";
 import CancelModal from "../../components/Modal/CancelModal";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
 import { useForm } from "react-hook-form";
 
@@ -40,7 +40,7 @@ const BtnArea = styled.div`
 `;
 
 const Diary = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const randomQuestions = [
     "이번 여행에서 맛있게 먹은 음식은 무엇인가요?",
     "가장 좋았던 장소는 어디였나요?",
@@ -84,34 +84,34 @@ const Diary = () => {
       return false;
     }
 
-    // const diaryInfo = {
-    //   ...data,
-    //   // nickname: nickname,
-    //   question: question,
-    //   counter: counter,
-    //   tags: tags,
-    // };
+    const diaryInfo = {
+      ...data,
+      question: question,
+      counter: counter,
+      tags: tags,
+    };
 
     // console.log("diaryInfo", diaryInfo);
+    console.log(diaryInfo, imageList);
     const formData = new FormData();
-
+    formData.append("diaryPostDto", new Blob([JSON.stringify(diaryInfo)], { type: "application/json" }));
     Array.from(imageList).forEach((el) => {
-      formData.append("file", el);
+      formData.append("imgFiles", el);
     });
-    formData.append("area", data.area);
-    formData.append("city", data.city);
-    formData.append("content", data.content);
-    formData.append("cost", data.cost);
-    formData.append("day", data.day);
-    formData.append("month", data.month);
-    formData.append("title", data.title);
-    formData.append("weather", data.weather);
-    formData.append("year", data.year);
-    formData.append("question", data.question);
-    formData.append("counter", data.counter);
-    tags.map((el) => {
-      formData.append("tags", el);
-    });
+    // formData.append("area", data.area);
+    // formData.append("city", data.city);
+    // formData.append("content", data.content);
+    // formData.append("cost", data.cost);
+    // formData.append("day", data.day);
+    // formData.append("month", data.month);
+    // formData.append("title", data.title);
+    // formData.append("weather", data.weather);
+    // formData.append("year", data.year);
+    // formData.append("question", question);
+    // formData.append("counter", counter);
+    // tags.map((el) => {
+    //   formData.append("tags", el);
+    // });
 
     console.log("imageList", imageList);
 
@@ -122,21 +122,10 @@ const Diary = () => {
     for (const value of formData.values()) {
       console.log("value", value);
     }
-    console.log("formDataFile", formData.getAll("file"));
+    // console.log("formDataFile", formData.getAll("file"));
     console.log("formData", formData);
 
     const accessToken = localStorage.getItem("accessToken");
-
-    // axios
-    //   // .post("http://localhost:4000/diary", diaryInfo)
-    //   .post(`/diary`, diaryInfo, {
-    //     headers: {
-    //       Authorization: accessToken,
-    //     },
-    //   })
-    //   // .then((res) => console.log("Diary", res.data))
-    // .then((res) => navigate(`/detail/${res.data.data.diaryId}`))
-    //   .catch((err) => console.log("DiaryErr", err));
 
     axios
       .post(`/diary`, formData, {
@@ -145,11 +134,22 @@ const Diary = () => {
           Authorization: accessToken,
         },
       })
-      .then((res) => console.log("IMGres:", res))
-      // .then((res) => navigate(`/detail/${res.data.data.diaryId}`))
+      // .then((res) => console.log("IMGres:", res))
+      .then((res) => navigate(`/detail/${res.data.data.diaryId}`))
 
       .catch((err) => console.log("IMGErr", err));
   };
+
+  // axios
+  //   // .post("http://localhost:4000/diary", diaryInfo)
+  //   .post(`/diary`, diaryInfo, {
+  //     headers: {
+  //       Authorization: accessToken,
+  //     },
+  //   })
+  //   // .then((res) => console.log("Diary", res.data))
+  // .then((res) => navigate(`/detail/${res.data.data.diaryId}`))
+  //   .catch((err) => console.log("DiaryErr", err));
 
   useEffect(() => {
     setLoading(true);
