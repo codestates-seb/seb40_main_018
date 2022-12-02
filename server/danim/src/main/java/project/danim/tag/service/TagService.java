@@ -1,16 +1,19 @@
 package project.danim.tag.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import project.danim.diary.domain.Diary;
+import project.danim.diary.dto.DiaryResponseDto;
 import project.danim.diary.repository.DiaryRepository;
-import project.danim.exeption.BusinessLogicException;
-import project.danim.exeption.ExceptionCode;
+import project.danim.diary.service.DiaryService;
+import project.danim.response.MultiResponseDto;
 import project.danim.tag.domain.Tag;
-import project.danim.tag.dto.TagPatchDto;
-import project.danim.tag.dto.TagPostDto;
-import project.danim.tag.dto.TagResponseDto;
+import project.danim.tag.dto.TagDiaryResponseDto;
 import project.danim.tag.repository.TagRepository;
 
 import javax.validation.Valid;
@@ -23,9 +26,11 @@ import java.util.stream.Collectors;
 public class TagService {
 
     private final TagRepository tagRepository;
+    private final DiaryRepository diaryRepository;
 
-    public TagService(TagRepository tagRepository) {
+    public TagService(TagRepository tagRepository, DiaryRepository diaryRepository) {
         this.tagRepository = tagRepository;
+        this.diaryRepository = diaryRepository;
     }
 
     // 태그 전체 조회
@@ -89,6 +94,16 @@ public class TagService {
                     .content(tag)
                     .build());
         }
+    }
+
+    public MultiResponseDto getTagDiaries(String name, int size, int page) {
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("diaryId").descending());
+        Page<Tag> findTags = tagRepository.findAllByContentContains(name, pageable);
+        List<TagDiaryResponseDto> result = findTags.getContent().stream()
+                .map(tag -> TagDiaryResponseDto.of(diaryRepository.findByDiaryId(tag.getDiaryId()).get()))
+                .collect(Collectors.toList());
+
+        return new MultiResponseDto(result, findTags);
     }
 
     // 태그 수정
