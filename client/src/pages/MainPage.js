@@ -14,7 +14,7 @@ const Main = styled.div`
   background-color: #fbfbfb;
 `;
 
-export default function MainPage() {
+function MainPage() {
   // const user = useSelector(SET_TOKEN);
   // console.log("user", user.payload.userReducer.isLogin);
   // const accesstoken = useSelector(DELETE_TOKEN);
@@ -67,3 +67,4 @@ export default function MainPage() {
     </Main>
   );
 }
+export default MainPage;

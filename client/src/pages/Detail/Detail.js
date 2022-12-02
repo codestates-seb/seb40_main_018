@@ -159,7 +159,7 @@ const CommentTitle = styled.div`
   color: #535353;
 `;
 
-const Detail = () => {
+function Detail() {
   const id = useParams().id;
   console.log("detail_id", id);
   const navigate = useNavigate();
@@ -316,6 +316,6 @@ const Detail = () => {
       </Section>
     </>
   );
-};
+}
 
 export default Detail;
