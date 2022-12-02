@@ -11,6 +11,10 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     Optional<Tag> findByTagId(Long tagId);
 
-    List<Tag> findAllByDiary_DiaryId(@Param(value = "diaryId") Long diaryId);
+    List<Tag> findAllByDiaryId(long diaryId);
+
+    void deleteAllByDiaryId(long diaryId);
+
+//    List<Tag> findAllByDiary_DiaryId(@Param(value = "diaryId") Long diaryId);
 
 }
