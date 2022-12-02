@@ -143,7 +143,7 @@ const Heart = styled.div`
   }
 `;
 // { selected }
-export const Card = ({ diaryList, setDiaryList, hasMore, setHasMore, result, setResult, loading }) => {
+export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading, page }) => {
   console.log("diaryList2", diaryList);
   const [like, setLike] = useState(false);
 
@@ -179,17 +179,17 @@ export const Card = ({ diaryList, setDiaryList, hasMore, setHasMore, result, set
   // };
 
   // 스크롤 시에 데이터를 추가적으로 받아오는 함수
-  const fetchMoreData = () => {
-    if (diaryList.length >= 50) {
-      setHasMore(!hasMore);
-      return;
-    }
-    // 가장 유력한 수정 후보
-    setTimeout(() => {
-      setDiaryList(diaryList.concat(result.slice(0, 12))); // 12개씩 커팅하기로 결정 -> 12개씩 slice
-      setResult(result.slice(12));
-    }, 1500);
-  };
+  // const fetchMoreData = () => {
+  // if (diaryList.length >= 50) {
+  //   setHasMore(!hasMore);
+  //   return;
+  // }
+  // // 가장 유력한 수정 후보
+  // setTimeout(() => {
+  //   setDiaryList(diaryList.concat(result.slice(0, 12))); // 12개씩 커팅하기로 결정 -> 12개씩 slice
+  //   setResult(result.slice(12));
+  // }, 1500);
+  // };
 
   return (
     <>
@@ -197,8 +197,8 @@ export const Card = ({ diaryList, setDiaryList, hasMore, setHasMore, result, set
 
       <InfiniteScroll
         dataLength={diaryList.length}
-        next={fetchMoreData}
-        hasMore={hasMore}
+        next={() => fetchDiaryList(page)}
+        hasMore={hasMore && !loading}
         loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
