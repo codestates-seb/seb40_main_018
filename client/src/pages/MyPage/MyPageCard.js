@@ -10,6 +10,7 @@ const CardContainer = styled.div`
   flex-wrap: wrap;
   justify-content: flex-start;
   margin-top: 47px;
+  margin-left: 20px;
 `;
 
 const CardArea = styled.div`

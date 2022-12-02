@@ -7,7 +7,7 @@ import SimpleImageSlider from "react-simple-image-slider";
 import DeleteModal from "../../components/Modal/DeleteModal";
 import { useState, useEffect } from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
-import Comment from "./Comment";
+// import Comment from "./Comment";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 // import LoginHeader from "../../components/Header/LoginHeader";
@@ -161,62 +161,29 @@ const CommentTitle = styled.div`
 
 function Detail() {
   const id = useParams().id;
-  console.log("detail_id", id);
   const navigate = useNavigate();
 
-  const images = [
-    { url: "images/1.jpg" },
-    { url: "images/2.jpg" },
-    { url: "images/3.jpg" },
-    { url: "images/4.jpg" },
-    { url: "images/5.jpg" },
-    { url: "images/6.jpg" },
-    { url: "images/7.jpg" },
-  ];
   const [diaryDetail, setDiaryDetail] = useState([]);
-  const [imageList, setImageList] = useState(images);
-  const [user, setUser] = useState("Jisoo");
+  const [imageList, setImageList] = useState([]);
   const [like, setLike] = useState(false);
 
-  // const [isEdit, setIsEdit] = useState(false);
-  // const [isSaved, setIsSaved] = useState(false);
-
   useEffect(() => {
     axios
-      // .get(`http://localhost:4000/diary/` + id)
       .get(`/diary/` + id)
       .then((res) => {
-        console.log("Detail", res.data.data);
         setDiaryDetail(res.data.data);
+        setImageList(res.data.data.diaryImages);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  useEffect(() => {
-    axios
-      .get(
-        // `http://localhost:4002/image/` + id,
-        `/s3/image/${id}`,
-        // , {
-        //   responseType: "blob",
-        // }
-      )
-      // .then((res) => {
-      //   console.log(res.data);
-      //   // setImageList(res.data);
-      // })
-      .then((res) => {
-        console.log("res", res);
-        const myFile = new File("file[]");
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const previewImage = e.target.result;
-          setImageList(previewImage);
-        };
-        reader.readAsDataURL(myFile);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // const myFile = new File("file[]");
+  // const reader = new FileReader();
+  // reader.onload = (e) => {
+  //   const previewImage = e.target.result;
+  //   setImageList(previewImage);
+  // };
+  // reader.readAsDataURL(myFile);
 
   // 하트
   const onClickHandler = () => {
@@ -267,13 +234,9 @@ function Detail() {
               }}
               width={"700px"}
               height={"480px"}
-              // images={imageList.map((item) => {
-              //   return { url: URL.createObjectURL(item) };
-              // })}
               images={imageList.map((item) => {
                 return item;
               })}
-              // images={images}
               showBullets={true}
               showNavs={true}
               autoPlay={true}
@@ -312,7 +275,7 @@ function Detail() {
             <IoIosArrowDropdown color="#535353" size="22" />
           </CommentTitleArea>
         </CommentContainer>
-        <Comment user={user} setUser={setUser} />
+        {/* <Comment user={user} setUser={setUser} /> */}
       </Section>
     </>
   );

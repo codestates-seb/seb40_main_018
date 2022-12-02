@@ -98,7 +98,7 @@ const FilterContainer = styled.div`
   }
 `;
 
-export const MainTab = ({ selected, setSelected, setTag }) => {
+export const MainTab = ({ selected, setSelected }) => {
   // const tags = diaryList.map((el) => el.tags);
   // console.log("tags", tags);
 
@@ -144,18 +144,7 @@ export const MainTab = ({ selected, setSelected, setTag }) => {
         </div>
         <div className="input-search">
           <AiOutlineSearch size={30} color="#86C1C1" />
-          <input
-            type="text"
-            className="logo-search"
-            placeholder="태그를 입력하세요"
-            onKeyDown={(event) => {
-              const value = event.currentTarget.value;
-              if (event.code === "Enter") {
-                console.log("엔터 눌렀다");
-                setTag(value);
-              }
-            }}
-          />
+          <input type="text" className="logo-search" placeholder="태그를 입력하세요" />
         </div>
         <PriceFilter />
       </FilterContainer>
