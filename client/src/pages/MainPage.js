@@ -27,7 +27,6 @@ export default function MainPage() {
   useEffect(() => {
     setLoading(true);
     axios.get(`http://localhost:4000/diary`).then((res) => {
-      // setLoading(true);
       // axios.get(`${process.env.REACT_APP_API_URL}diary?size=12&page=1`).then((res) => {
       const timer = setTimeout(() => {
         console.log(res.data.data);

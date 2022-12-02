@@ -7,7 +7,7 @@ import DarkMintButton from "../Button/DarkMintButton";
 import ShortInput from "../Input/ShortInput";
 import useFetch from "../../redux/useFetch";
 import { useDispatch } from "react-redux";
-import { getLoginStatus, getmyInfo } from "../../redux/userAction";
+import { getmyInfo } from "../../redux/userAction";
 
 export const MintCard = styled.div`
   height: ${(props) => (props.height ? props.height : "auto")};
@@ -119,18 +119,18 @@ export const SignupForm = () => {
     // ^^
 
     // 회원가입 요청
-    const res = await useFetch("POST", `${process.env.REACT_APP_API_URL}auth/register`, postSignup);
+    const res = await useFetch("POST", `/auth/register`, postSignup);
     // 이메일은 있으나 비밀번호가 다른경우
-    if (res === 400) {
+    if (res === 404 || res === 400) {
       alert("회원가입 실패!");
     } else if (res === 409) {
       // 입력 정보가 이미 있으면 로그인
-      await useFetch("POST", `${process.env.REACT_APP_API_URL}auth/login`, { email, password });
+      await useFetch("POST", `/auth/login`, { email, password });
 
       //내 정보 가져오기
       // 본인 회원 정보 조회 api가 따로 있음
-      const myInfo = await useFetch("GET", `${process.env.REACT_APP_API_URL}member/me`);
-      dispatch(getLoginStatus({ isLogin: true }));
+      const myInfo = await useFetch("GET", `/member/me`);
+      // dispatch(getLoginStatus({ isLogin: true }));
       dispatch(getmyInfo(myInfo));
       navigate("/login");
       alert("이미 가입되어 있는 정보입니다");

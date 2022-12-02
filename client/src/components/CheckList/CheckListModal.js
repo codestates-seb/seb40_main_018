@@ -66,7 +66,7 @@ export const CheckListModal = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_API_URL}check-list`, {
+      .get(`/check-list`, {
         headers: {
           Authorization: accessToken,
         },
