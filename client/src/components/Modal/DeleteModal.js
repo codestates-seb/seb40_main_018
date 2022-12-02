@@ -59,14 +59,19 @@ function DeleteModal() {
   const openModal2 = () => {
     setIsOpen2(!isOpen2);
   };
-
+  const accessToken = localStorage.getItem("accessToken");
   const submitHandler = () => {
-    // axios
-    axios.delete(`http://localhost:4000/diary/` + id).then((res) => {
-      console.log(res.status);
-      console.log("삭제");
-      navigate("/");
-    });
+    axios
+      .delete(`/diary/` + id, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => {
+        console.log(res.status);
+        console.log("삭제");
+        navigate("/");
+      });
   };
   return (
     <>
