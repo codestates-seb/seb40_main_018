@@ -32,18 +32,17 @@ public class S3Controller {
 //    private final S3Service s3Service;
     private final AmazonS3 amazonS3;
     private final AmazonS3Client amazonS3Client;
-    private final S3Repository s3Repository;
     private final DiaryService diaryService;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    @GetMapping("/{diary-id}")
-    public ResponseEntity<Object> getImages(@PathVariable("diary-id") Long diaryId, MultipartFile[] multipartFileList) throws IOException {
-
-
-
-    }
+//    @GetMapping("/{diary-id}")
+//    public ResponseEntity<Object> getImages(@PathVariable("diary-id") Long diaryId, MultipartFile[] multipartFileList) throws IOException {
+//
+//
+//
+//    }
 
     //TODO 10개 제한
     @PostMapping("/{diary-id}")
