@@ -4,17 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import project.danim.diary.domain.Diary;
-import project.danim.diary.service.DiaryService;
-import project.danim.response.SingleResponseDto;
-import project.danim.tag.domain.Tag;
 import project.danim.tag.dto.TagDeleteDto;
-import project.danim.tag.dto.TagPatchDto;
-import project.danim.tag.dto.TagPostDto;
-import project.danim.tag.dto.TagResponseDto;
 import project.danim.tag.service.TagService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 @RestController
@@ -27,6 +21,14 @@ public class TagController {
 
     public TagController(TagService tagService) {
         this.tagService = tagService;
+    }
+
+    @GetMapping
+    public ResponseEntity getTagDiaries(@NotBlank @RequestParam String name,
+                                        @Positive @RequestParam int size,
+                                        @Positive @RequestParam int page) {
+
+        return new ResponseEntity(tagService.getTagDiaries(name, size, page), HttpStatus.OK);
     }
 
     // 1개 일기의 태그 전체 조회
