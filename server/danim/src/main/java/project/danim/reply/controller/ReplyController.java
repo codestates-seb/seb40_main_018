@@ -2,6 +2,7 @@ package project.danim.reply.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import project.danim.diary.domain.Diary;
 import project.danim.diary.service.DiaryService;
@@ -42,9 +43,11 @@ public class ReplyController {
                                                        @PathVariable("diary-id") Long diaryId,
                                                        Reply reply) {
 
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         Diary diary = diaryService.findDiary(diaryId);
 
-        ReplyResponseDto response = replyService.createReply(request, reply, diary);
+        ReplyResponseDto response = replyService.createReply(request, reply, diary, email);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.CREATED);

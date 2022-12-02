@@ -17,8 +17,6 @@ public class CheckResponseDto {
 
     private Long checkId;
 
-    private String nickname;
-
     private String checkContent;
 
     private Boolean isCheck;
@@ -26,7 +24,7 @@ public class CheckResponseDto {
     private LocalDateTime createdAt;
 
     public static CheckResponseDto of(Check check) {
-        return new CheckResponseDto(check.getCheckId(), check.getNickname(), check.getCheckContent(), check.getIsCheck(), check.getCreatedAt());
+        return new CheckResponseDto(check.getCheckId(), check.getCheckContent(), check.getIsCheck(), check.getCreatedAt());
     }
 
 }
