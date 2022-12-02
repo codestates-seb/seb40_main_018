@@ -30,7 +30,7 @@ const Comment = ({ user }) => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${process.env.REACT_APP_API_URL}reply/${id}`).then((result) => {
+    axios.get(`/reply/` + id).then((result) => {
       const timer = setTimeout(() => {
         setComment(result.data);
         setLoading(false);
@@ -81,11 +81,11 @@ const Comment = ({ user }) => {
       exist: true,
     };
     await axios
-      .post(`${process.env.REACT_APP_API_URL}reply/{diary-id}`, addComment)
+      .post(`/reply/` + id, addComment)
       .then((res) => console.log(res.data))
       .then((err) => console.log(err));
 
-    await axios.get(`${process.env.REACT_APP_API_URL}reply/{diary-id}`).then((result) => {
+    await axios.get(`/reply/` + id).then((result) => {
       setComment(result.data);
     });
   };
@@ -123,7 +123,7 @@ const Comment = ({ user }) => {
       exist: true,
     };
     axios
-      .patch(`${process.env.REACT_APP_API_URL}reply/{reply-id}`, editComment)
+      .patch(`/reply/` + id, editComment)
       .then(() => setComment(comment))
       .then((err) => console.log(err));
   };
@@ -135,7 +135,7 @@ const Comment = ({ user }) => {
       setComment(comment.filter((item) => item.id !== id));
     }
     axios
-      .delete(`${process.env.REACT_APP_API_URL}reply/{reply-id}`)
+      .delete(`/reply/` + id)
       .then((res) => console.log(res))
       .then((err) => console.log(err));
   };
@@ -181,58 +181,59 @@ const Comment = ({ user }) => {
             </>
           )}
 
-          {comment.map((comment, index) => (
-            <Box sx={{ mb: 2, p: 2, bgcolor: "#f1f1f1", borderRadius: 3 }} key={index}>
-              {/* writer 정보, 작성 시간 */}
-              <Stack direction="row" spacing={2}>
-                {/* <ProfileIcon>
+          {comment &&
+            comment.map((comment, index) => (
+              <Box sx={{ mb: 2, p: 2, bgcolor: "#f1f1f1", borderRadius: 3 }} key={index}>
+                {/* writer 정보, 작성 시간 */}
+                <Stack direction="row" spacing={2}>
+                  {/* <ProfileIcon>
               {check_kor.test(comment.writer) ? comment.writer.slice(0, 1) : comment.writer.slice(0, 2)}
             </ProfileIcon> */}
-                <Item>{comment.writer}</Item>
+                  <Item>{comment.writer}</Item>
 
-                <Item>{timeForToday(comment.created_at)}</Item>
-              </Stack>
+                  <Item>{timeForToday(comment.created_at)}</Item>
+                </Stack>
 
-              {/* comment 글 내용 */}
-              <Box
-                key={index}
-                sx={{ padding: "5px 20px", color: comment.exist || "#535353", fontSize: 12 }}
-                // exist는 초기값으로 true를 가지며, removeComment를 통해 false로 변경된다.
-              >
-                <Markdown comment={comment} />
+                {/* comment 글 내용 */}
+                <Box
+                  key={index}
+                  sx={{ padding: "5px 20px", color: comment.exist || "#535353", fontSize: 12 }}
+                  // exist는 초기값으로 true를 가지며, removeComment를 통해 false로 변경된다.
+                >
+                  <Markdown comment={comment} />
+                </Box>
+                {/* comment 수정 */}
+                {comment.exist && user === comment.writer && (
+                  <>
+                    {openEditor === comment.id && <Editor initialValue={comment.content} ref={editorRef} />}
+                    <Button
+                      sx={{ color: "#afafaf", fontSize: 12 }}
+                      onClick={() => {
+                        if (comment.id === openEditor) {
+                          onEdit(comment);
+                          setOpenEditor("");
+                        } else {
+                          setOpenEditor(comment.id);
+                        }
+                      }}
+                    >
+                      수정
+                    </Button>
+
+                    {/* comment 삭제 */}
+                    <Button
+                      sx={{ color: "#afafaf", fontSize: 12 }}
+                      onClick={() => {
+                        onRemove(comment);
+                      }}
+                    >
+                      삭제
+                    </Button>
+                  </>
+                )}
+                <Divider variant="middle" />
               </Box>
-              {/* comment 수정 */}
-              {comment.exist && user === comment.writer && (
-                <>
-                  {openEditor === comment.id && <Editor initialValue={comment.content} ref={editorRef} />}
-                  <Button
-                    sx={{ color: "#afafaf", fontSize: 12 }}
-                    onClick={() => {
-                      if (comment.id === openEditor) {
-                        onEdit(comment);
-                        setOpenEditor("");
-                      } else {
-                        setOpenEditor(comment.id);
-                      }
-                    }}
-                  >
-                    수정
-                  </Button>
-
-                  {/* comment 삭제 */}
-                  <Button
-                    sx={{ color: "#afafaf", fontSize: 12 }}
-                    onClick={() => {
-                      onRemove(comment);
-                    }}
-                  >
-                    삭제
-                  </Button>
-                </>
-              )}
-              <Divider variant="middle" />
-            </Box>
-          ))}
+            ))}
         </Paper>
       )}
     </>

@@ -77,6 +77,9 @@ const Diary = () => {
       console.log("imageList:", imageList);
       alert("이미지를 추가해 주세요.");
       return false;
+    } else if (imageList.length === 1) {
+      alert("이미지는 2장 이상 추가해 주세요.");
+      return false;
     }
     if (tags.length < 3) {
       console.log("tags:", tags);
@@ -87,7 +90,6 @@ const Diary = () => {
     const diaryInfo = {
       ...data,
       question: question,
-      counter: counter,
       tags: tags,
     };
 
@@ -98,20 +100,6 @@ const Diary = () => {
     Array.from(imageList).forEach((el) => {
       formData.append("imgFiles", el);
     });
-    // formData.append("area", data.area);
-    // formData.append("city", data.city);
-    // formData.append("content", data.content);
-    // formData.append("cost", data.cost);
-    // formData.append("day", data.day);
-    // formData.append("month", data.month);
-    // formData.append("title", data.title);
-    // formData.append("weather", data.weather);
-    // formData.append("year", data.year);
-    // formData.append("question", question);
-    // formData.append("counter", counter);
-    // tags.map((el) => {
-    //   formData.append("tags", el);
-    // });
 
     console.log("imageList", imageList);
 

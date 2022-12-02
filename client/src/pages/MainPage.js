@@ -27,8 +27,7 @@ export default function MainPage() {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
-  const [tag, setTag] = useState("");
-  console.log(tag);
+  // const [tag, setTag] = useState("");
 
   // 현재 스켈레톤 쓰지 않아도 서버 빠름
   const fetchDiaryList = async (page) => {
@@ -82,7 +81,7 @@ export default function MainPage() {
   return (
     <Main>
       <div>
-        <MainTab selected={selected} setSelected={setSelected} diaryList={diaryList} setTag={setTag} />
+        <MainTab selected={selected} setSelected={setSelected} diaryList={diaryList} />
         <Card
           selected={selected}
           diaryList={diaryList}
