@@ -5,7 +5,6 @@ import project.danim.diary.domain.Diary;
 import project.danim.diary.dto.DiaryPatchDto;
 import project.danim.diary.dto.DiaryPostDto;
 import project.danim.diary.dto.DiaryResponseDto;
-import project.danim.diary.service.DiaryService;
 
 
 @Mapper(componentModel = "Spring")
@@ -47,7 +46,6 @@ public interface DiaryMapper {
     default DiaryResponseDto diaryToDiaryResponseDto(Diary diary){
         DiaryResponseDto diaryResponseDto = new DiaryResponseDto();
 
-
         diaryResponseDto.setDiaryId(diary.getDiaryId());
         diaryResponseDto.setTitle(diary.getTitle());
         diaryResponseDto.setContent(diary.getContent());
@@ -58,36 +56,11 @@ public interface DiaryMapper {
         diaryResponseDto.setTags(diary.getTags());
         diaryResponseDto.setCreatedAt(diary.getCreatedDate());
         diaryResponseDto.setModifiedAt(diary.getModifiedDate());
-        diaryResponseDto.setTravelDate(diary.getTravelDate());
+        diaryResponseDto.setYear(diary.getTravelDate().getYear());
+        diaryResponseDto.setMonth(diary.getTravelDate().getMonthValue());
+        diaryResponseDto.setDay(diary.getTravelDate().getDayOfMonth());
         diaryResponseDto.setMemberId(diary.getMemberId());
 
         return diaryResponseDto;
     }
-
-      /*
-  MemberId 추가 필요!!
- */
-   default DiaryResponseDto diaryToDiaryResponseDtos(Diary diary){
-
-        DiaryResponseDto diaryResponseDto = new DiaryResponseDto();
-       diaryResponseDto.setDiaryId(diary.getDiaryId());
-       diaryResponseDto.setTitle(diary.getTitle());
-       diaryResponseDto.setContent(diary.getContent());
-       diaryResponseDto.setWeather(diary.getWeather());
-       diaryResponseDto.setCity(diary.getCity());
-       diaryResponseDto.setArea(diary.getArea());
-       diaryResponseDto.setCost(diary.getCost());
-       diaryResponseDto.setTags(diary.getTags());
-       diaryResponseDto.setCreatedAt(diary.getCreatedDate());
-       diaryResponseDto.setModifiedAt(diary.getModifiedDate());
-       diaryResponseDto.setTravelDate(diary.getTravelDate());
-       diaryResponseDto.setMemberId(diary.getMemberId());
-       // diaryResponseDto.setCreatedDate(diary.getCreatedDate());
-      //  diaryResponseDto.setModifiedDate(diary.getModifiedDate());
-        //diaryResponseDto.setMemberId(diary.getMember().getMemberId());
-
-        return diaryResponseDto;
-    }
-
-
 }

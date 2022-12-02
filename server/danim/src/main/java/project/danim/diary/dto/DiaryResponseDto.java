@@ -24,5 +24,7 @@ public class DiaryResponseDto {
     private long likeCount;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    private LocalDate travelDate;
+    private int year;
+    private int month;
+    private int day;
 }
