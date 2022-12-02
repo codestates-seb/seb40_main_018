@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import project.danim.audit.BaseTime;
@@ -56,15 +57,17 @@ public class Diary extends BaseTime {
     @Column(nullable = false)
     private int cost;
 
-    @Column(nullable = true, name ="likes_count")
+    @Column(nullable = false, name ="likes_count")
     private int likesCount;
 
-    @Column(nullable = true)
-    @ElementCollection(fetch = FetchType.LAZY)
-    private List<String> tags;
-
+//    @BatchSize(size = 10)
+//    @Column(nullable = false)
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    @CollectionTable(name = "diary_tag", joinColumns = @JoinColumn(name = "diary_id"))
+//    private List<String> tags;
     @Column(nullable = false)
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "diary_image", joinColumns = @JoinColumn(name = "diary_id"))
     private List<String> diaryImages;
 
     @Column(nullable = false)
@@ -73,7 +76,7 @@ public class Diary extends BaseTime {
     @Column(nullable = false)
     private LocalDate travelDate;
 
-    public Diary(String title, String question, String content, String weather, String area, String city, int cost, int likesCount, List<String> tags, Long memberId, LocalDate travelDate){
+    public Diary(String title, String question, String content, String weather, String area, String city, int cost, int likesCount, Long memberId, LocalDate travelDate){
         this.title = title;
         this.question = question;
         this.content = content;
@@ -82,7 +85,7 @@ public class Diary extends BaseTime {
         this.city = city;
         this.cost = cost;
         this.likesCount = likesCount;
-        this.tags = tags;
+//        this.tags = tags;
         this.memberId = memberId;
         this.travelDate = travelDate;
     }
@@ -95,14 +98,13 @@ public class Diary extends BaseTime {
         this.likesCount = this.likesCount - 1;
     }
 
-    public void updateDiary(String title, String content, String weather, String area, String city, int cost, List<String> tags, LocalDate travelDate) {
+    public void updateDiary(String title, String content, String weather, String area, String city, int cost, LocalDate travelDate) {
         this.title = title;
         this.content = content;
         this.weather = weather;
         this.area = area;
         this.city = city;
         this.cost = cost;
-        this.tags = tags;
         this.travelDate = travelDate;
     }
 

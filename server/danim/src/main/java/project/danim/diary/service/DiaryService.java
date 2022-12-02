@@ -56,9 +56,9 @@ public class DiaryService {
 
         Diary diary = diaryRepository.save(newDiary);
 
-        tagService.createTags(diary.getDiaryId(), diary.getTags());
+        tagService.createTags(diary.getDiaryId(), diaryPostDto.getTags());
 
-        return diaryMapper.diaryToDiaryResponseDto(diary);
+        return diaryMapper.diaryToDiaryResponseDto(diary, diaryPostDto.getTags());
     }
 
     private Diary findVerifiedDiary(long diaryId) {
@@ -78,8 +78,7 @@ public class DiaryService {
 
     public DiaryResponseDto getDiary(long diaryId) {
         Diary findDiary = findVerifiedDiary(diaryId);
-
-        return diaryMapper.diaryToDiaryResponseDto(findDiary);
+        return diaryMapper.diaryToDiaryResponseDto(findDiary, tagService.getTags(diaryId));
     }
 
     /*
@@ -89,7 +88,7 @@ public class DiaryService {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("diaryId").descending());
         Page<Diary> diaryPage = diaryRepository.findAll(pageable);
         List<DiaryResponseDto> diaries = diaryPage.getContent().stream()
-                .map(diary -> diaryMapper.diaryToDiaryResponseDto(diary))
+                .map(diary -> diaryMapper.diaryToDiaryResponseDto(diary, tagService.getTags(diary.getDiaryId())))
                 .collect(Collectors.toList());
 
         return new MultiResponseDto<>(diaries, diaryPage);
@@ -99,7 +98,7 @@ public class DiaryService {
         Page<Diary> diaryPage = diaryRepository.findAllDiaryByCost(min, max, pageable);
 
         List<DiaryResponseDto> diaries = diaryPage.getContent().stream()
-                .map(diary -> diaryMapper.diaryToDiaryResponseDto(diary))
+                .map(diary -> diaryMapper.diaryToDiaryResponseDto(diary, tagService.getTags(diary.getDiaryId())))
                 .collect(Collectors.toList());
 
         return new MultiResponseDto<>(diaries, diaryPage);
@@ -136,18 +135,19 @@ public class DiaryService {
                 diaryPatchDto.getArea(),
                 diaryPatchDto.getCity(),
                 diaryPatchDto.getCost(),
-                diaryPatchDto.getTags(),
                 diaryPatchDto.getTravelDate()
         );
+
+        tagService.updateTags(findDiary.getDiaryId(), diaryPatchDto.getTags());
 
         List<String> updateDiaryImages = s3Service.updateDiaryImages(findDiary.getDiaryImages(), diaryImages, "diary");
         findDiary.addDiaryImages(updateDiaryImages);
 
         Diary updatedDiaries = diaryRepository.save(findDiary);
 
-        tagService.updateTags(updatedDiaries.getDiaryId(), updatedDiaries.getTags());
 
-        return diaryMapper.diaryToDiaryResponseDto(updatedDiaries);
+
+        return diaryMapper.diaryToDiaryResponseDto(updatedDiaries, tagService.getTags(diaryId));
     }
 
 //    default List<DiaryResponseDto> diaryToDiaryResponseDtos(List<Diary> diary){
