@@ -56,7 +56,8 @@ export const LoginForm = () => {
     if (password.trim() === "") {
       setPwdErrMsg("비밀번호를 입력해주세요.");
     } else if (!isValid("password", password)) {
-      setPwdErrMsg("Password는 8~16자의 비밀번호를 입력하여 주세요.");
+      setPwdErrMsg("Password는 영문대소문자, 숫자 혼합 사용하여 8~16자의 비밀번호를 입력하여 주세요.");
+      return false;
     } else {
       setPwdErrMsg("");
     }
