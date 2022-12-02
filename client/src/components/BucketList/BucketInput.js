@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import axios from "axios";
 import { Update } from "../CheckList/CheckInput";
+import { useParams } from "react-router-dom";
 
 export const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "350px")};
@@ -46,6 +47,7 @@ export const BucketInput = ({
   isEdit,
   setIsEdit,
 }) => {
+  const id = useParams().id;
   const updateTodo = (title, id, completed) => {
     const newTodo = todos.map((todo) => (todo.id === id ? { title, id, completed } : todo));
     setTodos(newTodo);
@@ -103,8 +105,10 @@ export const BucketInput = ({
       isCheck: completed,
     };
 
+    // ^^editTodo.id
+
     axios
-      .patch(`http://localhost:4005/btodos/` + editTodo.id, patch2)
+      .patch(`${process.env.REACT_APP_API_URL}bucket-list${id}`, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res2", err));
 

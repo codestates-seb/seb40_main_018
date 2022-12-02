@@ -159,8 +159,9 @@ const CommentTitle = styled.div`
   color: #535353;
 `;
 
-const Detail = () => {
+function Detail() {
   const id = useParams().id;
+  console.log("detail_id", id);
   const navigate = useNavigate();
 
   const images = [
@@ -195,7 +196,7 @@ const Detail = () => {
     axios
       .get(
         // `http://localhost:4002/image/` + id,
-        `/s3/image/{diary-id}`,
+        `/s3/image/${id}`,
         // , {
         //   responseType: "blob",
         // }
@@ -315,6 +316,6 @@ const Detail = () => {
       </Section>
     </>
   );
-};
+}
 
 export default Detail;

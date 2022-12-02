@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "350px")};
@@ -54,6 +55,8 @@ export const CheckInput = ({
   isEdit,
   setIsEdit,
 }) => {
+  const cid = useParams().id;
+
   const updateTodo = (title, id) => {
     const newTodo = todos.map((todo) => (todo.id === id ? { title, id, completed } : todo));
     setTodos(newTodo);
@@ -116,7 +119,7 @@ export const CheckInput = ({
 
     // ^^editTodo.id
     axios
-      .patch(`/check-list/{check-id}` + editTodo.id, patch2)
+      .patch(`/check-list/${cid}`, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res2", err));
 

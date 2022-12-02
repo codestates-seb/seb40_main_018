@@ -17,7 +17,6 @@ const Main = styled.div`
 
 export default function MainPage() {
   // const id = useParams().id;
-
   // const user = useSelector(SET_TOKEN);
   // console.log("user", user.payload.userReducer.isLogin);
   // const accesstoken = useSelector(DELETE_TOKEN);
@@ -27,22 +26,44 @@ export default function MainPage() {
   const [diaryList, setDiaryList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+
+  const fetchDiaryList = async (page) => {
+    setLoading(true);
+
+    const res = await axios.get(`/diary?size=12&page=${page}`);
+    console.log(res.data);
+    const diaries = res.data.data;
+    const pagination = res.data.pageInfo;
+
+    if (diaryList.length > 0) {
+      const previousDiaries = diaryList;
+      const newDiaries = diaries;
+
+      setDiaryList([...previousDiaries, ...newDiaries]);
+    } else {
+      setDiaryList(diaries);
+    }
+    setPage(pagination.page + 1);
+    setTotalPage(pagination.totalPages);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    setLoading(true);
     // axios.get(`http://localhost:4000/diary`).then((res) => {
-    axios.get(`/diary?size=12&page=${page}`).then((res) => {
-      const timer = setTimeout(() => {
-        console.log(res.data.data);
-        let response = res.data.data;
-        setDiaryList(response.slice(0, 12)); // 받아온 데이터에서 12개만 먼저 result state에 저장
-        response = response.slice(12);
-        setResult(response); // 저장한 데이터 모두 저장
-        setLoading(false);
-        setPage(page + 1);
-      }, 2000);
-      return () => clearTimeout(timer);
-    });
+    // axios.get(`/diary?size=12&page=${page}`).then((res) => {
+    //   const timer = setTimeout(() => {
+    //     console.log(res.data.data);
+    //     let response = res.data.data;
+    //     setDiaryList(response.slice(0, 12)); // 받아온 데이터에서 12개만 먼저 result state에 저장
+    //     response = response.slice(12);
+    //     setResult(response); // 저장한 데이터 모두 저장
+    //     setLoading(false);
+    //     setPage(page + 1);
+    //   }, 2000);
+    //   return () => clearTimeout(timer);
+    // });
+    fetchDiaryList(page);
   }, []);
 
   // useEffect(() => {
@@ -50,8 +71,9 @@ export default function MainPage() {
   // });
 
   // yerin
-  const [hasMore, setHasMore] = useState(true);
+  // const [hasMore, setHasMore] = useState(true);
   const [result, setResult] = useState([]);
+
   return (
     <Main>
       <div>
@@ -60,12 +82,14 @@ export default function MainPage() {
           selected={selected}
           diaryList={diaryList}
           setDiaryList={setDiaryList}
-          hasMore={hasMore}
-          setHasMore={setHasMore}
+          hasMore={page <= totalPage}
+          // setHasMore={setHasMore}
           result={result}
           setResult={setResult}
           loading={loading}
           setLoading={setLoading}
+          fetchDiaryList={fetchDiaryList}
+          page={page}
         />
       </div>
     </Main>
