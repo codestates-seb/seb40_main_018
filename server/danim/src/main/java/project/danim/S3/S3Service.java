@@ -62,7 +62,7 @@ public class S3Service {
         return imagePathList;
     }
 
-    public List<String> updateImages(List<String> savedImageList, MultipartFile[] multipartFiles, String dirName) throws IOException {
+    public List<String> updateDiaryImages(List<String> savedImageList, MultipartFile[] multipartFiles, String dirName) throws IOException {
         for (String imageUrl : savedImageList) {
             String path = imageUrl.replace("https://be-danim-bucket.s3.ap-northeast-2.amazonaws.com/", "");
             path = URLDecoder.decode(path, StandardCharsets.UTF_8);
@@ -72,13 +72,44 @@ public class S3Service {
         return uploadDiaryImages(multipartFiles, dirName);
     }
 
-    public void deleteImages(List<String> savedImageList) {
+    public void deleteDiaryImages(List<String> savedImageList) {
         for (String imageUrl : savedImageList) {
             String path = imageUrl.replace("https://be-danim-bucket.s3.ap-northeast-2.amazonaws.com/", "");
             path = URLDecoder.decode(path, StandardCharsets.UTF_8);
             amazonS3.deleteObject(bucket, path);
-            amazonS3.deleteObject(bucket, path);
         }
     }
 
+    public String uploadProfileImage(MultipartFile profileImage) throws IOException {
+
+        String originalName = "profile/" + profileImage.getOriginalFilename(); // 파일 이름
+        long size = profileImage.getSize(); // 파일 크기
+
+        ObjectMetadata objectMetaData = new ObjectMetadata();
+        objectMetaData.setContentType(profileImage.getContentType());
+        objectMetaData.setContentLength(size);
+
+        // S3에 업로드
+        amazonS3Client.putObject(
+                new PutObjectRequest(bucket, originalName, profileImage.getInputStream(), objectMetaData)
+                        .withCannedAcl(CannedAccessControlList.PublicRead)
+        );
+
+        String imagePath = amazonS3Client.getUrl(bucket, originalName).toString(); // 접근가능한 URL 가져오기
+
+        return imagePath;
+    }
+    public String updateProfileImage(String profileImageUrl, MultipartFile profileImage) throws IOException {
+        if (profileImage == null) {
+            return "https://cdn.pixabay.com/photo/2019/02/28/04/54/car-4025379_1280.png";
+        }
+        if (!profileImageUrl.equals("https://cdn.pixabay.com/photo/2019/02/28/04/54/car-4025379_1280.png")) {
+            String path = profileImageUrl.replace("https://be-danim-bucket.s3.ap-northeast-2.amazonaws.com/", "");
+            path = URLDecoder.decode(path, StandardCharsets.UTF_8);
+
+            amazonS3.deleteObject(bucket, path);
+        }
+
+        return uploadProfileImage(profileImage);
+    }
 }

@@ -2,10 +2,12 @@ package project.danim.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import project.danim.member.dto.MemberProfilePatchForm;
 import project.danim.member.dto.MemberResponseForMap;
 import project.danim.member.dto.MemberResponseForProfile;
@@ -14,6 +16,7 @@ import project.danim.member.service.MemberService;
 import project.danim.response.SingleResponseDto;
 
 import javax.validation.constraints.Positive;
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -35,11 +38,12 @@ public class MemberController {
         return new ResponseEntity<>(new SingleResponseDto<>(member), HttpStatus.OK);
     }
 
-    @PatchMapping("/me")
-    public ResponseEntity patchMe(@RequestBody @Validated MemberProfilePatchForm memberProfilePatchForm) {
+    @PatchMapping(value = "/me", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity patchMe(@RequestPart @Validated MemberProfilePatchForm memberProfilePatchForm,
+                                  @RequestPart(required = false) MultipartFile imageFile) throws IOException {
         // 해당 profile 멤버 id와 현재 접속한 id가 같은지 확인
 
-        MemberResponseForProfile updateMember = memberService.patchProfile(memberProfilePatchForm);
+        MemberResponseForProfile updateMember = memberService.patchProfile(memberProfilePatchForm, imageFile);
         return new ResponseEntity<>(new SingleResponseDto<>(updateMember), HttpStatus.OK);
     }
 
