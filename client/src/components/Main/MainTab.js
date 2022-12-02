@@ -60,15 +60,17 @@ const FilterContainer = styled.div`
       margin-bottom: 10px;
     }
     > .question-sort {
+      display: flex;
       margin-bottom: 12px;
       border-bottom: solid 3px #c2c2c2;
-
       > button {
         font-size: 20px;
         border: none;
         padding: 8px 24px;
         color: #535353;
         background-color: #fbfbfb;
+        /* display: flex; */
+        /* align-items: center;  */
         @media screen and (max-width: 640px) {
           height: 36px;
           padding-left: 0.4em;
@@ -136,7 +138,7 @@ export const MainTab = ({ selected, setSelected }) => {
             </button>
             <button onClick={sortClick} className={selected === "Like" ? "is-selected" : ""} value={"Like"}>
               LIKE!
-              <FaHeart color="#DF4949" />
+              <FaHeart size="20" color="#DF4949" />
             </button>
           </div>
         </div>

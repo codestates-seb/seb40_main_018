@@ -56,7 +56,8 @@ export const LoginForm = () => {
     if (password.trim() === "") {
       setPwdErrMsg("비밀번호를 입력해주세요.");
     } else if (!isValid("password", password)) {
-      setPwdErrMsg("Password는 8~16자의 비밀번호를 입력하여 주세요.");
+      setPwdErrMsg("Password는 영문대소문자, 숫자 혼합 사용하여 8~16자의 비밀번호를 입력하여 주세요.");
+      return false;
     } else {
       setPwdErrMsg("");
     }
@@ -78,7 +79,7 @@ export const LoginForm = () => {
     };
     console.log("postLogin", postLogin);
 
-    const res = await useFetch("POST", `${process.env.REACT_APP_API_URL}auth/login`, postLogin);
+    const res = await useFetch("POST", `/auth/login`, postLogin);
     if (res === 404) {
       alert("로그인 실패!");
       return false;
