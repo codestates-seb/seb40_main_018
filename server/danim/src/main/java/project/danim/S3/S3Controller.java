@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.danim.diary.domain.Diary;
 import project.danim.diary.service.DiaryService;
+import project.danim.reply.domain.Reply;
+import project.danim.reply.dto.ReplyResponseDto;
+import project.danim.response.SingleResponseDto;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,13 +32,24 @@ public class S3Controller {
 //    private final S3Service s3Service;
     private final AmazonS3 amazonS3;
     private final AmazonS3Client amazonS3Client;
+    private final S3Repository s3Repository;
+    private final DiaryService diaryService;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    @GetMapping("/{diary-id}")
+    public ResponseEntity<Object> getImages(@PathVariable("diary-id") Long diaryId, MultipartFile[] multipartFileList) throws IOException {
+
+
+
+    }
+
     //TODO 10개 제한
-    @PostMapping("/upload")
-    public ResponseEntity<Object> upload(MultipartFile[] multipartFileList) throws IOException {
+    @PostMapping("/{diary-id}")
+    public ResponseEntity<Object> upload(@PathVariable("diary-id") Long diaryId, MultipartFile[] multipartFileList) throws IOException {
+
+        Diary diary = diaryService.findDiary(diaryId);
 
         List<String> imagePathList = new ArrayList<>();
 
