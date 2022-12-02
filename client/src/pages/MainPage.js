@@ -25,9 +25,9 @@ export default function MainPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // axios.get(`http://localhost:4000/diary`).then((res) => {
     setLoading(true);
-    axios.get(`http://localhost:4000/diary`).then((res) => {
-      // axios.get(`${process.env.REACT_APP_API_URL}diary?size=12&page=1`).then((res) => {
+    axios.get(`/diary?size=12&page=1`).then((res) => {
       const timer = setTimeout(() => {
         console.log(res.data.data);
         let response = res.data;
