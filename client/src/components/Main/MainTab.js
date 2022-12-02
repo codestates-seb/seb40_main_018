@@ -60,15 +60,17 @@ const FilterContainer = styled.div`
       margin-bottom: 10px;
     }
     > .question-sort {
+      display: flex;
       margin-bottom: 12px;
       border-bottom: solid 3px #c2c2c2;
-
       > button {
         font-size: 20px;
         border: none;
         padding: 8px 24px;
         color: #535353;
         background-color: #fbfbfb;
+        /* display: flex; */
+        /* align-items: center;  */
         @media screen and (max-width: 640px) {
           height: 36px;
           padding-left: 0.4em;
@@ -123,25 +125,6 @@ export const MainTab = ({ selected, setSelected }) => {
     }
   };
 
-  //태그검색
-  //필터기능
-  // const searchFilter = (data, keyword) => {
-  //   console.log("data", data);
-  //   return data.filter((tags) => tags.includes(keyword));
-  // };
-
-  // const Container = document.querySelector(".container");
-  // //array 안에 있는 요소들 html에 맵핑
-  // Container.innerHTML = tags.map((tag) => `${tag}`).join("");
-
-  // //검색 input
-  // const input = document.querySelector(".input");
-  // input.addEventListener("keyup", (e) => {
-  //   const keyword = e.target.value;
-  //   const filterTags = searchFilter(tags, keyword);
-  //   Container.innerHTML = filterTags.map((tag) => `${tag}`).join("");
-  // });
-
   return (
     <MainContainer>
       <FilterContainer>
@@ -155,7 +138,7 @@ export const MainTab = ({ selected, setSelected }) => {
             </button>
             <button onClick={sortClick} className={selected === "Like" ? "is-selected" : ""} value={"Like"}>
               LIKE!
-              <FaHeart color="#DF4949" />
+              <FaHeart size="20" color="#DF4949" />
             </button>
           </div>
         </div>

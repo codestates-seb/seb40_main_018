@@ -88,7 +88,7 @@ export const CheckInput = ({
       isCheck: false,
     };
     await axios
-      .post(`${process.env.REACT_APP_API_URL}check-list`, todoPost, {
+      .post(`/check-list`, todoPost, {
         headers: {
           Authorization: accessToken,
         },
@@ -97,7 +97,7 @@ export const CheckInput = ({
       .then((err) => console.log(err));
 
     await axios
-      .get(`${process.env.REACT_APP_API_URL}check-list`, {
+      .get(`/check-list`, {
         headers: {
           Authorization: accessToken,
         },
@@ -119,7 +119,7 @@ export const CheckInput = ({
 
     // ^^editTodo.id
     axios
-      .patch(`${process.env.REACT_APP_API_URL}check-list/${cid}`, patch2)
+      .patch(`/check-list/${cid}`, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res2", err));
 

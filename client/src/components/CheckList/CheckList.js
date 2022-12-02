@@ -128,7 +128,7 @@ export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) =
     // ^^todo.id
 
     axios
-      .patch(`${process.env.REACT_APP_API_URL}check-list/` + cid, patch2)
+      .patch(`/check-list/` + cid, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
   };
@@ -144,7 +144,7 @@ export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) =
 
   const handleDelete = ({ id }) => {
     setTodos(todos.filter((todos) => todos.id !== id));
-    axios.delete(`${process.env.REACT_APP_API_URL}check-list/` + id);
+    axios.delete(`/check-list/` + id);
   };
 
   return (

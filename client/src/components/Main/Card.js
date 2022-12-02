@@ -84,13 +84,13 @@ const Region = styled.div`
   justify-content: center;
   align-items: center;
   width: auto;
-  height: 16px;
+  /* height: 16px; */
   color: #535353;
-  padding: 8px;
+  padding: 1px 7px;
   background-color: hsl(0, 0%, 100%);
   border: 1px solid hsl(180, 32%, 54%);
   border-radius: 35px;
-  font-size: 10px;
+  font-size: 12px;
 
   &:hover {
     background-color: hsl(180, 12%, 96%);
@@ -125,7 +125,10 @@ const Budget = styled.div`
 
 const TagContainer = styled.div`
   display: flex;
-  word-break: break-all;
+  align-items: flex-start;
+  height: 26px;
+  overflow: hidden;
+  /* word-break: break-all; */
   gap: 6px;
   flex-wrap: wrap;
 `;
@@ -187,6 +190,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, setHasMore, result, set
       setResult(result.slice(12));
     }, 1500);
   };
+
   return (
     <>
       {loading && <SkeletonCard />}
@@ -230,7 +234,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, setHasMore, result, set
                 <TagContainer>
                   {list.tags.map((tag, idx) => (
                     <li key={idx}>
-                      <DarkMintTag height="16px" text={tag}></DarkMintTag>
+                      <DarkMintTag text={tag}></DarkMintTag>
                     </li>
                   ))}
                 </TagContainer>
