@@ -55,7 +55,7 @@ const DateInfo = styled.div`
 /* 링크연결 - 각 다이어리 상세페이지로 */
 // 확인용
 
-const MyPageCard = ({ cardList, hasMore, fetchDiaryList, tag }) => {
+const MyPageCard = ({ cardList, hasMore, fetchDiaryList, page }) => {
   // yerin
   // 스크롤 시에 데이터를 추가적으로 받아오는 함수
   // const fetchMoreData = () => {
@@ -78,7 +78,7 @@ const MyPageCard = ({ cardList, hasMore, fetchDiaryList, tag }) => {
     <>
       <InfiniteScroll
         dataLength={cardList.length}
-        next={() => fetchDiaryList(tag)}
+        next={() => fetchDiaryList(page)}
         hasMore={hasMore}
         loader={<h4>Loading...</h4>}
         endMessage={

@@ -83,9 +83,9 @@ function LoginHeader() {
   return (
     <Box>
       <HeaderContainer>
-        <Link to="/">
+        <a href="/">
           <Logo2 />
-        </Link>
+        </a>
         {/* Header.js / 로그인 ? 로그인 후 헤더 : 로그인 전 헤더 */}
         <Block>
           <Link to="/diary">

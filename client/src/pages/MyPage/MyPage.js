@@ -26,9 +26,9 @@ const MyPage = () => {
   const [totalPage, setTotalPage] = useState(1);
   const accessToken = localStorage.getItem("accessToken");
 
-  const fetchDiaryList = async (tag) => {
+  const fetchDiaryList = async (page) => {
     setLoading(true);
-    const res = await axios.get(`/member/me/diaries?size=10&page=1&tag=${tag}`, {
+    const res = await axios.get(`/member/me/diaries?size=10&page=${page}`, {
       headers: {
         Authorization: accessToken,
       },
@@ -72,10 +72,10 @@ const MyPage = () => {
     //   })
     //   // .then((res) => console.log(res.data))
     //   .catch((err) => console.log(err));
-    const timer = setTimeout(() => {
-      fetchDiaryList(tag);
-    }, 2000);
-    return () => clearTimeout(timer);
+    // const timer = setTimeout(() => {
+    fetchDiaryList(tag);
+    // }, 2000);
+    // return () => clearTimeout(timer);
   }, []);
 
   // yerin
@@ -99,7 +99,7 @@ const MyPage = () => {
             result={result}
             setResult={setResult}
             fetchDiaryList={fetchDiaryList}
-            tag={tag}
+            page={page}
           />
         )}
       </MyPageContainer>
