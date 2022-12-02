@@ -6,19 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import project.danim.diary.domain.Diary;
-import project.danim.diary.dto.DiaryResponseDto;
 import project.danim.diary.repository.DiaryRepository;
-import project.danim.diary.service.DiaryService;
 import project.danim.response.MultiResponseDto;
 import project.danim.tag.domain.Tag;
 import project.danim.tag.dto.TagDiaryResponseDto;
 import project.danim.tag.repository.TagRepository;
 
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

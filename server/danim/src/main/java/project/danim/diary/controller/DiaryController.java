@@ -78,7 +78,7 @@ public class DiaryController {
     @GetMapping
     public ResponseEntity getDiaries(@Positive @RequestParam int size,
                                      @Positive @RequestParam int page) {
-        return new ResponseEntity<>(diaryService.findDiaries(size, page), HttpStatus.OK);
+        return new ResponseEntity<>(diaryService.findDiariesForCard(size, page), HttpStatus.OK);
     }
 
     @ApiOperation(value = "지역 검색", response = Diary.class)

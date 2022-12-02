@@ -10,6 +10,7 @@ import project.danim.diary.domain.Diary;
 import project.danim.diary.dto.DiaryPatchDto;
 import project.danim.diary.dto.DiaryPostDto;
 import project.danim.diary.dto.DiaryResponseDto;
+import project.danim.diary.dto.DiaryResponseDtoForCard;
 import project.danim.diary.mapper.DiaryMapper;
 import project.danim.diary.repository.DiaryRepository;
 import project.danim.exeption.BusinessLogicException;
@@ -93,6 +94,17 @@ public class DiaryService {
 
         return new MultiResponseDto<>(diaries, diaryPage);
     }
+
+    public MultiResponseDto findDiariesForCard(int size, int page) {
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("diaryId").descending());
+        Page<Diary> diaryPage = diaryRepository.findAll(pageable);
+        List<DiaryResponseDtoForCard> diaries = diaryPage.getContent().stream()
+                .map(diary -> DiaryResponseDtoForCard.of(diary))
+                .collect(Collectors.toList());
+
+        return new MultiResponseDto<>(diaries, diaryPage);
+    }
+
     public MultiResponseDto findDiariesFilterCost(int min, int max, int size, int page) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("diaryId").descending());
         Page<Diary> diaryPage = diaryRepository.findAllDiaryByCost(min, max, pageable);
