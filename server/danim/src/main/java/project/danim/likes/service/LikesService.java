@@ -72,4 +72,17 @@ public class LikesService {
     public Likes findLikes(Long memberId, Long diaryId){
         return likesRepository.findByDiaryIdAndMemberId(diaryId, memberId).orElse(null);
     }
+
+    public LikeResponseDto findLike(long diaryId, String email) {
+        Member findMember = memberService.findMember(email);
+
+        Likes findLike = likesRepository.findByDiaryIdAndMemberId(diaryId, findMember.getMemberId())
+                .orElse(null);
+
+        if (findLike == null) {
+            return new LikeResponseDto(false);
+        }
+
+        return new LikeResponseDto(true);
+    }
 }
