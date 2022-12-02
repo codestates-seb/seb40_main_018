@@ -69,7 +69,7 @@ function LoginHeader() {
     } else if (!modalRef.current.contains(target)) {
       modalRef.current.style.display = "none";
     } else {
-      modalRef.current.style.display = "block";
+      modalRef.current.style.display = "none";
     }
   };
 
