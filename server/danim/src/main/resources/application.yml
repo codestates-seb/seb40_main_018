@@ -36,7 +36,7 @@ cloud:
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
-  access-token-expiration-minutes: 30
-  refresh-token-expiration-minutes: 400
+  access-token-expiration-minutes: 2880
+  refresh-token-expiration-minutes: 5760
 
 
