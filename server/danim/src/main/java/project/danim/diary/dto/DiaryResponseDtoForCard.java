@@ -1,13 +1,10 @@
-package project.danim.member.dto;
+package project.danim.diary.dto;
 
 import lombok.Getter;
 import project.danim.diary.domain.Diary;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 @Getter
-public class MemberResponseForProfileDiaries {
+public class DiaryResponseDtoForCard {
     private final Long diaryId;
 
     private final String city;
@@ -18,7 +15,7 @@ public class MemberResponseForProfileDiaries {
 
     private final String imageUrl;
 
-    private MemberResponseForProfileDiaries(Long diaryId, String city, int year, int month, int day, String imageUrl) {
+    private DiaryResponseDtoForCard(Long diaryId, String city, int year, int month, int day, String imageUrl) {
         this.diaryId = diaryId;
         this.city = city;
         this.year = year;
@@ -27,8 +24,8 @@ public class MemberResponseForProfileDiaries {
         this.imageUrl = imageUrl;
     }
 
-    public static MemberResponseForProfileDiaries of(Diary diary) {
-        return new MemberResponseForProfileDiaries(diary.getDiaryId(),
+    public static DiaryResponseDtoForCard of(Diary diary) {
+        return new DiaryResponseDtoForCard(diary.getDiaryId(),
                 diary.getCity(),
                 diary.getTravelDate().getYear(),
                 diary.getTravelDate().getMonthValue(),
