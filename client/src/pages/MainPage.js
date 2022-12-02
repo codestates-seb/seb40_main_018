@@ -28,28 +28,26 @@ export default function MainPage() {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [tag, setTag] = useState("");
-
+  console.log(tag);
   const fetchDiaryList = async (page) => {
     setLoading(true);
+
     const res = await axios.get(`/diary?size=12&page=${page}`); // &tag=${tag}
-    const timer = setTimeout(() => {
-      console.log(res.data);
-      const diaries = res.data.data;
-      const pagination = res.data.pageInfo;
+    console.log(res.data);
+    const diaries = res.data.data;
+    const pagination = res.data.pageInfo;
 
-      if (diaryList.length > 0) {
-        const previousDiaries = diaryList;
-        const newDiaries = diaries;
+    if (diaryList.length > 0) {
+      const previousDiaries = diaryList;
+      const newDiaries = diaries;
 
-        setDiaryList([...previousDiaries, ...newDiaries]);
-      } else {
-        setDiaryList(diaries);
-      }
-      setPage(pagination.page + 1);
-      setTotalPage(pagination.totalPages);
-      setLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
+      setDiaryList([...previousDiaries, ...newDiaries]);
+    } else {
+      setDiaryList(diaries);
+    }
+    setPage(pagination.page + 1);
+    setTotalPage(pagination.totalPages);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -66,7 +64,10 @@ export default function MainPage() {
     //   }, 2000);
     //   return () => clearTimeout(timer);
     // });
-    fetchDiaryList(page);
+    const timer = setTimeout(() => {
+      fetchDiaryList(page);
+    }, 2000);
+    return () => clearTimeout(timer);
   }, []);
 
   // useEffect(() => {

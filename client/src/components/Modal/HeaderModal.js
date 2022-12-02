@@ -174,7 +174,6 @@ export const HeaderModal = () => {
     // dispatch(getLoginStatus({ isLogin: false }));
     // navigate("/");
     // window.location.reload(); // 효과
-    console.log("로그아웃 완료");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     dispatch(getLoginStatus({ isLogin: false }));

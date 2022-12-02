@@ -10,7 +10,8 @@ export const refreshToken = async () => {
       Refresh: refreshToken,
     },
   };
-  const res = await fetch("/token", options);
+  // ^^
+  const res = await fetch("/auth/refresh", options);
   console.log(res);
   console.log("토큰 재발급 완료");
   localStorage.setItem("accessToken", res.headers.get("authorization"));

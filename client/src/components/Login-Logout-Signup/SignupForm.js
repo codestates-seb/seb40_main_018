@@ -51,8 +51,9 @@ export const SignupForm = () => {
 
   const isValid = (type, value) => {
     const pattern = {
-      // 2자 이상 16자 이하, 영어 또는 숫자 또는 한글로 구성
-      nickname: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/,
+      // 한글이나 영문대소문자, 숫자, 특수문자 혼합 사용하여 2자 이상 16자 이하
+      // nickname: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/,
+      nickname: /^(?=.*[a-zA-Z가-힣])(?=.*[^a-zA-Z0-9]|.*[0-9]).{2,16}$/,
       // 숫자 (0~9) or 알파벳 (a~z, A~Z) 으로 시작하며 중간에 -_. 문자가 있을 수 있으며 그 후 숫자 (0~9) or 알파벳 (a~z, A~Z)이 올 수도 있고 연달아 올 수도 있고 없을 수도 있다.
       // @ 는 반드시 존재하며 . 도 반드시 존재하고 a~z, A~Z 의 문자가 2,3개 존재하고 i = 대소문자 구분 안한다.
       email: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
@@ -73,7 +74,8 @@ export const SignupForm = () => {
     if (name.length <= 0) {
       setNameErrMsg("닉네임을 입력해주세요.");
     } else if (!isValid("name", name)) {
-      setNameErrMsg("닉네임은 2자 이상 16자 이하, 영어 또는 숫자 또는 한글로만 입력하여 주세요.");
+      setNameErrMsg("닉네임은 한글이나 영문대소문자, 숫자, 특수문자 혼합 사용하여 2자 이상 16자 이하로 입력해 주세요.");
+      return false;
     } else {
       setNameErrMsg("");
     }
