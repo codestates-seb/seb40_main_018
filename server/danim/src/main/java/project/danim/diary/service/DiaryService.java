@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import project.danim.diary.domain.Diary;
+import project.danim.diary.dto.DiaryPatchDto;
 import project.danim.diary.dto.DiaryPostDto;
 import project.danim.diary.dto.DiaryResponseDto;
 import project.danim.diary.mapper.DiaryMapper;
@@ -17,9 +18,11 @@ import project.danim.member.repository.MemberRepository;
 import project.danim.member.service.MemberService;
 import project.danim.member.service.MemberServiceHelper;
 import project.danim.response.MultiResponseDto;
+import project.danim.tag.service.TagService;
 
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -33,10 +36,12 @@ public class DiaryService {
 
     private final MemberService memberService;
 
-    public DiaryService(DiaryRepository diaryRepository, DiaryMapper diaryMapper, MemberService memberService) {
+    private final TagService tagService;
+    public DiaryService(DiaryRepository diaryRepository, DiaryMapper diaryMapper, MemberService memberService, TagService tagService) {
         this.diaryRepository = diaryRepository;
         this.diaryMapper = diaryMapper;
         this.memberService = memberService;
+        this.tagService = tagService;
     }
 
     public DiaryResponseDto createDiary(DiaryPostDto diaryPostDto, String email){
@@ -44,6 +49,8 @@ public class DiaryService {
         Diary newDiary = diaryMapper.diaryPostDtoToDiary(diaryPostDto, findMember.getMemberId());
 
         Diary diary = diaryRepository.save(newDiary);
+
+        tagService.createTags(diary.getDiaryId(), diary.getTags());
 
         return diaryMapper.diaryToDiaryResponseDto(diary);
     }
@@ -110,25 +117,28 @@ public class DiaryService {
     /*
     다이어리 수정
      */
-    public Diary updateDiary(Diary diary) {
+    public DiaryResponseDto updateDiary(DiaryPatchDto diaryPatchDto, long diaryId, String email) {
+        Member loginMember = memberService.findMember(email);
+        if (diaryPatchDto.getMemberId() != loginMember.getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.ACCESS_FORBIDDEN, "로그인한 사용자와 다이어리 작성자가 다릅니다.");
+        }
 
-        Diary findDiary = findVerifiedDiary(diary.getDiaryId()); // 요청된 일기가 DB에 없으면 에러
-        //diaryRepository.findById(diaryId);
-
-        Optional.ofNullable(diary.getTitle())
-                .ifPresent(diaryTitle -> findDiary.setTitle(diaryTitle));
-
-        Optional.ofNullable(diary.getContent())
-                .ifPresent(diaryContent -> findDiary.setContent(diaryContent));
-
-        Optional.ofNullable(diary.getCost())
-                .ifPresent(diaryCost -> findDiary.setCost(diaryCost));
-
-        //  findDiary.setModifiedDate(LocalDateTime.now());
+        Diary findDiary = findVerifiedDiary(diaryId);
+        findDiary.updateDiary(diaryPatchDto.getTitle(),
+                diaryPatchDto.getContent(),
+                diaryPatchDto.getWeather(),
+                diaryPatchDto.getArea(),
+                diaryPatchDto.getCity(),
+                diaryPatchDto.getCost(),
+                diaryPatchDto.getTags(),
+                diaryPatchDto.getTravelDate()
+        );
 
         Diary updatedDiaries = diaryRepository.save(findDiary);
 
-        return updatedDiaries;
+        tagService.updateTags(updatedDiaries.getDiaryId(), updatedDiaries.getTags());
+
+        return diaryMapper.diaryToDiaryResponseDto(updatedDiaries);
     }
 
 //    default List<DiaryResponseDto> diaryToDiaryResponseDtos(List<Diary> diary){
@@ -144,6 +154,8 @@ public class DiaryService {
      */
     public void deleteDiary(long diaryId) {
         diaryRepository.deleteById(diaryId);
+
+        tagService.deleteTag(diaryId);
     }
 
 }

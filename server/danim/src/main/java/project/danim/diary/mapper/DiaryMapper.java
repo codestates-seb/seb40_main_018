@@ -24,6 +24,7 @@ public interface DiaryMapper {
                 diaryPostDto.getCity(),
                 diaryPostDto.getCost(),
                 0,
+                diaryPostDto.getTags(),
                 memberId,
                 diaryPostDto.getTravelDate());
 
@@ -33,7 +34,6 @@ public interface DiaryMapper {
     default Diary diaryPatchDtoTodiary(DiaryPatchDto diaryPatchDto){
         Diary diary = new Diary();
 
-        diary.setDiaryId(diaryPatchDto.getDiaryId());
         diary.setTitle(diaryPatchDto.getTitle());
         diary.setContent(diaryPatchDto.getContent());
         diary.setCost(diaryPatchDto.getCost());
@@ -57,8 +57,8 @@ public interface DiaryMapper {
         diaryResponseDto.setArea(diary.getArea());
         diaryResponseDto.setCost(diary.getCost());
         diaryResponseDto.setTags(diary.getTags());
-        diaryResponseDto.setCreatedAt(diary.getCreatedDate());
-        diaryResponseDto.setModifiedAt(diary.getModifiedDate());
+        diaryResponseDto.setCreatedAt(diary.getCreatedAt());
+        diaryResponseDto.setModifiedAt(diary.getModifiedAt());
         diaryResponseDto.setYear(diary.getTravelDate().getYear());
         diaryResponseDto.setMonth(diary.getTravelDate().getMonthValue());
         diaryResponseDto.setDay(diary.getTravelDate().getDayOfMonth());
