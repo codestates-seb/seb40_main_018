@@ -6,6 +6,8 @@ import project.danim.diary.dto.DiaryPatchDto;
 import project.danim.diary.dto.DiaryPostDto;
 import project.danim.diary.dto.DiaryResponseDto;
 
+import java.util.List;
+
 
 @Mapper(componentModel = "Spring")
 public interface DiaryMapper {
@@ -40,6 +42,7 @@ public interface DiaryMapper {
     }
 
 
+
     /*
   MemberId 추가 필요!!
  */
@@ -63,4 +66,7 @@ public interface DiaryMapper {
 
         return diaryResponseDto;
     }
+
+    List<DiaryResponseDto> diaryToCityResponseDtos(List<Diary> diaries);
+
 }

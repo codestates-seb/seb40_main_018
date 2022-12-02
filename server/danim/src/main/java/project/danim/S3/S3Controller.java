@@ -63,8 +63,6 @@ public class S3Controller {
     @DeleteMapping("/image")
     public void deleteImage(@RequestParam String fileName) {
 
-        deleteImage(fileName);
-
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
 
     }

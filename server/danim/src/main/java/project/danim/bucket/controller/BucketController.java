@@ -2,6 +2,7 @@ package project.danim.bucket.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.danim.bucket.domain.Bucket;
@@ -37,9 +38,9 @@ public class BucketController {
     }
 
     // 1개 조회
-    @GetMapping("/{bucket-list}")
+    @GetMapping("/{bucket-id}")
     public ResponseEntity<SingleResponseDto> getBucket(
-            @PathVariable("bucket-list") @Positive Long bucketId) {
+            @PathVariable("bucket-id") @Positive Long bucketId) {
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(bucketService.findBucket(bucketId)), HttpStatus.OK);
@@ -50,7 +51,9 @@ public class BucketController {
     @PostMapping
     public ResponseEntity<SingleResponseDto> postBucket(@Valid @RequestBody BucketPostDto request) {
 
-        BucketResponseDto response = bucketService.createBucket(request);
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        BucketResponseDto response = bucketService.createBucket(request, email);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.CREATED);
@@ -58,9 +61,9 @@ public class BucketController {
     }
 
     // 체크리스트 수정
-    @PatchMapping("/{bucket-list}")
+    @PatchMapping("/{bucket-id}")
     public ResponseEntity patchBucket(
-            @Positive @PathVariable("bucket-list") Long bucketId,
+            @Positive @PathVariable("bucket-id") Long bucketId,
             @RequestBody BucketPatchDto request) {
 
         BucketResponseDto response = bucketService.updateBucket(request, bucketId);
@@ -71,8 +74,8 @@ public class BucketController {
     }
 
     // 체크리스트 삭제
-    @DeleteMapping("/{bucket-list}")
-    public ResponseEntity deleteBucket(@Positive @PathVariable("bucket-list") Long bucketId) {
+    @DeleteMapping("/{bucket-id}")
+    public ResponseEntity deleteBucket(@Positive @PathVariable("bucket-id") Long bucketId) {
 
         bucketService.deleteBucket(bucketId);
 

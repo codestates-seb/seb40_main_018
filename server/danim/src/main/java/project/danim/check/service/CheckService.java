@@ -10,6 +10,8 @@ import project.danim.check.dto.CheckResponseDto;
 import project.danim.check.repository.CheckRepository;
 import project.danim.exeption.BusinessLogicException;
 import project.danim.exeption.ExceptionCode;
+import project.danim.member.domain.Member;
+import project.danim.member.service.MemberService;
 import project.danim.response.MultiResponseDto;
 
 import javax.validation.Valid;
@@ -22,8 +24,11 @@ public class CheckService {
 
     private final CheckRepository checkRepository;
 
-    public CheckService(CheckRepository checkRepository) {
+    private final MemberService memberService;
+
+    public CheckService(CheckRepository checkRepository, MemberService memberService) {
         this.checkRepository = checkRepository;
+        this.memberService = memberService;
     }
 
     // 1개 조회
@@ -42,9 +47,9 @@ public class CheckService {
     }
 
     // 체크리스트 생성
-    public CheckResponseDto createCheck(@Valid @RequestBody CheckPostDto request) {
+    public CheckResponseDto createCheck(@Valid @RequestBody CheckPostDto request, String email) {
 
-        // TODO 회원 확인 필요
+        Member findMember = memberService.findMember(email);
 
         Check check = Check.builder()
                 .checkContent(request.getCheckContent())
