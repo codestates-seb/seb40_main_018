@@ -183,10 +183,10 @@ const Detail = () => {
   useEffect(() => {
     axios
       // .get(`http://localhost:4000/diary/` + id)
-      .get(`/diary/{diary-id}`)
+      .get(`/diary/` + id)
       .then((res) => {
-        console.log(res.data);
-        setDiaryDetail(res.data);
+        console.log("Detail", res.data.data);
+        setDiaryDetail(res.data.data);
       })
       .catch((err) => console.log(err));
   }, []);

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-// import { useParams, useNavigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { Location } from "../Diary/Location";
 import styled from "styled-components";
 // import LoginHeader from "../../components/Header/LoginHeader";
@@ -41,7 +41,7 @@ const BtnArea = styled.div`
 `;
 
 const DiaryEdit = () => {
-  // const id = useParams().id;
+  const id = useParams().id;
   const navigate = useNavigate();
   const select1 = Object.keys(Location);
   const [selected, setSelected] = useState(select1[0]);
@@ -58,25 +58,30 @@ const DiaryEdit = () => {
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
     setLoading(true);
     axios
       // .get(`http://localhost:4000/diary/` + id)
-      .get(`/diary/{diary-id}`)
+      .get(`/diary/` + id, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.data);
         const timer = setTimeout(() => {
-          setSelected(res.data.area);
-          setCity(res.data.city);
-          setTitle(res.data.title);
-          setYear(res.data.year);
-          setMonth(res.data.month);
-          setDay(res.data.day);
-          setWeather(res.data.weather);
-          setQuestion(res.data.question);
-          setDiary(res.data.content);
-          setPrice(res.data.cost);
-          setTags(res.data.tags);
+          setSelected(res.data.data.area);
+          setCity(res.data.data.city);
+          setTitle(res.data.data.title);
+          setYear(res.data.data.year);
+          setMonth(res.data.data.month);
+          setDay(res.data.data.day);
+          setWeather(res.data.data.weather);
+          setQuestion(res.data.data.question);
+          setDiary(res.data.data.content);
+          setPrice(res.data.data.cost);
+          setTags(res.data.data.tags);
           setLoading(false);
         }, 1000);
         return () => clearTimeout(timer);
@@ -115,8 +120,12 @@ const DiaryEdit = () => {
     };
     axios
       // .patch(`http://localhost:4000/diary/` + id, diaryInfo)
-      .patch(`/diary/{diary-id}`, diaryInfo)
-      .then((res) => navigate(`/detail/${res.data.id}`))
+      .patch(`/diary/` + id, diaryInfo, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => navigate(`/detail/${res.data.diaryId}`))
       .then((err) => console.log(err));
   };
   return (
