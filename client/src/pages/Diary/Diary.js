@@ -59,7 +59,6 @@ const Diary = () => {
     "이번 여행 중 나만 알고 싶은 사진 명소는 어디인가요?",
     "여행에서 자주 들은 노래는 무엇인가요?",
   ];
-  const nickname = "dlwlrma";
   const [imageList, setImageList] = useState([]);
   const [question, setQuestion] = useState(randomQuestions[0]);
   let [counter, setCounter] = useState(0);
@@ -73,7 +72,7 @@ const Diary = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log("data", data);
     if (imageList.length === 0) {
       console.log("imageList:", imageList);
       alert("이미지를 추가해 주세요.");
@@ -85,19 +84,33 @@ const Diary = () => {
       return false;
     }
 
-    const diaryInfo = {
-      ...data,
-      nickname: nickname,
-      question: question,
-      counter: counter,
-      tags: tags,
-    };
+    // const diaryInfo = {
+    //   ...data,
+    //   // nickname: nickname,
+    //   question: question,
+    //   counter: counter,
+    //   tags: tags,
+    // };
 
-    console.log("diaryInfo", diaryInfo);
+    // console.log("diaryInfo", diaryInfo);
     const formData = new FormData();
 
     Array.from(imageList).forEach((el) => {
       formData.append("file", el);
+    });
+    formData.append("area", data.area);
+    formData.append("city", data.city);
+    formData.append("content", data.content);
+    formData.append("cost", data.cost);
+    formData.append("day", data.day);
+    formData.append("month", data.month);
+    formData.append("title", data.title);
+    formData.append("weather", data.weather);
+    formData.append("year", data.year);
+    formData.append("question", data.question);
+    formData.append("counter", data.counter);
+    tags.map((el) => {
+      formData.append("tags", el);
     });
 
     console.log("imageList", imageList);
@@ -109,30 +122,32 @@ const Diary = () => {
     for (const value of formData.values()) {
       console.log("value", value);
     }
-    console.log("formData", formData.getAll("file"));
+    console.log("formDataFile", formData.getAll("file"));
+    console.log("formData", formData);
 
     const accessToken = localStorage.getItem("accessToken");
 
-    axios
-      // .post("http://localhost:4000/diary", diaryInfo)
-      .post(`/diary`, diaryInfo, {
-        headers: {
-          Authorization: accessToken,
-        },
-      })
-      .then((res) => console.log(res.data))
-      // .then((res) => navigate(`/detail/${res.data.id}`))
-      .catch((err) => console.log("DiaryErr", err));
+    // axios
+    //   // .post("http://localhost:4000/diary", diaryInfo)
+    //   .post(`/diary`, diaryInfo, {
+    //     headers: {
+    //       Authorization: accessToken,
+    //     },
+    //   })
+    //   // .then((res) => console.log("Diary", res.data))
+    // .then((res) => navigate(`/detail/${res.data.data.diaryId}`))
+    //   .catch((err) => console.log("DiaryErr", err));
 
     axios
-      // .post("http://localhost:4002/image", formData, {
-      .post(`${process.env.REACT_APP_API_URL}s3/upload`, formData, {
+      .post(`/diary`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: accessToken,
         },
       })
       .then((res) => console.log("IMGres:", res))
+      // .then((res) => navigate(`/detail/${res.data.data.diaryId}`))
+
       .catch((err) => console.log("IMGErr", err));
   };
 
