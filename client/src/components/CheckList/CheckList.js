@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 export const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "350px")};
   height: ${(props) => (props.height ? props.height : "58px")};
@@ -107,6 +108,8 @@ export const MintButton2 = styled.button`
 `;
 
 export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) => {
+  const cid = useParams().id;
+  console.log("check_id", cid);
   const handleComplete = (todo) => {
     setTodos(
       todos.map((item) => {
@@ -125,7 +128,7 @@ export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) =
     // ^^todo.id
 
     axios
-      .patch(`${process.env.REACT_APP_API_URL}check-list/{check-id}` + patch2)
+      .patch(`${process.env.REACT_APP_API_URL}check-list/` + cid, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
   };
@@ -141,7 +144,7 @@ export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) =
 
   const handleDelete = ({ id }) => {
     setTodos(todos.filter((todos) => todos.id !== id));
-    axios.delete(`${process.env.REACT_APP_API_URL}check-list/{check-id}` + id);
+    axios.delete(`${process.env.REACT_APP_API_URL}check-list/` + id);
   };
 
   return (

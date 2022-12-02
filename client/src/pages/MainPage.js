@@ -27,7 +27,7 @@ export default function MainPage() {
   useEffect(() => {
     // axios.get(`http://localhost:4000/diary/${id}`).then((res) => {
     setLoading(true);
-    axios.get(`${process.env.REACT_APP_API_URL}diary?size=12&page=1`).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}diary?size=12&page=${page}`).then((res) => {
       const timer = setTimeout(() => {
         console.log(res.data.data);
         let response = res.data.data;
@@ -35,6 +35,7 @@ export default function MainPage() {
         response = response.slice(12);
         setResult(response); // 저장한 데이터 모두 저장
         setLoading(false);
+        setPage(page + 1);
       }, 2000);
       return () => clearTimeout(timer);
     });
@@ -43,6 +44,8 @@ export default function MainPage() {
   // yerin
   const [hasMore, setHasMore] = useState(true);
   const [result, setResult] = useState([]);
+  const [page, setPage] = useState(1);
+
   return (
     <Main>
       <div>

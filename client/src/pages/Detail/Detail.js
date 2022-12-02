@@ -161,6 +161,7 @@ const CommentTitle = styled.div`
 
 const Detail = () => {
   const id = useParams().id;
+  console.log("detail_id", id);
   const navigate = useNavigate();
 
   const images = [
@@ -183,7 +184,7 @@ const Detail = () => {
   useEffect(() => {
     axios
       // .get(`http://localhost:4000/diary/` + id)
-      .get(`${process.env.REACT_APP_API_URL}diary/{diary-id}`)
+      .get(`${process.env.REACT_APP_API_URL}diary/${id}`)
       .then((res) => {
         console.log(res.data);
         setDiaryDetail(res.data);
@@ -195,7 +196,7 @@ const Detail = () => {
     axios
       .get(
         // `http://localhost:4002/image/` + id,
-        `${process.env.REACT_APP_API_URL}image/{diary-id}`,
+        `${process.env.REACT_APP_API_URL}image/${id}`,
         // , {
         //   responseType: "blob",
         // }

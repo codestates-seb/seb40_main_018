@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 export const Test = styled.div`
@@ -78,6 +79,7 @@ export const MintButton2 = styled.button`
 `;
 
 export const BucketList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) => {
+  const id = useParams().id;
   const handleComplete = (todo) => {
     setTodos(
       todos.map((item) => {
@@ -96,7 +98,7 @@ export const BucketList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) 
     // ^^todo.id
 
     axios
-      .patch(`${process.env.REACT_APP_API_URL}bucket-list/{bucket-id}` + todo.id, patch2)
+      .patch(`${process.env.REACT_APP_API_URL}bucket-list/${id}`, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
   };
@@ -108,9 +110,11 @@ export const BucketList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) 
     setIsEdit(!isEdit);
   };
 
+  // ^^id
+
   const handleDelete = ({ id }) => {
     setTodos(todos.filter((todos) => todos.id !== id));
-    axios.delete(`${process.env.REACT_APP_API_URL}bucket-list/{bucket-id}` + id);
+    axios.delete(`${process.env.REACT_APP_API_URL}bucket-list/${id}`);
   };
 
   return (
