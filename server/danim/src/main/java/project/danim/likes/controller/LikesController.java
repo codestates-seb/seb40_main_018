@@ -35,9 +35,15 @@ public class LikesController {
     }
 
 */
-        @ApiOperation(value = "좋아요 등록")
         @GetMapping("/{diary-id}")
-        public ResponseEntity addLike(@Positive @PathVariable("diary-id") long diaryId){
+        public ResponseEntity getLike(@Positive @PathVariable("diary-id") long diaryId) {
+            String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            return new ResponseEntity<>(new SingleResponseDto<>(likesService.findLike(diaryId, email)), HttpStatus.OK);
+        }
+        @ApiOperation(value = "좋아요 등록")
+        @PostMapping("/{diary-id}")
+        public ResponseEntity addLike(@Positive @PathVariable("diary-id") long diaryId) {
             String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
             return new ResponseEntity<>(new SingleResponseDto<>(likesService.checkLike(diaryId, email)), HttpStatus.OK);
