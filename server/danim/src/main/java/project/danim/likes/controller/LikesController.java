@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import project.danim.diary.domain.Diary;
 import project.danim.likes.service.LikesService;
 import project.danim.member.domain.Member;
+import project.danim.response.SingleResponseDto;
 
 import javax.validation.constraints.Positive;
 import java.util.Objects;
@@ -38,9 +39,8 @@ public class LikesController {
         @GetMapping("/{diary-id}")
         public ResponseEntity addLike(@Positive @PathVariable("diary-id") long diaryId){
             String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            likesService.checkLike(diaryId, email);
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(new SingleResponseDto<>(likesService.checkLike(diaryId, email)), HttpStatus.OK);
         }
 
     }

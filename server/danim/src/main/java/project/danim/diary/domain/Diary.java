@@ -65,6 +65,8 @@ public class Diary extends BaseTime {
 //    @ElementCollection(fetch = FetchType.EAGER)
 //    @CollectionTable(name = "diary_tag", joinColumns = @JoinColumn(name = "diary_id"))
 //    private List<String> tags;
+
+    @BatchSize(size = 10)
     @Column(nullable = false)
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "diary_image", joinColumns = @JoinColumn(name = "diary_id"))

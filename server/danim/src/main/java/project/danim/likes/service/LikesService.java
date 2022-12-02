@@ -9,6 +9,7 @@ import project.danim.diary.service.DiaryService;
 import project.danim.exeption.BusinessLogicException;
 import project.danim.exeption.ExceptionCode;
 import project.danim.likes.domain.Likes;
+import project.danim.likes.dto.LikeResponseDto;
 import project.danim.likes.repository.LikesRepository;
 import project.danim.member.domain.Member;
 import project.danim.member.service.MemberService;
@@ -29,7 +30,7 @@ public class LikesService {
     private final DiaryService diaryService;
     private final MemberService memberService;
 
-    public void checkLike(long diaryId, String email) {
+    public LikeResponseDto checkLike(long diaryId, String email) {
         Member member = memberService.findMember(email);
         Diary diary = diaryService.findDiary(diaryId);
 
@@ -37,10 +38,12 @@ public class LikesService {
             Likes newLikes = new Likes(diaryId, member.getMemberId());
             diary.plusLikesCount();
             likesRepository.save(newLikes);
+            return new LikeResponseDto(true);
         } else {
             Likes findLike = likesRepository.findByDiaryIdAndMemberId(diaryId, member.getMemberId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
             diary.minusLikesCount();
             likesRepository.delete(findLike);
+            return new LikeResponseDto(false);
         }
     }
 
