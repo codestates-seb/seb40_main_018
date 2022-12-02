@@ -66,6 +66,12 @@ public class TagService {
 //
 //    }
 
+    public List<String> getTags(long diaryId) {
+        return tagRepository.findAllByDiaryId(diaryId).stream()
+                .map(tag -> tag.getContent())
+                .collect(Collectors.toList());
+    }
+
     public void createTags(long diaryId, List<String> tags) {
         for (String tag : tags) {
             tagRepository.save(Tag.builder()
