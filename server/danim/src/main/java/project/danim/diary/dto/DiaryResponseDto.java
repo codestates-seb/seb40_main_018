@@ -18,7 +18,7 @@ public class DiaryResponseDto {
     private String weather;
     private String city;
     private String area;
-    private List<Tag> tags;
+    private List<String> tags;
     private int cost;
     private long memberId;
     private long likeCount;

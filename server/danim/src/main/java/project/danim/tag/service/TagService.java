@@ -22,75 +22,89 @@ import java.util.stream.Collectors;
 @Transactional
 public class TagService {
 
-    private TagRepository tagRepository;
-    private DiaryRepository diaryRepository;
+    private final TagRepository tagRepository;
 
-    public TagService(TagRepository tagRepository, DiaryRepository diaryRepository) {
+    public TagService(TagRepository tagRepository) {
         this.tagRepository = tagRepository;
-        this.diaryRepository = diaryRepository;
     }
 
     // 태그 전체 조회
-    @Transactional
-    public List<TagResponseDto> findTags(Long diaryId) {
-
-        List<Tag> tags =  tagRepository.findAllByDiary_DiaryId(diaryId);
-
-        return tags.stream()
-                .map(tag -> TagResponseDto.builder()
-                        .content(tag.getContent())
-                        .diaryId(diaryId)
-                        .tagId(tag.getTagId())
-                        .createdAt(tag.getCreatedAt())
-                        .build())
-                .collect(Collectors.toList());
-
-    }
+//    @Transactional
+//    public List<TagResponseDto> findTags(Long diaryId) {
+//
+//        List<Tag> tags =  tagRepository.findAllByDiary_DiaryId(diaryId);
+//
+//        return tags.stream()
+//                .map(tag -> TagResponseDto.builder()
+//                        .content(tag.getContent())
+//                        .diaryId(diaryId)
+//                        .tagId(tag.getTagId())
+//                        .createdAt(tag.getCreatedAt())
+//                        .build())
+//                .collect(Collectors.toList());
+//
+//    }
 
     // 태그 생성
-    @Transactional
-    public TagResponseDto createTag(TagPostDto request, Tag tag, Diary diary) {
+//    @Transactional
+//    public TagResponseDto createTag(TagPostDto request, Tag tag, Diary diary) {
+//
+//        Optional<Diary> OptionalDiary = diaryRepository.findByDiaryId(diary.getDiaryId());
+//        Diary findDiary = OptionalDiary.orElseThrow(() -> new BusinessLogicException(ExceptionCode.DIARY_NOT_FOUND));
+//
+//        tag.setDiary(diary);
+//        tag.setContent(request.getContent());
+//
+//        Tag createTag = tagRepository.save(tag);
+//
+//        return TagResponseDto.builder()
+//                .diaryId(diary.getDiaryId())
+//                .content(createTag.getContent())
+//                .tagId(createTag.getTagId())
+//                .createdAt(createTag.getCreatedAt())
+//                .build();
+//
+//    }
 
-        Optional<Diary> OptionalDiary = diaryRepository.findByDiaryId(diary.getDiaryId());
-        Diary findDiary = OptionalDiary.orElseThrow(() -> new BusinessLogicException(ExceptionCode.DIARY_NOT_FOUND));
+    public void createTags(long diaryId, List<String> tags) {
+        for (String tag : tags) {
+            tagRepository.save(Tag.builder()
+                    .diaryId(diaryId)
+                    .content(tag)
+                    .build());
+        }
+    }
 
-        tag.setDiary(diary);
-        tag.setContent(request.getContent());
-
-        Tag createTag = tagRepository.save(tag);
-
-        return TagResponseDto.builder()
-                .diaryId(diary.getDiaryId())
-                .content(createTag.getContent())
-                .tagId(createTag.getTagId())
-                .createdAt(createTag.getCreatedAt())
-                .build();
-
+    public void updateTags(long diaryId, List<String> tags) {
+        tagRepository.deleteAllByDiaryId(diaryId);
+        for (String tag : tags) {
+            tagRepository.save(Tag.builder()
+                    .diaryId(diaryId)
+                    .content(tag)
+                    .build());
+        }
     }
 
     // 태그 수정
-    @Transactional
-    public TagResponseDto updateTag(@Valid @RequestBody TagPatchDto request, Long tagId) {
-
-        Optional<Tag> optionalTag = tagRepository.findById(tagId);
-        Tag findTag = optionalTag.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
-
-        Optional.ofNullable(request.getContent())
-                .ifPresent(content -> findTag.setContent(content));
-
-        Tag updateTag = tagRepository.save(findTag);
-
-        return TagResponseDto.of(updateTag);
-
-    }
+//    @Transactional
+//    public TagResponseDto updateTag(@Valid @RequestBody TagPatchDto request, Long tagId) {
+//
+//        Optional<Tag> optionalTag = tagRepository.findById(tagId);
+//        Tag findTag = optionalTag.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
+//
+//        Optional.ofNullable(request.getContent())
+//                .ifPresent(content -> findTag.setContent(content));
+//
+//        Tag updateTag = tagRepository.save(findTag);
+//
+//        return TagResponseDto.of(updateTag);
+//
+//    }
 
     // 태그 삭제
     @Transactional
-    public void deleteTag(Long tagId) {
-
-        Optional<Tag> findTag = tagRepository.findByTagId(tagId);
-
-        tagRepository.deleteById(tagId);
+    public void deleteTag(Long diaryId) {
+        tagRepository.deleteAllByDiaryId(diaryId);
     }
 
 }

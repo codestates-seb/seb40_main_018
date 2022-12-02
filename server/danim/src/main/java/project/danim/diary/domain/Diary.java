@@ -56,19 +56,16 @@ public class Diary extends BaseTime {
     @Column(nullable = true, name ="likes_count")
     private int likesCount;
 
-    @CreatedDate
-    private LocalDateTime createdDate = LocalDateTime.now();
-
-    @LastModifiedDate
-    private LocalDateTime modifiedDate = LocalDateTime.now();
-
+    @Column(nullable = true)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> tags;
     @Column(nullable = false)
     private Long memberId;
 
     @Column(nullable = false)
     private LocalDate travelDate;
 
-    public Diary(String title, String content, String weather, String area, String city, int cost, int likesCount, Long memberId, LocalDate travelDate){
+    public Diary(String title, String content, String weather, String area, String city, int cost, int likesCount, List<String> tags, Long memberId, LocalDate travelDate){
         this.title = title;
         this.content = content;
         this.weather = weather;
@@ -76,6 +73,7 @@ public class Diary extends BaseTime {
         this.city = city;
         this.cost = cost;
         this.likesCount = likesCount;
+        this.tags = tags;
         this.memberId = memberId;
         this.travelDate = travelDate;
     }
@@ -86,6 +84,17 @@ public class Diary extends BaseTime {
 
     public void minusLikesCount() {
         this.likesCount = this.likesCount - 1;
+    }
+
+    public void updateDiary(String title, String content, String weather, String area, String city, int cost, List<String> tags, LocalDate travelDate) {
+        this.title = title;
+        this.content = content;
+        this.weather = weather;
+        this.area = area;
+        this.city = city;
+        this.cost = cost;
+        this.tags = tags;
+        this.travelDate = travelDate;
     }
 
     /*
@@ -108,12 +117,9 @@ public class Diary extends BaseTime {
 
   */
 
-    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Tag> tags = new ArrayList<>();
+//    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Tag> tags = new ArrayList<>();
 
-    public void addTag(Tag tag) {
-        this.tags = tags;
-    }
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();

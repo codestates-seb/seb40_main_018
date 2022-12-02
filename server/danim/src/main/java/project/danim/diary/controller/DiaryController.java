@@ -23,8 +23,12 @@ import project.danim.diary.dto.DiaryPostDto;
 import project.danim.diary.dto.DiaryResponseDto;
 import project.danim.diary.mapper.DiaryMapper;
 import project.danim.diary.service.DiaryService;
+import project.danim.exeption.BusinessLogicException;
+import project.danim.exeption.ExceptionCode;
+import project.danim.member.domain.Member;
 import project.danim.response.MultiResponseDto;
 import project.danim.response.SingleResponseDto;
+import project.danim.security.memberDetails.MemberDetails;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -99,13 +103,9 @@ public class DiaryController {
     @PatchMapping("/{diary-id}")
     public ResponseEntity patchDiary(@PathVariable("diary-id") @Positive @NotNull long diaryId,
                                      @Valid @RequestBody DiaryPatchDto diaryPatchDto) {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-
-        diaryPatchDto.setDiaryId(diaryId);
-        Diary diary = diaryMapper.diaryPatchDtoTodiary(diaryPatchDto);
-        Diary updatedDiary = diaryService.updateDiary(diary);
-
-        return new ResponseEntity<>((diaryMapper.diaryToDiaryResponseDto(updatedDiary)),HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(diaryService.updateDiary(diaryPatchDto, diaryId, email)),HttpStatus.OK);
     }
 /*
     @GetMapping("search")

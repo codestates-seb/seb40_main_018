@@ -8,31 +8,24 @@ import javax.persistence.*;
 
 @Entity(name = "TAG")
 @Getter
-@Setter
 @NoArgsConstructor
-public class Tag extends BaseTime {
+public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id")
-    Long tagId;
+    private Long tagId;
 
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
-    String content;
+    private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "diary_id")
-    private Diary diary;
-
-    public void addDiary(Diary diary) {
-        diary.addTag(this);
-        this.diary = diary;
-    }
+    @Column(nullable = false)
+    private long diaryId;
 
     @Builder
-    public Tag(Long tagId, String content) {
-        this.tagId = tagId;
+    public Tag(String content, long diaryId) {
         this.content = content;
+        this.diaryId = diaryId;
     }
 
 }

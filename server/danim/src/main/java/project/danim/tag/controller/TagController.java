@@ -24,46 +24,44 @@ public class TagController {
 
     private final TagService tagService;
 
-    private final DiaryService diaryService;
 
-    public TagController(TagService tagService, DiaryService diaryService) {
+    public TagController(TagService tagService) {
         this.tagService = tagService;
-        this.diaryService = diaryService;
     }
 
     // 1개 일기의 태그 전체 조회
-    @GetMapping("/{diary-id}")
-    public ResponseEntity<SingleResponseDto> getTags(@PathVariable("diary-id") Long diaryId) {
-
-        return new ResponseEntity<>(new SingleResponseDto<>(tagService.findTags(diaryId)), HttpStatus.OK);
-
-    }
+//    @GetMapping("/{diary-id}")
+//    public ResponseEntity<SingleResponseDto> getTags(@PathVariable("diary-id") Long diaryId) {
+//
+//        return new ResponseEntity<>(new SingleResponseDto<>(tagService.findTags(diaryId)), HttpStatus.OK);
+//
+//    }
 
     // 태그 생성
-    @PostMapping("/{diary-id}")
-    public ResponseEntity<SingleResponseDto> postTag(@Valid @RequestBody TagPostDto request,
-                                                       @PathVariable("diary-id") Long diaryId,
-                                                       Tag tag) {
-
-        Diary diary = diaryService.findDiary(diaryId);
-
-        TagResponseDto response = tagService.createTag(request, tag, diary);
-
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(response), HttpStatus.CREATED);
-
-    }
+//    @PostMapping("/{diary-id}")
+//    public ResponseEntity<SingleResponseDto> postTag(@Valid @RequestBody TagPostDto request,
+//                                                       @PathVariable("diary-id") Long diaryId,
+//                                                       Tag tag) {
+//
+//        Diary diary = diaryService.findDiary(diaryId);
+//
+//        TagResponseDto response = tagService.createTag(request, tag, diary);
+//
+//        return new ResponseEntity<>(
+//                new SingleResponseDto<>(response), HttpStatus.CREATED);
+//
+//    }
 
     // 태그 수정
-    @PatchMapping("/{tag-id}")
-    public ResponseEntity patchTag(@PathVariable("tag-id") Long tagId,
-                                   @RequestBody TagPatchDto request) {
-
-        TagResponseDto response = tagService.updateTag(request, tagId);
-
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(response), HttpStatus.OK);
-    }
+//    @PatchMapping("/{tag-id}")
+//    public ResponseEntity patchTag(@PathVariable("tag-id") Long tagId,
+//                                   @RequestBody TagPatchDto request) {
+//
+//        TagResponseDto response = tagService.updateTag(request, tagId);
+//
+//        return new ResponseEntity<>(
+//                new SingleResponseDto<>(response), HttpStatus.OK);
+//    }
 
     // 태그 삭제
     @DeleteMapping("/{tag-id}")

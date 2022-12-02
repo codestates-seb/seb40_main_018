@@ -20,12 +20,11 @@ public class TagResponseDto {
 
     private String content;
 
-    private LocalDateTime createdAt;
 
 
     public static TagResponseDto of(Tag tag) {
 
-        return new TagResponseDto(tag.getTagId(), tag.getTagId(),tag.getContent(), tag.getCreatedAt());
+        return new TagResponseDto(tag.getTagId(), tag.getTagId(),tag.getContent());
     }
 
 }

@@ -1,6 +1,7 @@
 package project.danim.diary.dto;
 
 
+import io.swagger.models.auth.In;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,33 +9,45 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class DiaryPatchDto {
+  @NotNull
+  private long memberId;
 
-
-  private Long diaryId;
-
-  @NotBlank(message = "Patch Title")
+  @NotBlank
   private String title;
 
-  @NotBlank(message = "Patch your Trip")
+  @NotBlank
   private String content;
 
+  @NotNull
+  private Integer year;
 
+  @NotNull
+  private Integer month;
 
-//  @NotBlank
-//  private  String weather;
+  @NotNull
+  private Integer day;
+
+  @NotBlank
+  private String weather;
 
   @NotNull
   private int cost;
 
-  @Builder
-  public DiaryPatchDto(String title, String content, int cost){
-    this.title = title;
-    this.content = content;
-    this.cost = cost;
-  }
+  @NotBlank
+  private String area;
+
+  @NotBlank
+  private String city;
+
+  @NotNull
+  private List<String> tags;
+  public LocalDate getTravelDate() {
+    return LocalDate.of(year, month, day);}
 }
