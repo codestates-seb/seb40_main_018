@@ -13,10 +13,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import project.danim.diary.domain.Diary;
 import project.danim.diary.dto.DiaryPatchDto;
 import project.danim.diary.dto.DiaryPostDto;
@@ -33,6 +35,7 @@ import project.danim.security.memberDetails.MemberDetails;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,11 +58,12 @@ public class DiaryController {
 
 
     @ApiOperation(value = "Diary 등록", response = Diary.class)
-    @PostMapping
-    public ResponseEntity postDiary(@Valid @RequestBody DiaryPostDto diaryPostDto) throws JsonProcessingException {
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity postDiary(@Valid @RequestPart DiaryPostDto diaryPostDto,
+                                    @RequestPart MultipartFile[] imgFiles) throws IOException {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        DiaryResponseDto postDiary = diaryService.createDiary(diaryPostDto, email);
+        DiaryResponseDto postDiary = diaryService.createDiary(diaryPostDto, imgFiles, email);
 
         return new ResponseEntity<>(new SingleResponseDto<>(postDiary), HttpStatus.CREATED);
     }
@@ -100,12 +104,13 @@ public class DiaryController {
     }
 
     @ApiOperation(value = "Diary 수정", response = Diary.class)
-    @PatchMapping("/{diary-id}")
+    @PatchMapping(value = "/{diary-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity patchDiary(@PathVariable("diary-id") @Positive @NotNull long diaryId,
-                                     @Valid @RequestBody DiaryPatchDto diaryPatchDto) {
+                                     @Valid @RequestPart DiaryPatchDto diaryPatchDto,
+                                     @RequestPart MultipartFile[] imgFiles) throws IOException {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return new ResponseEntity<>(new SingleResponseDto<>(diaryService.updateDiary(diaryPatchDto, diaryId, email)),HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(diaryService.updateDiary(diaryPatchDto, imgFiles, diaryId, email)),HttpStatus.OK);
     }
 /*
     @GetMapping("search")

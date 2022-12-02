@@ -18,6 +18,7 @@ public interface DiaryMapper {
      */
     default Diary diaryPostDtoToDiary(DiaryPostDto diaryPostDto, long memberId){
         Diary diary = new Diary(diaryPostDto.getTitle(),
+                diaryPostDto.getQuestion(),
                 diaryPostDto.getContent(),
                 diaryPostDto.getWeather(),
                 diaryPostDto.getArea(),
@@ -63,6 +64,8 @@ public interface DiaryMapper {
         diaryResponseDto.setMonth(diary.getTravelDate().getMonthValue());
         diaryResponseDto.setDay(diary.getTravelDate().getDayOfMonth());
         diaryResponseDto.setMemberId(diary.getMemberId());
+        diaryResponseDto.setQuestion(diary.getQuestion());
+        diaryResponseDto.setDiaryImages(diary.getDiaryImages());
 
         return diaryResponseDto;
     }
