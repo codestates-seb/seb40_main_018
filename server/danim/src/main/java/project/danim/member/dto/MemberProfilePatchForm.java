@@ -14,7 +14,5 @@ public class MemberProfilePatchForm {
 
     private String nickname;
 
-    private String profileImg;
-
     private String aboutMe;
 }

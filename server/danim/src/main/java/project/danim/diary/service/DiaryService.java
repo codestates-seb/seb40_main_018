@@ -140,7 +140,7 @@ public class DiaryService {
                 diaryPatchDto.getTravelDate()
         );
 
-        List<String> updateDiaryImages = s3Service.updateImages(findDiary.getDiaryImages(), diaryImages, "diary");
+        List<String> updateDiaryImages = s3Service.updateDiaryImages(findDiary.getDiaryImages(), diaryImages, "diary");
         findDiary.addDiaryImages(updateDiaryImages);
 
         Diary updatedDiaries = diaryRepository.save(findDiary);
@@ -163,7 +163,7 @@ public class DiaryService {
      */
     public void deleteDiary(long diaryId) {
         Diary findDiary = findVerifiedDiary(diaryId);
-        s3Service.deleteImages(findDiary.getDiaryImages(), "diary");
+        s3Service.deleteDiaryImages(findDiary.getDiaryImages());
         tagService.deleteTag(diaryId);
         diaryRepository.delete(findDiary);
     }
