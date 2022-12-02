@@ -12,17 +12,23 @@ public class MemberResponseForProfileDiaries {
 
     private final String city;
 
-    private final LocalDate travelDate;
+    private final int year;
+    private final int month;
+    private final int day;
 
-    private MemberResponseForProfileDiaries(Long diaryId, String city, LocalDate travelDate) {
+    private MemberResponseForProfileDiaries(Long diaryId, String city, int year, int month, int day) {
         this.diaryId = diaryId;
         this.city = city;
-        this.travelDate = travelDate;
+        this.year = year;
+        this.month = month;
+        this.day = day;
     }
 
     public static MemberResponseForProfileDiaries of(Diary diary) {
         return new MemberResponseForProfileDiaries(diary.getDiaryId(),
                 diary.getCity(),
-                diary.getTravelDate());
+                diary.getTravelDate().getYear(),
+                diary.getTravelDate().getMonthValue(),
+                diary.getTravelDate().getDayOfMonth());
     }
 }

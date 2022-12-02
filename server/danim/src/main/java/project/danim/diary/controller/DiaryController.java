@@ -63,9 +63,7 @@ public class DiaryController {
     @ApiOperation(value = "특정 Diary 조회", response = Diary.class)
     @GetMapping("/{diary-id}")
     public ResponseEntity getDiary(@Positive @PathVariable("diary-id") @NotNull long diaryId) {
-            Diary finddiary = diaryService.findDiary(diaryId);
-
-        return new ResponseEntity<>((diaryMapper.diaryToDiaryResponseDto(finddiary)),HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(diaryService.getDiary(diaryId)),HttpStatus.OK);
     }
 
     @ApiOperation(value = "모든 Diary 조회", response = Diary.class)
@@ -101,6 +99,8 @@ public class DiaryController {
     @PatchMapping("/{diary-id}")
     public ResponseEntity patchDiary(@PathVariable("diary-id") @Positive @NotNull long diaryId,
                                      @Valid @RequestBody DiaryPatchDto diaryPatchDto) {
+
+
         diaryPatchDto.setDiaryId(diaryId);
         Diary diary = diaryMapper.diaryPatchDtoTodiary(diaryPatchDto);
         Diary updatedDiary = diaryService.updateDiary(diary);

@@ -48,7 +48,7 @@ public class DiaryService {
         return diaryMapper.diaryToDiaryResponseDto(diary);
     }
 
-    public Diary findVerifiedDiary(long diaryId) {
+    private Diary findVerifiedDiary(long diaryId) {
 
         Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
         Diary findDiary = optionalDiary.orElseThrow(() ->
@@ -61,6 +61,12 @@ public class DiaryService {
      */
     public Diary findDiary(long diaryId) {
         return findVerifiedDiary(diaryId);
+    }
+
+    public DiaryResponseDto getDiary(long diaryId) {
+        Diary findDiary = findVerifiedDiary(diaryId);
+
+        return diaryMapper.diaryToDiaryResponseDto(findDiary);
     }
 
     /*
