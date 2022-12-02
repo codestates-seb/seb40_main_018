@@ -21,12 +21,13 @@ const MyPageContainer = styled.div`
 const MyPage = () => {
   const [cardList, setCardList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [tag, setTag] = useState("");
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`/member/me/diaries?size=10&page=1`, {
+      .get(`/member/me/diaries?size=10&page=1&tag=${tag}`, {
         headers: {
           Authorization: accessToken,
         },
@@ -56,7 +57,7 @@ const MyPage = () => {
       <MyPageContainer>
         <UserEditBox />
         <MapIcon2 cardList={cardList} />
-        <MyPageSearch cardList={cardList} setCardList={setCardList} />
+        <MyPageSearch cardList={cardList} setCardList={setCardList} setTag={setTag} />
         {loading && <SkeletonDiary />}
         {!loading && (
           <MyPageCard
