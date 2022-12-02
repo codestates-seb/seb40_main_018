@@ -1,141 +1,84 @@
-//package project.danim.S3;
-//
-//import com.amazonaws.services.s3.AmazonS3;
-//import com.amazonaws.services.s3.AmazonS3Client;
-//import com.amazonaws.services.s3.model.CannedAccessControlList;
-//import com.amazonaws.services.s3.model.DeleteObjectRequest;
-//import com.amazonaws.services.s3.model.ObjectMetadata;
-//import com.amazonaws.services.s3.model.PutObjectRequest;
-//import lombok.RequiredArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.stereotype.Component;
-//import org.springframework.web.multipart.MultipartFile;
-//import org.springframework.web.server.ResponseStatusException;
-//
-//import java.io.File;
-//import java.io.FileOutputStream;
-//import java.io.IOException;
-//import java.io.InputStream;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Optional;
-//import java.util.UUID;
-//
-//@Slf4j
-//@RequiredArgsConstructor
-//@Component
-//public class S3Service {
-//
-//    private final AmazonS3Client amazonS3Client;
-//
-//    private final AmazonS3 amazonS3;
-//
-//    @Value("${cloud.aws.s3.bucket}")
-//    private String bucket;
-//
-////    public List<String> upload(List<MultipartFile> multipartFile, String dirName, File uploadFile) throws IOException {
-////
-////        List<String> fileNameList = new ArrayList<>();
-////
-////        multipartFile.forEach(file -> {
-////            String fileName = createFileName(file.getOriginalFilename());
-////            ObjectMetadata objectMetadata = new ObjectMetadata();
-////            objectMetadata.setContentLength(file.getSize());
-////            objectMetadata.setContentType(file.getContentType());
-////
-////            try(InputStream inputStream = file.getInputStream()) {
-////                amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-////                        .withCannedAcl(CannedAccessControlList.PublicRead));
-////            } catch(IOException e) {
-////                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
-////            }
-////
-////            String uploadImageUrl = putS3(uploadFile, fileName);
-////            removeNewFile(uploadFile);
-////
-////            fileNameList.add(fileName);
-////        });
-////
-////        return fileNameList;
-////
-////    }
-//
-//    private String createFileName(String fileName) { // 먼저 파일 업로드 시, 파일명을 난수화하기 위해 random으로 돌립니다.
-//        return UUID.randomUUID().toString().concat(getFileExtension(fileName));
-//    }
-//
-//    private String getFileExtension(String fileName) { // file 형식이 잘못된 경우를 확인하기 위해 만들어진 로직이며, 파일 타입과 상관없이 업로드할 수 있게 하기 위해 .의 존재 유무만 판단하였습니다.
-//        try {
-//            return fileName.substring(fileName.lastIndexOf("."));
-//        } catch (StringIndexOutOfBoundsException e) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 형식의 파일(" + fileName + ") 입니다.");
-//        }
-//    }
-//
-//    private String upload(File uploadFile, String dirName) {
-//
-//        String fileName = dirName + "/" + uploadFile.getName();
-//        String uploadImageUrl = putS3(uploadFile, fileName);
-//
-//        // 로컬에 생성된 File 삭제 (MultipartFile -> File 전환 하며 로컬에 파일 생성됨)
-//        removeNewFile(uploadFile);
-//
-//        // 업로드된 파일의 S3 URL 주소 반환
-//        return uploadImageUrl;
-//
-//    }
-//
-////    public String upload(MultipartFile multipartFile) throws IOException {
-////        String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
-////
-////        ObjectMetadata objMeta = new ObjectMetadata();
-////        objMeta.setContentLength(multipartFile.getInputStream().available());
-////
-////        amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objMeta);
-////
-////        return amazonS3.getUrl(bucket, s3FileName).toString();
-////    }
-//
-//    private String putS3(File uploadFile, String fileName) {
-//
-//        amazonS3Client.putObject(
-//                new PutObjectRequest(bucket, fileName, uploadFile)
-//                        .withCannedAcl(CannedAccessControlList.PublicRead));
-//
-//        return amazonS3Client.getUrl(bucket, fileName).toString();
-//
-//    }
-//
-//    private void removeNewFile(File targetFile) {
-//
-//        if (targetFile.delete()) {
-//            log.info("파일이 삭제되었습니다.");
-//        } else {
-//            log.info("파일이 삭제되지 못했습니다.");
-//        }
-//
-//    }
-//
-////    private Optional<File> convert(MultipartFile file) throws IOException {
-////
-////        File convertFile = new File(file.getOriginalFilename());
-////
-////        if(convertFile.createNewFile()) {
-////
-////            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
-////                fos.write(file.getBytes());
-////            }
-////
-////            return Optional.of(convertFile);
-////        }
-////
-////        return Optional.empty();
-////    }
-//
-//    public void deleteImage(String fileName) {
-//        amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
-//    }
-//
-//}
+package project.danim.S3;
+
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import project.danim.diary.domain.Diary;
+import project.danim.diary.service.DiaryService;
+
+import javax.transaction.Transactional;
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+@RequiredArgsConstructor
+@Service
+@Transactional
+public class S3Service {
+
+    private final AmazonS3 amazonS3;
+    private final AmazonS3Client amazonS3Client;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+
+
+    //TODO 10개 제한
+    public List<String> uploadDiaryImages(MultipartFile[] multipartFileList, String dirName) throws IOException {
+
+        List<String> imagePathList = new ArrayList<>();
+
+        for(MultipartFile multipartFile: multipartFileList) {
+
+            String originalName = dirName + "/" + multipartFile.getOriginalFilename(); // 파일 이름
+            long size = multipartFile.getSize(); // 파일 크기
+
+            ObjectMetadata objectMetaData = new ObjectMetadata();
+            objectMetaData.setContentType(multipartFile.getContentType());
+            objectMetaData.setContentLength(size);
+
+            // S3에 업로드
+            amazonS3Client.putObject(
+                    new PutObjectRequest(bucket, originalName, multipartFile.getInputStream(), objectMetaData)
+                            .withCannedAcl(CannedAccessControlList.PublicRead)
+            );
+
+            String imagePath = amazonS3Client.getUrl(bucket, originalName).toString(); // 접근가능한 URL 가져오기
+            imagePathList.add(imagePath);
+        }
+
+        return imagePathList;
+    }
+
+    public List<String> updateImages(List<String> savedImageList, MultipartFile[] multipartFiles, String dirName) throws IOException {
+        for (String imageUrl : savedImageList) {
+            String path = imageUrl.replace("https://be-danim-bucket.s3.ap-northeast-2.amazonaws.com/", "");
+            path = URLDecoder.decode(path, StandardCharsets.UTF_8);
+            amazonS3.deleteObject(bucket, path);
+        }
+
+        return uploadDiaryImages(multipartFiles, dirName);
+    }
+
+    public void deleteImages(List<String> savedImageList) {
+        for (String imageUrl : savedImageList) {
+            String path = imageUrl.replace("https://be-danim-bucket.s3.ap-northeast-2.amazonaws.com/", "");
+            path = URLDecoder.decode(path, StandardCharsets.UTF_8);
+            amazonS3.deleteObject(bucket, path);
+            amazonS3.deleteObject(bucket, path);
+        }
+    }
+
+}

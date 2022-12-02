@@ -5,6 +5,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import project.danim.S3.S3Service;
 import project.danim.diary.domain.Diary;
 import project.danim.diary.dto.DiaryPatchDto;
 import project.danim.diary.dto.DiaryPostDto;
@@ -36,17 +37,22 @@ public class DiaryService {
 
     private final MemberService memberService;
 
+    private final S3Service s3Service;
+
     private final TagService tagService;
-    public DiaryService(DiaryRepository diaryRepository, DiaryMapper diaryMapper, MemberService memberService, TagService tagService) {
+    public DiaryService(DiaryRepository diaryRepository, DiaryMapper diaryMapper, MemberService memberService, TagService tagService, S3Service s3Service) {
         this.diaryRepository = diaryRepository;
         this.diaryMapper = diaryMapper;
         this.memberService = memberService;
         this.tagService = tagService;
+        this.s3Service = s3Service;
     }
 
-    public DiaryResponseDto createDiary(DiaryPostDto diaryPostDto, String email){
+    public DiaryResponseDto createDiary(DiaryPostDto diaryPostDto, MultipartFile[] diaryImages, String email) throws IOException {
         Member findMember = memberService.findMember(email);
         Diary newDiary = diaryMapper.diaryPostDtoToDiary(diaryPostDto, findMember.getMemberId());
+        List<String> imgUrls = s3Service.uploadDiaryImages(diaryImages, "diary");
+        newDiary.addDiaryImages(imgUrls);
 
         Diary diary = diaryRepository.save(newDiary);
 
@@ -117,7 +123,7 @@ public class DiaryService {
     /*
     다이어리 수정
      */
-    public DiaryResponseDto updateDiary(DiaryPatchDto diaryPatchDto, long diaryId, String email) {
+    public DiaryResponseDto updateDiary(DiaryPatchDto diaryPatchDto, MultipartFile[] diaryImages, long diaryId, String email) throws IOException {
         Member loginMember = memberService.findMember(email);
         if (diaryPatchDto.getMemberId() != loginMember.getMemberId()) {
             throw new BusinessLogicException(ExceptionCode.ACCESS_FORBIDDEN, "로그인한 사용자와 다이어리 작성자가 다릅니다.");
@@ -133,6 +139,9 @@ public class DiaryService {
                 diaryPatchDto.getTags(),
                 diaryPatchDto.getTravelDate()
         );
+
+        List<String> updateDiaryImages = s3Service.updateImages(findDiary.getDiaryImages(), diaryImages, "diary");
+        findDiary.addDiaryImages(updateDiaryImages);
 
         Diary updatedDiaries = diaryRepository.save(findDiary);
 
@@ -153,9 +162,10 @@ public class DiaryService {
     특정 다이어리 삭제
      */
     public void deleteDiary(long diaryId) {
-        diaryRepository.deleteById(diaryId);
-
+        Diary findDiary = findVerifiedDiary(diaryId);
+        s3Service.deleteImages(findDiary.getDiaryImages(), "diary");
         tagService.deleteTag(diaryId);
+        diaryRepository.delete(findDiary);
     }
 
 }

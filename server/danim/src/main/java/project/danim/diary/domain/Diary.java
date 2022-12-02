@@ -36,15 +36,18 @@ public class Diary extends BaseTime {
     private String title;
 
     @Column(nullable = false, columnDefinition = "TEXT")
+    private String question;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     /*
     지역, 날씨 nullable = false로 바꿔야 합니다.
      */
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String weather;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String area;
 
     @Column(nullable = false)
@@ -57,16 +60,22 @@ public class Diary extends BaseTime {
     private int likesCount;
 
     @Column(nullable = true)
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     private List<String> tags;
+
+    @Column(nullable = false)
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<String> diaryImages;
+
     @Column(nullable = false)
     private Long memberId;
 
     @Column(nullable = false)
     private LocalDate travelDate;
 
-    public Diary(String title, String content, String weather, String area, String city, int cost, int likesCount, List<String> tags, Long memberId, LocalDate travelDate){
+    public Diary(String title, String question, String content, String weather, String area, String city, int cost, int likesCount, List<String> tags, Long memberId, LocalDate travelDate){
         this.title = title;
+        this.question = question;
         this.content = content;
         this.weather = weather;
         this.area = area;
@@ -95,6 +104,10 @@ public class Diary extends BaseTime {
         this.cost = cost;
         this.tags = tags;
         this.travelDate = travelDate;
+    }
+
+    public void addDiaryImages(List<String> diaryImages) {
+        this.diaryImages = diaryImages;
     }
 
     /*
