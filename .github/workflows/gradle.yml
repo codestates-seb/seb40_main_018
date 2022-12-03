@@ -46,7 +46,7 @@ jobs:
 #         arguments: build
     
     - name: Make zip file
-      run: zip -r ./seb40_main_018.zip
+      run: zip -r seb40_main_018.zip
       shell: bash
       
     - name: Configure AWS credentials
