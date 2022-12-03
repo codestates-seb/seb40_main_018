@@ -18,7 +18,5 @@ else
   sleep 5
 fi
 
-
-DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
-echo "> DEPLOY_JAR 배포 $DEPLOY_JAR"    >> /home/ubuntu/action/deploy.log
+echo "> DEPLOY_JAR 배포 $BUILD_JAR"    >> /home/ubuntu/action/deploy.log
 sudo nohup java -jar $BUILD_JAR --spring.profiles.active=prod &
