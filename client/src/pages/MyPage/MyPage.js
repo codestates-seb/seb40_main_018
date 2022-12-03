@@ -21,6 +21,7 @@ const MyPageContainer = styled.div`
 const MyPage = () => {
   const [cardList, setCardList] = useState([]);
   const [loading, setLoading] = useState(false);
+  // const [mainImage, setMainImage] = useState([])
   const [tag, setTag] = useState("");
   const [page2, setPage2] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
@@ -29,6 +30,7 @@ const MyPage = () => {
 
   const fetchDiaryList = async (page2) => {
     setLoading(true);
+
     const res = await axios.get(`/member/me/diaries?size=10&page=${page2}`, {
       headers: {
         Authorization: accessToken,
@@ -53,30 +55,7 @@ const MyPage = () => {
   };
 
   useEffect(() => {
-    // setLoading(true);
-    // axios
-    //   .get(`/member/me/diaries?size=10&page=1&tag=${tag}`, {
-    //     headers: {
-    //       Authorization: accessToken,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     const timer = setTimeout(() => {
-    //       console.log(res.data);
-    //       let response = res.data.data;
-    //       setCardList(response.slice(0, 10));
-    //       response = response.slice(10);
-    //       setResult(response);
-    //       setLoading(false);
-    //     }, 2000);
-    //     return () => clearTimeout(timer);
-    //   })
-    //   // .then((res) => console.log(res.data))
-    //   .catch((err) => console.log(err));
-    // const timer = setTimeout(() => {
     fetchDiaryList(page2);
-    // }, 2000);
-    // return () => clearTimeout(timer);
   }, []);
 
   // yerin
@@ -87,7 +66,7 @@ const MyPage = () => {
     <>
       {/* <LoginHeader /> */}
       <MyPageContainer>
-        <UserEditBox />
+        <UserEditBox cardList={cardList} />
         <MapIcon2 cardList={cardList} />
         <MyPageSearch cardList={cardList} setCardList={setCardList} setTag={setTag} />
         {loading && <SkeletonDiary />}

@@ -53,7 +53,6 @@ const DateInfo = styled.div`
   text-shadow: 2px 2px 4px gray;
 `;
 
-/* 링크연결 - 각 다이어리 상세페이지로 */
 // 확인용
 
 const MyPageCard = ({ cardList, hasMore, fetchDiaryList, page2 }) => {
@@ -96,10 +95,7 @@ const MyPageCard = ({ cardList, hasMore, fetchDiaryList, page2 }) => {
                 <>
                   <Link to={`/detail/${item.diaryId}`}>
                     <CardArea key={index}>
-                      <CardImg
-                        src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg"
-                        alt="이미지"
-                      />
+                      <CardImg src={item.imageUrl} alt="이미지" />
                       <TextArea>
                         <City>{item.city}</City>
                         <DateInfo>
