@@ -19,4 +19,4 @@ else
 fi
 
 echo "> DEPLOY_JAR 배포 $BUILD_JAR"    >> /home/ubuntu/action/deploy.log
-sudo nohup java -jar $BUILD_JAR --spring.profiles.active=prod &
+sudo nohup java -jar $BUILD_JAR &
