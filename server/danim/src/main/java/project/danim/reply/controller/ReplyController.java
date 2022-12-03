@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import project.danim.diary.domain.Diary;
 import project.danim.diary.service.DiaryService;
 import project.danim.member.domain.Member;
+import project.danim.member.service.MemberService;
 import project.danim.reply.domain.Reply;
 import project.danim.reply.dto.ReplyDeleteDto;
 import project.danim.reply.dto.ReplyPatchDto;
@@ -25,17 +26,19 @@ public class ReplyController {
 
     private final ReplyService replyService;
     private final DiaryService diaryService;
+    private final MemberService memberService;
 
-    public ReplyController(ReplyService replyService, DiaryService diaryService) {
+    public ReplyController(ReplyService replyService, DiaryService diaryService, MemberService memberService) {
         this.replyService = replyService;
         this.diaryService = diaryService;
+        this.memberService = memberService;
     }
 
     // 전체 조회
     @GetMapping("/{diary-id}")
-    public ResponseEntity<SingleResponseDto> getReplies(@PathVariable("diary-id") Long diaryId) {
+    public ResponseEntity<SingleResponseDto> getReplies(@PathVariable("diary-id") Long diaryId, Member member) {
 
-        return new ResponseEntity<>(new SingleResponseDto<>(replyService.findReplies(diaryId)), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(replyService.findReplies(diaryId, member)), HttpStatus.OK);
 
     }
 
@@ -43,7 +46,8 @@ public class ReplyController {
     @PostMapping("/{diary-id}")
     public ResponseEntity<SingleResponseDto> postReply(@Valid @RequestBody ReplyPostDto request,
                                                        @PathVariable("diary-id") Long diaryId,
-                                                       Reply reply, Member member) {
+                                                       Member member,
+                                                       Reply reply) {
 
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
