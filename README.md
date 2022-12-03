@@ -33,8 +33,7 @@
 
 BE 김은진 | BE 유현아 | BE 임원용 | FE 김은서 | FE 김예린 | FE 방혜민
 -- | -- | -- | -- | -- | --
-![image](https://user-images.githubusercontent.com/102038283/205431352-1eb7973e-d0f0-45da-aeaa-bd99d6f4c5c0.png) | ![image](https://user-images.githubusercontent.com/102038283/205431367-0b8dd3ae-07ce-483d-b37c-91d17817ad16.png) |  ![image](https://user-images.githubusercontent.com/102038283/205437895-4d36511d-3476-4d0e-8333-29b8e2b1cb8f.png) |  ![image](https://user-images.githubusercontent.com/102038283/205437899-a0ed0a10-8874-4b92-9efd-704b492e987c.png) |  ![image](https://user-images.githubusercontent.com/102038283/205437907-0964dcee-6036-4f9d-bf20-98c3f6f38d05.png) |  ![image](https://user-images.githubusercontent.com/102038283/205437914-3a27deae-a72a-406e-bd82-38f0d89d5e51.png)
-
+![image](https://user-images.githubusercontent.com/102038283/205431352-1eb7973e-d0f0-45da-aeaa-bd99d6f4c5c0.png) | ![image](https://user-images.githubusercontent.com/102038283/205431367-0b8dd3ae-07ce-483d-b37c-91d17817ad16.png) |  ![image](https://user-images.githubusercontent.com/102038283/205437895-4d36511d-3476-4d0e-8333-29b8e2b1cb8f.png) |  ![image](https://user-images.githubusercontent.com/102038283/205437899-a0ed0a10-8874-4b92-9efd-704b492e987c.png) |  ![image](https://user-images.githubusercontent.com/102038283/205437907-0964dcee-6036-4f9d-bf20-98c3f6f38d05.png) |  ![image](https://user-images.githubusercontent.com/102038283/205437914-3a27deae-a72a-406e-bd82-38f0d89d5e51.png) |
 [kim eunjin](https://github.com/2d3k)|[hyeonayou](https://github.com/hyeonayou)|[Im WonYong](https://github.com/ImWonYong)|[EUNSEO814](https://github.com/EUNSEO814)|[yelinz515](https://github.com/yelinz515)|[youthmn](https://github.com/youthmn)
 
 # SKILLS
