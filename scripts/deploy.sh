@@ -15,7 +15,7 @@ BUCKET_NAME=$(env | grep BUCKET_NAME | cut -c 13-27)
 AWS_ACCESS_KEY=$(env | grep AWS_ACCESS_KEY | cut -c 16-35)
 AWS_SECRET_ACCESS_KEY=$(env | grep AWS_SECRET_ACCESS_KEY | cut -c 23-62)
 JWT_SECRET_KEY=$(env | grep JWT_SECRET_KEY | cut -c 16-77)
-
+echo "> $RDS_URL" >> /home/ubuntu/action/scripts/deploy.log
 echo "> 현재 시간: $(date)" >> /home/ubuntu/action/deploy.log
 
 echo "> build 파일명: $JAR_NAME" >> /home/ubuntu/action/deploy.log
