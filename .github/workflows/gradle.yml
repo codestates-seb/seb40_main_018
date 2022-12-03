@@ -17,7 +17,7 @@ permissions:
   contents: read
   
 env:
-  S3_BUCKET_NAME: be-danim-bucket
+  BUCKET_NAME: be-danim-bucket
 
 jobs:
   build:
