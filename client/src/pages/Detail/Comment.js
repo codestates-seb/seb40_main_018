@@ -14,7 +14,7 @@ import { Item } from "../../components/Comment/CommentTool";
 import Markdown from "../../components/Comment/Markdown";
 import axios from "axios";
 import SkeletonComment from "../../components/Skeleton/SkeletonComment";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Comment = () => {
   const [loading, setLoading] = useState(false);
@@ -26,17 +26,37 @@ const Comment = () => {
   const [openEditor, setOpenEditor] = useState("");
   const id = useParams().id;
 
+  const [user, setUser] = useState("");
+  const [memberId, setMemberId] = useState("");
+
   useEffect(() => {
     setLoading(true);
     axios.get(`/reply/` + id).then((result) => {
       const timer = setTimeout(() => {
         setComment(result.data.data);
-        console.log("comment_result.data", result.data.data);
+        setMemberId(result.data.data.memberId);
+        setUser(result.data.data.nickname);
+        console.log("get", result.data.data);
         setLoading(false);
       }, 1000);
       return () => clearTimeout(timer);
     });
   }, []);
+
+  //  댓글 작성 버튼을 눌렀을 때 로그인하지 않은 사용자는 로그인페이지로 이동
+
+  // const navigate = useNavigate();
+
+  const onclickHandler = () => {
+    setDisplay(!display);
+    if (memberId) {
+      setDisplay(!display);
+    }
+    // else if (!memberId) {
+    //   alert("로그인이 필요합니다.");
+    //   navigate("/login");
+    // }
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -48,29 +68,13 @@ const Comment = () => {
     const getContent = editorInstance.getMarkdown();
     setDisplay(!display);
 
-    // 데이터 저장
-    // const data = {
-    //   content: getContent,
-    //   writer: user,
-    //   postId: "123123",
-    //   responseTo: "root",
-    //   commentId: uuid(),
-    //   created_at: `${date}`,
-    //   exist: true,
-    // };
-    // dispatch(addComment(data));
-
-    // content: getContent,
-    // writer: user,
-    // postId: "123123",
-    // created_at: `${date}`,
-    // responseTo: "root",
-    // exist: true,
     setComment([
       ...comment,
       {
         replyContent: getContent,
+        memberId: id,
         replyId: id,
+        nickname: user,
         createdAt: `${date}`,
         modifiedAt: `${date}`,
         responseTo: "root",
@@ -82,7 +86,9 @@ const Comment = () => {
 
     const addComment = {
       replyContent: getContent,
+      memberId: id,
       replyId: id,
+      nickname: user,
       createdAt: `${date}`,
       modifiedAt: `${date}`,
       responseTo: "root",
@@ -94,17 +100,15 @@ const Comment = () => {
           Authorization: accessToken,
         },
       })
-      .then((res) => console.log(res.data))
+      .then((res) => console.log("post", res.data))
       .catch((err) => {
         console.log(err);
-        navigate("/login");
       });
 
     await axios.get(`/reply/` + id).then((result) => {
       setComment(result.data.data);
     });
   };
-  const navigate = useNavigate();
 
   // Edit comment
   const onEdit = async ({ replyId }) => {
@@ -200,7 +204,7 @@ const Comment = () => {
   // }
 
   const accessToken = localStorage.getItem("accessToken");
-  const [userNickname, setUserNickname] = useState("");
+
   //  사용자 닉네임 나밖에 못 가져옴
   useEffect(() => {
     axios
@@ -211,21 +215,8 @@ const Comment = () => {
       })
       .then((res) => {
         console.log("userNickname", res.data.data);
-        setUserNickname(res.data.data.nickname);
       });
   }, []);
-
-  //  댓글 작성 버튼을 눌렀을 때 로그인하지 않은 사용자는 로그인페이지로 이동
-  // const navigate = useNavigate();
-
-  // const handleClick = () => {
-  //   // 만약에 유저닉네임 === null이면?
-  //   if (userNickname === null) {
-  //     alert("로그인이 필요합니다.");
-  //     navigate("/login");
-  //   }
-  //   setDisplay(!display);
-  // };
 
   return (
     <>
@@ -233,9 +224,7 @@ const Comment = () => {
       {!loading && (
         <Paper sx={{ mt: 1, mb: 10, width: 690, color: "#535353", bgcolor: "#fbfbfb", boxShadow: 0 }}>
           <Button
-            onClick={() => {
-              setDisplay(!display);
-            }}
+            onClick={onclickHandler}
             sx={{
               width: "5.5rem",
               fontSize: 12,
@@ -269,7 +258,7 @@ const Comment = () => {
               {check_kor.test(comment.writer) ? comment.writer.slice(0, 1) : comment.writer.slice(0, 2)}
             </ProfileIcon> */}
                   {/* writer 데이터 받으면 수정 */}
-                  <Item>{comment.replyId}</Item>
+                  <Item>{comment.nickname}</Item>
                   {/* <Item>{userNickname}</Item> */}
                   {/* <Item>Jisoo</Item> */}
                   {/* <Item>{timeForToday({ date })}</Item> */}
@@ -291,7 +280,7 @@ const Comment = () => {
                 {/* comment 수정 */}
                 {/* writer 데이터 받으면 수정 */}
                 {/* {user === comment.writer && ( */}
-                {userNickname && (
+                {user === comment.nickname && (
                   <>
                     {openEditor === comment.replyId && <Editor value={comment.replyContent} ref={editorRef} />}
                     <Button
