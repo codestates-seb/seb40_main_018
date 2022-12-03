@@ -23,6 +23,7 @@ public class TagDiaryResponseDto {
     private final String weather;
 
     private final String nickname;
+    private final int cost;
 
     private final int year;
     private final int month;
@@ -30,7 +31,7 @@ public class TagDiaryResponseDto {
 
     private final String imageUrl;
     private final List<String> tags;
-    private TagDiaryResponseDto (Long diaryId, String title, String area, String city, String content, Long memberId, String weather, String nickname, int year, int month, int day, String imageUrl, List<String> tags) {
+    private TagDiaryResponseDto (Long diaryId, String title, String area, String city, String content, Long memberId, String weather, String nickname, int cost, int year, int month, int day, String imageUrl, List<String> tags) {
         this.diaryId = diaryId;
         this.title = title;
         this.content = content;
@@ -39,6 +40,7 @@ public class TagDiaryResponseDto {
         this.memberId = memberId;
         this.weather = weather;
         this.nickname = nickname;
+        this.cost = cost;
         this.year = year;
         this.month = month;
         this.day = day;
@@ -56,6 +58,7 @@ public class TagDiaryResponseDto {
                 diary.getMemberId(),
                 diary.getWeather(),
                 member.getNickname(),
+                diary.getCost(),
                 diary.getTravelDate().getYear(),
                 diary.getTravelDate().getMonthValue(),
                 diary.getTravelDate().getDayOfMonth(),
