@@ -6,11 +6,12 @@ import { coyWithoutShadows } from "react-syntax-highlighter/dist/cjs/styles/pris
 import ReactMarkdown from "react-markdown";
 
 const Markdown = ({ comment }) => {
+  // console.log("comment", comment);
   return (
     <div>
       <ReactMarkdown
         // eslint-disable-next-line react/no-children-prop
-        children={comment.content}
+        children={comment.replyContent}
         components={{
           code({ inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
@@ -25,7 +26,7 @@ const Markdown = ({ comment }) => {
               />
             ) : (
               <code className={className} {...props}>
-                {comment.content}
+                {comment.replyContent}
               </code>
             );
           },

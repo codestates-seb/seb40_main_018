@@ -22,19 +22,20 @@ const MyPage = () => {
   const [cardList, setCardList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [tag, setTag] = useState("");
-  const [page, setPage] = useState(1);
+  const [page2, setPage2] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const accessToken = localStorage.getItem("accessToken");
+  console.log(tag);
 
-  const fetchDiaryList = async (page) => {
+  const fetchDiaryList = async (page2) => {
     setLoading(true);
-    const res = await axios.get(`/member/me/diaries?size=10&page=${page}`, {
+    const res = await axios.get(`/member/me/diaries?size=10&page=${page2}`, {
       headers: {
         Authorization: accessToken,
       },
     }); // &tag=${tag}
 
-    console.log(res.data);
+    console.log(res.data.data);
     const cards = res.data.data;
     const pagination = res.data.pageInfo;
 
@@ -46,7 +47,7 @@ const MyPage = () => {
     } else {
       setCardList(cards);
     }
-    setPage(pagination.page + 1);
+    setPage2(pagination.page + 1);
     setTotalPage(pagination.totalPages);
     setLoading(false);
   };
@@ -73,7 +74,7 @@ const MyPage = () => {
     //   // .then((res) => console.log(res.data))
     //   .catch((err) => console.log(err));
     // const timer = setTimeout(() => {
-    fetchDiaryList(tag);
+    fetchDiaryList(page2);
     // }, 2000);
     // return () => clearTimeout(timer);
   }, []);
@@ -94,12 +95,12 @@ const MyPage = () => {
           <MyPageCard
             cardList={cardList}
             setCardList={setCardList}
-            hasMore={page <= totalPage}
+            hasMore={page2 <= totalPage}
             // setHasMore={setHasMore}
             result={result}
             setResult={setResult}
             fetchDiaryList={fetchDiaryList}
-            page={page}
+            page2={page2}
           />
         )}
       </MyPageContainer>
