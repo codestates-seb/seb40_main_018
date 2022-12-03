@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.danim.diary.domain.Diary;
+import project.danim.member.domain.Member;
 import project.danim.reply.domain.Reply;
 
 import java.time.LocalDateTime;
@@ -27,8 +28,12 @@ public class ReplyResponseDto {
 
     private Boolean exist = true;
 
-    public static ReplyResponseDto of(Reply reply) {
-        return new ReplyResponseDto(reply.getReplyId(),reply.getReplyId(),  reply.getReplyContent(), reply.getCreatedAt(), reply.getResponseTo(), reply.getExist());
+    private Long memberId;
+
+    private String nickname;
+
+    public static ReplyResponseDto of(Reply reply, Diary diary, Member member) {
+        return new ReplyResponseDto(reply.getReplyId(), diary.getDiaryId(), reply.getReplyContent(), reply.getCreatedAt(), reply.getResponseTo(), reply.getExist(), member.getMemberId(), member.getNickname());
     }
 
 }

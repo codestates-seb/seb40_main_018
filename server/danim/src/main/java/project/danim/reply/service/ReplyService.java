@@ -36,7 +36,7 @@ public class ReplyService {
     }
 
     // 전체 조회
-    public List<ReplyResponseDto> findReplies(Long diaryId) {
+    public List<ReplyResponseDto> findReplies(Long diaryId/*, Member member*/) {
 
         List<Reply> replies =  replyRepository.findAllByDiary_DiaryId(diaryId);
 
@@ -46,13 +46,14 @@ public class ReplyService {
                         .diaryId(diaryId)
                         .replyId(reply.getReplyId())
                         .createdAt(reply.getCreatedAt())
+//                        .nickname(member.getNickname())
                         .build())
                 .collect(Collectors.toList());
 
     }
 
     // 댓글 생성
-    public ReplyResponseDto createReply(ReplyPostDto request ,Reply reply, Diary diary, String email) {
+    public ReplyResponseDto createReply(ReplyPostDto request ,Reply reply, Diary diary, Member member, String email) {
 
         Member findMember = memberService.findMember(email);
 
@@ -60,6 +61,7 @@ public class ReplyService {
         Diary findDiary = OptionalDiary.orElseThrow(() -> new BusinessLogicException(ExceptionCode.DIARY_NOT_FOUND));
 
         reply.setDiary(diary);
+        reply.setMemberId(member.getMemberId());
         reply.setReplyContent(request.getReplyContent());
 
         Reply createReply = replyRepository.save(reply);
@@ -71,12 +73,14 @@ public class ReplyService {
                 .createdAt(createReply.getCreatedAt())
                 .responseTo(createReply.getResponseTo())
                 .exist(createReply.getExist())
+                .memberId(findMember.getMemberId())
+                .nickname(findMember.getNickname())
                 .build();
 
     }
 
     // 댓글 수정
-    public ReplyResponseDto updateReply(@Valid @RequestBody ReplyPatchDto request, Long replyId) {
+    public Reply updateReply(@Valid @RequestBody ReplyPatchDto request, Long replyId) {
 
         Optional<Reply> optionalReply = replyRepository.findByReplyId(replyId);
         Reply findReply = optionalReply.orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
@@ -86,7 +90,7 @@ public class ReplyService {
 
         Reply updateReply = replyRepository.save(findReply);
 
-        return ReplyResponseDto.of(updateReply);
+        return updateReply;
 
     }
 
