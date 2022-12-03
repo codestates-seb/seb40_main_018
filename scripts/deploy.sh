@@ -28,4 +28,4 @@ else
 fi
 
 echo "> DEPLOY_JAR 배포 $BUILD_JAR"    >> /home/ubuntu/action/deploy.log
-sudo nohup java -jar $BUILD_JAR --srping.datasource.url=${RDS_URL} --spring.datasource.username=${RDS_USERNAME} --spring.datasource.password=${RDS_PASSWORD} --spring.datasource.port=${RDS_PORT} --cloud.aws.credentials.access-key=${AWS_ACCESS_KEY} --cloud.aws.credentials.secret-key=${AWS_SECRET_ACCESS_KEY} --cloud.aws.s3.bucket=${BUCKET_NAME} --jwt.secret-key=${JWT_SECRET_KEY} &
+sudo nohup java -jar $BUILD_JAR --srping.datasource.url=jdbc:mysql://${RDS_URL}/danim?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC&reconnect=true --spring.datasource.username=${RDS_USERNAME} --spring.datasource.password=${RDS_PASSWORD} --spring.datasource.port=${RDS_PORT} --cloud.aws.credentials.access-key=${AWS_ACCESS_KEY} --cloud.aws.credentials.secret-key=${AWS_SECRET_ACCESS_KEY} --cloud.aws.s3.bucket=${BUCKET_NAME} --jwt.secret-key=${JWT_SECRET_KEY} &
