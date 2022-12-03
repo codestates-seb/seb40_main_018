@@ -203,20 +203,32 @@ const Comment = () => {
   //   return date2;
   // }
 
-  const accessToken = localStorage.getItem("accessToken");
+  // const accessToken = localStorage.getItem("accessToken");
 
   //  사용자 닉네임 나밖에 못 가져옴
-  useEffect(() => {
-    axios
-      .get(`/member/me`, {
-        headers: {
-          Authorization: accessToken,
-        },
-      })
-      .then((res) => {
-        console.log("userNickname", res.data.data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`/member/me`, {
+  //       headers: {
+  //         Authorization: accessToken,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       console.log("userNickname", res.data.data);
+  //     });
+  // }, []);
+
+  //  댓글 작성 버튼을 눌렀을 때 로그인하지 않은 사용자는 로그인페이지로 이동
+  // const navigate = useNavigate();
+
+  // const handleClick = () => {
+  //   // 만약에 유저닉네임 === null이면?
+  //   if (userNickname === null) {
+  //     alert("로그인이 필요합니다.");
+  //     navigate("/login");
+  //   }
+  //   setDisplay(!display);
+  // };
 
   return (
     <>
