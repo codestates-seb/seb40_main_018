@@ -137,8 +137,6 @@ const SubmitBtn = styled.button`
 `;
 
 export const UserEditBox = ({ cardList }) => {
-  //상태를 만들어서 해주는거 어떨까요?
-
   // const [userProfile, setUserProfile] = useState([]);
   const [userNickname, setUserNickname] = useState("");
   const [userIntro, setUserIntro] = useState("");
