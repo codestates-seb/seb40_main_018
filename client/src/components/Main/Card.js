@@ -55,7 +55,7 @@ const Cardtitle = styled.div`
 
 const Cardcontents = styled.div`
   width: 280px;
-  height: 42px;
+  height: 46px;
   font-size: 11px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -165,12 +165,11 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
           Authorization: accessToken,
         },
       })
-      .then((res) => console.log("likeGet", res))
+      .then((res) => setLike(res.data.data.like))
       .catch((err) => {
-        // console.log(id);
-        console.log(err);
+        console.log("likeGetErr", err);
       });
-  });
+  }, []);
 
   const onClickHandler = (list) => {
     setLike(!like);
@@ -186,7 +185,6 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
     );
 
     const patch2 = {
-      title: list.title,
       like: !list.like,
     };
 
@@ -197,7 +195,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
           Authorization: accessToken,
         },
       })
-      .then((res) => console.log(res))
+      .then((res) => console.log("postLike", res.data.data.like))
       .catch((err) => console.log("res1", err));
   };
 
