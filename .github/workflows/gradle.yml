@@ -63,4 +63,5 @@ jobs:
       run: >
         aws deploy create-deployment --application-name danim18-codeDeploy
         --deployment-config-name CodeDeployDefault.AllAtOnce
+        --deployment-group-name danim18-codeDeploy-group
         --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=seb40_main_018.zip
