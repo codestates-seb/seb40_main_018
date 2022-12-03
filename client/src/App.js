@@ -19,7 +19,6 @@ import Header from "./components/Header/Header";
 import MainPage from "./pages/MainPage";
 import Detail from "./pages/Detail/Detail";
 
-
 function App() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.userReducer.isLogin);

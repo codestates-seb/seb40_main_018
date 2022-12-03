@@ -153,7 +153,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
 
   useEffect(() => {
     axios
-      .get(`/likes/` + Id, {
+      .get(`/likes/` + id, {
         headers: {
           Authorization: accessToken,
         },
