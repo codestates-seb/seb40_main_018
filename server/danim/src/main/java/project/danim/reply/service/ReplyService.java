@@ -36,7 +36,7 @@ public class ReplyService {
     }
 
     // 전체 조회
-    public List<ReplyResponseDto> findReplies(Long diaryId/*, Member member*/) {
+    public List<ReplyResponseDto> findReplies(Long diaryId, Member member) {
 
         List<Reply> replies =  replyRepository.findAllByDiary_DiaryId(diaryId);
 
@@ -46,7 +46,10 @@ public class ReplyService {
                         .diaryId(diaryId)
                         .replyId(reply.getReplyId())
                         .createdAt(reply.getCreatedAt())
-//                        .nickname(member.getNickname())
+                        .memberId(reply.getMemberId())
+                        .nickname(reply.getNickName())
+                        .exist(reply.getExist())
+                        .responseTo(reply.getResponseTo())
                         .build())
                 .collect(Collectors.toList());
 
@@ -61,7 +64,8 @@ public class ReplyService {
         Diary findDiary = OptionalDiary.orElseThrow(() -> new BusinessLogicException(ExceptionCode.DIARY_NOT_FOUND));
 
         reply.setDiary(diary);
-        reply.setMemberId(member.getMemberId());
+        reply.setNickName(findMember.getNickname());
+        reply.setMemberId(findMember.getMemberId());
         reply.setReplyContent(request.getReplyContent());
 
         Reply createReply = replyRepository.save(reply);
