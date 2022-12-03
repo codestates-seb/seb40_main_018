@@ -15,6 +15,7 @@ const Main = styled.div`
   /* height: 100vh; */
   background-color: #fbfbfb;
 `;
+
 const Container = styled.div``;
 export default function MainPage() {
   // const id = useParams().id;
@@ -28,7 +29,6 @@ export default function MainPage() {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
-
   const [tag, setTag] = useState("");
 
   const fetchDiaryList = async (page) => {

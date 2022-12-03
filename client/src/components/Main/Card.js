@@ -55,7 +55,7 @@ const Cardtitle = styled.div`
 
 const Cardcontents = styled.div`
   width: 280px;
-  height: 42px;
+  height: 46px;
   font-size: 11px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -155,28 +155,29 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
   console.log("diaryList2", diaryList);
 
   const [like, setLike] = useState();
-  const id = useParams();
-  console.log("id", id);
+  const id = useParams().id;
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     axios
-      .get(`/likes/` + Id, {
+      .get(`/likes/` + id, {
         headers: {
           Authorization: accessToken,
         },
       })
-      .then((res) => console.log("likeGet", res))
-      .catch((err) => console.log(err));
-  });
+      .then((res) => setLike(res.data.data.like))
+      .catch((err) => {
+        console.log("likeGetErr", err);
+      });
+  }, []);
 
   const onClickHandler = (list) => {
     setLike(!like);
+    console.log("list", list);
+
     setDiaryList(
       diaryList.map((item) => {
-        if (item.diaryId === list.id) {
-          console.log("item.id", item.diaryId);
-          console.log("list.id", list.id);
+        if (item.diaryId === list.diaryId) {
           return { ...item, like: !item.like };
         }
         return item;
@@ -184,14 +185,18 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
     );
 
     const patch2 = {
-      title: list.title,
       like: !list.like,
     };
 
+    // pass
     axios
-      .post(`/likes/` + id, patch2)
-      .then((res) => console.log(res))
-      .then((err) => console.log("res1", err));
+      .post(`/likes/` + list.diaryId, patch2, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => console.log("postLike", res.data.data.like))
+      .catch((err) => console.log("res1", err));
   };
 
   // const onClickHandler = ({ id }) => {
