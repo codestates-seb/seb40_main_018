@@ -12,6 +12,7 @@ public class DiaryResponseDtoForCard {
 
     private final String title;
     private final String content;
+    private final String area;
     private final String city;
 
     private final Long memberId;
@@ -28,10 +29,11 @@ public class DiaryResponseDtoForCard {
 
     private final List<String> tags;
 
-    private DiaryResponseDtoForCard(Long diaryId, String title, String city, String content, Long memberId, String weather, String nickname, int year, int month, int day, String imageUrl, List<String> tags) {
+    private DiaryResponseDtoForCard(Long diaryId, String title, String area, String city, String content, Long memberId, String weather, String nickname, int year, int month, int day, String imageUrl, List<String> tags) {
         this.diaryId = diaryId;
         this.title = title;
         this.content = content;
+        this.area = area;
         this.city = city;
         this.memberId = memberId;
         this.weather = weather;
@@ -46,6 +48,7 @@ public class DiaryResponseDtoForCard {
     public static DiaryResponseDtoForCard of(Diary diary, Member member, List<String> tags) {
         return new DiaryResponseDtoForCard(diary.getDiaryId(),
                 diary.getTitle(),
+                diary.getArea(),
                 diary.getCity(),
                 diary.getContent(),
                 diary.getMemberId(),
