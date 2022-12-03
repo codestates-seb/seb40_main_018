@@ -3,13 +3,11 @@ import "./App.css";
 import Diary from "../src/pages/Diary/Diary";
 import DiaryEdit from "./pages/DiaryEdit/DiaryEdit";
 import { Login } from "./pages/Login";
-import MainPage from "./pages/MainPage";
 import MyList from "./pages/MyList";
 import MyPage from "./pages/MyPage/MyPage";
 import NotFound from "./components/NotFound";
 import { SignUp } from "./pages/SignUp";
 import { GlobalStyles } from "./style/GlobalStyle";
-import Detail from "./pages/Detail/Detail";
 import useFetch from "./redux/useFetch";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoginStatus, getmyInfo } from "./redux/userAction";
@@ -18,6 +16,9 @@ import jwt_decode from "jwt-decode";
 import { setRefreshToken } from "./storage/Cookie";
 import LoginHeader from "./components/Header/LoginHeader";
 import Header from "./components/Header/Header";
+import MainPage from "./pages/MainPage";
+import Detail from "./pages/Detail/Detail";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ function App() {
     if (token) {
       try {
         const { exp } = jwt_decode(token);
-        // 토큰 만료
+        // 토큰 만료 3일
         if (Date.now() >= exp * 60 * 60 * 24 * 3) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
@@ -49,7 +50,7 @@ function App() {
           window.reload();
 
           // 토큰 만료 전 로그인 연장 필요
-        } else if (Date.now() >= exp * 60 * 60 * 24 * 3 - 100000) {
+        } else if (Date.now() >= exp * 1000 - 100000) {
           dispatch(getLoginStatus({ isLogin: true }));
           setRefreshToken();
           // 토큰 유효
@@ -74,6 +75,7 @@ function App() {
           <Route path="/diaryedit/:id" element={<DiaryEdit />} />
           <Route path="/login" element={<Login />} />
           <Route path="/mylist" element={<MyList />} />
+          <Route path="/mylist/:id" element={<MyList />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="*" element={<NotFound />} />

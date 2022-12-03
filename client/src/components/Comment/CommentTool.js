@@ -7,10 +7,15 @@ import { Box } from "@mui/system";
 
 // time
 export function timeForToday(time) {
+  console.log("time", time);
   const now = new Date();
-  const created_at = new Date(time);
+  console.log("now", now.getTime());
+  const createdAt = new Date(time);
+  console.log("createdAt", createdAt);
 
-  const minute = Math.floor((now.getTime() - created_at.getTime()) / 1000 / 60);
+  // 작성 시간-현재 시간 => 지나간 시간
+
+  const minute = Math.floor((now.getTime() - createdAt.getTime()) / 1000 / 60);
   if (minute < 1) return "방금전";
   if (minute < 60) {
     return `${minute}분전`;

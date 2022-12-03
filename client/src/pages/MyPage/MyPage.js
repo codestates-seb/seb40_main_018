@@ -23,34 +23,43 @@ const MyPage = () => {
   const [loading, setLoading] = useState(false);
   // const [mainImage, setMainImage] = useState([])
   const [tag, setTag] = useState("");
+  const [page2, setPage2] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const accessToken = localStorage.getItem("accessToken");
+  console.log(tag);
+
+  const fetchDiaryList = async (page2) => {
+    setLoading(true);
+
+    const res = await axios.get(`/member/me/diaries?size=10&page=${page2}`, {
+      headers: {
+        Authorization: accessToken,
+      },
+    }); // &tag=${tag}
+
+    console.log(res.data.data);
+    const cards = res.data.data;
+    const pagination = res.data.pageInfo;
+
+    if (cardList.length > 0) {
+      const previousCards = cardList;
+      const newCards = cards;
+
+      setCardList([...previousCards, ...newCards]);
+    } else {
+      setCardList(cards);
+    }
+    setPage2(pagination.page + 1);
+    setTotalPage(pagination.totalPages);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`/member/me/diaries?size=10&page=1&tag=${tag}`, {
-        headers: {
-          Authorization: accessToken,
-        },
-      })
-      .then((res) => {
-        const timer = setTimeout(() => {
-          console.log("Diaries", res.data.data);
-          let response = res.data.data;
-          setCardList(response.slice(0, 10));
-          response = response.slice(10);
-          // setMainImage()
-          setResult(response);
-          setLoading(false);
-        }, 2000);
-        return () => clearTimeout(timer);
-      })
-      // .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+    fetchDiaryList(page2);
   }, []);
 
   // yerin
-  const [hasMore, setHasMore] = useState(true);
+  // const [hasMore, setHasMore] = useState(true);
   const [result, setResult] = useState([]);
 
   return (
@@ -65,10 +74,12 @@ const MyPage = () => {
           <MyPageCard
             cardList={cardList}
             setCardList={setCardList}
-            hasMore={hasMore}
-            setHasMore={setHasMore}
+            hasMore={page2 <= totalPage}
+            // setHasMore={setHasMore}
             result={result}
             setResult={setResult}
+            fetchDiaryList={fetchDiaryList}
+            page2={page2}
           />
         )}
       </MyPageContainer>
