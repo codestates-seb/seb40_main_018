@@ -7,7 +7,7 @@ import SimpleImageSlider from "react-simple-image-slider";
 import DeleteModal from "../../components/Modal/DeleteModal";
 import { useState, useEffect } from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
-// import Comment from "./Comment";
+import Comment from "./Comment";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 // import LoginHeader from "../../components/Header/LoginHeader";
@@ -166,6 +166,7 @@ function Detail() {
   const [diaryDetail, setDiaryDetail] = useState([]);
   const [imageList, setImageList] = useState([]);
   const [like, setLike] = useState(false);
+  const [user, setUser] = useState("Jisoo");
 
   useEffect(() => {
     axios
@@ -275,7 +276,7 @@ function Detail() {
             <IoIosArrowDropdown color="#535353" size="22" />
           </CommentTitleArea>
         </CommentContainer>
-        {/* <Comment user={user} setUser={setUser} /> */}
+        <Comment user={user} setUser={setUser} />
       </Section>
     </>
   );

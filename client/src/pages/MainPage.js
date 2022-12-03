@@ -29,10 +29,9 @@ export default function MainPage() {
   const [totalPage, setTotalPage] = useState(1);
   // const [tag, setTag] = useState("");
 
+  // 현재 스켈레톤 쓰지 않아도 서버 빠름
   const fetchDiaryList = async (page) => {
-    setLoading(true);
-
-    const res = await axios.get(`/diary?size=12&page=${page}`);
+    const res = await axios.get(`/diary?size=12&page=${page}`); // &tag=${tag}
     console.log(res.data);
     const diaries = res.data.data;
     const pagination = res.data.pageInfo;
@@ -47,7 +46,6 @@ export default function MainPage() {
     }
     setPage(pagination.page + 1);
     setTotalPage(pagination.totalPages);
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -64,7 +62,12 @@ export default function MainPage() {
     //   }, 2000);
     //   return () => clearTimeout(timer);
     // });
+
     fetchDiaryList(page);
+    // const timer = setTimeout(() => {
+
+    // }, 2000);
+    // return () => clearTimeout(timer);
   }, []);
 
   // useEffect(() => {
