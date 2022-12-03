@@ -165,11 +165,15 @@ function Detail() {
 
   const [diaryDetail, setDiaryDetail] = useState([]);
   const [imageList, setImageList] = useState([]);
-  const [like, setLike] = useState(false);
-
+  const [like, setLike] = useState();
+  const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
     axios
-      .get(`/diary/` + id)
+      .get(`/diary/` + id, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
       .then((res) => {
         setDiaryDetail(res.data.data);
         setImageList(res.data.data.diaryImages);
@@ -177,6 +181,15 @@ function Detail() {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    axios
+      .get(`/likes/` + id, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => setLike(res.data.data.like));
+  });
   // const myFile = new File("file[]");
   // const reader = new FileReader();
   // reader.onload = (e) => {
@@ -194,9 +207,13 @@ function Detail() {
     };
 
     axios
-      .patch(`/diary/` + id, patch2)
-      .then((res) => console.log(res))
-      .then((err) => console.log("res1", err));
+      .post(`/likes/` + id, patch2, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => console.log("likePost", res))
+      .catch((err) => console.log("res1", err));
   };
 
   // 다이어리 본문 수정버튼
@@ -264,8 +281,9 @@ function Detail() {
               diaryDetail.tags.map((el, index) => <DarkMintButton key={index} text={el} width="auto" />)}
           </TagsArea>
           <BtnArea>
+            {/* 권한 확인해야함. 다이어리 작성한 사람 아이디랑, 현재 유저 아이디 비교해서 같을때만 수정가능하게 바꾸기 */}
+            {/* {diaryDetail.memberId === diary.memberId} */}
             <EditBtn onClick={editBtnHandler}>수정</EditBtn>
-            {/* props로 일기id 내려주기 */}
             <DeleteModal />
           </BtnArea>
         </DiaryContainer>

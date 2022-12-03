@@ -57,12 +57,11 @@ const DiaryEdit = () => {
   const [price, setPrice] = useState(0);
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [addImage, setAddImage] = useState([]);
   const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
     setLoading(true);
     axios
-      // .get(`http://localhost:4000/diary/` + id)
       .get(`/diary/` + id, {
         headers: {
           Authorization: accessToken,
@@ -82,6 +81,7 @@ const DiaryEdit = () => {
           setDiary(res.data.data.content);
           setPrice(res.data.data.cost);
           setTags(res.data.data.tags);
+          setImageList(res.data.data.diaryImages);
           setLoading(false);
         }, 1000);
         return () => clearTimeout(timer);
@@ -105,6 +105,7 @@ const DiaryEdit = () => {
     const yearNum = parseInt(year);
     const monthNum = parseInt(month);
     const dayNum = parseInt(day);
+
     const diaryInfo = {
       title: title,
       year: yearNum,
@@ -118,10 +119,31 @@ const DiaryEdit = () => {
       city: city,
       tags: tags,
     };
+    console.log(diaryInfo, imageList);
+    const formData = new FormData();
+    formData.append("diaryPostDto", new Blob([JSON.stringify(diaryInfo)], { type: "application/json" }));
+    Array.from(imageList).forEach((el) => {
+      formData.append("imgFiles", el);
+    });
+
+    console.log("imageList", imageList);
+
+    for (const key of formData.keys()) {
+      console.log("key", key);
+    }
+
+    for (const value of formData.values()) {
+      console.log("value", value);
+    }
+    // console.log("formDataFile", formData.getAll("file"));
+    console.log("formData", formData);
+
+    const accessToken = localStorage.getItem("accessToken");
+
     axios
-      // .patch(`http://localhost:4000/diary/` + id, diaryInfo)
-      .patch(`/diary/` + id, diaryInfo, {
+      .patch(`/diary/` + id, formData, {
         headers: {
+          "Content-Type": "multipart/form-data",
           Authorization: accessToken,
         },
       })
@@ -130,7 +152,6 @@ const DiaryEdit = () => {
   };
   return (
     <>
-      {/* <LoginHeader /> */}
       {loading ? (
         <Loading />
       ) : (
@@ -148,7 +169,12 @@ const DiaryEdit = () => {
               day={day}
               setDay={setDay}
             />
-            <DiaryEditImg imageList={imageList} setImageList={setImageList} />
+            <DiaryEditImg
+              imageList={imageList}
+              setImageList={setImageList}
+              addImage={addImage}
+              setAddImage={setAddImage}
+            />
             <DiaryEditText question={question} setQuestion={setQuestion} diary={diary} setDiary={setDiary} />
             <DiaryEditPrice price={price} setPrice={setPrice} />
             <DiaryEditPlace
