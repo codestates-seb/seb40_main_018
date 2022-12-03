@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
-import { useParams, useNavigate } from "react-router-dom";
+// import { useParams, useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MintLineButton from "../Button/MintLineButton";
 import { Container, Inside, MintButton3, ModalBackdrop, ModalView } from "./HeaderModal";
@@ -51,27 +52,58 @@ const YesBtn = styled.div`
   margin-right: 14px;
 `;
 
-function DeleteModal() {
+function DeleteModal({ diaryDetail }) {
   const navigate = useNavigate();
-  const id = useParams().id;
+  // const id = useParams().id;
 
   const [isOpen2, setIsOpen2] = useState(false);
+  const [isMine, setIsMine] = useState();
+  console.log("isMine", isMine);
   const openModal2 = () => {
     setIsOpen2(!isOpen2);
   };
   const accessToken = localStorage.getItem("accessToken");
-  const submitHandler = () => {
+
+  useEffect(() => {
     axios
-      .delete(`/diary/` + id, {
+      .get(`/member/me`, {
         headers: {
           Authorization: accessToken,
         },
       })
-      .then((res) => {
-        console.log(res.status);
-        console.log("삭제");
-        navigate("/");
-      });
+      .then((res) => setIsMine(res.data.data.memberId));
+  }, []);
+
+  const submitHandler = () => {
+    if (isMine === diaryDetail.memberId) {
+      axios
+        .delete(`/diary/${diaryDetail.diaryId}`, {
+          headers: {
+            Authorization: accessToken,
+          },
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log("deleteErr", err));
+    } else if (isMine !== diaryDetail.memberId) {
+      alert("직접 작성한 일기만 삭제 가능합니다.");
+      navigate(`/diary/${diaryDetail.diaryId}`);
+    }
+    // axios
+    //   .delete(`/diary/` + id, {
+    //     headers: {
+    //       Authorization: accessToken,
+    //     },
+    //   })
+    //   .then(() => {
+    //     console.log("diaryDetail.memberId", diaryDetail.memberId);
+    //     if (isMine === diaryDetail.memberId) {
+    //       console.log("삭제");
+    //       navigate("/");
+    //     } else if (isMine !== diaryDetail.memberId) {
+    //       alert("직접 작성한 일기만 삭제 가능합니다.");
+    //       navigate(`/diary/` + id);
+    //     }
+    //   });
   };
   return (
     <>

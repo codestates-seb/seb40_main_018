@@ -27,11 +27,11 @@ export default function MainPage() {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
-  // const [tag, setTag] = useState("");
 
-  // 현재 스켈레톤 쓰지 않아도 서버 빠름
+  const [tag, setTag] = useState("");
   const fetchDiaryList = async (page) => {
-    const res = await axios.get(`/diary?size=12&page=${page}`); // &tag=${tag}
+  const res = await axios.get(`/diary?size=12&page=${page}&tag=${tag}`);
+
     console.log(res.data);
     const diaries = res.data.data;
     const pagination = res.data.pageInfo;
@@ -81,7 +81,7 @@ export default function MainPage() {
   return (
     <Main>
       <div>
-        <MainTab selected={selected} setSelected={setSelected} diaryList={diaryList} />
+        <MainTab selected={selected} setSelected={setSelected} diaryList={diaryList} setTag={setTag} />
         <Card
           selected={selected}
           diaryList={diaryList}

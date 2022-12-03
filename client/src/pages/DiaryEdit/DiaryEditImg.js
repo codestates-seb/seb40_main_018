@@ -65,18 +65,7 @@ const UploadBtn = styled.button`
 const fileTypes = ["JPG", "PNG", "GIF"];
 
 const DiaryEditImg = ({ imageList, setImageList }) => {
-  // const images = [
-  //   { url: "../../images/user.png" },
-  //   { url: "images/2.jpg" },
-  //   { url: "images/3.jpg" },
-  //   { url: "images/4.jpg" },
-  //   { url: "images/5.jpg" },
-  //   { url: "images/6.jpg" },
-  //   { url: "images/7.jpg" },
-  // ];
-  // const [imageList, setImageList] = useState([]);
-  // 여기 잘 바꿔야 할듯?
-
+  console.log("EditDiaryImg", imageList);
   const [isDrag, setIsDrag] = useState(false);
   const imageRegistHandler = (files) => {
     let tempImagelist = [...imageList];
@@ -109,7 +98,7 @@ const DiaryEditImg = ({ imageList, setImageList }) => {
               width={"700px"}
               height={"480px"}
               images={imageList.map((item) => {
-                return { url: URL.createObjectURL(item) };
+                return item;
               })}
               showBullets={true}
               showNavs={true}
@@ -127,7 +116,7 @@ const DiaryEditImg = ({ imageList, setImageList }) => {
               <ImgItem>
                 <MdClose className="delete-img" size="28" onClick={() => imageDeleteHandler(index)} />
               </ImgItem>
-              <PreViewImg alt="갤러리 이미지" src={URL.createObjectURL(image)} />
+              <PreViewImg alt="갤러리 이미지" src={image} />
             </ListStyled>
           );
         })}

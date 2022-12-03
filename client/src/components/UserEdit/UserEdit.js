@@ -136,16 +136,15 @@ const SubmitBtn = styled.button`
   }
 `;
 
-export const UserEditBox = () => {
+export const UserEditBox = ({ cardList }) => {
   //상태를 만들어서 해주는거 어떨까요?
-  const defaultImg = "https://cdn-icons-png.flaticon.com/512/666/666201.png";
 
   // const [userProfile, setUserProfile] = useState([]);
   const [userNickname, setUserNickname] = useState("");
   const [userIntro, setUserIntro] = useState("");
   // const [diaryCount, setDiaryCount] = useState("1");
   const [isEdit, setIsEdit] = useState(false);
-  const [img, setImg] = useState(defaultImg);
+  const [img, setImg] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const editHandler = () => {
@@ -161,19 +160,29 @@ export const UserEditBox = () => {
   };
 
   const submitHandler = () => {
-    const formData = new FormData();
     // form Data 객체 생성
-    formData.append("nickname", "userNickname");
-    formData.append("aboutMe", "userIntro");
-    formData.append("profileImg", img.files[0]);
-
+    const editUserProfile = {
+      nickname: userNickname,
+      aboutMe: userIntro,
+    };
+    const formData = new FormData();
+    console.log("img", img);
+    formData.append("imageFile", img);
+    formData.append(
+      "memberProfilePatchForm",
+      new Blob([JSON.stringify(editUserProfile)], { type: "application/json" }),
+    );
     setIsEdit(!isEdit);
-    // const editUserProfile = {
-    //   nickname: userNickname,
-    //   aboutMe: userIntro,
-    //   profileImg: a,
-    // };
+    for (const key of formData.keys()) {
+      console.log("key", key);
+    }
+
+    for (const value of formData.values()) {
+      console.log("value", value);
+    }
+    // console.log("formDataFile", formData.getAll("file"));
     console.log("formData", formData);
+
     axios
       .patch(`/member/me`, formData, {
         headers: {
@@ -182,7 +191,7 @@ export const UserEditBox = () => {
         },
       })
       .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("editPatch", err));
   };
 
   const cancelHandler = () => {
@@ -199,6 +208,7 @@ export const UserEditBox = () => {
     }
     reader.onloadend = () => {
       const resultImage = reader.result;
+      // console.log("resultImage", resultImage);
       setImg(resultImage);
     };
   };
@@ -274,7 +284,7 @@ export const UserEditBox = () => {
                 <UserInformation>
                   <Id> {userNickname}</Id>
                   <Information> {userIntro}</Information>
-                  <Count>게시글 1</Count>
+                  <Count>게시글 {cardList.length}</Count>
                 </UserInformation>
                 <Block>
                   <SubmitBtn type="button" onClick={editHandler}>

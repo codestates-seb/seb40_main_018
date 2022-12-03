@@ -1,12 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import styled from "styled-components";
 import DarkMintTag from "../Tag/DarkMintTag";
 import SkeletonCard from "../Skeleton/SkeletonCard";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 // import { MainTab } from "./MainTab";
 
 const Main = styled.div`
@@ -145,9 +145,22 @@ const Heart = styled.div`
 // { selected }
 export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading, page }) => {
   console.log("diaryList2", diaryList);
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState();
 
-  // const [completed, setcompleted] = useState(false);
+  const id = useParams().id;
+  console.log("id", id);
+  const accessToken = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    axios
+      .get(`/likes/` + Id, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => console.log("likeGet", res))
+      .catch((err) => console.log(err));
+  });
 
   const onClickHandler = (list) => {
     setLike(!like);
@@ -166,7 +179,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
     };
 
     axios
-      .patch(`http://localhost:4000/diary/` + list.id, patch2)
+      .post(`/likes/` + id, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
   };
@@ -212,7 +225,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
             {/* 정렬 - diaryList?.sort(MainTab(selected)) */}
             {diaryList.map((list, index) => (
               <CardBox key={index}>
-                <Preview src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지">
+                <Preview src={list.imageUrl} alt="이미지">
                   <Heart>
                     <button className="heartBtn" onClick={() => onClickHandler(list)}>
                       {list.like ? <FaHeart color="#DF4949" /> : <FiHeart color="#DF4949" fill="#646464" />}
