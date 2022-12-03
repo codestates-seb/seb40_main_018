@@ -6,7 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.danim.diary.domain.Diary;
 import project.danim.diary.repository.DiaryRepository;
+import project.danim.member.service.MemberService;
 import project.danim.response.MultiResponseDto;
 import project.danim.tag.domain.Tag;
 import project.danim.tag.dto.TagDiaryResponseDto;
@@ -21,10 +23,12 @@ public class TagService {
 
     private final TagRepository tagRepository;
     private final DiaryRepository diaryRepository;
+    private final MemberService memberService;
 
-    public TagService(TagRepository tagRepository, DiaryRepository diaryRepository) {
+    public TagService(TagRepository tagRepository, DiaryRepository diaryRepository, MemberService memberService) {
         this.tagRepository = tagRepository;
         this.diaryRepository = diaryRepository;
+        this.memberService = memberService;
     }
 
     // 태그 전체 조회
@@ -94,7 +98,10 @@ public class TagService {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("diaryId").descending());
         Page<Tag> findTags = tagRepository.findAllByContentContains(name, pageable);
         List<TagDiaryResponseDto> result = findTags.getContent().stream()
-                .map(tag -> TagDiaryResponseDto.of(diaryRepository.findByDiaryId(tag.getDiaryId()).get()))
+                .map(tag -> {
+                    Diary findDiary = diaryRepository.findByDiaryId(tag.getDiaryId()).get();
+                    return TagDiaryResponseDto.of(findDiary, memberService.findMember(findDiary.getMemberId()) ,getTags(findDiary.getDiaryId()));
+                })
                 .collect(Collectors.toList());
 
         return new MultiResponseDto(result, findTags);

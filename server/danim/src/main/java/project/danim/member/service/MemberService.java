@@ -27,6 +27,11 @@ public class MemberService {
         return memberRepository.findByEmail(email).orElseThrow(() ->
                 new MemberNotFoundException(ExceptionCode.MEMBER_NOT_FOUND));
     }
+
+    public Member findMember(long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(() ->
+                new MemberNotFoundException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
     public MemberResponseForProfile patchProfile(MemberProfilePatchForm memberProfilePatchForm, MultipartFile multipartFile) throws IOException {
         Member findMember = memberRepository.findById(memberProfilePatchForm.getMemberId()).get();
 
