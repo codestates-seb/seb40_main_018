@@ -225,7 +225,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
             {/* 정렬 - diaryList?.sort(MainTab(selected)) */}
             {diaryList.map((list, index) => (
               <CardBox key={index}>
-                <Preview src="https://cdn.pixabay.com/photo/2022/11/11/13/00/clouds-7584944_960_720.jpg" alt="이미지">
+                <Preview src={list.imageUrl} alt="이미지">
                   <Heart>
                     <button className="heartBtn" onClick={() => onClickHandler(list)}>
                       {list.like ? <FaHeart color="#DF4949" /> : <FiHeart color="#DF4949" fill="#646464" />}

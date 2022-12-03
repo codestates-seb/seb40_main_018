@@ -136,7 +136,7 @@ const SubmitBtn = styled.button`
   }
 `;
 
-export const UserEditBox = () => {
+export const UserEditBox = ({ cardList }) => {
   //상태를 만들어서 해주는거 어떨까요?
 
   // const [userProfile, setUserProfile] = useState([]);
@@ -145,8 +145,6 @@ export const UserEditBox = () => {
   // const [diaryCount, setDiaryCount] = useState("1");
   const [isEdit, setIsEdit] = useState(false);
   const [img, setImg] = useState([]);
-  const [preview, setPreview] = useState([]);
-  console.log("preview2", preview);
   const [loading, setLoading] = useState(false);
 
   const editHandler = () => {
@@ -169,8 +167,7 @@ export const UserEditBox = () => {
     };
     const formData = new FormData();
     console.log("img", img);
-    console.log("preview", preview);
-    formData.append("imageFile", preview);
+    formData.append("imageFile", img);
     formData.append(
       "memberProfilePatchForm",
       new Blob([JSON.stringify(editUserProfile)], { type: "application/json" }),
@@ -204,7 +201,6 @@ export const UserEditBox = () => {
 
   const onChangeFile = (e) => {
     // console.log(e.target.files[0]);
-    setPreview(e.target.files[0]);
 
     let reader = new FileReader();
     if (e.target.files[0]) {
@@ -288,7 +284,7 @@ export const UserEditBox = () => {
                 <UserInformation>
                   <Id> {userNickname}</Id>
                   <Information> {userIntro}</Information>
-                  <Count>게시글 1</Count>
+                  <Count>게시글 {cardList.length}</Count>
                 </UserInformation>
                 <Block>
                   <SubmitBtn type="button" onClick={editHandler}>

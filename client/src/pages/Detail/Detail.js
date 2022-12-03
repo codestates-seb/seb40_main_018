@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
 // import Comment from "./Comment";
 import { useNavigate, useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
+
 import axios from "axios";
 // import LoginHeader from "../../components/Header/LoginHeader";
 
@@ -164,6 +166,7 @@ function Detail() {
   const navigate = useNavigate();
 
   const [diaryDetail, setDiaryDetail] = useState([]);
+  console.log("DiaryDetail", diaryDetail);
   const [imageList, setImageList] = useState([]);
   const [like, setLike] = useState();
   const accessToken = localStorage.getItem("accessToken");
@@ -218,14 +221,26 @@ function Detail() {
 
   // 다이어리 본문 수정버튼
   const editBtnHandler = () => {
-    navigate(`/diaryedit/` + id);
+    axios
+      .get(`/member/me`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => {
+        if (diaryDetail.memberId !== res.data.data.memberId) {
+          alert("직접 작성한 일기만 수정가능합니다.");
+          return false;
+        } else if (diaryDetail.memberId === res.data.data.memberId) {
+          navigate(`/diaryedit/` + id);
+        }
+      });
   };
 
   const formatter = new Intl.NumberFormat("ko");
 
   return (
     <>
-      {/* <LoginHeader /> */}
       <Section>
         <DiaryContainer>
           <TitleArea>
@@ -280,11 +295,16 @@ function Detail() {
             {diaryDetail.tags &&
               diaryDetail.tags.map((el, index) => <DarkMintButton key={index} text={el} width="auto" />)}
           </TagsArea>
+          {/* 권한 확인해야함. 다이어리 작성한 사람 아이디랑, 현재 유저 아이디 비교해서 같을때만 수정가능하게 바꾸기 */}
+          {/* {member.memberId && diaryDetail.memberId === member.memberId &&
           <BtnArea>
-            {/* 권한 확인해야함. 다이어리 작성한 사람 아이디랑, 현재 유저 아이디 비교해서 같을때만 수정가능하게 바꾸기 */}
-            {/* {diaryDetail.memberId === diary.memberId} */}
             <EditBtn onClick={editBtnHandler}>수정</EditBtn>
             <DeleteModal />
+          </BtnArea>
+        </DiaryContainer>} */}
+          <BtnArea>
+            <EditBtn onClick={editBtnHandler}>수정</EditBtn>
+            <DeleteModal diaryDetail={diaryDetail} />
           </BtnArea>
         </DiaryContainer>
         <CommentContainer>

@@ -21,6 +21,7 @@ const MyPageContainer = styled.div`
 const MyPage = () => {
   const [cardList, setCardList] = useState([]);
   const [loading, setLoading] = useState(false);
+  // const [mainImage, setMainImage] = useState([])
   const [tag, setTag] = useState("");
   const accessToken = localStorage.getItem("accessToken");
 
@@ -34,10 +35,11 @@ const MyPage = () => {
       })
       .then((res) => {
         const timer = setTimeout(() => {
-          console.log(res.data);
+          console.log("Diaries", res.data.data);
           let response = res.data.data;
           setCardList(response.slice(0, 10));
           response = response.slice(10);
+          // setMainImage()
           setResult(response);
           setLoading(false);
         }, 2000);
@@ -55,7 +57,7 @@ const MyPage = () => {
     <>
       {/* <LoginHeader /> */}
       <MyPageContainer>
-        <UserEditBox />
+        <UserEditBox cardList={cardList} />
         <MapIcon2 cardList={cardList} />
         <MyPageSearch cardList={cardList} setCardList={setCardList} setTag={setTag} />
         {loading && <SkeletonDiary />}
