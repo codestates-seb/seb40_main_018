@@ -6,7 +6,7 @@ import styled from "styled-components";
 import DarkMintTag from "../Tag/DarkMintTag";
 import SkeletonCard from "../Skeleton/SkeletonCard";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 // import { MainTab } from "./MainTab";
 
 const Main = styled.div`
@@ -165,8 +165,10 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
       like: !list.like,
     };
 
+    const id = useParams().id;
+
     axios
-      .patch(`http://localhost:4000/diary/` + list.id, patch2)
+      .patch(`/likes/` + id, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
   };
@@ -226,8 +228,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
                 </Link>
                 <MintWrapper>
                   <Region>
-                    {list.area}
-                    {list.city}
+                    {list.area} {list.city}
                   </Region>
                   <Budget>{list.cost}</Budget>
                 </MintWrapper>
