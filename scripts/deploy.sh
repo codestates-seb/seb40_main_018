@@ -2,11 +2,10 @@
 BUILD_JAR=$(ls /home/ubuntu/action/server/danim/build/libs/danim-0.0.1-SNAPSHOT.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 
-RDS_FORTH=jdbc:mysql://
-RDS_BACK=/danim?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC&reconnect=true
+RDS_FORTH='jdbc:mysql://'
+RDS_BACK='/danim?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC&reconnect=true'
 DB_URL=$(env | grep RDS_URL | cut -c 9-59)
-HALF_URL=$RDS_FORTH$DB_URL
-RDS_URL=$HALF_URL$RDS_BACK
+RDS_URL=${RDS_FORTH}${DB_URL}${RDS_BACK}
 
 RDS_USERNAME=$(env | grep RDS_USERNAME | cut -c 14-20)
 RDS_PASSWORD=$(env | grep RDS_PASSWORD | cut -c 14-25)
