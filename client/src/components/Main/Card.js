@@ -155,8 +155,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
   console.log("diaryList2", diaryList);
 
   const [like, setLike] = useState();
-  const id = useParams();
-  console.log("id", id);
+  const id = useParams().id;
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -167,16 +166,19 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
         },
       })
       .then((res) => console.log("likeGet", res))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        // console.log(id);
+        console.log(err);
+      });
   });
 
   const onClickHandler = (list) => {
     setLike(!like);
+    console.log("list", list);
+
     setDiaryList(
       diaryList.map((item) => {
-        if (item.diaryId === list.id) {
-          console.log("item.id", item.diaryId);
-          console.log("list.id", list.id);
+        if (item.diaryId === list.diaryId) {
           return { ...item, like: !item.like };
         }
         return item;
@@ -188,12 +190,15 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
       like: !list.like,
     };
 
-    const id = useParams().id;
-
+    // pass
     axios
-      .post(`/likes/` + id, patch2)
+      .post(`/likes/` + list.diaryId, patch2, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
       .then((res) => console.log(res))
-      .then((err) => console.log("res1", err));
+      .catch((err) => console.log("res1", err));
   };
 
   // const onClickHandler = ({ id }) => {
