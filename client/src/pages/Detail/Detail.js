@@ -163,6 +163,7 @@ const CommentTitle = styled.div`
 
 function Detail() {
   const id = useParams().id;
+  console.log("Detail-Like-id", id);
   const navigate = useNavigate();
 
   const [diaryDetail, setDiaryDetail] = useState([]);
