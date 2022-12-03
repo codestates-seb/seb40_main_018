@@ -99,7 +99,7 @@ public class DiaryService {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("diaryId").descending());
         Page<Diary> diaryPage = diaryRepository.findAll(pageable);
         List<DiaryResponseDtoForCard> diaries = diaryPage.getContent().stream()
-                .map(diary -> DiaryResponseDtoForCard.of(diary))
+                .map(diary -> DiaryResponseDtoForCard.of(diary, memberService.findMember(diary.getMemberId()), tagService.getTags(diary.getDiaryId())))
                 .collect(Collectors.toList());
 
         return new MultiResponseDto<>(diaries, diaryPage);
