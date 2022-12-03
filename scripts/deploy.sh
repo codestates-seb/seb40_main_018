@@ -4,8 +4,8 @@ JAR_NAME=$(basename $BUILD_JAR)
 
 RDS_FORTH=jdbc:mysql://
 RDS_BACK=/danim?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC&reconnect=true
-RDS_URL=$(env | grep RDS_URL | cut -c 9-59)
-DB_URL=$RDS_FORTH$RDS_URL$RDS_BACK
+DB_URL=$(env | grep RDS_URL | cut -c 9-59)
+RDB_URL=$RDS_FORTH$DB_URL$RDS_BACK
 
 RDS_USERNAME=$(env | grep RDS_USERNAME | cut -c 14-20)
 RDS_PASSWORD=$(env | grep RDS_PASSWORD | cut -c 14-25)
@@ -32,4 +32,4 @@ else
 fi
 
 echo "> DEPLOY_JAR 배포 $BUILD_JAR"    >> /home/ubuntu/action/deploy.log
-sudo nohup java -jar $BUILD_JAR --srping.datasource.url=${DBURL} --spring.datasource.username=${RDS_USERNAME} --spring.datasource.password=${RDS_PASSWORD} --spring.datasource.port=${RDS_PORT} --cloud.aws.credentials.access-key=${AWS_ACCESS_KEY} --cloud.aws.credentials.secret-key=${AWS_SECRET_ACCESS_KEY} --cloud.aws.s3.bucket=${BUCKET_NAME} --jwt.secret-key=${JWT_SECRET_KEY} &
+sudo nohup java -jar $BUILD_JAR --srping.datasource.url=${RDS_URL} --spring.datasource.username=${RDS_USERNAME} --spring.datasource.password=${RDS_PASSWORD} --spring.datasource.port=${RDS_PORT} --cloud.aws.credentials.access-key=${AWS_ACCESS_KEY} --cloud.aws.credentials.secret-key=${AWS_SECRET_ACCESS_KEY} --cloud.aws.s3.bucket=${BUCKET_NAME} --jwt.secret-key=${JWT_SECRET_KEY} &
