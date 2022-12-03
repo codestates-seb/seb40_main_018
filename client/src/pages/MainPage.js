@@ -12,9 +12,12 @@ const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  /* height: 100vh; */
   background-color: #fbfbfb;
 `;
-
+const Container = styled.div`
+  height: 100vh;
+`;
 export default function MainPage() {
   // const id = useParams().id;
   // const user = useSelector(SET_TOKEN);
@@ -29,8 +32,9 @@ export default function MainPage() {
   const [totalPage, setTotalPage] = useState(1);
 
   const [tag, setTag] = useState("");
+
   const fetchDiaryList = async (page) => {
-  const res = await axios.get(`/diary?size=12&page=${page}&tag=${tag}`);
+    const res = await axios.get(`/diary?size=12&page=${page}&tag=${tag}`);
 
     console.log(res.data);
     const diaries = res.data.data;
@@ -49,38 +53,14 @@ export default function MainPage() {
   };
 
   useEffect(() => {
-    // axios.get(`http://localhost:4000/diary`).then((res) => {
-    // axios.get(`/diary?size=12&page=${page}`).then((res) => {
-    //   const timer = setTimeout(() => {
-    //     console.log(res.data.data);
-    //     let response = res.data.data;
-    //     setDiaryList(response.slice(0, 12)); // 받아온 데이터에서 12개만 먼저 result state에 저장
-    //     response = response.slice(12);
-    //     setResult(response); // 저장한 데이터 모두 저장
-    //     setLoading(false);
-    //     setPage(page + 1);
-    //   }, 2000);
-    //   return () => clearTimeout(timer);
-    // });
-
     fetchDiaryList(page);
-    // const timer = setTimeout(() => {
-
-    // }, 2000);
-    // return () => clearTimeout(timer);
   }, []);
 
-  // useEffect(() => {
-  //   axios.get(`/tag/{diary-id}`).then((res) => console.log(res.data.data));
-  // });
-
-  // yerin
-  // const [hasMore, setHasMore] = useState(true);
   const [result, setResult] = useState([]);
 
   return (
     <Main>
-      <div>
+      <Container>
         <MainTab selected={selected} setSelected={setSelected} diaryList={diaryList} setTag={setTag} />
         <Card
           selected={selected}
@@ -95,7 +75,7 @@ export default function MainPage() {
           fetchDiaryList={fetchDiaryList}
           page={page}
         />
-      </div>
+      </Container>
     </Main>
   );
 }

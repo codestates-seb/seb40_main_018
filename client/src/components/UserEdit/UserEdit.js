@@ -200,7 +200,7 @@ export const UserEditBox = ({ cardList }) => {
   };
 
   const onChangeFile = (e) => {
-    // console.log(e.target.files[0]);
+    console.log("test", e.target.files[0]);
 
     let reader = new FileReader();
     if (e.target.files[0]) {
@@ -208,7 +208,7 @@ export const UserEditBox = ({ cardList }) => {
     }
     reader.onloadend = () => {
       const resultImage = reader.result;
-      // console.log("resultImage", resultImage);
+      console.log("resultImage", resultImage);
       setImg(resultImage);
     };
   };

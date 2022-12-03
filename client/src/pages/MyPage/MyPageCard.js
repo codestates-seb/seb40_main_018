@@ -82,8 +82,8 @@ const MyPageCard = ({ cardList, hasMore, fetchDiaryList, page2 }) => {
         hasMore={hasMore}
         loader={<h4>Loading...</h4>}
         endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
+          <p style={{ textAlign: "center", marginTop: "40px", marginBottom: "20px" }}>
+            <b>마지막 페이지입니다 : )</b>
           </p>
         }
       >
