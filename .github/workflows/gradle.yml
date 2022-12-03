@@ -44,6 +44,7 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
+        build-root-directory: server/danim
     
     - name: Make zip file
       run: zip -r ./seb40_main_018.zip .
