@@ -1,4 +1,6 @@
 import axios from "axios";
+// import { useEffect } from "react";
+
 import { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
@@ -11,6 +13,7 @@ import { Link, useParams } from "react-router-dom";
 
 const Main = styled.div`
   display: grid;
+  margin: 0 10px;
   gap: 40px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   @media screen and (max-width: 1260px) {
@@ -37,15 +40,17 @@ const CardBox = styled.div`
 `;
 
 const Id = styled.div`
-  width: 280px;
   font-size: 12px;
-  color: #000000;
+  color: #86c1c1;
+  font-weight: 800;
 `;
 
 const Cardtitle = styled.div`
+  margin-top: 5px;
+  font-weight: 600;
   width: 280px;
   font-size: 12px;
-  color: #000000;
+  color: #535353;
 `;
 
 const Cardcontents = styled.div`
@@ -56,16 +61,17 @@ const Cardcontents = styled.div`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  color: #000000;
+  color: #535353;
 `;
 
-const Preview = styled.div`
+const Preview = styled.img`
   width: 280px;
   height: 280px;
-  border: 1px solid red;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
+  object-fit: cover;
 `;
 
 const MintWrapper = styled.div`
@@ -107,13 +113,12 @@ const Budget = styled.div`
   justify-content: center;
   align-items: center;
   width: auto;
-  padding: 8px;
-  height: 16px;
+  padding: 1px 7px;
   color: #535353;
   background-color: hsl(0, 0%, 100%);
   border: 1px solid hsl(180, 32%, 54%);
   border-radius: 35px;
-  font-size: 10px;
+  font-size: 12px;
 
   &:hover {
     background-color: hsl(180, 12%, 96%);
@@ -133,8 +138,6 @@ const TagContainer = styled.div`
   flex-wrap: wrap;
 `;
 const Heart = styled.div`
-  margin-bottom: 240px;
-  margin-left: 240px;
   cursor: pointer;
   > .heartBtn {
     border: none;
@@ -142,12 +145,17 @@ const Heart = styled.div`
     cursor: pointer;
   }
 `;
-// { selected }
+
+const TopStyle = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading, page }) => {
   console.log("diaryList2", diaryList);
-  const [like, setLike] = useState();
 
-  const id = useParams().id;
+  const [like, setLike] = useState();
+  const id = useParams();
   console.log("id", id);
   const accessToken = localStorage.getItem("accessToken");
 
@@ -166,7 +174,9 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
     setLike(!like);
     setDiaryList(
       diaryList.map((item) => {
-        if (item.id === list.id) {
+        if (item.diaryId === list.id) {
+          console.log("item.id", item.diaryId);
+          console.log("list.id", list.id);
           return { ...item, like: !item.like };
         }
         return item;
@@ -206,6 +216,8 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
   // }, 1500);
   // };
 
+  const formatter = new Intl.NumberFormat("ko");
+
   return (
     <>
       {loading && <SkeletonCard />}
@@ -216,8 +228,8 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
         hasMore={hasMore && !loading}
         loader={<h4>Loading...</h4>}
         endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
+          <p style={{ textAlign: "center", marginTop: "40px", marginBottom: "20px" }}>
+            <b>마지막 페이지입니다 : )</b>
           </p>
         }
       >
@@ -227,15 +239,16 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
             {/* 정렬 - diaryList?.sort(MainTab(selected)) */}
             {diaryList.map((list, index) => (
               <CardBox key={index}>
-                <Preview src={list.imageUrl} alt="이미지">
+                <TopStyle>
+                  <Id>{list.nickname}</Id>
                   <Heart>
                     <button className="heartBtn" onClick={() => onClickHandler(list)}>
                       {list.like ? <FaHeart color="#DF4949" /> : <FiHeart color="#DF4949" fill="#646464" />}
                     </button>
                   </Heart>
-                </Preview>
+                </TopStyle>
                 <Link to={`/detail/${list.diaryId}`}>
-                  <Id>{list.nickname}</Id>
+                  <Preview src={list.imageUrl} alt="이미지" />
                   <Cardtitle>{list.title}</Cardtitle>
                   <Cardcontents>{list.content}</Cardcontents>
                 </Link>
@@ -243,7 +256,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
                   <Region>
                     {list.area} {list.city}
                   </Region>
-                  <Budget>{list.cost}</Budget>
+                  <Budget>총 예산 : {formatter.format(list.cost)} ₩</Budget>
                 </MintWrapper>
                 <TagContainer>
                   {list.tags.map((tag, idx) => (

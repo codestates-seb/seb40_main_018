@@ -97,7 +97,6 @@ const Comment = () => {
       .then((res) => console.log(res.data))
       .catch((err) => {
         console.log(err);
-        navigate("/login");
       });
 
     await axios.get(`/reply/` + id).then((result) => {
@@ -201,6 +200,7 @@ const Comment = () => {
 
   const accessToken = localStorage.getItem("accessToken");
   const [userNickname, setUserNickname] = useState("");
+  const [memberId, setMemberId] = useState("");
   //  사용자 닉네임 나밖에 못 가져옴
   useEffect(() => {
     axios
@@ -211,6 +211,7 @@ const Comment = () => {
       })
       .then((res) => {
         console.log("userNickname", res.data.data);
+        setMemberId(res.data.data.memberId);
         setUserNickname(res.data.data.nickname);
       });
   }, []);
@@ -226,6 +227,14 @@ const Comment = () => {
   //   }
   //   setDisplay(!display);
   // };
+  const onclickHandler = () => {
+    if (memberId) {
+      setDisplay(!display);
+    } else if (!memberId) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+    }
+  };
 
   return (
     <>
@@ -233,9 +242,10 @@ const Comment = () => {
       {!loading && (
         <Paper sx={{ mt: 1, mb: 10, width: 690, color: "#535353", bgcolor: "#fbfbfb", boxShadow: 0 }}>
           <Button
-            onClick={() => {
-              setDisplay(!display);
-            }}
+            // onClick={() => {
+            //   setDisplay(!display);
+            // }}
+            onClick={onclickHandler}
             sx={{
               width: "5.5rem",
               fontSize: 12,
