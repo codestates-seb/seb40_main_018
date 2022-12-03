@@ -8,8 +8,6 @@
 name: Java CI with Gradle
 
 on:
-  push:
-    branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
 
@@ -32,18 +30,18 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+    - name: Validate Gradle
+      uses: server/danim/gradle/gradle-build-action@v2
       
-    - name : Gradle init
-      run: gradle init
+#     - name : Gradle init
+#       run: gradle init
       
-    - name : Execute Gradle build
-      run: gradle build
-#     - name: Build with Gradle
-#       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-#       with:
-#         arguments: build
+#     - name : Execute Gradle build
+#       run: gradle build
+    - name: Build with Gradle
+      uses: server/danim/gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+      with:
+        arguments: build
     
     - name: Make zip file
       run: zip -r ./seb40_main_018.zip .
