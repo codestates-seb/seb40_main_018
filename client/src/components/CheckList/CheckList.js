@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 export const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "350px")};
   height: ${(props) => (props.height ? props.height : "58px")};
@@ -107,13 +107,14 @@ export const MintButton2 = styled.button`
   }
 `;
 
-export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) => {
-  const cid = useParams().id;
-  console.log("check_id", cid);
-  const handleComplete = (todo) => {
+export const CheckList = ({ todos, setTodos }) => {
+  // pass
+  const handleComplete = async (todo) => {
+    console.log(todo.checkId);
     setTodos(
       todos.map((item) => {
-        if (item.id === todo.id) {
+        if (item.id === todo.checkId) {
+          console.log("CheckList.item.id", item.id);
           return { ...item, isCheck: !item.isCheck };
         }
         return item;
@@ -126,25 +127,68 @@ export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) =
     };
 
     // ^^todo.id
+    // 경로였을 때 patch 통신 잘 되는데, ui 이상해짐
 
-    axios
-      .patch(`/check-list/` + cid, patch2)
+    await axios
+      .patch(`/check-list/` + todo.checkId, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
+
+    await axios
+      .get(`/check-list`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((result) => {
+        setTodos(result.data);
+        // navigate(`/mylist/${cid}`);
+      });
   };
 
-  const handleEdit = ({ id }) => {
-    const findTodo = todos.find((todo) => todo.id === id);
-    setEditTodo(findTodo);
+  // const cid = useParams().id;
 
-    setIsEdit(!isEdit);
-  };
+  // const handleEdit = (item) => {
+  //   console.log("item.checkId", item.checkId);
+  //   const findTodo = todos.find((todo) => {
+  //     todo.checkId === item.checkId;
+  //     console.log("todo.checkId", todo.checkId);
+  //   });
+  //   console.log("findTodo", findTodo);
+
+  //   setEditTodo(findTodo);
+
+  //   setIsEdit(!isEdit);
+  // };
 
   // ^^id
+  const accessToken = localStorage.getItem("accessToken");
 
-  const handleDelete = ({ id }) => {
-    setTodos(todos.filter((todos) => todos.id !== id));
-    axios.delete(`/check-list/` + id);
+  // delete 할 때 모든 리스트가 삭제되고, get이 된다?
+  const handleDelete = async (check) => {
+    // setTodos(
+    //   todos.filter((item) => {
+    //     console.log("delete_checkId", item.checkId);
+    //     console.log("delete_id2", checkId.checkId); // 해당 id 경로 이동 시 undefined x
+    //     item.checkId !== checkId.checkId;
+    //   }),
+    // );
+
+    await axios.delete(`/check-list/` + check.checkId).then((res) => {
+      console.log(res);
+    });
+
+    await axios
+      .get(`/check-list`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((result) => {
+        setTodos(result.data);
+        // navigate(`/mylist/${cid}`);
+      });
+    // 등록 버튼 눌렀을 때 해당 id 링크로 이동?
   };
 
   return (
@@ -164,9 +208,9 @@ export const CheckList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) =
             />
           </Block2>
           <ButtonContainer>
-            <MintLineButton2 width="50px" height="20px" onClick={() => handleEdit(todo)}>
+            {/* <MintLineButton2 width="50px" height="20px" onClick={() => handleEdit(todo)}>
               수정
-            </MintLineButton2>
+            </MintLineButton2> */}
             <MintButton2 width="50px" height="20px" onClick={() => handleDelete(todo)}>
               삭제
             </MintButton2>
