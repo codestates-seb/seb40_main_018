@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import project.danim.diary.domain.Diary;
 import project.danim.diary.service.DiaryService;
+import project.danim.member.domain.Member;
 import project.danim.reply.domain.Reply;
 import project.danim.reply.dto.ReplyDeleteDto;
 import project.danim.reply.dto.ReplyPatchDto;
@@ -16,6 +17,7 @@ import project.danim.response.SingleResponseDto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/reply")
@@ -41,13 +43,13 @@ public class ReplyController {
     @PostMapping("/{diary-id}")
     public ResponseEntity<SingleResponseDto> postReply(@Valid @RequestBody ReplyPostDto request,
                                                        @PathVariable("diary-id") Long diaryId,
-                                                       Reply reply) {
+                                                       Reply reply, Member member) {
 
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Diary diary = diaryService.findDiary(diaryId);
 
-        ReplyResponseDto response = replyService.createReply(request, reply, diary, email);
+        ReplyResponseDto response = replyService.createReply(request, reply, diary, member, email);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.CREATED);
@@ -60,7 +62,7 @@ public class ReplyController {
             @Positive @PathVariable("reply-id") Long replyId,
             @RequestBody ReplyPatchDto request) {
 
-        ReplyResponseDto response = replyService.updateReply(request, replyId);
+        Reply response = replyService.updateReply(request, replyId);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.OK);
