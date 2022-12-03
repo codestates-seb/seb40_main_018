@@ -2,6 +2,7 @@ package project.danim.tag.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.danim.tag.dto.TagDeleteDto;
@@ -27,8 +28,9 @@ public class TagController {
     public ResponseEntity getTagDiaries(@NotBlank @RequestParam String name,
                                         @Positive @RequestParam int size,
                                         @Positive @RequestParam int page) {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return new ResponseEntity(tagService.getTagDiaries(name, size, page), HttpStatus.OK);
+        return new ResponseEntity(tagService.getTagDiaries(email, name, size, page), HttpStatus.OK);
     }
 
     // 1개 일기의 태그 전체 조회

@@ -9,28 +9,36 @@ import java.util.List;
 @Getter
 public class DiaryResponseDtoForCard {
     private final Long diaryId;
-
     private final String title;
     private final String content;
     private final String area;
     private final String city;
-
     private final Long memberId;
-
     private final String weather;
-
     private final String nickname;
     private final int cost;
-
     private final int year;
     private final int month;
     private final int day;
-
+    private final boolean isLike;
     private final String imageUrl;
-
     private final List<String> tags;
 
-    private DiaryResponseDtoForCard(Long diaryId, String title, String area, String city, String content, Long memberId, String weather, String nickname, int cost, int year, int month, int day, String imageUrl, List<String> tags) {
+    private DiaryResponseDtoForCard(Long diaryId,
+                                    String title,
+                                    String area,
+                                    String city,
+                                    String content,
+                                    Long memberId,
+                                    String weather,
+                                    String nickname,
+                                    int cost,
+                                    int year,
+                                    int month,
+                                    int day,
+                                    boolean isLike,
+                                    String imageUrl,
+                                    List<String> tags) {
         this.diaryId = diaryId;
         this.title = title;
         this.content = content;
@@ -43,11 +51,12 @@ public class DiaryResponseDtoForCard {
         this.year = year;
         this.month = month;
         this.day = day;
+        this.isLike = isLike;
         this.imageUrl = imageUrl;
         this.tags = tags;
     }
 
-    public static DiaryResponseDtoForCard of(Diary diary, Member member, List<String> tags) {
+    public static DiaryResponseDtoForCard of(Diary diary,boolean isLike, Member member, List<String> tags) {
         return new DiaryResponseDtoForCard(diary.getDiaryId(),
                 diary.getTitle(),
                 diary.getArea(),
@@ -60,6 +69,7 @@ public class DiaryResponseDtoForCard {
                 diary.getTravelDate().getYear(),
                 diary.getTravelDate().getMonthValue(),
                 diary.getTravelDate().getDayOfMonth(),
+                isLike,
                 diary.getDiaryImages().get(0),
                 tags
                 );

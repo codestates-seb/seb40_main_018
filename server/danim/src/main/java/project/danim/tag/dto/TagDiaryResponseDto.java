@@ -29,9 +29,24 @@ public class TagDiaryResponseDto {
     private final int month;
     private final int day;
 
+    private final boolean isLike;
     private final String imageUrl;
     private final List<String> tags;
-    private TagDiaryResponseDto (Long diaryId, String title, String area, String city, String content, Long memberId, String weather, String nickname, int cost, int year, int month, int day, String imageUrl, List<String> tags) {
+    private TagDiaryResponseDto (Long diaryId,
+                                 String title,
+                                 String area,
+                                 String city,
+                                 String content,
+                                 Long memberId,
+                                 String weather,
+                                 String nickname,
+                                 int cost,
+                                 int year,
+                                 int month,
+                                 int day,
+                                 boolean isLike,
+                                 String imageUrl,
+                                 List<String> tags) {
         this.diaryId = diaryId;
         this.title = title;
         this.content = content;
@@ -44,11 +59,12 @@ public class TagDiaryResponseDto {
         this.year = year;
         this.month = month;
         this.day = day;
+        this.isLike = isLike;
         this.imageUrl = imageUrl;
         this.tags = tags;
     }
 
-    public static TagDiaryResponseDto of(Diary diary, Member member, List<String> tags) {
+    public static TagDiaryResponseDto of(Diary diary, boolean isLike, Member member, List<String> tags) {
 
         return new TagDiaryResponseDto(diary.getDiaryId(),
                 diary.getTitle(),
@@ -62,6 +78,7 @@ public class TagDiaryResponseDto {
                 diary.getTravelDate().getYear(),
                 diary.getTravelDate().getMonthValue(),
                 diary.getTravelDate().getDayOfMonth(),
+                isLike,
                 diary.getDiaryImages().get(0),
                 tags
                 );
