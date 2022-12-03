@@ -15,6 +15,7 @@ public class TagDiaryResponseDto {
 
     private final String title;
     private final String content;
+    private final String area;
     private final String city;
 
     private final Long memberId;
@@ -29,10 +30,11 @@ public class TagDiaryResponseDto {
 
     private final String imageUrl;
     private final List<String> tags;
-    private TagDiaryResponseDto (Long diaryId, String title, String city, String content, Long memberId, String weather, String nickname, int year, int month, int day, String imageUrl, List<String> tags) {
+    private TagDiaryResponseDto (Long diaryId, String title, String area, String city, String content, Long memberId, String weather, String nickname, int year, int month, int day, String imageUrl, List<String> tags) {
         this.diaryId = diaryId;
         this.title = title;
         this.content = content;
+        this.area = area;
         this.city = city;
         this.memberId = memberId;
         this.weather = weather;
@@ -48,6 +50,7 @@ public class TagDiaryResponseDto {
 
         return new TagDiaryResponseDto(diary.getDiaryId(),
                 diary.getTitle(),
+                diary.getArea(),
                 diary.getCity(),
                 diary.getContent(),
                 diary.getMemberId(),
