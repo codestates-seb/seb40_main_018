@@ -46,7 +46,7 @@ const Id = styled.div`
 `;
 
 const Cardtitle = styled.div`
-  margin-top: 5px;
+  margin-top: 10px;
   font-weight: 600;
   width: 280px;
   font-size: 12px;
@@ -55,13 +55,14 @@ const Cardtitle = styled.div`
 
 const Cardcontents = styled.div`
   width: 280px;
-  height: 46px;
+  height: 42px;
   font-size: 11px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   color: #535353;
+  margin: 6px 0px 6px 0px;
 `;
 
 const Preview = styled.img`
@@ -81,6 +82,7 @@ const MintWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-bottom: 6px;
 `;
 
 const Region = styled.div`
@@ -149,6 +151,7 @@ const Heart = styled.div`
 const TopStyle = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 8px;
 `;
 
 export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading, page }) => {
