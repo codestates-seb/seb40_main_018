@@ -31,11 +31,11 @@ const MyPage = () => {
   const fetchDiaryList = async (page2) => {
     setLoading(true);
 
-    const res = await axios.get(`/member/me/diaries?size=10&page=${page2}`, {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}member/me/diaries?size=10&page=${page2}`, {
       headers: {
         Authorization: accessToken,
       },
-    }); // &tag=${tag}
+    });
 
     console.log(res.data.data);
     const cards = res.data.data;

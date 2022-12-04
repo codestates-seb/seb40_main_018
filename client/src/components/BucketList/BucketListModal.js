@@ -65,7 +65,7 @@ export const BucketListModal = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`/bucket-list`, {
+      .get(`${process.env.REACT_APP_API_URL}bucket-list`, {
         headers: {
           Authorization: accessToken,
         },

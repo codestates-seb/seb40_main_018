@@ -28,7 +28,7 @@ const MapIcon2 = () => {
   const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
     axios
-      .get(`/member/me/map`, {
+      .get(`${process.env.REACT_APP_API_URL}member/me/map`, {
         headers: {
           Authorization: accessToken,
         },

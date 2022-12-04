@@ -32,9 +32,7 @@ export default function MainPage() {
   const [tag, setTag] = useState("");
 
   const fetchDiaryList = async (page) => {
-    const res = await axios.get(
-      `http://ec2-43-201-50-74.ap-northeast-2.compute.amazonaws.com:8080/diary?size=12&page=${page}&tag=${tag}`,
-    );
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}diary?size=12&page=${page}&tag=${tag}`);
 
     console.log(res.data);
     const diaries = res.data.data;

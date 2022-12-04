@@ -71,7 +71,7 @@ export const CheckInput = ({
       isCheck: false,
     };
     await axios
-      .post(`/check-list`, todoPost, {
+      .post(`${process.env.REACT_APP_API_URL}check-list`, todoPost, {
         headers: {
           Authorization: accessToken,
         },
@@ -80,7 +80,7 @@ export const CheckInput = ({
       .then((err) => console.log(err));
 
     await axios
-      .get(`/check-list`, {
+      .get(`${process.env.REACT_APP_API_URL}check-list`, {
         headers: {
           Authorization: accessToken,
         },
