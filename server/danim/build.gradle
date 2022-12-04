@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.cloud:spring-cloud-starter-aws-parameter-store-config'
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-test'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -57,7 +57,7 @@ dependencies {
 
 
 ext {
-	set('springCloudVersion', "Hoxton.SR6")
+	set('springCloudVersion', "2021.0.5")
 }
 
 dependencyManagement {
