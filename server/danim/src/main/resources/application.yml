@@ -9,6 +9,7 @@ spring:
           endpoint: https://ssm.ap-northeast-2.amazonaws.com
           origin:
             aws:parameter:
+              origin: aws:ssm
               prefix: /sprig-boot-aws
               recursive: true
               decrypt-values: true
