@@ -1,4 +1,19 @@
 spring:
+  profiles:
+    active: awsparamstore
+  cloud:
+    config:
+      server:
+        awsparamstore:
+          region: ap-northeast-2
+          endpoint: https://ssm.ap-northeast-2.amazonaws.com
+          origin:
+            aws:parameter:
+              prefix: /sprig-boot-aws/danim
+              profile-separator:
+              recursive: true
+              decrypt-values: true
+              max-results: 5
   servlet:
     multipart:
       max-file-size: 10MB
