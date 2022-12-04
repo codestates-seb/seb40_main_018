@@ -9,11 +9,10 @@ spring:
           endpoint: https://ssm.ap-northeast-2.amazonaws.com
           origin:
             aws:parameter:
-              prefix: /sprig-boot-aws/danim
-              profile-separator:
+              prefix: /sprig-boot-aws
               recursive: true
               decrypt-values: true
-              max-results: 5
+              max-results: 10
   servlet:
     multipart:
       max-file-size: 10MB
@@ -21,10 +20,10 @@ spring:
   datasource:
     profiles: local
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${RDS_URL}/danim?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC&reconnect=true
-    username: ${RDS_USERNAME}
-    password: ${RDS_PASSWORD}
-    port: ${RDS_PORT}
+    url: ${mySql.url}
+    username: ${mySql.username}
+    password: ${mySql.password}
+    port: ${mySql.port}
   config:
     import: "optional:configserver:"
   jpa:
@@ -38,11 +37,11 @@ spring:
 cloud:
   aws:
     credentials:
-      access-key: ${AWS_ACCESS_KEY}
-      secret-key: ${AWS_SECRET_ACCESS_KEY}
+      access-key: ${aws.access.key}
+      secret-key: ${aws.secret.key}
       instance-profile: false
     s3:
-      bucket: ${BUCKET_NAME}
+      bucket: ${bucket.name}
     region:
       auto: false
       static: ap-northeast-2
@@ -51,7 +50,7 @@ cloud:
 
 
 jwt:
-  secret-key: ${JWT_SECRET_KEY}
+  secret-key: ${jwt.secret.key}
   access-token-expiration-minutes: 2880
   refresh-token-expiration-minutes: 5760
 
