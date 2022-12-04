@@ -123,7 +123,7 @@ export const SignupForm = () => {
     // 회원가입 요청
     const res = await useFetch("POST", `/auth/register`, postSignup);
     // 이메일은 있으나 비밀번호가 다른경우
-    if (res === 404 || res === 400) {
+    if (res === 404 || res === 400 || res === 405) {
       alert("회원가입 실패!");
     } else if (res === 409) {
       // 입력 정보가 이미 있으면 로그인
