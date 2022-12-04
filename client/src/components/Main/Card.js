@@ -10,7 +10,6 @@ import SkeletonCard from "../Skeleton/SkeletonCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link, useParams } from "react-router-dom";
 // import { MainTab } from "./MainTab";
-
 const Main = styled.div`
   display: grid;
   margin: 0 10px;
