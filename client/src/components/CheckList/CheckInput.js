@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 export const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "350px")};
@@ -50,32 +50,15 @@ export const CheckInput = ({
   todos,
   setTodos,
   editTodo,
-  setEditTodo,
+  // setEditTodo,
   completed,
-  isEdit,
-  setIsEdit,
+  // isEdit,
+  // setIsEdit,
 }) => {
-  const cid = useParams().id;
-
-  const updateTodo = (title, id) => {
-    const newTodo = todos.map((todo) => (todo.id === id ? { title, id, completed } : todo));
-    setTodos(newTodo);
-    setEditTodo("");
-  };
-
-  useEffect(() => {
-    if (editTodo) {
-      setInput(editTodo.title);
-    } else {
-      setInput("");
-    }
-  }, [setInput, editTodo]);
-
-  const onInputChange = (event) => {
-    setInput(event.target.value);
-  };
+  // const cid = useParams().id;
 
   const accessToken = localStorage.getItem("accessToken");
+  // const navigate = useNavigate();
 
   const onFormSubmit = async (event) => {
     event.preventDefault();
@@ -104,27 +87,52 @@ export const CheckInput = ({
       })
       .then((result) => {
         setTodos(result.data);
+        // navigate(`/mylist/${cid}`);
       });
     // }, []);
   };
 
-  const updateHandler = () => {
-    updateTodo(input, editTodo.id, editTodo.completed);
-    // console.log("patchid", editTodo.id);
+  useEffect(() => {
+    if (editTodo) {
+      setInput(editTodo.checkContent);
+    } else {
+      setInput("");
+    }
+  }, [setInput, editTodo]);
 
-    const patch2 = {
-      checkContent: input,
-      isCheck: completed,
-    };
-
-    // ^^editTodo.id
-    axios
-      .patch(`/check-list/${cid}`, patch2)
-      .then((res) => console.log(res))
-      .then((err) => console.log("res2", err));
-
-    setIsEdit(!isEdit);
+  // pass
+  const onInputChange = (event) => {
+    setInput(event.target.value);
   };
+
+  // 문제
+  // const updateTodo = (title, id) => {
+  //   const newTodo = todos.map((todo) => {
+  //     console.log("todo", todo);
+  //     todo.checkId === id ? { title, id, completed } : todo;
+  //   });
+  //   console.log("newtodo", newTodo);
+  //   setTodos(newTodo);
+  //   setEditTodo("");
+  // };
+
+  // params x
+  // const updateHandler = () => {
+  //   //   updateTodo(input, editTodo.checkId);
+
+  //   //   const patch2 = {
+  //   //     checkContent: input,
+  //   //     isCheck: completed,
+  //   //   };
+
+  //   // ^^editTodo.id
+  //   axios
+  //     .patch(`/check-list/${editTodo.checkId}`, patch2)
+  //     .then((res) => console.log(res))
+  //     .then((err) => console.log("res2", err));
+
+  //   setIsEdit(!isEdit);
+  // };
   return (
     <>
       <InputContainer width="424px" height="36px">
@@ -135,11 +143,11 @@ export const CheckInput = ({
           </Button>
         </form>
       </InputContainer>
-      {isEdit ? (
+      {/* {isEdit ? (
         <Update color="5E5E5E" size="18" onClick={(todos) => updateHandler(todos)}>
           저장
         </Update>
-      ) : null}
+      ) : null} */}
     </>
   );
 };

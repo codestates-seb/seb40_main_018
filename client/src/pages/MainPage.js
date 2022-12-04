@@ -15,9 +15,8 @@ const Main = styled.div`
   /* height: 100vh; */
   background-color: #fbfbfb;
 `;
-const Container = styled.div`
-  /* height: 100vh; */
-`;
+
+const Container = styled.div``;
 export default function MainPage() {
   // const id = useParams().id;
   // const user = useSelector(SET_TOKEN);

@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import styled from "styled-components";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import axios from "axios";
-import { Update } from "../CheckList/CheckInput";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
+// import { Update } from "../CheckList/CheckInput";
 
 export const InputContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "350px")};
@@ -41,40 +41,25 @@ export const BucketInput = ({
   setInput,
   todos,
   setTodos,
-  editTodo,
-  setEditTodo,
+  // editTodo,
+  // setEditTodo,
   completed,
-  isEdit,
-  setIsEdit,
+  // isEdit,
+  // setIsEdit,
 }) => {
-  const id = useParams().id;
-  const updateTodo = (title, id, completed) => {
-    const newTodo = todos.map((todo) => (todo.id === id ? { title, id, completed } : todo));
-    setTodos(newTodo);
-    setEditTodo("");
-  };
-  useEffect(() => {
-    if (editTodo) {
-      setInput(editTodo.title);
-    } else {
-      setInput("");
-    }
-  }, [setInput, editTodo]);
-
-  const setInputChange = (event) => {
-    setInput(event.target.value);
-  };
+  // const id = useParams().id;
 
   const accessToken = localStorage.getItem("accessToken");
 
+  // pass
   const onFormSubmit = async (event) => {
     event.preventDefault();
-    setTodos([...todos, { bucketContent: input, isCheck: completed }]);
+    setTodos([...todos, { bucketContent: input, isBucket: completed }]);
     setInput("");
 
     const todoPost = {
       bucketContent: input,
-      isCheck: false,
+      isBucket: false,
     };
     await axios
       .post(`/bucket-list`, todoPost, {
@@ -96,24 +81,49 @@ export const BucketInput = ({
       });
   };
 
-  const updateHandler = () => {
-    updateTodo(input, editTodo.id, editTodo.completed);
-    // console.log("patchid", editTodo.id);
+  // useEffect(() => {
+  //   if (editTodo) {
+  //     setInput(editTodo.bucketContent);
+  //   } else {
+  //     setInput("");
+  //   }
+  // }, [setInput, editTodo]);
 
-    const patch2 = {
-      bucketContent: input,
-      isCheck: completed,
-    };
-
-    // ^^editTodo.id
-
-    axios
-      .patch(`${process.env.REACT_APP_API_URL}bucket-list${id}`, patch2)
-      .then((res) => console.log(res))
-      .then((err) => console.log("res2", err));
-
-    setIsEdit(!isEdit);
+  const setInputChange = (event) => {
+    setInput(event.target.value);
   };
+
+  // const updateTodo = (id) => {
+  //   // const newTodo = todos.map((todo) => (todo.id === id ? { title, id, completed } : todo));
+
+  //   console.log("newTodo", newTodo);
+  //   setTodos(newTodo);
+  //   setEditTodo("");
+  // };
+
+  // const updateHandler = () => {
+  //   //  오류핵심
+  //   // updateTodo(editTodo.bucketId);
+  //   // console.log("patchid", editTodo.id);
+  //   const id = editTodo.id;
+  //   console.log("id", id);
+  //   const newTodo = todos.find((todo) => todo.id === id);
+  //   setEditTodo("");
+
+  //   const patch2 = {
+  //     bucketContent: newTodo.bucketContent,
+  //     isBucket: completed,
+  //   };
+
+  //   // ^^editTodo.id
+
+  //   axios
+  //     .patch(`/bucket-list/${editTodo.bucketId}`, patch2)
+  //     .then((res) => console.log(res))
+  //     .then((err) => console.log("res2", err));
+
+  //   setIsEdit(!isEdit);
+  // };
   return (
     <>
       <InputContainer width="424px" height="36px">
@@ -124,11 +134,11 @@ export const BucketInput = ({
           </Button>
         </form>
       </InputContainer>
-      {isEdit ? (
+      {/* {isEdit ? (
         <Update color="5E5E5E" size="18" onClick={(todos) => updateHandler(todos)}>
           저장
         </Update>
-      ) : null}
+      ) : null} */}
     </>
   );
 };

@@ -230,7 +230,7 @@ export const UserEditBox = ({ cardList }) => {
           setUserIntro(res.data.data.aboutMe);
           setImg(res.data.data.profileImg);
           setLoading(false);
-        }, 5000);
+        }, 1000);
         return () => clearTimeout(timer);
       });
   }, []);
