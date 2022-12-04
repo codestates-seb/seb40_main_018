@@ -27,7 +27,7 @@ function App() {
 
   // 내 정보 가져오기
   const userLoad = async () => {
-    const myInfo = await useFetch("GET", `/member/me`);
+    const myInfo = await useFetch("GET", `${process.env.REACT_APP_API_URL}member/me`);
     dispatch(getmyInfo(myInfo));
     console.log("myInfo member/me", myInfo);
   };
