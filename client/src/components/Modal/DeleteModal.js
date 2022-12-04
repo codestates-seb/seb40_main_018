@@ -66,7 +66,7 @@ function DeleteModal({ diaryDetail }) {
 
   useEffect(() => {
     axios
-      .get(`/member/me`, {
+      .get(`${process.env.REACT_APP_API_URL}member/me`, {
         headers: {
           Authorization: accessToken,
         },
@@ -77,7 +77,7 @@ function DeleteModal({ diaryDetail }) {
   const submitHandler = () => {
     if (isMine === diaryDetail.memberId) {
       axios
-        .delete(`/diary/${diaryDetail.diaryId}`, {
+        .delete(`${process.env.REACT_APP_API_URL}diary/${diaryDetail.diaryId}`, {
           headers: {
             Authorization: accessToken,
           },

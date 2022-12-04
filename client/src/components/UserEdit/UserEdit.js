@@ -184,7 +184,7 @@ export const UserEditBox = ({ cardList }) => {
     console.log("formData", formData);
 
     axios
-      .patch(`/member/me`, formData, {
+      .patch(`${process.env.REACT_APP_API_URL}member/me`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: accessToken,
@@ -217,7 +217,7 @@ export const UserEditBox = ({ cardList }) => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`/member/me`, {
+      .get(`${process.env.REACT_APP_API_URL}member/me`, {
         headers: {
           Authorization: accessToken,
         },

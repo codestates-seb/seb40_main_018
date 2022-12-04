@@ -116,7 +116,7 @@ const Diary = () => {
     const accessToken = localStorage.getItem("accessToken");
 
     axios
-      .post(`/diary`, formData, {
+      .post(`${process.env.REACT_APP_API_URL}diary`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: accessToken,

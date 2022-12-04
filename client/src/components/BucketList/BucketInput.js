@@ -62,7 +62,7 @@ export const BucketInput = ({
       isBucket: false,
     };
     await axios
-      .post(`/bucket-list`, todoPost, {
+      .post(`${process.env.REACT_APP_API_URL}bucket-list`, todoPost, {
         headers: {
           Authorization: accessToken,
         },
@@ -71,7 +71,7 @@ export const BucketInput = ({
       .then((err) => console.log(err));
 
     await axios
-      .get(`/bucket-list`, {
+      .get(`${process.env.REACT_APP_API_URL}bucket-list`, {
         headers: {
           Authorization: accessToken,
         },
