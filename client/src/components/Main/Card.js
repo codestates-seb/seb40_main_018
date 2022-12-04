@@ -160,7 +160,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
 
   useEffect(() => {
     axios
-      .get(`/likes/` + id, {
+      .get(`${process.env.REACT_APP_API_URL}likes/` + id, {
         headers: {
           Authorization: accessToken,
         },
@@ -190,7 +190,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
 
     // pass
     axios
-      .post(`/likes/` + list.diaryId, patch2, {
+      .post(`${process.env.REACT_APP_API_URL}likes/` + list.diaryId, patch2, {
         headers: {
           Authorization: accessToken,
         },

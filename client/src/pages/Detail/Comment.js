@@ -31,7 +31,7 @@ const Comment = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`/reply/` + id).then((result) => {
+    axios.get(`${process.env.REACT_APP_API_URL}reply/` + id).then((result) => {
       const timer = setTimeout(() => {
         setComment(result.data.data);
 
@@ -78,7 +78,7 @@ const Comment = () => {
       exist: true,
     };
     await axios
-      .post(`/reply/` + id, addComment, {
+      .post(`${process.env.REACT_APP_API_URL}reply/` + id, addComment, {
         headers: {
           Authorization: accessToken,
         },
@@ -88,7 +88,7 @@ const Comment = () => {
         console.log(err);
       });
 
-    await axios.get(`/reply/` + id).then((result) => {
+    await axios.get(`${process.env.REACT_APP_API_URL}reply/` + id).then((result) => {
       setComment(result.data.data);
     });
   };
@@ -126,14 +126,14 @@ const Comment = () => {
     };
     // ui는 잘 됨,
     await axios
-      .patch(`/reply/` + replyId, editComment)
+      .patch(`${process.env.REACT_APP_API_URL}reply/` + replyId, editComment)
       .then(() => {
         setComment(comment);
       })
       .catch((err) => console.log(err));
 
     // pass
-    await axios.get(`/reply/` + id).then((result) => {
+    await axios.get(`${process.env.REACT_APP_API_URL}reply/` + id).then((result) => {
       setComment(result.data.data);
     });
   };
@@ -152,11 +152,11 @@ const Comment = () => {
     // comment.find((item) => item.replyId === replyId);
     // 통신 삭제 잘 됨
     await axios
-      .delete(`/reply/` + replyId)
+      .delete(`${process.env.REACT_APP_API_URL}reply/` + replyId)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
 
-    await axios.get(`/reply/` + id).then((result) => {
+    await axios.get(`${process.env.REACT_APP_API_URL}reply/` + id).then((result) => {
       setComment(result.data.data);
     });
   };
@@ -190,7 +190,7 @@ const Comment = () => {
   //  사용자 닉네임 나밖에 못 가져옴
   useEffect(() => {
     axios
-      .get(`/member/me`, {
+      .get(`${process.env.REACT_APP_API_URL}member/me`, {
         headers: {
           Authorization: accessToken,
         },
