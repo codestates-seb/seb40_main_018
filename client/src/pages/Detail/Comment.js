@@ -26,17 +26,24 @@ const Comment = () => {
   const [openEditor, setOpenEditor] = useState("");
   const id = useParams().id;
 
+  // const [user, setUser] = useState("");
+  const [memberId, setMemberId] = useState("");
+
   useEffect(() => {
     setLoading(true);
     axios.get(`/reply/` + id).then((result) => {
       const timer = setTimeout(() => {
         setComment(result.data.data);
-        console.log("comment_result.data", result.data.data);
+
+        // setUser(result.data.data.nickname);
+        console.log("get", result.data.data);
         setLoading(false);
       }, 1000);
       return () => clearTimeout(timer);
     });
   }, []);
+
+  //  댓글 작성 버튼을 눌렀을 때 로그인하지 않은 사용자는 로그인페이지로 이동
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -48,24 +55,6 @@ const Comment = () => {
     const getContent = editorInstance.getMarkdown();
     setDisplay(!display);
 
-    // 데이터 저장
-    // const data = {
-    //   content: getContent,
-    //   writer: user,
-    //   postId: "123123",
-    //   responseTo: "root",
-    //   commentId: uuid(),
-    //   created_at: `${date}`,
-    //   exist: true,
-    // };
-    // dispatch(addComment(data));
-
-    // content: getContent,
-    // writer: user,
-    // postId: "123123",
-    // created_at: `${date}`,
-    // responseTo: "root",
-    // exist: true,
     setComment([
       ...comment,
       {
@@ -94,7 +83,7 @@ const Comment = () => {
           Authorization: accessToken,
         },
       })
-      .then((res) => console.log(res.data))
+      .then((res) => console.log("post", res.data))
       .catch((err) => {
         console.log(err);
       });
@@ -103,7 +92,6 @@ const Comment = () => {
       setComment(result.data.data);
     });
   };
-  const navigate = useNavigate();
 
   // Edit comment
   const onEdit = async ({ replyId }) => {
@@ -111,12 +99,11 @@ const Comment = () => {
     const editorInstance = editorRef.current.getInstance();
     const getContent = editorInstance.getMarkdown();
 
-    if (comment.find((item) => item.replyId === replyId)) {
-      setComment(comment.map((item) => (item.replyId === replyId ? (item.replyContent = getContent) : item)));
-    }
+    // if (comment.find((item) => item.replyId === replyId)) {
+    //   setComment(comment.map((item) => (item.replyId === replyId ? (item.replyContent = getContent) : item)));
+    // }
 
     setComment([
-      ...comment,
       {
         replyContent: getContent,
         replyId: id,
@@ -146,9 +133,9 @@ const Comment = () => {
       .catch((err) => console.log(err));
 
     // pass
-    // await axios.get(`/reply/` + id).then((result) => {
-    //   setComment(result.data.data);
-    // });
+    await axios.get(`/reply/` + id).then((result) => {
+      setComment(result.data.data);
+    });
   };
 
   // Remove comment
@@ -199,8 +186,7 @@ const Comment = () => {
   // }
 
   const accessToken = localStorage.getItem("accessToken");
-  const [userNickname, setUserNickname] = useState("");
-  const [memberId, setMemberId] = useState("");
+
   //  사용자 닉네임 나밖에 못 가져옴
   useEffect(() => {
     axios
@@ -212,9 +198,19 @@ const Comment = () => {
       .then((res) => {
         console.log("userNickname", res.data.data);
         setMemberId(res.data.data.memberId);
-        setUserNickname(res.data.data.nickname);
       });
   }, []);
+
+  const navigate = useNavigate();
+
+  const onclickHandler = () => {
+    if (memberId) {
+      setDisplay(!display);
+    } else if (!memberId) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+    }
+  };
 
   //  댓글 작성 버튼을 눌렀을 때 로그인하지 않은 사용자는 로그인페이지로 이동
   // const navigate = useNavigate();
@@ -227,14 +223,6 @@ const Comment = () => {
   //   }
   //   setDisplay(!display);
   // };
-  const onclickHandler = () => {
-    if (memberId) {
-      setDisplay(!display);
-    } else if (!memberId) {
-      alert("로그인이 필요합니다.");
-      navigate("/login");
-    }
-  };
 
   return (
     <>
@@ -242,10 +230,7 @@ const Comment = () => {
       {!loading && (
         <Paper sx={{ mt: 1, mb: 10, width: 690, color: "#535353", bgcolor: "#fbfbfb", boxShadow: 0 }}>
           <Button
-            // onClick={() => {
-            //   setDisplay(!display);
-            // }}
-            onClick={onclickHandler}
+            onClick={() => onclickHandler()}
             sx={{
               width: "5.5rem",
               fontSize: 12,
@@ -301,34 +286,34 @@ const Comment = () => {
                 {/* comment 수정 */}
                 {/* writer 데이터 받으면 수정 */}
                 {/* {user === comment.writer && ( */}
-                {userNickname && (
-                  <>
-                    {openEditor === comment.replyId && <Editor value={comment.replyContent} ref={editorRef} />}
-                    <Button
-                      sx={{ color: "#afafaf", fontSize: 12 }}
-                      onClick={() => {
-                        if (comment.replyId === openEditor) {
-                          onEdit(comment);
-                          setOpenEditor("");
-                        } else {
-                          setOpenEditor(comment.replyId);
-                        }
-                      }}
-                    >
-                      수정
-                    </Button>
+                {/* {user === comment.nickname && ( */}
+                <>
+                  {openEditor === comment.replyId && <Editor value={comment.replyContent} ref={editorRef} />}
+                  <Button
+                    sx={{ color: "#afafaf", fontSize: 12 }}
+                    onClick={() => {
+                      if (comment.replyId === openEditor) {
+                        onEdit(comment);
+                        setOpenEditor("");
+                      } else {
+                        setOpenEditor(comment.replyId);
+                      }
+                    }}
+                  >
+                    수정
+                  </Button>
 
-                    {/* comment 삭제 */}
-                    <Button
-                      sx={{ color: "#afafaf", fontSize: 12 }}
-                      onClick={() => {
-                        onRemove(comment);
-                      }}
-                    >
-                      삭제
-                    </Button>
-                  </>
-                )}
+                  {/* comment 삭제 */}
+                  <Button
+                    sx={{ color: "#afafaf", fontSize: 12 }}
+                    onClick={() => {
+                      onRemove(comment);
+                    }}
+                  >
+                    삭제
+                  </Button>
+                </>
+                {/* )} */}
                 <Divider variant="middle" />
               </Box>
             ))}

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 export const Test = styled.div`
@@ -78,13 +77,13 @@ export const MintButton2 = styled.button`
   }
 `;
 
-export const BucketList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) => {
-  const id = useParams().id;
-  const handleComplete = (todo) => {
+export const BucketList = ({ todos, setTodos }) => {
+  const accessToken = localStorage.getItem("accessToken");
+  const handleComplete = async (todo) => {
     setTodos(
       todos.map((item) => {
-        if (item.id === todo.id) {
-          return { ...item, isCheck: !item.isCheck };
+        if (item.id === todo.bucketId) {
+          return { ...item, isBucket: !item.isBucket };
         }
         return item;
       }),
@@ -92,29 +91,52 @@ export const BucketList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) 
 
     const patch2 = {
       bucketContent: todo.bucketContent,
-      isCheck: !todo.isCheck,
+      isBucket: !todo.isBucket,
     };
 
     // ^^todo.id
 
     axios
-      .patch(`/bucket-list/${id}`, patch2)
+      .patch(`/bucket-list/${todo.bucketId}`, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
+
+    await axios
+      .get(`/bucket-list`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((result) => {
+        setTodos(result.data);
+        // navigate(`/mylist/${cid}`);
+      });
   };
 
-  const handleEdit = ({ id }) => {
-    const findTodo = todos.find((todo) => todo.id === id);
-    setEditTodo(findTodo);
+  // const handleEdit = (bucketId) => {
+  //   console.log("handleEdit_bucketId", bucketId);
+  //   const findTodo = todos.find((todo) => todo.bucketId === bucketId);
+  //   setEditTodo(findTodo);
 
-    setIsEdit(!isEdit);
-  };
+  //   setIsEdit(!isEdit);
+  // };
 
   // ^^id
 
-  const handleDelete = ({ id }) => {
-    setTodos(todos.filter((todos) => todos.id !== id));
-    axios.delete(`/bucket-list/${id}`);
+  const handleDelete = async (item) => {
+    // setTodos(todos.filter((todos) => todos.id !== id));
+    axios.delete(`/bucket-list/${item.bucketId}`);
+
+    await axios
+      .get(`/bucket-list`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((result) => {
+        setTodos(result.data);
+        // navigate(`/mylist/${cid}`);
+      });
   };
 
   return (
@@ -123,20 +145,20 @@ export const BucketList = ({ todos, setTodos, setEditTodo, isEdit, setIsEdit }) 
         <li className="list-item" key={idx}>
           <Block2>
             <button onClick={() => handleComplete(todo)} className="complete-icon">
-              {todo.isCheck ? "🔳" : "⬜"}
+              {todo.isBucket ? "🔳" : "⬜"}
             </button>
             <input
               type="text"
               value={todo.bucketContent}
               // 완료 시 밑줄 그어짐
-              className={`list ${todo.isCheck ? "complete" : ""}`}
+              className={`list ${todo.isBucket ? "complete" : ""}`}
               onChange={(e) => e.preventDefault()}
             />
           </Block2>
           <ButtonContainer>
-            <MintLineButton2 width="50px" height="20px" onClick={() => handleEdit(todo)}>
+            {/* <MintLineButton2 width="50px" height="20px" onClick={() => handleEdit(todo)}>
               수정
-            </MintLineButton2>
+            </MintLineButton2> */}
             <MintButton2 width="50px" height="20px" onClick={() => handleDelete(todo)}>
               삭제
             </MintButton2>

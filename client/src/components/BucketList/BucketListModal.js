@@ -103,6 +103,7 @@ export const BucketListModal = () => {
           {loading ? (
             <Loading />
           ) : (
+            // 진짜 수정버튼 지운다면 필요없는 props 지우기
             <BucketList
               todos={todos}
               setTodos={setTodos}

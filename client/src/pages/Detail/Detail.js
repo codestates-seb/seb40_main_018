@@ -172,7 +172,6 @@ function Detail() {
 
   const [like, setLike] = useState();
   const accessToken = localStorage.getItem("accessToken");
-  const [user, setUser] = useState("Jisoo");
 
   useEffect(() => {
     axios
@@ -310,7 +309,7 @@ function Detail() {
             <IoIosArrowDropdown color="#535353" size="22" />
           </CommentTitleArea>
         </CommentContainer>
-        <Comment user={user} setUser={setUser} />
+        <Comment />
       </Section>
     </>
   );

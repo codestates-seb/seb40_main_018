@@ -80,7 +80,7 @@ export const LoginForm = () => {
     console.log("postLogin", postLogin);
 
     const res = await useFetch("POST", `/auth/login`, postLogin);
-    if (res === 404) {
+    if (res === 404 || res === 401) {
       alert("로그인 실패!");
       return false;
     } else {
