@@ -10,7 +10,8 @@ spring:
     username: ${RDS_USERNAME}
     password: ${RDS_PASSWORD}
     port: ${RDS_PORT}
-
+  config:
+    import: "optional:configserver:"
   jpa:
     hibernate:
       ddl-auto: update  # (1) 스키마 자동 생성
