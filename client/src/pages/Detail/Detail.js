@@ -175,7 +175,7 @@ function Detail() {
 
   useEffect(() => {
     axios
-      .get(`/diary/` + id, {
+      .get(`${process.env.REACT_APP_API_URL}diary/` + id, {
         headers: {
           Authorization: accessToken,
         },
@@ -189,7 +189,7 @@ function Detail() {
 
   useEffect(() => {
     axios
-      .get(`/likes/` + id, {
+      .get(`${process.env.REACT_APP_API_URL}likes/` + id, {
         headers: {
           Authorization: accessToken,
         },
@@ -213,7 +213,7 @@ function Detail() {
     };
 
     axios
-      .post(`/likes/` + id, patch2, {
+      .post(`${process.env.REACT_APP_API_URL}likes/` + id, patch2, {
         headers: {
           Authorization: accessToken,
         },
@@ -225,7 +225,7 @@ function Detail() {
   // 다이어리 본문 수정버튼
   const editBtnHandler = () => {
     axios
-      .get(`/member/me`, {
+      .get(`${process.env.REACT_APP_API_URL}member/me`, {
         headers: {
           Authorization: accessToken,
         },
@@ -267,11 +267,10 @@ function Detail() {
                 backgroundSize: "contain",
                 backgroundRepeat: "none",
               }}
+              startIndex={1}
               width={"700px"}
               height={"480px"}
-              images={imageList.map((item) => {
-                return item;
-              })}
+              images={imageList}
               showBullets={true}
               showNavs={true}
               autoPlay={true}

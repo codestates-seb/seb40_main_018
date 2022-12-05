@@ -97,12 +97,12 @@ export const BucketList = ({ todos, setTodos }) => {
     // ^^todo.id
 
     axios
-      .patch(`/bucket-list/${todo.bucketId}`, patch2)
+      .patch(`${process.env.REACT_APP_API_URL}bucket-list/${todo.bucketId}`, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
 
     await axios
-      .get(`/bucket-list`, {
+      .get(`${process.env.REACT_APP_API_URL}bucket-list`, {
         headers: {
           Authorization: accessToken,
         },
@@ -125,10 +125,10 @@ export const BucketList = ({ todos, setTodos }) => {
 
   const handleDelete = async (item) => {
     // setTodos(todos.filter((todos) => todos.id !== id));
-    axios.delete(`/bucket-list/${item.bucketId}`);
+    axios.delete(`${process.env.REACT_APP_API_URL}bucket-list/${item.bucketId}`);
 
     await axios
-      .get(`/bucket-list`, {
+      .get(`${process.env.REACT_APP_API_URL}bucket-list`, {
         headers: {
           Authorization: accessToken,
         },

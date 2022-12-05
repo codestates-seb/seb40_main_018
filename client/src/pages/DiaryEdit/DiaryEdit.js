@@ -62,7 +62,7 @@ const DiaryEdit = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`/diary/` + id, {
+      .get(`${process.env.REACT_APP_API_URL}diary/` + id, {
         headers: {
           Authorization: accessToken,
         },
@@ -141,7 +141,7 @@ const DiaryEdit = () => {
     const accessToken = localStorage.getItem("accessToken");
 
     axios
-      .patch(`/diary/` + id, formData, {
+      .patch(`${process.env.REACT_APP_API_URL}diary/` + id, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: accessToken,

@@ -52,50 +52,6 @@ const parsingData2 = (data) => {
   });
   // console.log("cityObj2", data);
   return data;
-  //   const cityObj = {};
-  //   console.log("cityObj2", cityObj);
-  //   data.forEach((i) => {
-  //     const cityName = i.selected;
-  //     console.log("cityName", cityName);
-  //     if (!cityObj[cityName]) {
-  //       cityObj[cityName] = { posts: [], color: "" };
-  //       cityObj[cityName].posts.push(i);
-  //     } else if (cityObj[cityName]) {
-  //       cityObj[cityName].posts.push(i);
-  //     }
-  //   });
-
-  //   const notInData = cityArr.filter((i) => !Object.keys(cityObj).includes(i));
-
-  //   notInData.forEach((i) => (cityObj[i] = { posts: [], color: "" }));
-
-  //   Object.keys(cityObj).forEach((i) => {
-  //     if (cityObj[i].posts.length === 0) {
-  //       cityObj[i].color = "#ccc";
-  //     } else if (cityObj[i].posts.length === 1) {
-  //       cityObj[i].color = "#D8F3DC";
-  //     } else if (cityObj[i].posts.length === 2) {
-  //       cityObj[i].color = "#B7E4C7";
-  //     } else if (cityObj[i].posts.length === 3) {
-  //       cityObj[i].color = "#95D5B2";
-  //     } else if (cityObj[i].posts.length === 4) {
-  //       cityObj[i].color = "#74C69D";
-  //     } else if (cityObj[i].posts.length === 5) {
-  //       cityObj[i].color = "#52B788";
-  //     } else if (cityObj[i].posts.length === 6) {
-  //       cityObj[i].color = "#40916C";
-  //     } else if (cityObj[i].posts.length === 7) {
-  //       cityObj[i].color = "#2D6A4F";
-  //     } else if (cityObj[i].posts.length === 8) {
-  //       cityObj[i].color = "#1B4332";
-  //     } else if (cityObj[i].posts.length === 9) {
-  //       cityObj[i].color = "#081C15";
-  //     } else {
-  //       cityObj[i].color = "#000";
-  //     }
-  //   });
-  //   console.log("cityObj2", cityObj);
-  //   return cityObj;
 };
 
 export default parsingData2;

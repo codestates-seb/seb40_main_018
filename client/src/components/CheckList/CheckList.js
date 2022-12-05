@@ -130,12 +130,12 @@ export const CheckList = ({ todos, setTodos }) => {
     // 경로였을 때 patch 통신 잘 되는데, ui 이상해짐
 
     await axios
-      .patch(`/check-list/` + todo.checkId, patch2)
+      .patch(`${process.env.REACT_APP_API_URL}check-list/` + todo.checkId, patch2)
       .then((res) => console.log(res))
       .then((err) => console.log("res1", err));
 
     await axios
-      .get(`/check-list`, {
+      .get(`${process.env.REACT_APP_API_URL}check-list`, {
         headers: {
           Authorization: accessToken,
         },
@@ -174,12 +174,12 @@ export const CheckList = ({ todos, setTodos }) => {
     //   }),
     // );
 
-    await axios.delete(`/check-list/` + check.checkId).then((res) => {
+    await axios.delete(`${process.env.REACT_APP_API_URL}check-list/` + check.checkId).then((res) => {
       console.log(res);
     });
 
     await axios
-      .get(`/check-list`, {
+      .get(`${process.env.REACT_APP_API_URL}check-list`, {
         headers: {
           Authorization: accessToken,
         },
