@@ -7,6 +7,7 @@ spring:
         awsparamstore:
           region: ap-northeast-2
           endpoint: https://ssm.ap-northeast-2.amazonaws.com
+          origin: aws:ssm:ap-northeast-2:440272560521:parameter
           prefix: sprig-boot-aws
           recursive: true
           decrypt-values: true
