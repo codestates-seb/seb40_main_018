@@ -1,17 +1,5 @@
 
 spring:
-  profiles:
-    active: awsparamstore
-  cloud:
-    config:
-      server:
-        awsparamstore:
-          region: ap-northeast-2
-          endpoint: https://ssm.ap-northeast-2.amazonaws.com
-          prefix: sprig-boot-aws
-          recursive: true
-          decrypt-values: true
-          max-results: 10
   servlet:
     multipart:
       max-file-size: 10MB
@@ -24,7 +12,7 @@ spring:
     password: ${mySql.password}
     port: ${mySql.port}
   config:
-    import: "optional:configserver:"
+    import: 'aws-parameterstore:'
   jpa:
     hibernate:
       ddl-auto: update  # (1) 스키마 자동 생성
@@ -32,7 +20,12 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-
+aws:
+  paramstore:
+    enabled: true
+    prefix: /spring-boot-aws
+    profile-separator: _
+    name: danim
 cloud:
   aws:
     credentials:
