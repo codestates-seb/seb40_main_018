@@ -280,10 +280,7 @@ const Comment = () => {
                   {/* <ProfileIcon>
               {check_kor.test(comment.writer) ? comment.writer.slice(0, 1) : comment.writer.slice(0, 2)}
             </ProfileIcon> */}
-                  {/* writer 데이터 받으면 수정 */}
-                  {/* <Item>{comment.replyId}</Item> */}
                   <Item>{comment.nickname}</Item>
-                  {/* <Item>Jisoo</Item> */}
                   {/* <Item>{timeForToday({ date })}</Item> */}
                   {/* <Item>{comment.date2}</Item> */}
                   {/* <Item>
