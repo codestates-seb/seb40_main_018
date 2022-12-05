@@ -25,7 +25,7 @@
 
 .rti--tag {
   align-items: center;
-  background: #86c1c1;
+  background: #86c1c1 !important;
   border-radius: 35px;
   display: inline-flex;
   justify-content: center;
