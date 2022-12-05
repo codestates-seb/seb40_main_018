@@ -15,6 +15,8 @@ import project.danim.diary.mapper.DiaryMapper;
 import project.danim.diary.repository.DiaryRepository;
 import project.danim.exeption.BusinessLogicException;
 import project.danim.exeption.ExceptionCode;
+import project.danim.likes.domain.Likes;
+import project.danim.likes.repository.LikesRepository;
 import project.danim.member.domain.Member;
 import project.danim.member.repository.MemberRepository;
 import project.danim.member.service.MemberService;
@@ -41,12 +43,14 @@ public class DiaryService {
     private final S3Service s3Service;
 
     private final TagService tagService;
-    public DiaryService(DiaryRepository diaryRepository, DiaryMapper diaryMapper, MemberService memberService, TagService tagService, S3Service s3Service) {
+    private final LikesRepository likesRepository;
+    public DiaryService(DiaryRepository diaryRepository, DiaryMapper diaryMapper, MemberService memberService, TagService tagService, S3Service s3Service, LikesRepository likesRepository) {
         this.diaryRepository = diaryRepository;
         this.diaryMapper = diaryMapper;
         this.memberService = memberService;
         this.tagService = tagService;
         this.s3Service = s3Service;
+        this.likesRepository = likesRepository;
     }
 
     public DiaryResponseDto createDiary(DiaryPostDto diaryPostDto, MultipartFile[] diaryImages, String email) throws IOException {
@@ -95,11 +99,23 @@ public class DiaryService {
         return new MultiResponseDto<>(diaries, diaryPage);
     }
 
-    public MultiResponseDto findDiariesForCard(int size, int page) {
+    public MultiResponseDto findDiariesForCard(String email, int size, int page) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("diaryId").descending());
         Page<Diary> diaryPage = diaryRepository.findAll(pageable);
+
         List<DiaryResponseDtoForCard> diaries = diaryPage.getContent().stream()
-                .map(diary -> DiaryResponseDtoForCard.of(diary, memberService.findMember(diary.getMemberId()), tagService.getTags(diary.getDiaryId())))
+                .map(diary -> {
+                    boolean isLike = false;
+                    if (!email.equals("anonymousUser")) {
+                        Member findMember = memberService.findMember(email);
+                        Likes findLike = likesRepository.findByDiaryIdAndMemberId(diary.getDiaryId(), findMember.getMemberId()).orElse(null);
+
+                        if (findLike != null) {
+                            isLike = true;
+                        }
+                    }
+                    return DiaryResponseDtoForCard.of(diary, isLike, memberService.findMember(diary.getMemberId()), tagService.getTags(diary.getDiaryId()));
+                })
                 .collect(Collectors.toList());
 
         return new MultiResponseDto<>(diaries, diaryPage);

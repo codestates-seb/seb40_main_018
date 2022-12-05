@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.danim.diary.domain.Diary;
 import project.danim.diary.repository.DiaryRepository;
+import project.danim.likes.domain.Likes;
+import project.danim.likes.repository.LikesRepository;
+import project.danim.member.domain.Member;
 import project.danim.member.service.MemberService;
 import project.danim.response.MultiResponseDto;
 import project.danim.tag.domain.Tag;
@@ -24,11 +27,13 @@ public class TagService {
     private final TagRepository tagRepository;
     private final DiaryRepository diaryRepository;
     private final MemberService memberService;
+    private final LikesRepository likesRepository;
 
-    public TagService(TagRepository tagRepository, DiaryRepository diaryRepository, MemberService memberService) {
+    public TagService(TagRepository tagRepository, DiaryRepository diaryRepository, MemberService memberService, LikesRepository likesRepository) {
         this.tagRepository = tagRepository;
         this.diaryRepository = diaryRepository;
         this.memberService = memberService;
+        this.likesRepository = likesRepository;
     }
 
     // 태그 전체 조회
@@ -94,13 +99,23 @@ public class TagService {
         }
     }
 
-    public MultiResponseDto getTagDiaries(String name, int size, int page) {
+    public MultiResponseDto getTagDiaries(String email, String name, int size, int page) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("diaryId").descending());
         Page<Tag> findTags = tagRepository.findAllByContentContains(name, pageable);
         List<TagDiaryResponseDto> result = findTags.getContent().stream()
                 .map(tag -> {
                     Diary findDiary = diaryRepository.findByDiaryId(tag.getDiaryId()).get();
-                    return TagDiaryResponseDto.of(findDiary, memberService.findMember(findDiary.getMemberId()) ,getTags(findDiary.getDiaryId()));
+                    boolean isLike = false;
+                    if (!email.equals("anonymousUser")) {
+                        Member findMember = memberService.findMember(email);
+                        Likes findLike = likesRepository.findByDiaryIdAndMemberId(findDiary.getDiaryId(), findMember.getMemberId()).orElse(null);
+
+                        if (findLike != null) {
+                            isLike = true;
+                        }
+                    }
+
+                    return TagDiaryResponseDto.of(findDiary, isLike, memberService.findMember(findDiary.getMemberId()) ,getTags(findDiary.getDiaryId()));
                 })
                 .collect(Collectors.toList());
 
