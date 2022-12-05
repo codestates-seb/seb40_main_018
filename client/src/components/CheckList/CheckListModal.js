@@ -46,6 +46,9 @@ export const Text = styled.div`
 
 export const Block = styled.div`
   flex-direction: row;
+  @media screen and (max-width: 640px) {
+    margin: 50px;
+  }
 `;
 export const ListInput = styled.div`
   display: flex;
