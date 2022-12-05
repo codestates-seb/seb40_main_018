@@ -41,10 +41,6 @@ public class Diary extends BaseTime {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
-
-    /*
-    지역, 날씨 nullable = false로 바꿔야 합니다.
-     */
     @Column(nullable = false)
     private String weather;
 
@@ -68,7 +64,7 @@ public class Diary extends BaseTime {
 
     @BatchSize(size = 10)
     @Column(nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "diary_image", joinColumns = @JoinColumn(name = "diary_id"))
     private List<String> diaryImages;
 

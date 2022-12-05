@@ -29,7 +29,7 @@ public class S3Service {
     private String bucket;
 
 
-    //TODO 10개 제한
+    //비동기 처리나 멀티 스레딩 처리 하자
     public List<String> uploadDiaryImages(MultipartFile[] multipartFileList, String dirName) throws IOException {
 
         List<String> imagePathList = new ArrayList<>();
