@@ -17,6 +17,13 @@ const FilterContainer = styled.div`
     display: flex;
     row-gap: 12px;
   }
+  @media screen and (max-width: 500px) {
+    display: flex;
+    /* flex-wrap: nowrap; */
+    margin-left: 10px;
+    margin-right: 10px;
+    row-gap: 0px;
+  }
   > .input-search {
     display: flex;
     max-width: 200px;
@@ -34,6 +41,9 @@ const FilterContainer = styled.div`
       box-shadow: 0px 0px 1px 1px #5da7a7;
       border: none;
       outline: 0;
+    }
+    @media screen and (max-width: 500px) {
+      margin-bottom: 30px;
     }
     > input {
       font-size: 12px;
@@ -58,6 +68,7 @@ const FilterContainer = styled.div`
       align-items: flex-start;
       gap: 10px;
       margin-bottom: 10px;
+      margin-right: 30px;
     }
     > .question-sort {
       display: flex;
@@ -90,7 +101,7 @@ const FilterContainer = styled.div`
             border-top: #40d8d8 solid 15px;
             border-bottom: none;
             font-size: 18px;
-            padding-bottom: none;
+            margin-top: auto;
           }
         }
       }

@@ -1,4 +1,12 @@
 import { useState, useRef, useEffect } from "react";
+import styled from "styled-components";
+
+export const Block = styled.div`
+  /* flex-direction: row;
+  @media screen and (max-width: 900px) {
+    margin: 30px;
+  } */
+`;
 
 // dot icon
 //import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
@@ -26,7 +34,8 @@ const Comment = () => {
   const [openEditor, setOpenEditor] = useState("");
   const id = useParams().id;
 
-  // const [user, setUser] = useState("");
+  const [user, setUser] = useState("");
+
   const [memberId, setMemberId] = useState("");
 
   useEffect(() => {
@@ -34,8 +43,8 @@ const Comment = () => {
     axios.get(`${process.env.REACT_APP_API_URL}reply/` + id).then((result) => {
       const timer = setTimeout(() => {
         setComment(result.data.data);
-
-        // setUser(result.data.data.nickname);
+        setUser(result.data.data.nickname); //pass
+        console.log("user", user);
         console.log("get", result.data.data);
         setLoading(false);
       }, 1000);
@@ -60,6 +69,8 @@ const Comment = () => {
       {
         replyContent: getContent,
         replyId: id,
+        memberId: memberId,
+        nickname: user,
         createdAt: `${date}`,
         modifiedAt: `${date}`,
         responseTo: "root",
@@ -72,6 +83,8 @@ const Comment = () => {
     const addComment = {
       replyContent: getContent,
       replyId: id,
+      memberId: memberId,
+      nickname: user,
       createdAt: `${date}`,
       modifiedAt: `${date}`,
       responseTo: "root",
@@ -107,6 +120,8 @@ const Comment = () => {
       {
         replyContent: getContent,
         replyId: id,
+        memberId: memberId,
+        nickname: user,
         createdAt: `${date}`,
         modifiedAt: `${date}`,
         responseTo: "root",
@@ -119,6 +134,8 @@ const Comment = () => {
     const editComment = {
       replyContent: getContent,
       replyId: id,
+      memberId: memberId,
+      nickname: user,
       createdAt: `${date}`,
       modifiedAt: `${date}`,
       responseTo: "root",
@@ -225,7 +242,7 @@ const Comment = () => {
   // };
 
   return (
-    <>
+    <Block>
       {loading && <SkeletonComment />}
       {!loading && (
         <Paper sx={{ mt: 1, mb: 10, width: 690, color: "#535353", bgcolor: "#fbfbfb", boxShadow: 0 }}>
@@ -263,10 +280,7 @@ const Comment = () => {
                   {/* <ProfileIcon>
               {check_kor.test(comment.writer) ? comment.writer.slice(0, 1) : comment.writer.slice(0, 2)}
             </ProfileIcon> */}
-                  {/* writer 데이터 받으면 수정 */}
-                  <Item>{comment.replyId}</Item>
-                  {/* <Item>{userNickname}</Item> */}
-                  {/* <Item>Jisoo</Item> */}
+                  <Item>{comment.nickname}</Item>
                   {/* <Item>{timeForToday({ date })}</Item> */}
                   {/* <Item>{comment.date2}</Item> */}
                   {/* <Item>
@@ -286,40 +300,40 @@ const Comment = () => {
                 {/* comment 수정 */}
                 {/* writer 데이터 받으면 수정 */}
                 {/* {user === comment.writer && ( */}
-                {/* {user === comment.nickname && ( */}
-                <>
-                  {openEditor === comment.replyId && <Editor value={comment.replyContent} ref={editorRef} />}
-                  <Button
-                    sx={{ color: "#afafaf", fontSize: 12 }}
-                    onClick={() => {
-                      if (comment.replyId === openEditor) {
-                        onEdit(comment);
-                        setOpenEditor("");
-                      } else {
-                        setOpenEditor(comment.replyId);
-                      }
-                    }}
-                  >
-                    수정
-                  </Button>
+                {comment.memberId === memberId && (
+                  <>
+                    {openEditor === comment.replyId && <Editor value={comment.replyContent} ref={editorRef} />}
+                    <Button
+                      sx={{ color: "#afafaf", fontSize: 12 }}
+                      onClick={() => {
+                        if (comment.replyId === openEditor) {
+                          onEdit(comment);
+                          setOpenEditor("");
+                        } else {
+                          setOpenEditor(comment.replyId);
+                        }
+                      }}
+                    >
+                      수정
+                    </Button>
 
-                  {/* comment 삭제 */}
-                  <Button
-                    sx={{ color: "#afafaf", fontSize: 12 }}
-                    onClick={() => {
-                      onRemove(comment);
-                    }}
-                  >
-                    삭제
-                  </Button>
-                </>
-                {/* )} */}
+                    {/* comment 삭제 */}
+                    <Button
+                      sx={{ color: "#afafaf", fontSize: 12 }}
+                      onClick={() => {
+                        onRemove(comment);
+                      }}
+                    >
+                      삭제
+                    </Button>
+                  </>
+                )}
                 <Divider variant="middle" />
               </Box>
             ))}
         </Paper>
       )}
-    </>
+    </Block>
   );
 };
 
