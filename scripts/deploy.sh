@@ -19,4 +19,4 @@ else
 fi
 
 echo "> DEPLOY_JAR 배포 $BUILD_JAR"    >> /home/ubuntu/action/deploy.log
-nohup java -jar $BUILD_JAR >> /home/ubuntu/action/app.log &
+nohup java -jar $BUILD_JAR > /home/ubuntu/action/app.log  2>&1 &
