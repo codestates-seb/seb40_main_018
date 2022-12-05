@@ -80,8 +80,9 @@
 
 <br/>
 
-![image](https://user-images.githubusercontent.com/102038283/205526285-d38461c7-5560-4901-9f5c-802f8e2a1cdb.png)
-![image](https://user-images.githubusercontent.com/102038283/205526294-117b8a12-b609-4a81-9d23-1d44699456f8.png)
+![register](https://user-images.githubusercontent.com/102038283/205527629-09a91fe3-8fe1-4ff2-ae43-3f71d61a67e1.gif)
+![login](https://user-images.githubusercontent.com/102038283/205527636-6f856d30-6cca-4252-8a95-fa13a25e81c1.gif)
+
   
 <br/>
 <br/>
@@ -90,7 +91,8 @@
 
 <br/>
 
-![image](https://user-images.githubusercontent.com/102038283/205525096-38e3a741-e3ed-4d5a-9e69-147ec6db990a.png)
+![마이리스트](https://user-images.githubusercontent.com/102038283/205527653-dd33021c-4bfa-434e-a735-93a741ca2c7e.gif)
+
 
 <br/>
 
@@ -106,8 +108,9 @@ Bucket-List에는 여행에서 꼭 하고 싶은 일들을 기록할 수 있습�
 
 <br/>
 
+![Dec-04-2022 12-03-56](https://user-images.githubusercontent.com/102038283/205527663-b31ab383-05c3-4395-915d-5c84509caf85.gif)
 
-![image](https://user-images.githubusercontent.com/102038283/205525054-abbb5243-b503-44f4-891d-9ec60ca2fbe3.png)
+
 
 <br/>
 
@@ -124,7 +127,8 @@ Bucket-List에는 여행에서 꼭 하고 싶은 일들을 기록할 수 있습�
 <br/>
 
   
-![image](https://user-images.githubusercontent.com/102038283/205525042-202db5cb-e3c9-4b0d-ab3b-8dd4cf8f10db.png)  
+![상세페이지2](https://user-images.githubusercontent.com/102038283/205527682-b165e714-78d2-4b83-8870-6551e8768625.gif)
+
 
 <br/>
 <br/>
@@ -133,7 +137,8 @@ Bucket-List에는 여행에서 꼭 하고 싶은 일들을 기록할 수 있습�
 
 <br/>
 
-![image](https://user-images.githubusercontent.com/102038283/205525018-e2cde447-12ed-467a-bad8-8c7e28128ae5.png)  
+![마이페이지2](https://user-images.githubusercontent.com/102038283/205527692-ec6af4ac-0709-4ebf-9b61-f2f3d81aafaa.gif)
+
 
 <br/>
 마이페이지에서는 상태메시지나 프로필 사진 등 유저에 관한 정보를 관리할 수 있습니다.  
