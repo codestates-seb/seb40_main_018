@@ -7,13 +7,10 @@ spring:
         awsparamstore:
           region: ap-northeast-2
           endpoint: https://ssm.ap-northeast-2.amazonaws.com
-          origin:
-            aws:parameter:
-              origin: aws:ssm
-              prefix: /sprig-boot-aws
-              recursive: true
-              decrypt-values: true
-              max-results: 10
+          prefix: sprig-boot-aws
+          recursive: true
+          decrypt-values: true
+          max-results: 10
   servlet:
     multipart:
       max-file-size: 10MB
