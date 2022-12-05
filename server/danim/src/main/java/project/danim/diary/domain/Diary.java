@@ -64,7 +64,7 @@ public class Diary extends BaseTime {
 
     @BatchSize(size = 10)
     @Column(nullable = false)
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "diary_image", joinColumns = @JoinColumn(name = "diary_id"))
     private List<String> diaryImages;
 

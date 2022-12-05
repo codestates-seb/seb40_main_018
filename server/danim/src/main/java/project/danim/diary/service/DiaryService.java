@@ -68,7 +68,7 @@ public class DiaryService {
 
     private Diary findVerifiedDiary(long diaryId) {
 
-        Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
+        Optional<Diary> optionalDiary = diaryRepository.findByDiaryId(diaryId);
         Diary findDiary = optionalDiary.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.DIARY_NOT_FOUND));
         return findDiary;
