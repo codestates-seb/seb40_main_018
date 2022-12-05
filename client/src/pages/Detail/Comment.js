@@ -26,7 +26,7 @@ const Comment = () => {
   const [openEditor, setOpenEditor] = useState("");
   const id = useParams().id;
 
-  // const [user, setUser] = useState("");
+  const [user, setUser] = useState("");
   const [memberId, setMemberId] = useState("");
 
   useEffect(() => {
@@ -34,8 +34,7 @@ const Comment = () => {
     axios.get(`/reply/` + id).then((result) => {
       const timer = setTimeout(() => {
         setComment(result.data.data);
-
-        // setUser(result.data.data.nickname);
+        setUser(result.data.data.nickname);
         console.log("get", result.data.data);
         setLoading(false);
       }, 1000);
@@ -107,6 +106,7 @@ const Comment = () => {
       {
         replyContent: getContent,
         replyId: id,
+        nickname: user,
         createdAt: `${date}`,
         modifiedAt: `${date}`,
         responseTo: "root",
@@ -119,6 +119,7 @@ const Comment = () => {
     const editComment = {
       replyContent: getContent,
       replyId: id,
+      nickname: user,
       createdAt: `${date}`,
       modifiedAt: `${date}`,
       responseTo: "root",
@@ -264,8 +265,8 @@ const Comment = () => {
               {check_kor.test(comment.writer) ? comment.writer.slice(0, 1) : comment.writer.slice(0, 2)}
             </ProfileIcon> */}
                   {/* writer 데이터 받으면 수정 */}
-                  <Item>{comment.replyId}</Item>
-                  {/* <Item>{userNickname}</Item> */}
+                  {/* <Item>{comment.replyId}</Item> */}
+                  <Item>{user}</Item>
                   {/* <Item>Jisoo</Item> */}
                   {/* <Item>{timeForToday({ date })}</Item> */}
                   {/* <Item>{comment.date2}</Item> */}
