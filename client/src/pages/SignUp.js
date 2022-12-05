@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { SignupForm } from "../components/Login-Logout-Signup/SignupForm";
+// import { SignupForm } from "../components/Login-Logout-Signup/SignupForm";
+import SignupForm2 from "../components/Login-Logout-Signup/SignupForm2";
 import { ReactComponent as Logo } from "../images/DanimLogo.svg";
 
 export const Container = styled.div`
@@ -40,7 +41,8 @@ export const SignUp = () => {
           <Logo2 />
           <div>Danim에 오신걸 환영합니다!</div>
         </Intro>
-        <SignupForm />
+        {/* <SignupForm /> */}
+        <SignupForm2 />
       </SignupContainer>
     </Container>
   );
