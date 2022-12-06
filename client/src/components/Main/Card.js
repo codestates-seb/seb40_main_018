@@ -15,13 +15,13 @@ const Main = styled.div`
   margin: 0 10px;
   gap: 40px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  @media screen and (max-width: 1260px) {
+  @media screen and (max-width: 1440px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  @media screen and (max-width: 980px) {
+  @media screen and (max-width: 1120px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  @media screen and (max-width: 640px) {
+  @media screen and (max-width: 770px) {
     display: flex;
     flex-direction: column;
     align-items: center;
