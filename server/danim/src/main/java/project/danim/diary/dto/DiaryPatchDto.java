@@ -1,8 +1,6 @@
 package project.danim.diary.dto;
 
 
-import io.swagger.models.auth.In;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
