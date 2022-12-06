@@ -178,11 +178,11 @@ public class DiaryService {
         List<String> updateDiaryImages = s3Service.updateDiaryImages(findDiary.getDiaryImages(), diaryImages, "diary");
         findDiary.addDiaryImages(updateDiaryImages);
 
-        Diary updatedDiaries = diaryRepository.save(findDiary);
+        Diary updatedDiary = diaryRepository.save(findDiary);
 
 
 
-        return diaryMapper.diaryToDiaryResponseDto(updatedDiaries, tagService.getTags(diaryId));
+        return diaryMapper.diaryToDiaryResponseDto(updatedDiary, tagService.getTags(diaryId));
     }
 
     /*
