@@ -23,6 +23,11 @@ const CardArea = styled.div`
   height: 155px;
   border-radius: 35px;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  /* overflow: hidden; */
+  transition: 0.3s;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const CardImg = styled.img`
@@ -36,9 +41,12 @@ const TextArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   position: absolute;
-  top: 50px;
-  left: 36px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 `;
 
 const City = styled.div`

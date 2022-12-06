@@ -64,7 +64,9 @@ const Cardcontents = styled.div`
   color: #535353;
   margin: 6px 0px 6px 0px;
 `;
-
+const ImgBox = styled.div`
+  overflow: hidden;
+`;
 const Preview = styled.img`
   width: 280px;
   height: 280px;
@@ -73,6 +75,10 @@ const Preview = styled.img`
   justify-content: center;
   align-items: center;
   object-fit: cover;
+  transition: 0.3s;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const MintWrapper = styled.div`
@@ -161,6 +167,7 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
   // const id = useParams().id;
   const accessToken = localStorage.getItem("accessToken");
 
+
   // useEffect(() => {
   //   axios
   //     .get(`${process.env.REACT_APP_API_URL}likes/` + id, {
@@ -193,7 +200,8 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
 
     // pass
     axios
-      .post(`${process.env.REACT_APP_API_URL}likes/` + list.diaryId, patch2, {
+      // .post(`${process.env.REACT_APP_API_URL}likes/` + list.diaryId, patch2, {
+      .post(`/likes/` + list.diaryId, patch2, {
         headers: {
           Authorization: accessToken,
         },
@@ -254,7 +262,9 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
                   </Heart>
                 </TopStyle>
                 <Link to={`/detail/${list.diaryId}`}>
-                  <Preview src={list.imageUrl} alt="이미지" />
+                  <ImgBox>
+                    <Preview src={list.imageUrl} alt="이미지" />
+                  </ImgBox>
                   <Cardtitle>{list.title}</Cardtitle>
                   <Cardcontents>{list.content}</Cardcontents>
                 </Link>
