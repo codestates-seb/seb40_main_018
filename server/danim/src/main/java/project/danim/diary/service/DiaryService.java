@@ -158,11 +158,12 @@ public class DiaryService {
      */
     public DiaryResponseDto updateDiary(DiaryPatchDto diaryPatchDto, MultipartFile[] diaryImages, long diaryId, String email) throws IOException {
         Member loginMember = memberService.findMember(email);
-        if (diaryPatchDto.getMemberId() != loginMember.getMemberId()) {
+        Diary findDiary = findVerifiedDiary(diaryId);
+        if (findDiary.getMemberId() != loginMember.getMemberId()) {
             throw new BusinessLogicException(ExceptionCode.ACCESS_FORBIDDEN, "로그인한 사용자와 다이어리 작성자가 다릅니다.");
         }
 
-        Diary findDiary = findVerifiedDiary(diaryId);
+
         findDiary.updateDiary(diaryPatchDto.getTitle(),
                 diaryPatchDto.getContent(),
                 diaryPatchDto.getWeather(),

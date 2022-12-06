@@ -15,9 +15,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class DiaryPatchDto {
-  @NotNull
-  private long memberId;
-
   @NotBlank
   private String title;
 

@@ -64,7 +64,7 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.POST, "/member/me").authenticated()
                         .antMatchers(HttpMethod.PATCH, "/member/me").authenticated()
                         .antMatchers(HttpMethod.POST, "/diary").authenticated()
-                        .antMatchers(HttpMethod.PATCH, "/diary").authenticated()
+                        .antMatchers(HttpMethod.PATCH, "/diary/*").authenticated()
                         .antMatchers(HttpMethod.DELETE, "/diary/*").authenticated()
                         .antMatchers(HttpMethod.POST, "/likes/*").authenticated()
 //                      .antMatchers(HttpMethod.GET,"/bucket-list").authenticated()
