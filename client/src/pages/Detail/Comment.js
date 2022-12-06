@@ -18,7 +18,7 @@ import { Box } from "@mui/system";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 
-import { Item } from "../../components/Comment/CommentTool";
+import { Item, timeForToday2 } from "../../components/Comment/CommentTool";
 import Markdown from "../../components/Comment/Markdown";
 import axios from "axios";
 import SkeletonComment from "../../components/Skeleton/SkeletonComment";
@@ -282,6 +282,7 @@ const Comment = () => {
             </ProfileIcon> */}
                   <Item>{comment.nickname}</Item>
                   {/* <Item>{timeForToday({ date })}</Item> */}
+                  <Item>{timeForToday2(comment.createdAt)}</Item>
                   {/* <Item>{comment.date2}</Item> */}
                   {/* <Item>
                     {`${comment.createAt.slice(0, 3)} ${comment.createAt.slice(3)}`}
