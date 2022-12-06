@@ -107,7 +107,7 @@ public class DiaryController {
     }
 
     @ApiOperation(value = "Diary 수정", response = Diary.class)
-    @PatchMapping(value = "/{diary-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/{diary-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity patchDiary(@Positive @NotNull @PathVariable("diary-id") long diaryId,
                                      @Valid @RequestPart DiaryPatchDto diaryPatchDto,
                                      @RequestPart(value = "imgFiles") MultipartFile[] imgFiles) throws IOException {
