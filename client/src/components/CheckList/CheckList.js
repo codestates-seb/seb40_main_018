@@ -128,13 +128,13 @@ export const CheckList = ({ todos, setTodos }) => {
       .catch((err) => console.log("res1", err));
 
     await axios
-      .get(`${process.env.REACT_APP_API_URL}check-list`, {
+      .get(`${process.env.REACT_APP_API_URL}member/me/check-list`, {
         headers: {
           Authorization: accessToken,
         },
       })
       .then((result) => {
-        setTodos(result.data);
+        setTodos(result.data.data);
         // navigate(`/mylist/${cid}`);
       });
   };
@@ -161,43 +161,44 @@ export const CheckList = ({ todos, setTodos }) => {
     await axios.delete(`${process.env.REACT_APP_API_URL}check-list/` + check.checkId);
 
     await axios
-      .get(`${process.env.REACT_APP_API_URL}check-list`, {
+      .get(`${process.env.REACT_APP_API_URL}member/me/check-list`, {
         headers: {
           Authorization: accessToken,
         },
       })
       .then((result) => {
-        setTodos(result.data);
+        setTodos(result.data.data);
         // navigate(`/mylist/${cid}`);
       });
   };
 
   return (
     <Test>
-      {todos.map((todo, idx) => (
-        <li className="list-item" key={idx}>
-          <Block2>
-            <button onClick={() => handleComplete(todo)} className="complete-icon">
-              {todo.isCheck ? "🔳" : "⬜"}
-            </button>
-            <input
-              type="text"
-              value={todo.checkContent}
-              // 완료 시 밑줄 그어짐
-              className={`list ${todo.isCheck ? "complete" : ""}`}
-              onChange={(e) => e.preventDefault()}
-            />
-          </Block2>
-          <ButtonContainer>
-            {/* <MintLineButton2 width="50px" height="20px" onClick={() => handleEdit(todo)}>
+      {todos.length > 0 &&
+        todos.map((todo, idx) => (
+          <li className="list-item" key={idx}>
+            <Block2>
+              <button onClick={() => handleComplete(todo)} className="complete-icon">
+                {todo.isCheck ? "🔳" : "⬜"}
+              </button>
+              <input
+                type="text"
+                value={todo.checkContent}
+                // 완료 시 밑줄 그어짐
+                className={`list ${todo.isCheck ? "complete" : ""}`}
+                onChange={(e) => e.preventDefault()}
+              />
+            </Block2>
+            <ButtonContainer>
+              {/* <MintLineButton2 width="50px" height="20px" onClick={() => handleEdit(todo)}>
               수정
             </MintLineButton2> */}
-            <MintButton2 width="50px" height="20px" onClick={() => handleDelete(todo)}>
-              삭제
-            </MintButton2>
-          </ButtonContainer>
-        </li>
-      ))}
+              <MintButton2 width="50px" height="20px" onClick={() => handleDelete(todo)}>
+                삭제
+              </MintButton2>
+            </ButtonContainer>
+          </li>
+        ))}
     </Test>
   );
 };

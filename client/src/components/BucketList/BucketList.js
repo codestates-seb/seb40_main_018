@@ -99,13 +99,13 @@ export const BucketList = ({ todos, setTodos }) => {
       .catch((err) => console.log("res1", err));
 
     await axios
-      .get(`${process.env.REACT_APP_API_URL}bucket-list`, {
+      .get(`${process.env.REACT_APP_API_URL}member/me/bucket-list`, {
         headers: {
           Authorization: accessToken,
         },
       })
       .then((result) => {
-        setTodos(result.data);
+        setTodos(result.data.data);
         // navigate(`/mylist/${cid}`);
       });
   };
@@ -120,46 +120,47 @@ export const BucketList = ({ todos, setTodos }) => {
 
   const handleDelete = async (item) => {
     // setTodos(todos.filter((todos) => todos.id !== id));
-    axios.delete(`${process.env.REACT_APP_API_URL}bucket-list/${item.bucketId}`);
+    await axios.delete(`${process.env.REACT_APP_API_URL}bucket-list/${item.bucketId}`);
 
     await axios
-      .get(`${process.env.REACT_APP_API_URL}bucket-list`, {
+      .get(`${process.env.REACT_APP_API_URL}member/me/bucket-list`, {
         headers: {
           Authorization: accessToken,
         },
       })
       .then((result) => {
-        setTodos(result.data);
+        setTodos(result.data.data);
         // navigate(`/mylist/${cid}`);
       });
   };
 
   return (
     <Test>
-      {todos.map((todo, idx) => (
-        <li className="list-item" key={idx}>
-          <Block2>
-            <button onClick={() => handleComplete(todo)} className="complete-icon">
-              {todo.isBucket ? "🔳" : "⬜"}
-            </button>
-            <input
-              type="text"
-              value={todo.bucketContent}
-              // 완료 시 밑줄 그어짐
-              className={`list ${todo.isBucket ? "complete" : ""}`}
-              onChange={(e) => e.preventDefault()}
-            />
-          </Block2>
-          <ButtonContainer>
-            {/* <MintLineButton2 width="50px" height="20px" onClick={() => handleEdit(todo)}>
+      {todos.length > 0 &&
+        todos.map((todo, idx) => (
+          <li className="list-item" key={idx}>
+            <Block2>
+              <button onClick={() => handleComplete(todo)} className="complete-icon">
+                {todo.isBucket ? "🔳" : "⬜"}
+              </button>
+              <input
+                type="text"
+                value={todo.bucketContent}
+                // 완료 시 밑줄 그어짐
+                className={`list ${todo.isBucket ? "complete" : ""}`}
+                onChange={(e) => e.preventDefault()}
+              />
+            </Block2>
+            <ButtonContainer>
+              {/* <MintLineButton2 width="50px" height="20px" onClick={() => handleEdit(todo)}>
               수정
             </MintLineButton2> */}
-            <MintButton2 width="50px" height="20px" onClick={() => handleDelete(todo)}>
-              삭제
-            </MintButton2>
-          </ButtonContainer>
-        </li>
-      ))}
+              <MintButton2 width="50px" height="20px" onClick={() => handleDelete(todo)}>
+                삭제
+              </MintButton2>
+            </ButtonContainer>
+          </li>
+        ))}
     </Test>
   );
 };

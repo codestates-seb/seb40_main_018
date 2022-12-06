@@ -69,7 +69,7 @@ export const CheckListModal = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_API_URL}check-list`, {
+      .get(`${process.env.REACT_APP_API_URL}member/me/check-list`, {
         headers: {
           Authorization: accessToken,
         },
@@ -77,7 +77,7 @@ export const CheckListModal = () => {
       .then((result) => {
         // 로딩 시간이 짧아 settimeout 적용
         const timer = setTimeout(() => {
-          setTodos(result.data);
+          setTodos(result.data.data);
           setLoading(false);
         }, 1000);
         return () => clearTimeout(timer);

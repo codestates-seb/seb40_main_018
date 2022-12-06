@@ -70,13 +70,13 @@ export const BucketInput = ({
       .catch((err) => console.log(err));
 
     await axios
-      .get(`${process.env.REACT_APP_API_URL}bucket-list`, {
+      .get(`${process.env.REACT_APP_API_URL}member/me/bucket-list`, {
         headers: {
           Authorization: accessToken,
         },
       })
       .then((result) => {
-        setTodos(result.data);
+        setTodos(result.data.data);
       });
   };
 
