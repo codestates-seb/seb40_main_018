@@ -4,6 +4,7 @@ package project.danim.diary.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -46,6 +47,9 @@ public class DiaryPatchDto {
 
   @NotNull
   private List<String> tags;
+
+  @NotNull
+  private List<MultipartFile> imgFiles;
   public LocalDate getTravelDate() {
     return LocalDate.of(year, month, day);}
 }
