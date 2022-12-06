@@ -161,29 +161,13 @@ const TopStyle = styled.div`
 `;
 
 export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading, page, setLike, like }) => {
-  console.log("diaryList2", diaryList);
-  console.log("like", like);
+  // console.log("diaryList2", diaryList);
+  // console.log("like", like);
 
-  // const id = useParams().id;
   const accessToken = localStorage.getItem("accessToken");
-
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_API_URL}likes/` + id, {
-  //       headers: {
-  //         Authorization: accessToken,
-  //       },
-  //     })
-  //     .then((res) => setLike(res.data.data.like))
-  //     .catch((err) => {
-  //       console.log("likeGetErr", err);
-  //     });
-  // }, []);
 
   const onClickHandler = (list) => {
     setLike(!like);
-    console.log("list", list);
 
     setDiaryList(
       diaryList.map((item) => {
@@ -198,37 +182,14 @@ export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading
       like: !list.like,
     };
 
-    // pass
     axios
-      // .post(`${process.env.REACT_APP_API_URL}likes/` + list.diaryId, patch2, {
       .post(`/likes/` + list.diaryId, patch2, {
         headers: {
           Authorization: accessToken,
         },
       })
-      .then((res) => console.log("postLike", res.data.data.like))
-      .catch((err) => console.log("res1", err));
+      .catch((err) => console.log("like", err));
   };
-
-  // const onClickHandler = ({ id }) => {
-  //   const heartClick = like.find((todo) => todo.id === id);
-  //   setLike(heartClick);
-  //   console.log(heartClick);
-  //   setLike(!like);
-  // };
-
-  // 스크롤 시에 데이터를 추가적으로 받아오는 함수
-  // const fetchMoreData = () => {
-  // if (diaryList.length >= 50) {
-  //   setHasMore(!hasMore);
-  //   return;
-  // }
-  // // 가장 유력한 수정 후보
-  // setTimeout(() => {
-  //   setDiaryList(diaryList.concat(result.slice(0, 12))); // 12개씩 커팅하기로 결정 -> 12개씩 slice
-  //   setResult(result.slice(12));
-  // }, 1500);
-  // };
 
   const formatter = new Intl.NumberFormat("ko");
 

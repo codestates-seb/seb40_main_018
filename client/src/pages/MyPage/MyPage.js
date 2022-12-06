@@ -26,7 +26,7 @@ const MyPage = () => {
   const [page2, setPage2] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const accessToken = localStorage.getItem("accessToken");
-  console.log(tag);
+  console.log("tag", tag);
 
   const fetchDiaryList = async (page2) => {
     setLoading(true);
@@ -37,7 +37,6 @@ const MyPage = () => {
       },
     });
 
-    console.log(res.data.data);
     const cards = res.data.data;
     const pagination = res.data.pageInfo;
 

@@ -94,12 +94,9 @@ export const BucketList = ({ todos, setTodos }) => {
       isBucket: !todo.isBucket,
     };
 
-    // ^^todo.id
-
     axios
       .patch(`${process.env.REACT_APP_API_URL}bucket-list/${todo.bucketId}`, patch2)
-      .then((res) => console.log(res))
-      .then((err) => console.log("res1", err));
+      .catch((err) => console.log("res1", err));
 
     await axios
       .get(`${process.env.REACT_APP_API_URL}bucket-list`, {
@@ -120,8 +117,6 @@ export const BucketList = ({ todos, setTodos }) => {
 
   //   setIsEdit(!isEdit);
   // };
-
-  // ^^id
 
   const handleDelete = async (item) => {
     // setTodos(todos.filter((todos) => todos.id !== id));

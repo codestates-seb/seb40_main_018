@@ -163,11 +163,9 @@ const CommentTitle = styled.div`
 
 function Detail() {
   const id = useParams().id;
-  console.log("Detail-Like-id", id);
   const navigate = useNavigate();
 
   const [diaryDetail, setDiaryDetail] = useState([]);
-  console.log("DiaryDetail", diaryDetail);
   const [imageList, setImageList] = useState([]);
 
   const [like, setLike] = useState();
@@ -218,8 +216,7 @@ function Detail() {
           Authorization: accessToken,
         },
       })
-      .then((res) => console.log("likePost", res))
-      .catch((err) => console.log("res1", err));
+      .catch((err) => console.log("detail", err));
   };
 
   // 다이어리 본문 수정버튼
@@ -241,6 +238,11 @@ function Detail() {
   };
 
   const formatter = new Intl.NumberFormat("ko");
+
+  // const onStartSlide = useCallback((idx, length) => {
+  //   console.log(`[App onStartSlide] ${idx}/${length}`);
+  //   // setImageList(`${idx} / ${length}`);
+  // }, []);
 
   return (
     <>
@@ -267,7 +269,7 @@ function Detail() {
                 backgroundSize: "contain",
                 backgroundRepeat: "none",
               }}
-              startIndex={1}
+              // onStartSlide={onStartSlide}
               width={"700px"}
               height={"480px"}
               images={imageList}
@@ -275,6 +277,8 @@ function Detail() {
               showNavs={true}
               autoPlay={true}
               loop={true}
+              useGPURender={true}
+              // startIndex={2}
             />
           </IMGArea>
           <DiaryArea>

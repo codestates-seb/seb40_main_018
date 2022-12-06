@@ -2,11 +2,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useState } from "react";
 
 function Scroll() {
-  // yerin
   const [hasMore, setHasMore] = useState(true);
   const [items, setItems] = useState(Array.from({ length: 20 }));
 
-  console.log("items", items);
+  // console.log("items", items);
 
   const fetchMoreData = () => {
     if (items.length >= 100) {

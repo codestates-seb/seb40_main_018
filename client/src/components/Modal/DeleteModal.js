@@ -54,11 +54,9 @@ const YesBtn = styled.div`
 
 function DeleteModal({ diaryDetail }) {
   const navigate = useNavigate();
-  // const id = useParams().id;
 
   const [isOpen2, setIsOpen2] = useState(false);
   const [isMine, setIsMine] = useState();
-  console.log("isMine", isMine);
   const openModal2 = () => {
     setIsOpen2(!isOpen2);
   };
@@ -67,7 +65,6 @@ function DeleteModal({ diaryDetail }) {
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}member/me`, {
-        // .get(`/member/me`, {
         headers: {
           Authorization: accessToken,
         },
@@ -79,7 +76,6 @@ function DeleteModal({ diaryDetail }) {
     if (isMine === diaryDetail.memberId) {
       axios
         .delete(`${process.env.REACT_APP_API_URL}diary/${diaryDetail.diaryId}`, {
-          // .delete(`/diary/${diaryDetail.diaryId}`, {
           headers: {
             Authorization: accessToken,
           },

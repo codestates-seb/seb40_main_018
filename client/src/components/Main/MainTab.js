@@ -109,7 +109,7 @@ const FilterContainer = styled.div`
   }
 `;
 
-export const MainTab = ({ selected, setSelected, setTag }) => {
+export const MainTab = ({ selected, setSelected, setTag, page }) => {
   // const tags = diaryList.map((el) => el.tags);
   // console.log("tags", tags);
 
@@ -168,7 +168,7 @@ export const MainTab = ({ selected, setSelected, setTag }) => {
             }}
           />
         </div>
-        <PriceFilter />
+        <PriceFilter page={page} />
       </FilterContainer>
     </MainContainer>
   );

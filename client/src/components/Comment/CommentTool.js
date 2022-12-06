@@ -9,7 +9,7 @@ import timezone from "dayjs/plugin/timezone";
 
 // 사용중
 export const timeForToday2 = (time) => {
-  console.log("time", time);
+  // console.log("time", time);
   const year = time[0];
   const month = time[1];
   const day = time[2];
@@ -17,9 +17,6 @@ export const timeForToday2 = (time) => {
   const minute = time[4];
   const second = time[5];
 
-  console.log("year", year);
-  const createdAt = new Date(time);
-  console.log("createdAt", createdAt);
   dayjs.extend(relativeTime);
   dayjs.locale("ko");
   dayjs.extend(utc);
@@ -32,33 +29,33 @@ export const timeForToday2 = (time) => {
   return parsedDate.fromNow();
 };
 
-export function timeForToday(time) {
-  console.log("time", time);
-  const now = new Date();
-  console.log("now", now.getTime());
-  const createdAt = new Date(time);
-  console.log("createdAt", createdAt);
+// export function timeForToday(time) {
+//   console.log("time", time);
+//   const now = new Date();
+//   console.log("now", now.getTime());
+//   const createdAt = new Date(time);
+//   console.log("createdAt", createdAt);
 
-  // 작성 시간-현재 시간 => 지나간 시간
+//   // 작성 시간-현재 시간 => 지나간 시간
 
-  const minute = Math.floor((now.getTime() - createdAt.getTime()) / 1000 / 60);
-  if (minute < 1) return "방금전";
-  if (minute < 60) {
-    return `${minute}분전`;
-  }
+//   const minute = Math.floor((now.getTime() - createdAt.getTime()) / 1000 / 60);
+//   if (minute < 1) return "방금전";
+//   if (minute < 60) {
+//     return `${minute}분전`;
+//   }
 
-  const hour = Math.floor(minute / 60);
-  if (hour < 24) {
-    return `${hour}시간전`;
-  }
+//   const hour = Math.floor(minute / 60);
+//   if (hour < 24) {
+//     return `${hour}시간전`;
+//   }
 
-  const day = Math.floor(minute / 60 / 24);
-  if (day < 365) {
-    return `${day}일전`;
-  }
+//   const day = Math.floor(minute / 60 / 24);
+//   if (day < 365) {
+//     return `${day}일전`;
+//   }
 
-  return `${Math.floor(day / 365)}년전`;
-}
+//   return `${Math.floor(day / 365)}년전`;
+// }
 
 // style
 

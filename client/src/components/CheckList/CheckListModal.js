@@ -95,8 +95,6 @@ export const CheckListModal = () => {
     //   });
   }, []);
 
-  // const [mid, setMid] = useState();
-
   return (
     <Block>
       <DarkMintShadowButton>체크리스트</DarkMintShadowButton>

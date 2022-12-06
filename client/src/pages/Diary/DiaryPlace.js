@@ -45,7 +45,6 @@ const DiaryPlace = ({ Location, register, errors }) => {
   // const [city, setCity] = useState(Location[selected][0]);
 
   const onClickHandler = (e) => {
-    console.log("e", e.target.value);
     setSelected(e.target.value);
   };
 

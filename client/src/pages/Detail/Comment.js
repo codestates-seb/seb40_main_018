@@ -44,8 +44,6 @@ const Comment = () => {
       const timer = setTimeout(() => {
         setComment(result.data.data);
         setUser(result.data.data.nickname); //pass
-        console.log("user", user);
-        console.log("get", result.data.data);
         setLoading(false);
       }, 1000);
       return () => clearTimeout(timer);
@@ -96,7 +94,6 @@ const Comment = () => {
           Authorization: accessToken,
         },
       })
-      .then((res) => console.log("post", res.data))
       .catch((err) => {
         console.log(err);
       });
@@ -157,50 +154,12 @@ const Comment = () => {
 
   // Remove comment
   const onRemove = async ({ replyId }) => {
-    // if (comment.find((item) => item.replyId === replyId)) {
-    //   console.log("replyId", replyId);
-    //   setComment(
-    //     comment.filter((item) => {
-    //       console.log("replyId", replyId);
-    //       item.replyId !== replyId;
-    //     }),
-    //   );
-    // }
-    // comment.find((item) => item.replyId === replyId);
-    // 통신 삭제 잘 됨
-    await axios
-      .delete(`${process.env.REACT_APP_API_URL}reply/` + replyId)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    await axios.delete(`${process.env.REACT_APP_API_URL}reply/` + replyId).catch((err) => console.log(err));
 
     await axios.get(`${process.env.REACT_APP_API_URL}reply/` + id).then((result) => {
       setComment(result.data.data);
     });
   };
-
-  // useEffect(() => {
-  //   localStorage.setItem("reply", JSON.stringify(comments));
-  //   setLocal(comments.filter((comment) => comment.responseTo === "root"));
-  //   // console.log(local);
-  // }, [comments]);
-
-  // createdAt: `${date}`,
-  // modifiedAt: `${date}`,
-  // replyContent: getContent,
-  // replyId: "123123",
-  // responseTo: "root",
-  // exist: true,
-  // if (question.createAt) {
-  //   var date = `${question.createAt.slice(0, 10)} ${question.createAt.slice(
-  //     11,
-  //     19
-  //   )}`;
-  // }
-
-  // if (comment.createAt) {
-  //   let date2 = `${comment.createAt.slice(0, 3)} ${comment.createAt.slice(3)}`;
-  //   return date2;
-  // }
 
   const accessToken = localStorage.getItem("accessToken");
 
@@ -213,7 +172,7 @@ const Comment = () => {
         },
       })
       .then((res) => {
-        console.log("userNickname", res.data.data);
+        // console.log("userNickname", res.data.data);
         setMemberId(res.data.data.memberId);
       });
   }, []);
@@ -228,18 +187,6 @@ const Comment = () => {
       navigate("/login");
     }
   };
-
-  //  댓글 작성 버튼을 눌렀을 때 로그인하지 않은 사용자는 로그인페이지로 이동
-  // const navigate = useNavigate();
-
-  // const handleClick = () => {
-  //   // 만약에 유저닉네임 === null이면?
-  //   if (userNickname === null) {
-  //     alert("로그인이 필요합니다.");
-  //     navigate("/login");
-  //   }
-  //   setDisplay(!display);
-  // };
 
   return (
     <Block>
@@ -281,13 +228,7 @@ const Comment = () => {
               {check_kor.test(comment.writer) ? comment.writer.slice(0, 1) : comment.writer.slice(0, 2)}
             </ProfileIcon> */}
                   <Item>{comment.nickname}</Item>
-                  {/* <Item>{timeForToday({ date })}</Item> */}
                   <Item>{timeForToday2(comment.createdAt)}</Item>
-                  {/* <Item>{comment.date2}</Item> */}
-                  {/* <Item>
-                    {`${comment.createAt.slice(0, 3)} ${comment.createAt.slice(3)}`}
-                    {/* ${comment.createAt.slice(11, 19)} */}
-                  {/* </Item> */}
                 </Stack>
 
                 {/* comment 글 내용 */}
@@ -299,8 +240,6 @@ const Comment = () => {
                   <Markdown comment={comment} />
                 </Box>
                 {/* comment 수정 */}
-                {/* writer 데이터 받으면 수정 */}
-                {/* {user === comment.writer && ( */}
                 {comment.memberId === memberId && (
                   <>
                     {openEditor === comment.replyId && <Editor value={comment.replyContent} ref={editorRef} />}
