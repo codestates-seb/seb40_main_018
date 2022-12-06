@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import project.danim.diary.domain.Diary;
 import project.danim.diary.dto.DiaryPatchDto;
 import project.danim.diary.dto.DiaryPostDto;
@@ -110,10 +111,12 @@ public class DiaryController {
     @PatchMapping(value = "/{diary-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity patchDiary(@Positive @NotNull @PathVariable("diary-id") long diaryId,
                                      @Valid @RequestPart DiaryPatchDto diaryPatchDto,
-                                     @RequestPart(value = "imgFiles") MultipartFile[] imgFiles) throws IOException {
+                                     MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
+        MultipartFile[] multipartFiles = multipartHttpServletRequest.getFiles("imgFiles").toArray(new MultipartFile[multipartHttpServletRequest.getFiles("imgFiles").size()]);
+
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return new ResponseEntity<>(new SingleResponseDto<>(diaryService.updateDiary(diaryPatchDto, imgFiles, diaryId, email)),HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(diaryService.updateDiary(diaryPatchDto, multipartFiles, diaryId, email)),HttpStatus.OK);
     }
 /*
     @GetMapping("search")
