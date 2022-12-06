@@ -61,26 +61,7 @@ const DateInfo = styled.div`
   text-shadow: 2px 2px 4px gray;
 `;
 
-// 확인용
-
 const MyPageCard = ({ cardList, hasMore, fetchDiaryList, page2 }) => {
-  // 스크롤 시에 데이터를 추가적으로 받아오는 함수
-  // const fetchMoreData = () => {
-  //   if (cardList.length >= 50) {
-  //     setHasMore(!hasMore);
-  //     return;
-  //   }
-  // a fake async api call like which sends
-  // 20 more records in .5 secs
-  // 가장 유력한 수정 후보
-  //   setTimeout(() => {
-  //     // setItems(items.concat(Array.from({ length: 10 })));
-  //     setCardList(cardList.concat(result.slice(0, 10))); // 10개씩 커팅하기로 결정 -> 10개씩 slice
-  //     setResult(result.slice(10)); // 호출하여 10개씩 커팅할때마다 원본 데이터인 result 또한 10개씩 줄여줌
-
-  //     // setDiaryList(diaryList.concat(diaryList.slice(0, 10)));
-  //   }, 1500);
-  // };
   return (
     <>
       <InfiniteScroll
@@ -99,9 +80,9 @@ const MyPageCard = ({ cardList, hasMore, fetchDiaryList, page2 }) => {
           {cardList && (
             <>
               {cardList.map((item, index) => (
-                <>
+                <div key={index}>
                   <Link to={`/detail/${item.diaryId}`}>
-                    <CardArea key={index}>
+                    <CardArea>
                       <CardImg src={item.imageUrl} alt="이미지" />
                       <TextArea>
                         <City>{item.city}</City>
@@ -111,7 +92,7 @@ const MyPageCard = ({ cardList, hasMore, fetchDiaryList, page2 }) => {
                       </TextArea>
                     </CardArea>
                   </Link>
-                </>
+                </div>
               ))}
             </>
           )}

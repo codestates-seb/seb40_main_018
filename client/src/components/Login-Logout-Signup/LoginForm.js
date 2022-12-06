@@ -77,7 +77,6 @@ export const LoginForm = () => {
       email: email,
       password: password,
     };
-    console.log("postLogin", postLogin);
 
     const res = await useFetch("POST", `/auth/login`, postLogin);
     if (res === 404 || res === 401) {

@@ -41,7 +41,7 @@ export default function MainPage() {
       },
     });
 
-    console.log("res", res.data);
+    // console.log("main", res.data);
     const diaries = res.data.data;
     const pagination = res.data.pageInfo;
 

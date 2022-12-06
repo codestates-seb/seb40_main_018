@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { HiFilter } from "react-icons/hi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
+import axios from "axios";
 
 export const Block = styled.div`
   /* margin-top: -8px; */
@@ -200,7 +201,7 @@ const Mid = styled.div`
   margin: 8px;
 `;
 
-function PriceFilter() {
+function PriceFilter({ page }) {
   // 막대 필터 적용시 자동 필터 검색
   const fixedMinPrice = 10000;
   const fixedMaxPrice = 1000000;
@@ -231,6 +232,18 @@ function PriceFilter() {
       setRangeMaxPercent(100 - (rangeMaxValue / fixedMaxPrice) * 100);
     }
   };
+  // console.log("rangeMinValue", rangeMinValue); // range 조절
+  // console.log("rangeMaxValue", rangeMaxValue); // range 조절
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}diary/cost?min=${rangeMinValue}&max=${rangeMaxValue}&size=10&page=${page}`)
+      .then((res) => {
+        // console.log("price", res);
+        setRangeMinValue(res.data.min);
+        setRangeMaxValue(res.data.max);
+      });
+  }, []);
 
   const formatter = new Intl.NumberFormat("ko");
   return (

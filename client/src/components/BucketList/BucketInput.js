@@ -67,8 +67,7 @@ export const BucketInput = ({
           Authorization: accessToken,
         },
       })
-      .then((res) => console.log(res))
-      .then((err) => console.log(err));
+      .catch((err) => console.log(err));
 
     await axios
       .get(`${process.env.REACT_APP_API_URL}bucket-list`, {

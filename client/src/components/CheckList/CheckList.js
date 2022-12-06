@@ -108,13 +108,10 @@ export const MintButton2 = styled.button`
 `;
 
 export const CheckList = ({ todos, setTodos }) => {
-  // pass
   const handleComplete = async (todo) => {
-    console.log(todo.checkId);
     setTodos(
       todos.map((item) => {
         if (item.id === todo.checkId) {
-          console.log("CheckList.item.id", item.id);
           return { ...item, isCheck: !item.isCheck };
         }
         return item;
@@ -126,13 +123,9 @@ export const CheckList = ({ todos, setTodos }) => {
       isCheck: !todo.isCheck,
     };
 
-    // ^^todo.id
-    // 경로였을 때 patch 통신 잘 되는데, ui 이상해짐
-
     await axios
       .patch(`${process.env.REACT_APP_API_URL}check-list/` + todo.checkId, patch2)
-      .then((res) => console.log(res))
-      .then((err) => console.log("res1", err));
+      .catch((err) => console.log("res1", err));
 
     await axios
       .get(`${process.env.REACT_APP_API_URL}check-list`, {
@@ -164,19 +157,8 @@ export const CheckList = ({ todos, setTodos }) => {
   // ^^id
   const accessToken = localStorage.getItem("accessToken");
 
-  // delete 할 때 모든 리스트가 삭제되고, get이 된다?
   const handleDelete = async (check) => {
-    // setTodos(
-    //   todos.filter((item) => {
-    //     console.log("delete_checkId", item.checkId);
-    //     console.log("delete_id2", checkId.checkId); // 해당 id 경로 이동 시 undefined x
-    //     item.checkId !== checkId.checkId;
-    //   }),
-    // );
-
-    await axios.delete(`${process.env.REACT_APP_API_URL}check-list/` + check.checkId).then((res) => {
-      console.log(res);
-    });
+    await axios.delete(`${process.env.REACT_APP_API_URL}check-list/` + check.checkId);
 
     await axios
       .get(`${process.env.REACT_APP_API_URL}check-list`, {
@@ -188,7 +170,6 @@ export const CheckList = ({ todos, setTodos }) => {
         setTodos(result.data);
         // navigate(`/mylist/${cid}`);
       });
-    // 등록 버튼 눌렀을 때 해당 id 링크로 이동?
   };
 
   return (

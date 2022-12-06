@@ -72,9 +72,7 @@ const Diary = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("data", data);
     if (imageList.length === 0) {
-      console.log("imageList:", imageList);
       alert("이미지를 추가해 주세요.");
       return false;
     } else if (imageList.length === 1) {
@@ -82,7 +80,6 @@ const Diary = () => {
       return false;
     }
     if (tags.length < 3) {
-      console.log("tags:", tags);
       alert("태그를 세개 이상 등록해 주세요.");
       return false;
     }
@@ -93,25 +90,21 @@ const Diary = () => {
       tags: tags,
     };
 
-    // console.log("diaryInfo", diaryInfo);
-    console.log(diaryInfo, imageList);
     const formData = new FormData();
     formData.append("diaryPostDto", new Blob([JSON.stringify(diaryInfo)], { type: "application/json" }));
     Array.from(imageList).forEach((el) => {
       formData.append("imgFiles", el);
     });
 
-    console.log("imageList", imageList);
+    // for (const key of formData.keys()) {
+    //   console.log("key", key);
+    // }
 
-    for (const key of formData.keys()) {
-      console.log("key", key);
-    }
-
-    for (const value of formData.values()) {
-      console.log("value", value);
-    }
-    // console.log("formDataFile", formData.getAll("file"));
-    console.log("formData", formData);
+    // for (const value of formData.values()) {
+    //   console.log("value", value);
+    // }
+    // // console.log("formDataFile", formData.getAll("file"));
+    // console.log("formData", formData);
 
     const accessToken = localStorage.getItem("accessToken");
 
@@ -122,22 +115,10 @@ const Diary = () => {
           Authorization: accessToken,
         },
       })
-      // .then((res) => console.log("IMGres:", res))
       .then((res) => navigate(`/detail/${res.data.data.diaryId}`))
 
       .catch((err) => console.log("IMGErr", err));
   };
-
-  // axios
-  //   // .post("http://localhost:4000/diary", diaryInfo)
-  //   .post(`/diary`, diaryInfo, {
-  //     headers: {
-  //       Authorization: accessToken,
-  //     },
-  //   })
-  //   // .then((res) => console.log("Diary", res.data))
-  // .then((res) => navigate(`/detail/${res.data.data.diaryId}`))
-  //   .catch((err) => console.log("DiaryErr", err));
 
   useEffect(() => {
     setLoading(true);
@@ -149,7 +130,6 @@ const Diary = () => {
 
   return (
     <>
-      {/* <LoginHeader /> */}
       {loading ? (
         <Loading />
       ) : (

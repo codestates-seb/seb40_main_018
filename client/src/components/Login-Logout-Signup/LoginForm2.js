@@ -86,8 +86,6 @@ function LoginForm2() {
   currentPassword.current = watch("password", "");
 
   const onValid = async (data) => {
-    console.log("data", data);
-
     const postLogin = {
       email: data.email,
       password: data.password,

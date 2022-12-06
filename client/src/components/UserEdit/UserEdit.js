@@ -224,7 +224,7 @@ export const UserEditBox = ({ cardList }) => {
       })
       .then((res) => {
         const timer = setTimeout(() => {
-          console.log("getTest", res.data.data);
+          // console.log("getTest", res.data.data);
           // setUserProfile(res.data);
           setUserNickname(res.data.data.nickname);
           setUserIntro(res.data.data.aboutMe);

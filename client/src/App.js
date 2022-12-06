@@ -23,13 +23,13 @@ function App() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.userReducer.isLogin);
   const user = useSelector((state) => state.userReducer);
-  console.log("user", user);
+  // console.log("user", user);
 
   // 내 정보 가져오기
   const userLoad = async () => {
     const myInfo = await useFetch("GET", `/member/me`);
     dispatch(getmyInfo(myInfo));
-    console.log("myInfo member/me", myInfo);
+    // console.log("myInfo member/me", myInfo);
   };
 
   useEffect(() => {
@@ -57,7 +57,7 @@ function App() {
           dispatch(getLoginStatus({ isLogin: true }));
         }
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
   }, [isLogin]);
