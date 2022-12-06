@@ -5,6 +5,7 @@ import project.danim.diary.domain.Diary;
 import project.danim.diary.dto.DiaryPatchDto;
 import project.danim.diary.dto.DiaryPostDto;
 import project.danim.diary.dto.DiaryResponseDto;
+import project.danim.diary.dto.DiaryResponseDtoForCard;
 
 import java.util.List;
 
@@ -41,34 +42,8 @@ public interface DiaryMapper {
         return diary;
     }
 
-
-
-    /*
-  MemberId 추가 필요!!
- */
     default DiaryResponseDto diaryToDiaryResponseDto(Diary diary, List<String> tags){
-        DiaryResponseDto diaryResponseDto = new DiaryResponseDto();
-
-        diaryResponseDto.setDiaryId(diary.getDiaryId());
-        diaryResponseDto.setTitle(diary.getTitle());
-        diaryResponseDto.setContent(diary.getContent());
-        diaryResponseDto.setWeather(diary.getWeather());
-        diaryResponseDto.setCity(diary.getCity());
-        diaryResponseDto.setArea(diary.getArea());
-        diaryResponseDto.setCost(diary.getCost());
-        diaryResponseDto.setTags(tags);
-        diaryResponseDto.setCreatedAt(diary.getCreatedAt());
-        diaryResponseDto.setModifiedAt(diary.getModifiedAt());
-        diaryResponseDto.setYear(diary.getTravelDate().getYear());
-        diaryResponseDto.setMonth(diary.getTravelDate().getMonthValue());
-        diaryResponseDto.setDay(diary.getTravelDate().getDayOfMonth());
-        diaryResponseDto.setMemberId(diary.getMemberId());
-        diaryResponseDto.setQuestion(diary.getQuestion());
-        diaryResponseDto.setDiaryImages(diary.getDiaryImages());
-
-        return diaryResponseDto;
+        return DiaryResponseDto.of(diary, tags);
     }
-
-    List<DiaryResponseDto> diaryToCityResponseDtos(List<Diary> diaries);
 
 }

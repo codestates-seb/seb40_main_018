@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,7 +72,7 @@ public class DiaryController {
     @ApiOperation(value = "특정 Diary 조회", response = Diary.class)
     @GetMapping("/{diary-id}")
     public ResponseEntity getDiary(@Positive @PathVariable("diary-id") @NotNull long diaryId) {
-        return new ResponseEntity<>(new SingleResponseDto<>(diaryService.getDiary(diaryId)),HttpStatus.OK);
+        return new ResponseEntity<>(diaryService.getDiary(diaryId),HttpStatus.OK);
     }
 
     @ApiOperation(value = "모든 Diary 조회", response = Diary.class)
@@ -83,17 +84,17 @@ public class DiaryController {
         return new ResponseEntity<>(diaryService.findDiariesForCard(email, size, page), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "지역 검색", response = Diary.class)
-    @GetMapping("/search")
-    public ResponseEntity getDiaryCityList(@RequestParam("search") String cityKeyword,
-                                           @Positive @RequestParam int page,
-                                           @Positive @RequestParam int size,
-                                           @RequestParam String sort) {
-        Page<Diary> searchResult = diaryService.diarySearchCityList(cityKeyword, page - 1, size,sort);
-        List<Diary> diaries = searchResult.getContent();
-
-        return new ResponseEntity<>(new MultiResponseDto<>(diaryMapper.diaryToCityResponseDtos(diaries),searchResult),HttpStatus.OK);
-    }
+//    @ApiOperation(value = "지역 검색", response = Diary.class)
+//    @GetMapping("/search")
+//    public ResponseEntity getDiaryCityList(@RequestParam("search") String cityKeyword,
+//                                           @Positive @RequestParam int page,
+//                                           @Positive @RequestParam int size,
+//                                           @RequestParam String sort) {
+//        Page<Diary> searchResult = diaryService.diarySearchCityList(cityKeyword, page - 1, size,sort);
+//        List<Diary> diaries = searchResult.getContent();
+//
+//        return new ResponseEntity<>(new MultiResponseDto<>(diaryMapper.diaryToCityResponseDtos(diaries),searchResult),HttpStatus.OK);
+//    }
 
 
 
@@ -107,9 +108,9 @@ public class DiaryController {
 
     @ApiOperation(value = "Diary 수정", response = Diary.class)
     @PatchMapping(value = "/{diary-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity patchDiary(@PathVariable("diary-id") @Positive @NotNull long diaryId,
+    public ResponseEntity patchDiary(@Positive @NotNull @PathVariable("diary-id") long diaryId,
                                      @Valid @RequestPart DiaryPatchDto diaryPatchDto,
-                                     @RequestPart MultipartFile[] imgFiles) throws IOException {
+                                     @RequestPart(value = "imgFiles") MultipartFile[] imgFiles) throws IOException {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return new ResponseEntity<>(new SingleResponseDto<>(diaryService.updateDiary(diaryPatchDto, imgFiles, diaryId, email)),HttpStatus.OK);

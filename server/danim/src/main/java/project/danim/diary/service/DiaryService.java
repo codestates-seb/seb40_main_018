@@ -1,8 +1,11 @@
 package project.danim.diary.service;
 
 
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import project.danim.S3.S3Service;
@@ -22,6 +25,7 @@ import project.danim.member.repository.MemberRepository;
 import project.danim.member.service.MemberService;
 import project.danim.member.service.MemberServiceHelper;
 import project.danim.response.MultiResponseDto;
+import project.danim.response.SingleResponseDto;
 import project.danim.tag.service.TagService;
 
 
@@ -32,18 +36,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 public class DiaryService {
     private final DiaryRepository diaryRepository;
     private final DiaryMapper diaryMapper;
-
     private final MemberService memberService;
-
     private final S3Service s3Service;
-
     private final TagService tagService;
     private final LikesRepository likesRepository;
+
     public DiaryService(DiaryRepository diaryRepository, DiaryMapper diaryMapper, MemberService memberService, TagService tagService, S3Service s3Service, LikesRepository likesRepository) {
         this.diaryRepository = diaryRepository;
         this.diaryMapper = diaryMapper;
@@ -81,9 +84,12 @@ public class DiaryService {
         return findVerifiedDiary(diaryId);
     }
 
-    public DiaryResponseDto getDiary(long diaryId) {
+    @Transactional(propagation = Propagation.REQUIRED)
+    public SingleResponseDto getDiary(long diaryId) {
         Diary findDiary = findVerifiedDiary(diaryId);
-        return diaryMapper.diaryToDiaryResponseDto(findDiary, tagService.getTags(diaryId));
+        DiaryResponseDto diaryResponseDto = DiaryResponseDto.of(findDiary, tagService.getTags(diaryId));
+//        log.info(diaryResponseDto.getDiaryImages().toString());
+        return new SingleResponseDto<>(diaryResponseDto);
     }
 
     /*
@@ -177,14 +183,6 @@ public class DiaryService {
 
         return diaryMapper.diaryToDiaryResponseDto(updatedDiaries, tagService.getTags(diaryId));
     }
-
-//    default List<DiaryResponseDto> diaryToDiaryResponseDtos(List<Diary> diary){
-//
-//        List<DiaryResponseDto> diaryResponseDtos =diary.stream().map(diary -> answerToAnswerResponseDto(answer)).collect(Collectors.toList());
-//
-//
-//        return answerResponseDtos;
-//    };
 
     /*
     특정 다이어리 삭제
