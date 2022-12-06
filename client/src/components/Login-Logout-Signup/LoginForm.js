@@ -78,8 +78,8 @@ export const LoginForm = () => {
       password: password,
     };
 
-    const res = await useFetch("POST", `/auth/login`, postLogin);
-    if (res === 404 || res === 401) {
+    const res = await useFetch("POST", `${process.env.REACT_APP_API_URL}auth/login`, postLogin);
+    if (res === 404 || res === 401 || res === 405) {
       alert("로그인 실패!");
       return false;
     } else {

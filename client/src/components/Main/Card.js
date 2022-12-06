@@ -55,7 +55,7 @@ const Cardtitle = styled.div`
 
 const Cardcontents = styled.div`
   width: 280px;
-  height: 42px;
+  height: 46px;
   font-size: 11px;
   display: -webkit-box;
   -webkit-line-clamp: 3;

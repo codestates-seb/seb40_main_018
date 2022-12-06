@@ -98,16 +98,16 @@ const SignupForm2 = () => {
 
     // console.log("postSignup", postSignup);
     // 회원가입 요청
-    const res = await useFetch("POST", `/auth/register`, postSignup);
+    const res = await useFetch("POST", `${process.env.REACT_APP_API_URL}auth/register`, postSignup);
     if (res === 404 || res === 401 || res === 405) {
       alert("회원가입 실패!");
     } else if (res === 409) {
       // 입력 정보가 이미 있으면 로그인
-      await useFetch("POST", `/auth/login`, postSignup);
+      await useFetch("POST", `${process.env.REACT_APP_API_URL}auth/login`, postSignup);
 
       //내 정보 가져오기
       // 본인 회원 정보 조회 api가 따로 있음
-      const myInfo = await useFetch("GET", `/member/me`);
+      const myInfo = await useFetch("GET", `${process.env.REACT_APP_API_URL}member/me`);
       // dispatch(getLoginStatus({ isLogin: true }));
       dispatch(getmyInfo(myInfo));
       navigate("/login");
