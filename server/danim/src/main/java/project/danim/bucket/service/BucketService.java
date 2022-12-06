@@ -50,10 +50,10 @@ public class BucketService {
 
         Member findMember = memberService.findMember(email);
 
-
         Bucket bucket = Bucket.builder()
                 .bucketContent(request.getBucketContent())
                 .isBucket(request.getIsBucket())
+                .memberId(findMember.getMemberId())
                 .build();
 
         Bucket createdBucket = bucketRepository.save(bucket);
@@ -72,6 +72,8 @@ public class BucketService {
                 .ifPresent(bucketContent -> findBucket.setBucketContent(bucketContent));
         Optional.ofNullable(request.getIsBucket())
                 .ifPresent(isBucket -> findBucket.setIsBucket(isBucket));
+        Optional.ofNullable(request.getMemberId())
+                .ifPresent(memberId -> findBucket.setMemberId(memberId));
 
         Bucket updatedBucket = bucketRepository.save(findBucket);
 

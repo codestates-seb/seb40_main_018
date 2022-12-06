@@ -23,8 +23,10 @@ public class BucketResponseDto {
 
     private LocalDateTime createdAt;
 
+    private Long memberId;
+
     public static BucketResponseDto of(Bucket bucket) {
-        return new BucketResponseDto(bucket.getBucketId(), bucket.getBucketContent(), bucket.getIsBucket(), bucket.getCreatedAt());
+        return new BucketResponseDto(bucket.getBucketId(), bucket.getBucketContent(), bucket.getIsBucket(), bucket.getCreatedAt(), bucket.getMemberId());
     }
 
 }

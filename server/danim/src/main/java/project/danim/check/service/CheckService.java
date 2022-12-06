@@ -54,6 +54,7 @@ public class CheckService {
         Check check = Check.builder()
                 .checkContent(request.getCheckContent())
                 .isCheck(request.getIsCheck())
+                .memberId(findMember.getMemberId())
                 .build();
 
         Check createdCheck = checkRepository.save(check);
@@ -72,6 +73,8 @@ public class CheckService {
                 .ifPresent(checkContent -> findCheck.setCheckContent(checkContent));
         Optional.ofNullable(request.getIsCheck())
                 .ifPresent(isCheck -> findCheck.setIsCheck(isCheck));
+        Optional.ofNullable(request.getMemberId())
+                .ifPresent(memberId -> findCheck.setMemberId(memberId));
 
         Check updatedCheck = checkRepository.save(findCheck);
 

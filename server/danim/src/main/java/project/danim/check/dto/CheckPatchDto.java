@@ -11,4 +11,6 @@ public class CheckPatchDto {
 
     private Boolean isCheck;
 
+    private Long memberId;
+
 }
