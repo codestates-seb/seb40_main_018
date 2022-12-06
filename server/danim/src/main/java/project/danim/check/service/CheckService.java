@@ -3,6 +3,8 @@ package project.danim.check.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+import project.danim.bucket.domain.Bucket;
+import project.danim.bucket.dto.BucketResponseDto;
 import project.danim.check.domain.Check;
 import project.danim.check.dto.CheckPatchDto;
 import project.danim.check.dto.CheckPostDto;
@@ -11,12 +13,15 @@ import project.danim.check.repository.CheckRepository;
 import project.danim.exeption.BusinessLogicException;
 import project.danim.exeption.ExceptionCode;
 import project.danim.member.domain.Member;
+import project.danim.member.domain.MemberNotFoundException;
+import project.danim.member.repository.MemberRepository;
 import project.danim.member.service.MemberService;
 import project.danim.response.MultiResponseDto;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,9 +31,12 @@ public class CheckService {
 
     private final MemberService memberService;
 
-    public CheckService(CheckRepository checkRepository, MemberService memberService) {
+    private final MemberRepository memberRepository;
+
+    public CheckService(CheckRepository checkRepository, MemberService memberService, MemberRepository memberRepository) {
         this.checkRepository = checkRepository;
         this.memberService = memberService;
+        this.memberRepository = memberRepository;
     }
 
     // 1개 조회
@@ -42,8 +50,23 @@ public class CheckService {
     }
 
     // 전체 조회
-    public List<Check> findChecks() {
-        return checkRepository.findAll();
+    public List<CheckResponseDto> getMyCheck(String email) {
+
+        Member findMember = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new MemberNotFoundException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        List<Check> checkList = checkRepository.findByMemberId(findMember.getMemberId());
+
+        return checkList.stream()
+                .map(check -> CheckResponseDto.builder()
+                        .checkContent(check.getCheckContent())
+                        .isCheck(check.getIsCheck())
+                        .createdAt(check.getCreatedAt())
+                        .checkId(check.getCheckId())
+                        .memberId(findMember.getMemberId())
+                        .build())
+                .collect(Collectors.toList());
+
     }
 
     // 체크리스트 생성
