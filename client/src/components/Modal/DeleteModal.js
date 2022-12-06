@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 // import { useParams, useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MintLineButton from "../Button/MintLineButton";
 import { Container, Inside, MintButton3, ModalBackdrop, ModalView } from "./HeaderModal";
@@ -53,7 +53,7 @@ const YesBtn = styled.div`
 `;
 
 function DeleteModal({ diaryDetail }) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const id = useParams().id;
 
   const [isOpen2, setIsOpen2] = useState(false);
@@ -67,6 +67,7 @@ function DeleteModal({ diaryDetail }) {
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}member/me`, {
+        // .get(`/member/me`, {
         headers: {
           Authorization: accessToken,
         },
@@ -78,11 +79,12 @@ function DeleteModal({ diaryDetail }) {
     if (isMine === diaryDetail.memberId) {
       axios
         .delete(`${process.env.REACT_APP_API_URL}diary/${diaryDetail.diaryId}`, {
+          // .delete(`/diary/${diaryDetail.diaryId}`, {
           headers: {
             Authorization: accessToken,
           },
         })
-        .then((res) => console.log(res))
+        .then(() => navigate("/"))
         .catch((err) => console.log("deleteErr", err));
     } else if (isMine !== diaryDetail.memberId) {
       alert("직접 작성한 일기만 삭제 가능합니다.");
