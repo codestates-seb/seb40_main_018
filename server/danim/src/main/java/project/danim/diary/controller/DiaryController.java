@@ -110,10 +110,9 @@ public class DiaryController {
     @ApiOperation(value = "Diary 수정", response = Diary.class)
     @PatchMapping(value = "/{diary-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity patchDiary(@Positive @NotNull @PathVariable("diary-id") long diaryId,
-                                     @ModelAttribute DiaryPatchDto diaryPatchDto) throws IOException {
+                                     @Valid @RequestPart(name = "diaryPatchDto") DiaryPatchDto diaryPatchDto,
+                                     @ModelAttribute("imgFiles") MultipartFile[] imgFiles) throws IOException {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        MultipartFile[] imgFiles = diaryPatchDto.getImgFiles().toArray(new MultipartFile[diaryPatchDto.getImgFiles().size()]);
 
         return new ResponseEntity<>(new SingleResponseDto<>(diaryService.updateDiary(diaryPatchDto, imgFiles, diaryId, email)),HttpStatus.OK);
     }

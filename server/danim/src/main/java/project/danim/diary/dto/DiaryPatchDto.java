@@ -48,8 +48,6 @@ public class DiaryPatchDto {
   @NotNull
   private List<String> tags;
 
-  @NotNull
-  private List<MultipartFile> imgFiles;
   public LocalDate getTravelDate() {
     return LocalDate.of(year, month, day);}
 }
