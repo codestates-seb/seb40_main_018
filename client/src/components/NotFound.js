@@ -23,6 +23,10 @@ const NotText = styled.div`
   font-size: 20px;
   font-weight: 900;
   color: #5e9090;
+  @media screen and (max-width: 600px) {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
 `;
 const TextArea = styled.div`
   display: flex;
@@ -31,6 +35,10 @@ const TextArea = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 38px;
+  @media screen and (max-width: 600px) {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
 `;
 
 const HomeButton = styled.button`

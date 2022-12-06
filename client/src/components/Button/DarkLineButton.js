@@ -17,8 +17,12 @@ const DarkLineButtonStyle = styled.button`
   }
 `;
 
-const DarkLineButton = ({ text, handleSubmit }) => {
-  return <DarkLineButtonStyle onClick={handleSubmit}>{text}</DarkLineButtonStyle>;
+const DarkLineButton = ({ type, text, handleSubmit }) => {
+  return (
+    <DarkLineButtonStyle type={type} onClick={handleSubmit}>
+      {text}
+    </DarkLineButtonStyle>
+  );
 };
 
 export default DarkLineButton;

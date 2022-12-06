@@ -64,7 +64,6 @@ const DateInfo = styled.div`
 // 확인용
 
 const MyPageCard = ({ cardList, hasMore, fetchDiaryList, page2 }) => {
-  // yerin
   // 스크롤 시에 데이터를 추가적으로 받아오는 함수
   // const fetchMoreData = () => {
   //   if (cardList.length >= 50) {
