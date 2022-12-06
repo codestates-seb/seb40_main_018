@@ -30,11 +30,18 @@ export default function MainPage() {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [tag, setTag] = useState("");
+  const [like, setLike] = useState(false);
+
+  const accessToken = localStorage.getItem("accessToken");
 
   const fetchDiaryList = async (page) => {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}diary?size=12&page=${page}&tag=${tag}`);
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}diary?size=12&page=${page}&tag=${tag}`, {
+      headers: {
+        Authorization: accessToken,
+      },
+    });
 
-    console.log(res.data);
+    console.log("res", res.data);
     const diaries = res.data.data;
     const pagination = res.data.pageInfo;
 
@@ -45,6 +52,7 @@ export default function MainPage() {
       setDiaryList([...previousDiaries, ...newDiaries]);
     } else {
       setDiaryList(diaries);
+      setLike(res.data.data.like);
     }
     setPage(pagination.page + 1);
     setTotalPage(pagination.totalPages);
@@ -59,7 +67,17 @@ export default function MainPage() {
   return (
     <Main>
       <Container>
-        <MainTab selected={selected} setSelected={setSelected} diaryList={diaryList} setTag={setTag} />
+        <MainTab
+          selected={selected}
+          setSelected={setSelected}
+          diaryList={diaryList}
+          setTag={setTag}
+          tag={tag}
+          page={page}
+          setPage={setPage}
+          setTotalPage={setTotalPage}
+          totalPage={totalPage}
+        />
         <Card
           selected={selected}
           diaryList={diaryList}
@@ -72,6 +90,9 @@ export default function MainPage() {
           setLoading={setLoading}
           fetchDiaryList={fetchDiaryList}
           page={page}
+          setLike={setLike}
+          like={like}
+          tag={tag}
         />
       </Container>
     </Main>

@@ -88,7 +88,7 @@ const SignupForm2 = () => {
   currentPassword.current = watch("password", "");
 
   const onValid = async (data) => {
-    console.log("data", data);
+    // console.log("data", data);
 
     const postSignup = {
       nickname: data.nickname,
@@ -96,7 +96,7 @@ const SignupForm2 = () => {
       password: data.password,
     };
 
-    console.log("postSignup", postSignup);
+    // console.log("postSignup", postSignup);
     // 회원가입 요청
     const res = await useFetch("POST", `/auth/register`, postSignup);
     if (res === 404 || res === 401 || res === 405) {
