@@ -61,7 +61,7 @@ public class DiaryController {
     @ApiOperation(value = "Diary 등록", response = Diary.class)
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity postDiary(@Valid @RequestPart DiaryPostDto diaryPostDto,
-                                    @RequestPart MultipartFile[] imgFiles) throws IOException {
+                                    @RequestPart(value = "imgFiles") MultipartFile[] imgFiles) throws IOException {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         DiaryResponseDto postDiary = diaryService.createDiary(diaryPostDto, imgFiles, email);
@@ -109,8 +109,8 @@ public class DiaryController {
     @ApiOperation(value = "Diary 수정", response = Diary.class)
     @PatchMapping(value = "/{diary-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity patchDiary(@Positive @NotNull @PathVariable("diary-id") long diaryId,
-                                     @Valid @RequestBody DiaryPatchDto diaryPatchDto,
-                                     @RequestParam(value = "imgFiles") MultipartFile[] imgFiles) throws IOException {
+                                     @Valid @RequestPart DiaryPatchDto diaryPatchDto,
+                                     @RequestPart(value = "imgFiles") MultipartFile[] imgFiles) throws IOException {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return new ResponseEntity<>(new SingleResponseDto<>(diaryService.updateDiary(diaryPatchDto, imgFiles, diaryId, email)),HttpStatus.OK);
