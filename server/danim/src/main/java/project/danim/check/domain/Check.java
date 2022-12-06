@@ -22,17 +22,14 @@ public class Check extends BaseTime {
     @Column(nullable = false)
     private Boolean isCheck;
 
-    // TODO 멤버 1 - 체크 n // 멤버 1 - 체크리스트 1
-
-//    @JoinColumn(name = "MEMBER_ID")
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Member member;
+    private Long memberId;
 
     @Builder
-    public Check(Long checkId, String checkContent, Boolean isCheck) {
+    public Check(Long checkId, String checkContent, Boolean isCheck, Long memberId) {
         this.checkId = checkId;
         this.checkContent = checkContent;
         this.isCheck = isCheck;
+        this.memberId = memberId;
     }
 
 }

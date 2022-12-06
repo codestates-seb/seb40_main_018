@@ -17,4 +17,6 @@ public class BucketPatchDto {
 
     private Boolean isBucket;
 
+    private Long memberId;
+
 }

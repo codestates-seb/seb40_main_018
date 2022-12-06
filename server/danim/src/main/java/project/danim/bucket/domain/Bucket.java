@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.danim.audit.BaseTime;
+import project.danim.member.domain.Member;
 
 import javax.persistence.*;
 
@@ -25,16 +26,13 @@ public class Bucket extends BaseTime {
     @Column(nullable = false)
     private Boolean isBucket;
 
-    // TODO 멤버 1 - 체크 n // 멤버 1 - 체크리스트 1
-
-//    @JoinColumn(name = "MEMBER_ID")
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Member member;
+    private Long memberId;
 
     @Builder
-    public Bucket(Long bucketId, String bucketContent, Boolean isBucket) {
+    public Bucket(Long bucketId, String bucketContent, Boolean isBucket, Long memberId) {
         this.bucketId = bucketId;
         this.bucketContent = bucketContent;
         this.isBucket = isBucket;
+        this.memberId = memberId;
     }
 }

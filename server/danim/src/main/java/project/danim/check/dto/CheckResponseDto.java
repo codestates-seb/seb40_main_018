@@ -23,8 +23,10 @@ public class CheckResponseDto {
 
     private LocalDateTime createdAt;
 
+    private Long memberId;
+
     public static CheckResponseDto of(Check check) {
-        return new CheckResponseDto(check.getCheckId(), check.getCheckContent(), check.getIsCheck(), check.getCreatedAt());
+        return new CheckResponseDto(check.getCheckId(), check.getCheckContent(), check.getIsCheck(), check.getCreatedAt(), check.getMemberId());
     }
 
 }
