@@ -1,14 +1,12 @@
 import axios from "axios";
 // import { useEffect } from "react";
-
-import { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import styled from "styled-components";
 import DarkMintTag from "../Tag/DarkMintTag";
 import SkeletonCard from "../Skeleton/SkeletonCard";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import { MainTab } from "./MainTab";
 const Main = styled.div`
   display: grid;
@@ -156,25 +154,25 @@ const TopStyle = styled.div`
   margin-bottom: 8px;
 `;
 
-export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading, page }) => {
+export const Card = ({ diaryList, setDiaryList, hasMore, fetchDiaryList, loading, page, setLike, like }) => {
   console.log("diaryList2", diaryList);
+  console.log("like", like);
 
-  const [like, setLike] = useState();
-  const id = useParams().id;
+  // const id = useParams().id;
   const accessToken = localStorage.getItem("accessToken");
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}likes/` + id, {
-        headers: {
-          Authorization: accessToken,
-        },
-      })
-      .then((res) => setLike(res.data.data.like))
-      .catch((err) => {
-        console.log("likeGetErr", err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.REACT_APP_API_URL}likes/` + id, {
+  //       headers: {
+  //         Authorization: accessToken,
+  //       },
+  //     })
+  //     .then((res) => setLike(res.data.data.like))
+  //     .catch((err) => {
+  //       console.log("likeGetErr", err);
+  //     });
+  // }, []);
 
   const onClickHandler = (list) => {
     setLike(!like);

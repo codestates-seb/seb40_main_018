@@ -88,12 +88,15 @@ const SignupForm2 = () => {
   currentPassword.current = watch("password", "");
 
   const onValid = async (data) => {
+    // console.log("data", data);
+
     const postSignup = {
       nickname: data.nickname,
       email: data.email,
       password: data.password,
     };
 
+    // console.log("postSignup", postSignup);
     // 회원가입 요청
     const res = await useFetch("POST", `${process.env.REACT_APP_API_URL}auth/register`, postSignup);
     if (res === 404 || res === 401 || res === 405) {
