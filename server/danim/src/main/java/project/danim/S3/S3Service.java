@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import project.danim.response.SingleResponseDto;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -105,5 +106,24 @@ public class S3Service {
         }
 
         return uploadProfileImage(profileImage);
+    }
+
+    public String updateDiaryImage(MultipartFile profileImage) throws IOException {
+        String originalName = "diary/" + profileImage.getOriginalFilename(); // 파일 이름
+        long size = profileImage.getSize(); // 파일 크기
+
+        ObjectMetadata objectMetaData = new ObjectMetadata();
+        objectMetaData.setContentType(profileImage.getContentType());
+        objectMetaData.setContentLength(size);
+
+        // S3에 업로드
+        amazonS3Client.putObject(
+                new PutObjectRequest(bucket, originalName, profileImage.getInputStream(), objectMetaData)
+                        .withCannedAcl(CannedAccessControlList.PublicRead)
+        );
+
+        String imagePath = amazonS3Client.getUrl(bucket, originalName).toString(); // 접근가능한 URL 가져오기
+
+        return imagePath;
     }
 }
