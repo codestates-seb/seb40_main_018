@@ -104,15 +104,7 @@ export const BucketListModal = () => {
             <Loading />
           ) : (
             // 진짜 수정버튼 지운다면 필요없는 props 지우기
-            <BucketList
-              todos={todos}
-              setTodos={setTodos}
-              setEditTodo={setEditTodo}
-              completed={completed}
-              setcompleted={setcompleted}
-              isEdit={isEdit}
-              setIsEdit={setIsEdit}
-            />
+            <BucketList todos={todos} setTodos={setTodos} />
           )}
         </div>
       </Container>

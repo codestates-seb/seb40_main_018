@@ -86,7 +86,6 @@ export const CheckInput = ({
       })
       .then((result) => {
         setTodos(result.data.data);
-        // navigate(`/mylist/${cid}`);
       });
     // }, []);
   };
@@ -104,7 +103,7 @@ export const CheckInput = ({
     setInput(event.target.value);
   };
 
-  // 문제
+  // 수정 버튼
   // const updateTodo = (title, id) => {
   //   const newTodo = todos.map((todo) => {
   //     console.log("todo", todo);

@@ -106,7 +106,6 @@ export const BucketList = ({ todos, setTodos }) => {
       })
       .then((result) => {
         setTodos(result.data.data);
-        // navigate(`/mylist/${cid}`);
       });
   };
 
@@ -119,7 +118,6 @@ export const BucketList = ({ todos, setTodos }) => {
   // };
 
   const handleDelete = async (item) => {
-    // setTodos(todos.filter((todos) => todos.id !== id));
     await axios.delete(`${process.env.REACT_APP_API_URL}bucket-list/${item.bucketId}`);
 
     await axios
@@ -130,7 +128,6 @@ export const BucketList = ({ todos, setTodos }) => {
       })
       .then((result) => {
         setTodos(result.data.data);
-        // navigate(`/mylist/${cid}`);
       });
   };
 

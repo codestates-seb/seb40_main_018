@@ -82,23 +82,11 @@ export const CheckListModal = () => {
         }, 1000);
         return () => clearTimeout(timer);
       });
-
-    // axios
-    //   .get(`/member/me`, {
-    //     headers: {
-    //       Authorization: accessToken,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data.data);
-    //     setMid(res.data.data.memberId);
-    //   });
   }, []);
 
   return (
     <Block>
       <DarkMintShadowButton>체크리스트</DarkMintShadowButton>
-      {/* {mid && ( */}
       <Container>
         <ListHeader />
         <ListInput>
@@ -129,7 +117,6 @@ export const CheckListModal = () => {
           )}
         </div>
       </Container>
-      {/* )} */}
     </Block>
   );
 };
