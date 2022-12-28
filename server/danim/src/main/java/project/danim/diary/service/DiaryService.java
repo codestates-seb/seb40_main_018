@@ -77,6 +77,7 @@ public class DiaryService {
         return findDiary;
     }
 
+
     /*
      예외 처리
      */
