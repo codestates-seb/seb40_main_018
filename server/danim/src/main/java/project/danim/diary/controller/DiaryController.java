@@ -85,19 +85,6 @@ public class DiaryController {
         return new ResponseEntity<>(diaryService.findDiariesForCard(email, size, page), HttpStatus.OK);
     }
 
-//    @ApiOperation(value = "지역 검색", response = Diary.class)
-//    @GetMapping("/search")
-//    public ResponseEntity getDiaryCityList(@RequestParam("search") String cityKeyword,
-//                                           @Positive @RequestParam int page,
-//                                           @Positive @RequestParam int size,
-//                                           @RequestParam String sort) {
-//        Page<Diary> searchResult = diaryService.diarySearchCityList(cityKeyword, page - 1, size,sort);
-//        List<Diary> diaries = searchResult.getContent();
-//
-//        return new ResponseEntity<>(new MultiResponseDto<>(diaryMapper.diaryToCityResponseDtos(diaries),searchResult),HttpStatus.OK);
-//    }
-
-
 
     @GetMapping("/cost")
     public ResponseEntity getDiariesFilterCost(@Positive @RequestParam int min,
@@ -116,13 +103,7 @@ public class DiaryController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(diaryService.updateDiary(diaryPatchDto, imgFiles, diaryId, email)),HttpStatus.OK);
     }
-/*
-    @GetMapping("search")
-    public ResponseEntity searchCost(@RequestParam("cost") int cost) {
 
-        return new ResponseEntity<>(diaryService.findDiaries(cost), HttpStatus.OK);
-    }
-*/
     /*
      다이어리 삭제 구현
      */
