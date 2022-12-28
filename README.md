@@ -137,8 +137,9 @@ Bucket-List에는 여행에서 꼭 하고 싶은 일들을 기록할 수 있습�
 
 <br/>
 
-  
-![상세페이지2](https://user-images.githubusercontent.com/62506973/208844737-5d70c7a0-c697-4371-9f16-460ad40c5fcb.gif)
+![댓글10-2](https://user-images.githubusercontent.com/62506973/209781771-0afeb887-25a4-42f0-a0f1-7970e6769a78.gif)
+
+
 
 
 <br/>
