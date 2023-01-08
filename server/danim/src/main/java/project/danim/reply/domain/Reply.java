@@ -31,8 +31,10 @@ public class Reply extends BaseTime {
 
     private String nickName;
 
+    private Long diaryId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DIARY_ID")
+    @JoinColumn(name = "DIARY")
     private Diary diary;
 
     public void addDiary(Diary diary) {
@@ -41,12 +43,13 @@ public class Reply extends BaseTime {
     }
 
     @Builder
-    public Reply(Long replyId, String replyContent, String responseTo, Boolean exist, Long memberId, String nickName) {
+    public Reply(Long replyId, String replyContent, String responseTo, Boolean exist, Long memberId, String nickName, Long diaryId) {
         this.replyId = replyId;
         this.replyContent = replyContent;
         this.responseTo = responseTo;
         this.exist = exist;
         this.memberId = memberId;
         this.nickName = nickName;
+        this.diaryId = getDiaryId();
     }
 }

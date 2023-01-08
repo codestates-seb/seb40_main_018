@@ -56,30 +56,37 @@ public class ReplyService {
     }
 
     // 댓글 생성
-    public ReplyResponseDto createReply(ReplyPostDto request ,Reply reply, Diary diary, Member member, String email) {
+    public ReplyResponseDto createReply(ReplyPostDto request, String email, Diary diary, Member member) {
 
         Member findMember = memberService.findMember(email);
 
         Optional<Diary> OptionalDiary = diaryRepository.findByDiaryId(diary.getDiaryId());
         Diary findDiary = OptionalDiary.orElseThrow(() -> new BusinessLogicException(ExceptionCode.DIARY_NOT_FOUND));
 
-        reply.setDiary(diary);
-        reply.setNickName(findMember.getNickname());
-        reply.setMemberId(findMember.getMemberId());
-        reply.setReplyContent(request.getReplyContent());
+        Reply reply = Reply.builder()
+                .replyContent(request.getReplyContent())
+                .replyId(request.getReplyId())
+                .memberId(request.getMemberId())
+                .diaryId(request.getDiaryId())
+                .nickName(request.getNickname())
+                .responseTo(request.getReplyContent())
+                .exist(request.getExist())
+                .build();
 
         Reply createReply = replyRepository.save(reply);
 
-        return ReplyResponseDto.builder()
-                .diaryId(diary.getDiaryId())
-                .replyContent(createReply.getReplyContent())
-                .replyId(createReply.getReplyId())
-                .createdAt(createReply.getCreatedAt())
-                .responseTo(createReply.getResponseTo())
-                .exist(createReply.getExist())
-                .memberId(findMember.getMemberId())
-                .nickname(findMember.getNickname())
-                .build();
+        return ReplyResponseDto.of(createReply, diary, member);
+
+//        return ReplyResponseDto.builder()
+//                .diaryId(diary.getDiaryId())
+//                .replyContent(createReply.getReplyContent())
+//                .replyId(createReply.getReplyId())
+//                .createdAt(createReply.getCreatedAt())
+//                .responseTo(createReply.getResponseTo())
+//                .exist(createReply.getExist())
+//                .memberId(findMember.getMemberId())
+//                .nickname(findMember.getNickname())
+//                .build();
 
     }
 

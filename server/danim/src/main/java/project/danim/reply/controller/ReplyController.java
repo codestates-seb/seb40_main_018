@@ -45,15 +45,13 @@ public class ReplyController {
     // 댓글 생성
     @PostMapping("/{diary-id}")
     public ResponseEntity<SingleResponseDto> postReply(@Valid @RequestBody ReplyPostDto request,
-                                                       @PathVariable("diary-id") Long diaryId,
-                                                       Member member,
-                                                       Reply reply) {
+                                                       @PathVariable("diary-id") Long diaryId, Member member) {
 
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Diary diary = diaryService.findDiary(diaryId);
 
-        ReplyResponseDto response = replyService.createReply(request, reply, diary, member, email);
+        ReplyResponseDto response = replyService.createReply(request, email, diary, member);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.CREATED);
