@@ -77,17 +77,6 @@ public class ReplyService {
 
         return ReplyResponseDto.of(createReply, diary, member);
 
-//        return ReplyResponseDto.builder()
-//                .diaryId(diary.getDiaryId())
-//                .replyContent(createReply.getReplyContent())
-//                .replyId(createReply.getReplyId())
-//                .createdAt(createReply.getCreatedAt())
-//                .responseTo(createReply.getResponseTo())
-//                .exist(createReply.getExist())
-//                .memberId(findMember.getMemberId())
-//                .nickname(findMember.getNickname())
-//                .build();
-
     }
 
     // 댓글 수정
