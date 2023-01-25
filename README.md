@@ -16,6 +16,14 @@
 [배포 링크](http://danimbucket.s3-website.ap-northeast-2.amazonaws.com/)
 
 <br/>
+
+**게스트 계정**
+
+이메일 : guest@guest.com
+
+비밀번호 : guest123!
+
+<br/>
 <br/>
   
   
